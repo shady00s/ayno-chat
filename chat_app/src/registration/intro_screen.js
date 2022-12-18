@@ -13,7 +13,7 @@ export default function RegistrationScreen(){
 
         {/* intro container */}
 
-        <div className="w-full h-intro   xl:h-screen xl:w-1/2  bg-slate-900">
+        <div className="w-full h-intro   xl:h-screen xl:w-1/2  animate-changeColor bg-400% bg-gradient"> 
             <img src="/logo.png" className="p-2 mt-5"  alt="logo"/>
 
             <div className="relative m-auto top-1/4 p-3">
