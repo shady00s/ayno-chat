@@ -1,0 +1,15 @@
+.SidebarComponent{
+   max-width:2.5rem;
+   border-right: 3px solid rgba(60, 67, 60, 0.167);
+   overflow: hidden;
+   display: flex;
+   align-items: flex-start;
+   flex-direction: column;
+}
+
+@media all  and (min-width:859px) {
+   .SidebarComponent{
+      max-width:10.5rem;
+      
+   }
+}

@@ -1,0 +1,38 @@
+import axiosInestance from "../axios/inestance"
+
+class ApiCall{
+    static getFriendsList = (userID)=>{
+        try {
+            let friendsList =  axiosInestance.get('/user/friends'
+            ,{
+                  params:{
+                      user_id:userID
+                  }
+              }).then((value)=>{
+                     return value
+              })
+              return friendsList
+        } catch (error) {
+            console.log(error)
+        }
+
+     
+    }
+    static getSearchData = (userName)=>{
+        try {
+            let searchList = axiosInestance.get('/user/search',{
+                params:{contactName:userName}
+            
+            }).then((value)=>{
+                console.log(value)
+                    return value
+            })
+            return searchList
+        } catch (error) {
+            console.log(error)
+        }
+        
+    }
+}
+
+export default ApiCall
