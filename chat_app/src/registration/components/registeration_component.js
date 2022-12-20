@@ -8,8 +8,11 @@ import InputTextComponent from './input_text_component';
 import LoadingComponent from './../../reusable-components/loading_component';
 import ApiCall from './../../home/api_call';
 import RegisterValidation from './RegisterValidation';
+import { useNavigate,redirect } from "react-router-dom";
 const RegistrationComponent = () => {
-
+    //router 
+    const navigate = useNavigate();
+    
     //registration data object
     const[registerData,setRegisterData]=useState({
         username:'',
@@ -32,7 +35,7 @@ const RegistrationComponent = () => {
     useEffect(()=>{
         
         // get avatars from cartoon avatar api
-        function avatarGenerator(gneder) {
+        function avatarGenerator(gneder,avatar) {
             // to not render more images every refresh
             if(avatar.length <=40 ){
                 setAvatar([])
@@ -42,10 +45,10 @@ const RegistrationComponent = () => {
                 }
             }
     
-            return avatar
+            return 
             
         }
-        avatarGenerator(gender)
+        avatarGenerator(gender,avatar)
 
 
         setRegisterData({
@@ -72,7 +75,7 @@ const RegistrationComponent = () => {
             ApiCall.postUserRegisterData(registerData).then(apiResponse=>{
                 if(apiResponse.status===201){
                     setLoading(false)
-                    
+                    navigate('/home')
                 }else{
                     setLoading(false)
                      alert('there is an problem '+apiResponse.data)   

@@ -13,11 +13,11 @@ export default function HomeScreen(){
             </Helmet>
 
         <main className='mainHomeScreen bg-background overflow-hidden h-screen'>
-            <img src="./logo.png" className=" w-40 p-3"/>
+            <img alt="ayno logo" src="./logo.png" className=" w-40 p-3"/>
 
             <div className="flex flex-wrap items-stretch justify-items-stretch  overflow-hidden h-full">
                 <Sidebar/>
-                <ContactList/>
+                    <ContactList/>
                 <MessageComponent/>
             </div>
 

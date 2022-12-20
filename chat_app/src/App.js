@@ -1,9 +1,11 @@
-import RegistrationScreen from './registration/intro_screen'
-import HomeScreen from './home/screen/homeScreen';
 
+import AppRouters from './router';
+import { RouterProvider } from 'react-router-dom';
 function App() {
   return (
-    <RegistrationScreen/>
+
+    <AppRouters/>
+   
   );
 }
 
