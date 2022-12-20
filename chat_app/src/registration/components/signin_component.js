@@ -16,11 +16,11 @@ const SignInComponent = ()=>{
                     {/* remember me container */}
                      <div className="flex justify-evenly m-3 cursor-pointer" onClick={()=>{setRememberMe(!rememberMe)}}>
                     <input checked={rememberMe} onChange={(value)=>{setRememberMe(!rememberMe)}} type={"checkbox"} name={'rememberMe'}/>
-                    <label  className="pl-2 text-slate-200" form="rememberMe">Remember me?</label>
+                    <label  className="pl-2 text-slate-200 select-none" form="rememberMe">Remember me?</label>
                     </div>
                     
                 </form>
-                <SubmitButton className="w-6/12" onClick={()=>{console.log("test1")}} title={"Sign-in"}/>
+                <SubmitButton className="w-6/12 bg-indigo-800" onClick={()=>{console.log("test1")}} title={"Sign-in"}/>
 
             
        

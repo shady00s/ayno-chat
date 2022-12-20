@@ -33,6 +33,19 @@ class ApiCall{
         }
         
     }
+
+    static postUserRegisterData = (data)=>{
+
+
+        try {
+            let postData = axiosInestance.post('/user/register',data).then(value=> value)
+            return postData        
+
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
 }
 
 export default ApiCall

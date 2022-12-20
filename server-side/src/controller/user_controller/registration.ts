@@ -9,14 +9,13 @@ import PasswordManager from "./utils/password_manager";
     const password = req.body.password;
    
     const profileImagePath = req.body.profilePath;
+
 // check if there is any body key have undefined value
     if(userName == undefined || password  == undefined ||  profileImagePath == undefined){
-        res.status(404).json({message:"data is missing or corupted"})
+        res.status(204).json({message:"data is missing or corupted"})
     }
     else{
         try {
-           
-
             PasswordManager.encode(password).then((hashedPassword:string)=>{
                 const UserModel = new user_model({
                     name:userName,
