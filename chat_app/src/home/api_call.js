@@ -18,9 +18,11 @@ class ApiCall{
 
      
     }
-    static getUserChatMessages = (contact_name)=>{
+    static getUserChatMessages = (contactName)=>{
         try {
-            let result = axiosInestance.get(`/chat/${contact_name}`).then(data=> data)
+            let result = axiosInestance.post(`/chat/${contactName}`).then(data=>{
+               return data
+            } )
             return result
         } catch (error) {
             console.log(error)

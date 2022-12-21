@@ -29,7 +29,7 @@ module.exports = {
 
       },
       colors:{
-        'subBackGround':'#1E2329',
+        'subBackGround':'#1C242D',
         'background':'#1A1E23',
         'black':'#030405',
         'grey':'#505045',

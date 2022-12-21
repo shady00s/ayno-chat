@@ -1,7 +1,7 @@
 import Sidebar from "../components/side_bar";
 import ContactList from "../components/contact_list";
 import MessageComponent from "../components/message_component";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 export default function HomeScreen(){
     return(
 

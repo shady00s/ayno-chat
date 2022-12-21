@@ -1,13 +1,12 @@
 export default function ContactButton(props){
     return(
-        <div className="flex group items-center p-1
-            relative
-            w-11/12
+        <div className="flex group items-center p-1 relative
+           
            ml-2 mr-2 mb-2 cursor-pointer border-l-2 bg-subBackGround border-l-slate-800
            rounded-sm hover:bg-slate-800  hover:border-l-slate-700">
             <img alt="user profile"src="https://cdn.pixabay.com/photo/2018/08/28/13/29/avatar-3637561_960_720.png" className="w-9"/>
             <div className="ml-6 flex flex-col justify-start">   
-                <h3 className="font-sans text-slate-100 text-xl text-green-50">Test</h3>
+                <h3 className="font-sans text-slate-100 text-xl text-green-50">{props.data.name}</h3>
 
                 <div className="flex   items-center"> 
                 <h3 className="font-sans text-grey w-2/3 truncate">Tasdfasdfasdfsadfsdfasdfsdfsadfest</h3>
@@ -15,7 +14,7 @@ export default function ContactButton(props){
                 </div>
             </div>
             {/* message number component */}
-            <div className="absolute right-2">
+            <div className="absolute right-8 top-2">
                 
            
             <CounterComponent number="21"/>

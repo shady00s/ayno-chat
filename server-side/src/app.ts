@@ -23,7 +23,7 @@ app.use((req,res,next)=>{
     next()
 })
 app.use('/user',userRouter)
-app.use('/chats',chatRouter)
+app.use('/chat',chatRouter)
 
 
 
