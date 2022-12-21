@@ -1,8 +1,21 @@
+import TextInputContainer from "../../home/components/text_input_component"
 import SubmitButton from "./submit_button"
-import React,{useState} from "react"
+import React,{useState,useEffect} from "react"
+import InputTextComponent from './input_text_component';
+import ApiCall from './../../home/api_call';
 
 const SignInComponent = ()=>{
     const [rememberMe,setRememberMe]=useState(false)
+    const [userName,setUserName]=useState('')
+    const [password,setPassword]=useState('')
+   
+    const sendLoginData = ()=>{
+        ApiCall.getUserLoginData().then(loginData=>{
+            if(loginData.status===200){
+                
+            }
+        })
+    }
     return(
         <>
             <div className="p-3 w-11/12 flex-col flex justify-center">
@@ -11,8 +24,9 @@ const SignInComponent = ()=>{
 
                 <form className="p-3 flex flex-col justify-start items-start">
 
-                    <input className=" focus:boder-b-6 m-1 p-2 bg-transparent border-b-2 border-b-cyan-700" placeholder="Your name"/>
-                    <input className="m-1 p-2 bg-transparent border-b-2 border-b-cyan-700" placeholder="Your password"/>
+                    <InputTextComponent onChange={(event)=>{setUserName(event.target.value)} }placeHolder={"Name:"}/>
+                    <InputTextComponent onChange={(event)=>{setPassword(event.target.value)} }placeHolder={"Password:"}/>
+                    
                     {/* remember me container */}
                      <div className="flex justify-evenly m-3 cursor-pointer" onClick={()=>{setRememberMe(!rememberMe)}}>
                     <input checked={rememberMe} onChange={(value)=>{setRememberMe(!rememberMe)}} type={"checkbox"} name={'rememberMe'}/>

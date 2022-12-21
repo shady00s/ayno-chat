@@ -22,7 +22,7 @@ export default function ChatMessageComponent(props){
                     <span className=" text-white leading-relaxed text-center">
                    hello sdfsfs
                     </span>
-                    <CheckCircle className="w-3 absolute right-2 bottom-1"  color={"#ffffff"}/>            
+                    <CheckCircle className="w-2 absolute right-2 bottom-1"  color={"#ffffff"}/>            
                     </div>
                     <div className= {` ${props.isUser === true ? ownerTitleContainerStyle : guestMainTitleContainerStyle}`}>
                     <img alt="user profile" src="https://cdn.pixabay.com/photo/2018/08/28/13/29/avatar-3637561_960_720.png" className="w-full"/>

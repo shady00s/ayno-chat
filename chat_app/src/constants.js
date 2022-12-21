@@ -2,4 +2,4 @@
 
  const  userStorageName = 'aynoUserData'
 
- export default {userStorageName}
+ export  {userStorageName}

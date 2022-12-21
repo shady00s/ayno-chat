@@ -1,4 +1,4 @@
-export default function ContactButton(){
+export default function ContactButton(props){
     return(
         <div className="flex group items-center p-1
             relative

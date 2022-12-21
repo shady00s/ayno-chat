@@ -15,7 +15,7 @@ export default function  Sidebar(){
     return (
         <div className=" SidebarComponent">
                 {navButtons.map((item,index)=>
-                    <div className='pb-4 pr-2 pl-1 '>
+                    <div key={item.name} className='pb-4 pr-2 pl-1 '>
 
                         <IconButtonWithText  isActive={true}  key={item.name}  icon={item.icon} name={item.name}/>
                     </div>

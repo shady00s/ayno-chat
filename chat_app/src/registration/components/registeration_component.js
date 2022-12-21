@@ -9,6 +9,7 @@ import LoadingComponent from './../../reusable-components/loading_component';
 import ApiCall from './../../home/api_call';
 import RegisterValidation from './RegisterValidation';
 import { useNavigate,redirect } from "react-router-dom";
+import StorageManager from "../../utils/storage_manager";
 const RegistrationComponent = () => {
     //router 
     const navigate = useNavigate();
@@ -65,8 +66,7 @@ const RegistrationComponent = () => {
         // send register data to the api
     const [loading,setLoading]=useState(false)
     const postRegisterData = ()=>{
-
-
+        
         if( RegisterValidation.nameValidation(username) ===true && RegisterValidation.passwordValidation(pass,confirmPass)===true && selectAvatar.name!=='' ){
             setLoading(true)
            
@@ -75,6 +75,24 @@ const RegistrationComponent = () => {
             ApiCall.postUserRegisterData(registerData).then(apiResponse=>{
                 if(apiResponse.status===201){
                     setLoading(false)
+
+                    if(rememberMe===true){
+                        StorageManager.insertDataToStorage({
+                            name:apiResponse.data.user_body.name,
+                            profilePath:apiResponse.data.user_body.profileImagePath,
+                            id:apiResponse.data.user_body._id
+                        },'local')
+                    }else{
+                        StorageManager.insertDataToStorage({
+                            name:apiResponse.data.user_body.name,
+                            profilePath:apiResponse.data.user_body.profileImagePath,
+                            id:apiResponse.data.user_body._id
+                        },'session')
+
+                    }
+            
+
+
                     navigate('/home')
                 }else{
                     setLoading(false)

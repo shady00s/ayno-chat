@@ -8,7 +8,7 @@ const getChatMessages= (req:Request,res:Response)=>{
         user_model.findOne({name:user_name}).then(responseData=>{
             res.status(200).json({
                 message:"succssess",
-                body:responseData.conversations
+                conversations:responseData.conversations
             })
         })
     } catch (error) {

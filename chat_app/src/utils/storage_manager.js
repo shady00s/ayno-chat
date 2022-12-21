@@ -29,10 +29,19 @@ class StorageManager{
 
         let userDataFromLocalStorage = JSON.parse(localStorage.getItem(userStorageName)) 
         let userDataFromSessionStorage = JSON.parse(sessionStorage.getItem(userStorageName)) 
-        
-        return 
+            if(userDataFromLocalStorage !== null){
+                return userDataFromLocalStorage
+            }
+            else if (userDataFromSessionStorage !==null) {
+                return userDataFromSessionStorage
+            } 
+            else{
+                console.log("no data found")
+               return {}
+            }
+         
     }
 }
 
-
+export default StorageManager
 

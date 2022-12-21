@@ -18,13 +18,21 @@ class ApiCall{
 
      
     }
+    static getUserChatMessages = (contact_name)=>{
+        try {
+            let result = axiosInestance.get(`/chat/${contact_name}`).then(data=> data)
+            return result
+        } catch (error) {
+            console.log(error)
+        }
+    }
     static getSearchData = (userName)=>{
         try {
             let searchList = axiosInestance.get('/user/search',{
                 params:{contactName:userName}
             
             }).then((value)=>{
-                console.log(value)
+               
                     return value
             })
             return searchList
@@ -32,6 +40,15 @@ class ApiCall{
             console.log(error)
         }
         
+    }
+
+    static getUserLoginData = ()=>{
+        try {
+            let userData = axiosInestance.get('/user/login').then(value=>value)
+            return userData
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     static postUserRegisterData = (data)=>{

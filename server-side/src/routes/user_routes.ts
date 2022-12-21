@@ -7,7 +7,7 @@ const userRouter = express.Router()
 
 userRouter.post('/register',userRegistrationController)
 
-userRouter.get('/login',userLoginController)
+userRouter.post('/login',userLoginController)
 
 userRouter.get('/friends',getUserFriendsController)
 
