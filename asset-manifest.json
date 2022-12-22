@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/ayno-chat/static/css/main.39256ec5.css",
-    "main.js": "/ayno-chat/static/js/main.7db20bc2.js",
+    "main.css": "/ayno-chat/static/css/main.51f58e06.css",
+    "main.js": "/ayno-chat/static/js/main.64109e55.js",
     "static/js/6176.c5790e78.chunk.js": "/ayno-chat/static/js/6176.c5790e78.chunk.js",
     "static/js/8302.5eae8e88.chunk.js": "/ayno-chat/static/js/8302.5eae8e88.chunk.js",
     "static/js/1898.7d09f7e8.chunk.js": "/ayno-chat/static/js/1898.7d09f7e8.chunk.js",
@@ -211,7 +211,7 @@
     "static/js/1621.a377aac3.chunk.js": "/ayno-chat/static/js/1621.a377aac3.chunk.js",
     "static/js/4055.5f8f4050.chunk.js": "/ayno-chat/static/js/4055.5f8f4050.chunk.js",
     "static/js/3024.16d26df0.chunk.js": "/ayno-chat/static/js/3024.16d26df0.chunk.js",
-    "static/js/1725.4bf7c7ba.chunk.js": "/ayno-chat/static/js/1725.4bf7c7ba.chunk.js",
+    "static/js/1725.5394b949.chunk.js": "/ayno-chat/static/js/1725.5394b949.chunk.js",
     "static/js/219.ae83b1ba.chunk.js": "/ayno-chat/static/js/219.ae83b1ba.chunk.js",
     "static/js/8435.9c5a5467.chunk.js": "/ayno-chat/static/js/8435.9c5a5467.chunk.js",
     "static/js/2763.02653f27.chunk.js": "/ayno-chat/static/js/2763.02653f27.chunk.js",
@@ -263,7 +263,6 @@
     "static/js/8813.fb3415a5.chunk.js": "/ayno-chat/static/js/8813.fb3415a5.chunk.js",
     "static/js/2029.03bf30dc.chunk.js": "/ayno-chat/static/js/2029.03bf30dc.chunk.js",
     "static/js/3138.22468b54.chunk.js": "/ayno-chat/static/js/3138.22468b54.chunk.js",
-    "static/js/5407.9f6a3cc3.chunk.js": "/ayno-chat/static/js/5407.9f6a3cc3.chunk.js",
     "static/js/204.fa09ba33.chunk.js": "/ayno-chat/static/js/204.fa09ba33.chunk.js",
     "static/js/6973.255ef615.chunk.js": "/ayno-chat/static/js/6973.255ef615.chunk.js",
     "static/js/9323.97e42155.chunk.js": "/ayno-chat/static/js/9323.97e42155.chunk.js",
@@ -281,7 +280,6 @@
     "static/js/1874.27ea10ed.chunk.js": "/ayno-chat/static/js/1874.27ea10ed.chunk.js",
     "static/js/1739.394afb81.chunk.js": "/ayno-chat/static/js/1739.394afb81.chunk.js",
     "static/js/2962.4cc4feff.chunk.js": "/ayno-chat/static/js/2962.4cc4feff.chunk.js",
-    "static/js/7702.a17dae74.chunk.js": "/ayno-chat/static/js/7702.a17dae74.chunk.js",
     "static/js/7761.605c40ef.chunk.js": "/ayno-chat/static/js/7761.605c40ef.chunk.js",
     "static/js/9893.dc5befb6.chunk.js": "/ayno-chat/static/js/9893.dc5befb6.chunk.js",
     "static/js/1694.194d64b8.chunk.js": "/ayno-chat/static/js/1694.194d64b8.chunk.js",
@@ -289,8 +287,8 @@
     "static/js/6411.42318af6.chunk.js": "/ayno-chat/static/js/6411.42318af6.chunk.js",
     "static/js/787.6f726199.chunk.js": "/ayno-chat/static/js/787.6f726199.chunk.js",
     "index.html": "/ayno-chat/index.html",
-    "main.39256ec5.css.map": "/ayno-chat/static/css/main.39256ec5.css.map",
-    "main.7db20bc2.js.map": "/ayno-chat/static/js/main.7db20bc2.js.map",
+    "main.51f58e06.css.map": "/ayno-chat/static/css/main.51f58e06.css.map",
+    "main.64109e55.js.map": "/ayno-chat/static/js/main.64109e55.js.map",
     "6176.c5790e78.chunk.js.map": "/ayno-chat/static/js/6176.c5790e78.chunk.js.map",
     "8302.5eae8e88.chunk.js.map": "/ayno-chat/static/js/8302.5eae8e88.chunk.js.map",
     "1898.7d09f7e8.chunk.js.map": "/ayno-chat/static/js/1898.7d09f7e8.chunk.js.map",
@@ -500,7 +498,7 @@
     "1621.a377aac3.chunk.js.map": "/ayno-chat/static/js/1621.a377aac3.chunk.js.map",
     "4055.5f8f4050.chunk.js.map": "/ayno-chat/static/js/4055.5f8f4050.chunk.js.map",
     "3024.16d26df0.chunk.js.map": "/ayno-chat/static/js/3024.16d26df0.chunk.js.map",
-    "1725.4bf7c7ba.chunk.js.map": "/ayno-chat/static/js/1725.4bf7c7ba.chunk.js.map",
+    "1725.5394b949.chunk.js.map": "/ayno-chat/static/js/1725.5394b949.chunk.js.map",
     "219.ae83b1ba.chunk.js.map": "/ayno-chat/static/js/219.ae83b1ba.chunk.js.map",
     "8435.9c5a5467.chunk.js.map": "/ayno-chat/static/js/8435.9c5a5467.chunk.js.map",
     "2763.02653f27.chunk.js.map": "/ayno-chat/static/js/2763.02653f27.chunk.js.map",
@@ -552,7 +550,6 @@
     "8813.fb3415a5.chunk.js.map": "/ayno-chat/static/js/8813.fb3415a5.chunk.js.map",
     "2029.03bf30dc.chunk.js.map": "/ayno-chat/static/js/2029.03bf30dc.chunk.js.map",
     "3138.22468b54.chunk.js.map": "/ayno-chat/static/js/3138.22468b54.chunk.js.map",
-    "5407.9f6a3cc3.chunk.js.map": "/ayno-chat/static/js/5407.9f6a3cc3.chunk.js.map",
     "204.fa09ba33.chunk.js.map": "/ayno-chat/static/js/204.fa09ba33.chunk.js.map",
     "6973.255ef615.chunk.js.map": "/ayno-chat/static/js/6973.255ef615.chunk.js.map",
     "9323.97e42155.chunk.js.map": "/ayno-chat/static/js/9323.97e42155.chunk.js.map",
@@ -570,7 +567,6 @@
     "1874.27ea10ed.chunk.js.map": "/ayno-chat/static/js/1874.27ea10ed.chunk.js.map",
     "1739.394afb81.chunk.js.map": "/ayno-chat/static/js/1739.394afb81.chunk.js.map",
     "2962.4cc4feff.chunk.js.map": "/ayno-chat/static/js/2962.4cc4feff.chunk.js.map",
-    "7702.a17dae74.chunk.js.map": "/ayno-chat/static/js/7702.a17dae74.chunk.js.map",
     "7761.605c40ef.chunk.js.map": "/ayno-chat/static/js/7761.605c40ef.chunk.js.map",
     "9893.dc5befb6.chunk.js.map": "/ayno-chat/static/js/9893.dc5befb6.chunk.js.map",
     "1694.194d64b8.chunk.js.map": "/ayno-chat/static/js/1694.194d64b8.chunk.js.map",
@@ -579,7 +575,7 @@
     "787.6f726199.chunk.js.map": "/ayno-chat/static/js/787.6f726199.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.39256ec5.css",
-    "static/js/main.7db20bc2.js"
+    "static/css/main.51f58e06.css",
+    "static/js/main.64109e55.js"
   ]
 }
