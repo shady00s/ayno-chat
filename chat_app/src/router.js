@@ -5,12 +5,12 @@ const AppRouters = () => {
 
     const router = createBrowserRouter([
         {
-            path: "/",
+            path: "/ayno-chat/",
 
             element: <IntroScreen />
         },
         {
-            path:"/home",
+            path:"/ayno/home",
             element:<HomeScreen/>
         }
     ])
