@@ -13,11 +13,11 @@ const navButtons = [
 export default function  Sidebar(){
     
     return (
-        <div className=" SidebarComponent">
+        <div className=" SidebarComponent h-home-content">
                 {navButtons.map((item,index)=>
                     <div key={item.name} className='pb-4 pr-2 pl-1 '>
 
-                        <IconButtonWithText  isActive={true}  key={item.name}  icon={item.icon} name={item.name}/>
+                        <IconButtonWithText  isActive={false}  key={item.name}  icon={item.icon} name={item.name}/>
                     </div>
    )}
                 

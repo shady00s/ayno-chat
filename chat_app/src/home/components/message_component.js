@@ -12,7 +12,7 @@ export default function MessageComponent(){
         ApiCall.getUserChatMessages(user_id.name)
     },[])
     return(
-        <div style={{height:"88%"}} className='ml-2 flex w-10/12 flex-col xl:w-5/12 bg-subBackGround overflow-y-auto'>
+        <div className='ml-2 flex w-5/6 flex-col md:w-6/12 h-5/6 bg-subBackGround overflow-y-auto md:h-home-content'>
             <ChatMessageComponent isUser={false}/>
             <ChatMessageComponent isUser={true}/>
 

@@ -53,11 +53,11 @@ export default function ContactList(){
 
  
     return(
-        <div style={{borderRight:" 3px solid rgba(60, 67, 60, 0.167)"}} className="hidden  xl:flex flex-col p-1 h-4/5  overflow-y-auto w-1/4">
+        <div style={{borderRight:" 3px solid rgba(60, 67, 60, 0.167)"}} className="flex flex-col h-home-content  overflow-y-auto ">
             <SearchComponent onInputClick={()=>{setSearchContainer(true)}} searchSubmit={getSearchResult} searchResult={(value)=>{setSearch(value.target.value)}}/>
                 {/* search result */}
             { searchContainer?
-                    <div style={{backgroundColor:"rgba(30, 41, 59,0.2)"}} className="max-h-3/4 overflow-y-auto rounded-sm p-2 ml-1 mr-1 -mt-1 mb-3  ">
+                    <div style={{backgroundColor:"rgba(30, 41, 59,0.2)"}} className="max-h-3/4   overflow-y-auto rounded-sm p-2 ml-1 mr-1 -mt-1 mb-3  ">
                             <div className="flex justify-between">
                                 <h6 className="text-slate-200 text-left p-1 mb-5 ">Search results</h6>
 
@@ -70,11 +70,13 @@ export default function ContactList(){
                } 
              
                 
-               
+               <div className="p-1 ">
 
                <h6 className="text-slate-200 text-left p-1">Friends</h6>
                {loading?<LoadingComponent/>: contacts.length === 0 ?<EmptyContactComponent/>:contacts.map((data)=>{<ContactButton data={data}/>})}
             
+               </div>
+
         </div>
     )
 }

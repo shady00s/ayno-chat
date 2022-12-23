@@ -14,8 +14,6 @@ export default function IntroScreen(){
         {/* intro container */}
 
         <div className="w-full h-intro   xl:h-screen xl:w-1/2  animate-changeColor bg-400% bg-gradient"> 
-            <img src="/logo.png" className="p-2 mt-5"  alt="logo"/>
-
             <div className="relative m-auto top-1/4 p-3">
             <h1 className=" text-slate-200 text-3xl pb-2">
                 Chat any one with no information needed.
@@ -27,6 +25,7 @@ export default function IntroScreen(){
         </div>
 
         {/* registration and sign in main container  */}
+        
         <div className="p-3 xl:w-1/2 flex flex-col justify-center items-center  overflow-none  relative   max-w-lg w-screen m-auto   " >
 
             {/* sign in container */}

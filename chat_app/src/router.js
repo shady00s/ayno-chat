@@ -10,7 +10,7 @@ const AppRouters = () => {
             element: <IntroScreen />
         },
         {
-            path:"/ayno/home",
+            path:"/ayno-chat/home",
             element:<HomeScreen/>
         }
     ])

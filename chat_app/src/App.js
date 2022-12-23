@@ -4,10 +4,13 @@ import AppRouters from './router';
 import { RouterProvider } from 'react-router-dom';
 function App() {
   return (
-    <HelmetProvider>
+    <>
+      <HelmetProvider>
 
       <AppRouters/>
-    </HelmetProvider>
+      </HelmetProvider>
+    </>
+    
    
   );
 }

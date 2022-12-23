@@ -8,7 +8,7 @@ export default function TextInputContainer(){
     const [activated,setActivated] = useState(false)
     const [textVal,setTextVal] = useState('')
     return(
-        <div className=" justify-between items-center  sticky bottom-0 p-1 w-full h-10 bg-background flex">
+        <div className=" justify-between items-center border-2 border-gray-800 rounded-md sticky bottom-0 pl-4 pr-4 w-full  bg-background flex">
             <input autoFocus onChange={(val)=>{setTextVal(val.target.value)}} value={textVal} placeholder="Write your text here" className="border-r-2 border-r-slate-700  p-1 w-9/12 bg-transparent text-gray-200" type={'text'}/>
 
 

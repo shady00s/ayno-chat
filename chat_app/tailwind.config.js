@@ -38,7 +38,9 @@ module.exports = {
       },
       height:{
         'intro':'28rem',
-        'registration':'95vh'
+        'registration':'95vh',
+        'home-screen':'93vh',
+        'home-content':'91%'
       }
     },
     
