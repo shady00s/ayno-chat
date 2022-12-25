@@ -18,7 +18,7 @@ class StorageManager{
                 sessionStorage.removeItem( userStorageName )
                 //add data to sessionStorage
                 sessionStorage.setItem(userStorageName, JSON.stringify(userData))
-    
+                break;
             default:
                 break;
         }

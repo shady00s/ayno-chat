@@ -1,6 +1,6 @@
-import { createBrowserRouter,Router,RouterProvider } from "react-router-dom"
-import HomeScreen from './home/screen/homeScreen';
-import IntroScreen from './registration/intro_screen';
+import { createBrowserRouter,RouterProvider } from "react-router-dom"
+import HomeScreen from './home/screen/home-screen';
+import IntroScreen from './registration/screens/intro_screen';
 const AppRouters = () => {
 
     const router = createBrowserRouter([
@@ -11,7 +11,7 @@ const AppRouters = () => {
         },
         {
             path:"/ayno-chat/home",
-            element:<HomeScreen/>
+            element:<HomeScreen />
         }
     ])
     return (

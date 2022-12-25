@@ -1,6 +1,6 @@
-import SubmitButton from "./components/submit_button"
-import RegistrationComponent from "./components/registeration_component"
-import SignInComponent from "./components/signin_component"
+import SubmitButton from "../components/submit_button"
+import RegistrationComponent from "../components/registeration_component"
+import SignInComponent from "../components/signin_component"
 import { useState } from 'react';
 
 export default function IntroScreen(){
@@ -10,10 +10,11 @@ export default function IntroScreen(){
     const [close,setClose]=useState(false) 
     return(<>
     <div className="bg-slate-800 xl:overflow-hidden    flex flex-col w-full flex-wrap  xl:flex-row">
-
         {/* intro container */}
 
         <div className="w-full h-intro   xl:h-screen xl:w-1/2  animate-changeColor bg-400% bg-gradient"> 
+        <img alt="ayno logo" src={"./images/logo.png"} className=" w-40 p-3"/>
+
             <div className="relative m-auto top-1/4 p-3">
             <h1 className=" text-slate-200 text-3xl pb-2">
                 Chat any one with no information needed.

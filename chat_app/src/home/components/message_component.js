@@ -6,13 +6,15 @@ import StorageManager from './../../utils/storage_manager';
 
 export default function MessageComponent(){
     const [chat,setChat]=useState([])
-
     useEffect(()=>{
-       let user_id = StorageManager.getDataFromStorage()
-        ApiCall.getUserChatMessages(user_id.name)
+        console.log("message component called")
+
+    //    let user_id = StorageManager.getDataFromStorage()
+    //     ApiCall.getUserChatMessages(user_id.name)
+
     },[])
     return(
-        <div className='ml-2 flex w-5/6 flex-col md:w-6/12 h-5/6 bg-subBackGround overflow-y-auto md:h-home-content'>
+        <div className='sm:h-home-screen overflow-scroll md:w-5/12 w-5/6  h-mobile-height'>
             <ChatMessageComponent isUser={false}/>
             <ChatMessageComponent isUser={true}/>
 

@@ -29,6 +29,7 @@ module.exports = {
 
       },
       colors:{
+        'theme':'rgba(8,8,8,0.7)',
         'subBackGround':'#1C242D',
         'background':'#1A1E23',
         'black':'#030405',
@@ -39,8 +40,13 @@ module.exports = {
       height:{
         'intro':'28rem',
         'registration':'95vh',
-        'home-screen':'93vh',
-        'home-content':'91%'
+        'home-screen':'89vh',
+        'home-content':'91%',
+        'mobile-height':'80vh'
+      },
+      width:{
+        'personal-info':'20rem',
+        'avatar-info':'32rem',
       }
     },
     

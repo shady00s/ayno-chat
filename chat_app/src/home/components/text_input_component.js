@@ -2,7 +2,7 @@ import EmojiPicker from "emoji-picker-react";
 import { useState } from "react";
 import { Smile } from "react-feather";
 import IconButtonWithText from "./icon_button_with_text";
-
+import { Send } from "react-feather";
 export default function TextInputContainer(){
 
     const [activated,setActivated] = useState(false)
@@ -14,7 +14,7 @@ export default function TextInputContainer(){
 
                 {/* emoji picker container */}
               { activated===true ?  <div  className="absolute bottom-10   right-2">
-                    <EmojiPicker lazyLoadEmojis={true} theme="dark" onEmojiClick={(emoji)=>{
+                    <EmojiPicker lazyLoadEmojis={false} theme="dark" onEmojiClick={(emoji)=>{
                         
 
                         setTextVal (textVal+emoji.emoji)
@@ -22,7 +22,7 @@ export default function TextInputContainer(){
                 </div> : null }
             {/* emoji button */}
             <Smile  color="#505045"  className="cursor-pointer ml-2" onClick={()=>{setActivated(!activated)}}/>
-            <IconButtonWithText name="Send" icon="send" isActive={true}/>
+            <IconButtonWithText name="Send" icon={Send} isActive={true}/>
             
         </div>
     )
