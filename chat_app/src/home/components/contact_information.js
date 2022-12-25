@@ -11,7 +11,7 @@ const ContactInformation = (props)=>{
         if(width >= 782 ) setIsMobile(false)
     },[props.isMobile,width])
 
-    const mobileConfigurationStyle ="absolute bg-theme w-full h-full transition-colors  top-0 left-0 overflow-y-auto"
+    const mobileConfigurationStyle ="absolute bg-theme w-full h-full transition-colors  z-50  top-0 left-0 overflow-y-auto"
     const mobileInfoContainerStyle = "w-0 h-0 -translate-x-full transition-transform invisible"
     return(
         <>
@@ -20,10 +20,10 @@ const ContactInformation = (props)=>{
                 setIsMobile(false)
             }
             return
-            }} className={isMobile? mobileConfigurationStyle :"w-3/12 pl-4 pr-4 transition-colors"}>
+            }} className={isMobile? mobileConfigurationStyle :"w-3/12 pl-4 pr-4  transition-colors"}>
 
         
-        <div  className={ width <=782? `flex flex-col items-center justify-start transition-all  ${isMobile?"absolute top-0 w-4/5 md:w-2/5  bg-background right-0 h-full translate-x-0" :mobileInfoContainerStyle} `:"w-full visible h-full"}>
+        <div  className={ width <=782? ` flex flex-col items-center justify-start transition-all  ${isMobile?"absolute top-0 w-4/5 md:w-2/5  bg-background right-0 h-full translate-x-0" :mobileInfoContainerStyle} `:"w-full visible h-full"}>
 
             <div className={`flex flex-col justify-start items-center p-4 border-b-2 border-b-slate-800 w-full `}>
                 <img  src={"https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/3.png"} className={"w-28 rounded-full"}/>
