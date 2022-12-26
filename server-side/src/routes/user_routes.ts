@@ -3,6 +3,7 @@ import userRegistrationController from "../controller/user_controller/registrati
 import getUserFriendsController from "../controller/user_controller/friends";
 import search_user from './../controller/user_controller/search_user';
 import userLoginController from './../controller/user_controller/login';
+import postAddFriendController from "../controller/user_controller/add_friends";
 const userRouter = express.Router()
 
 userRouter.post('/register',userRegistrationController)
@@ -10,6 +11,8 @@ userRouter.post('/register',userRegistrationController)
 userRouter.post('/login',userLoginController)
 
 userRouter.get('/friends',getUserFriendsController)
+
+userRouter.post('/add-friend',postAddFriendController)
 
 userRouter.post('/')
 
