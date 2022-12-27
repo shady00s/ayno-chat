@@ -11,7 +11,7 @@ interface conversationModel{
     conversation_id:mongoose.Types.ObjectId,
     conversation_name:String,
     messages:Array<messageModel>,
-    members_ids:mongoose.Types.ObjectId,
+    members_ids:Array<mongoose.Types.ObjectId>,
 }
 const conversation_schema = new mongoose.Schema<conversationModel>({
     conversation_id:{type:mongoose.Schema.Types.ObjectId},
@@ -24,8 +24,8 @@ const conversation_schema = new mongoose.Schema<conversationModel>({
         date:{type:Date,default:Date.now()}
     }
     ],
-    members_ids:{type:mongoose.Schema.Types.ObjectId,required:true,ref:"UsersModel"},
+    members_ids:[{type:mongoose.Schema.Types.ObjectId,required:true,ref:"UsersModel"}],
     
 })
 
-export default mongoose.model('conversationModel',conversation_schema)
+export default mongoose.model('conversation_collection',conversation_schema)

@@ -7,6 +7,6 @@ const chatRouter = express.Router()
 
 chatRouter.post('/:user_name',getChatMessages )
 
-chatRouter.post('/:user_name/send-message',postMessageController)
+chatRouter.post('/send-message',postMessageController)
 
 export default chatRouter
