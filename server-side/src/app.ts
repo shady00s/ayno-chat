@@ -4,7 +4,11 @@ import userRouter from "./routes/user_routes";
 import mongoose from 'mongoose';
 import * as dotenv from 'dotenv' ;
 import chatRouter from './routes/chat_routes';
-
+import MessageSocket from './sockets/message_socket';
+import http from 'http'
+import { Http2SecureServer } from "http2";
+import { Server } from "socket.io";
+import SocketManager from "./sockets/message_socket";
 dotenv.config()
 const app = express()
 
@@ -27,20 +31,24 @@ app.use('/chat',chatRouter)
 
 
 
-app.listen(8080,()=>{
-
-   
-    Logining.info("connected to port 8080")
 
 
-})
-
+       
 
 try {
     mongoose.connect(`mongodb+srv://${process.env.DATABASE_USER_NAME}:${process.env.DATABASE_PASSWORD}@chatdatabase.fnneyaw.mongodb.net/
     `,{retryWrites:true,w:'majority'}).then((val)=>{
         Logining.info('connected to mongo database '+val.connect.name)
+
+       const server:http.Server = app.listen(8080,()=>{
+            Logining.info("connected to port 8080")
+        })
+
+      // SocketManager.connect(server)
+       SocketManager.messageSocket('hell','12345',server)
     })
+
+    
     mongoose.set('strictQuery',false)
 } catch (error) {
  Logining.error('faild to connect to mongo database'+error)   

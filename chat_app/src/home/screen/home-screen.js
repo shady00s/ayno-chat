@@ -5,8 +5,8 @@ import MessageComponent from "../components/message_component";
 import { Helmet } from "react-helmet-async";
 import useWindowDimensions from "../../utils/window_size";
 import ContactInformation from "../components/contact_information"
-import { Menu } from "react-feather";
 import SettingsComponent from './../components/settings_component';
+
 
 export default function HomeScreen(){
     const {width,height} = useWindowDimensions()
@@ -14,7 +14,7 @@ export default function HomeScreen(){
 
     const [contactInfoMobile,setContactInfoMobile]=useState(false)
     
-   
+ 
     return(
         <>
              <main className=' bg-background'>

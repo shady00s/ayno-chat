@@ -1,17 +1,17 @@
 import { Request,Response } from "express"
-import user_model from "../../model/user_model";
 import conversation_model from "../../model/conversation_model";
+import SocketManager from './../../sockets/message_socket';
 
 const postMessageController = (req:Request,res:Response)=>{
-    const resiver_id = req.params.user_name;
-    const sender_id = req.query.sender_id;
+    const sender_id = req.body.sender_id;
+    const conversation_id = req.body.conversation_id;
+    const message_content = req.body.message_content;
 
     try {
-      
-    user_model.findById(sender_id).then(sendResult=>{
-          sendResult.conversations
+
+    conversation_model.findOneAndUpdate({conversation_id:conversation_id},{$push:{messages:{message:message_content,sender_id:sender_id,}}},{new:true}).then(results=>{
+        res.status(201).json({message:"succsses",body:results})
     })
-  
     
 
     

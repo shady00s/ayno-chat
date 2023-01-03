@@ -76,7 +76,7 @@ const postAddFriendController = async(req:Request,res:Response,next:NextFunction
         
     } catch (error) {
        
-
+        Logining.error("There is an error")
     }
    
      

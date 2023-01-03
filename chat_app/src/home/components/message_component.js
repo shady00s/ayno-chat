@@ -1,33 +1,64 @@
-import ChatMessageComponent from './chat_message_component';
-import TextInputContainer from './text_input_component';
-import { useState, useEffect } from 'react';
+import ChatMessageComponent from "./chat_message_component"
+import ChatMessageInputComponent from './chat_message_input_component';
+import { useState, useEffect, useRef } from 'react';
 import ApiCall from './../api_call';
 import StorageManager from './../../utils/storage_manager';
+import SocketClientManager from './../../sockets/message_socket';
+import LoadingComponent from './../../reusable-components/loading_component';
 
-export default function MessageComponent(){
-    const [chat,setChat]=useState([])
-    useEffect(()=>{
-        console.log("message component called")
+const socketRef = SocketClientManager.socketInit()
 
-    //    let user_id = StorageManager.getDataFromStorage()
-    //     ApiCall.getUserChatMessages(user_id.name)
+export default function MessageComponent() {
 
-    },[])
-    return(
-        <div className='sm:h-home-screen overflow-scroll md:w-5/12 w-5/6  h-mobile-height'>
-            <ChatMessageComponent isUser={false}/>
-            <ChatMessageComponent isUser={true}/>
+    const scrollRef = useRef(null)
+    const [chat, setChat] = useState([])
+    let user_id = StorageManager.getDataFromStorage()
+    const [socket, setSocket] = useState(null)
+    const [text, setText] = useState("")
+    useEffect(() => {
+        socketRef.emit("send-message", text)
 
-            <ChatMessageComponent isUser={false}/>
-            <ChatMessageComponent isUser={true}/> 
-            <ChatMessageComponent isUser={true}/>
-            <ChatMessageComponent isUser={true}/>
-            <ChatMessageComponent isUser={true}/>
-            <ChatMessageComponent isUser={true}/>
-            <ChatMessageComponent isUser={true}/>
-            <ChatMessageComponent isUser={true}/>
+        if (text !== "") {
+            socketRef.on("recive-message", (message) => {
+                //add new message that comes from the socket to previous messages
+                setSocket(() => socketRef)
 
-            <TextInputContainer/>
+                if (message.body !== null) {
+                  
+                    setChat((prev)=>[...prev,message])
+                    scrollRef.current.scrollIntoView({behavior:"smooth"})
+
+                }
+            })
+        }
+
+
+    }, [text, socketRef])
+
+    useEffect(() => {
+
+        ApiCall.getUserChatMessages(user_id.id, "63aaee37181289caad5cc5b4").then(messages => {
+            setChat(() => messages.data.conversations.messages)
+        })
+
+        scrollRef.current.scrollIntoView({behavior:"smooth"})
+
+
+    }, [])
+    return (
+        <div  className='sm:h-home-screen flex flex-col relative overflow-scroll md:w-5/12 w-5/6  h-mobile-height'>
+           {chat.length !==0 ? 
+           chat.map(messages => <ChatMessageComponent key={Math.random().toString()} message={messages.message} isUser={messages.sender_id == user_id.id ? true : false} />) 
+           :<div className="w-full h-full justify-center items-center"><LoadingComponent/></div>} 
+                       <div ref={scrollRef}/>
+
+            <div className='sticky bottom-0 w-full'>
+
+                <ChatMessageInputComponent socketMessage={(value) => { setText(value) }} conversation_id="63ab380966640e1bdf353f36" friend_id="63aaee37181289caad5cc5b4" />
+               
+            
+            </div>
+            
         </div>
     )
 }

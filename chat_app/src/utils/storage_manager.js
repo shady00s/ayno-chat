@@ -24,9 +24,8 @@ class StorageManager{
         }
     }
 
-    static getDataFromStorage =()=>{
+    static getDataFromStorage = ()=>{
         //search in local storage
-
         let userDataFromLocalStorage = JSON.parse(localStorage.getItem(userStorageName)) 
         let userDataFromSessionStorage = JSON.parse(sessionStorage.getItem(userStorageName)) 
             if(userDataFromLocalStorage !== null){

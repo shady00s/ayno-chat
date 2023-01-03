@@ -34,23 +34,25 @@ export default function ContactList(props){
         // })
     }
 
+    let userData = StorageManager.getDataFromStorage()
 
     useEffect(()=>{
-        console.log("contact component called")
 
-        // let userData = StorageManager.getDataFromStorage()
      
-        // setLoading(true)
-        // if(userData !== {}){
-          
-        //     ApiCall.getFriendsList(userData.id).then(value=>{
-        //         setLoading(false)
-                
-        //         setContacts(()=>value.data.body.friends)
-                
-        //     })  
-        // }
-        //     console.log(searchList)
+        if(userData !== {}){
+            setLoading(true)
+
+            ApiCall.getFriendsList(userData.id).then(value=>{
+                setLoading(false)
+                   
+                setContacts(()=>value.data.body.friends)
+
+            })  
+
+        }else{
+            setContacts([])
+        }
+
         
     },[])
 
@@ -76,8 +78,8 @@ export default function ContactList(props){
                <div className="p-1 ">
 
                <h6 className="text-slate-200 text-left p-1">{props.isGroup?"Groups":"Friends"}</h6>
-               {loading?<LoadingComponent/>: contacts.length === 0 ?<EmptyContactComponent/>:contacts.map((data)=>{<ContactButton data={data}/>})}
-            
+               {loading?<LoadingComponent/>: contacts.length !== 0 ?contacts.map((data)=><ContactButton key={data} data={{name:data}}/>):<EmptyContactComponent/>}
+               
                </div>
 
         </div>

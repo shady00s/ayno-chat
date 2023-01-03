@@ -18,9 +18,12 @@ class ApiCall{
 
      
     }
-    static getUserChatMessages = (contactName)=>{
+    static getUserChatMessages = (userID,friendId)=>{
         try {
-            let result = axiosInestance.post(`/chat/${contactName}`).then(data=>{
+            let result = axiosInestance.post(`/chat/messages`,{},{params:{
+                user_id:userID, 
+                friend_id:friendId
+            }}).then(data=>{
                return data
             } )
             return result
@@ -64,6 +67,14 @@ class ApiCall{
             console.log(error)
         }
 
+    }
+    static postUserMessage = (data)=>{
+        try{
+       const message = axiosInestance.post('/chat/send-message/',data).then(value=>value)
+        return message
+    } catch (error) {
+        console.log(error)
+    }
     }
 }
 

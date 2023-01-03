@@ -5,7 +5,7 @@ import postMessageController from '../controller/chat_controller/send_messages';
 const chatRouter = express.Router()
 
 
-chatRouter.post('/:user_name',getChatMessages )
+chatRouter.post('/messages',getChatMessages )
 
 chatRouter.post('/send-message',postMessageController)
 

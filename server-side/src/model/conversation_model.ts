@@ -1,18 +1,7 @@
 import mongoose from 'mongoose';
+import { conversationModel } from '../types/message_types';
 
-interface messageModel{
-    message:String,
-    sender_id:mongoose.Types.ObjectId,
-    seen:Boolean,
-    delivered:Boolean,
-    date:Date
-}
-interface conversationModel{
-    conversation_id:mongoose.Types.ObjectId,
-    conversation_name:String,
-    messages:Array<messageModel>,
-    members_ids:Array<mongoose.Types.ObjectId>,
-}
+
 const conversation_schema = new mongoose.Schema<conversationModel>({
     conversation_id:{type:mongoose.Schema.Types.ObjectId},
     conversation_name:{type:String,required:true},

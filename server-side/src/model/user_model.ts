@@ -1,13 +1,6 @@
 import mongoose from 'mongoose';
+import { userModel } from '../types/user_types';
 
-
-interface userModel{
-    name:String,
-    password:String,
-    profileImagePath:String,
-    conversations:Array<mongoose.Types.ObjectId>,
-    friends:Array<String>,    
-}
 const user_schema = new mongoose.Schema<userModel>({
    name:{type:String,required:true},
    password:{type:String,required:true},
