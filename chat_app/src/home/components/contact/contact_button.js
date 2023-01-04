@@ -7,17 +7,18 @@ export default function ContactButton(props){
         
     },[])
     return(
-        <div className="flex group items-center p-1 relative
-           
-           ml-2 mr-2 mb-2 cursor-pointer border-l-2 bg-subBackGround border-l-slate-800
+        <div className="flex group items-center justify-evenly p-1 w-full transition-colors  mb-2 cursor-pointer border-l-2 bg-subBackGround border-l-slate-800
            rounded-sm hover:bg-slate-800  hover:border-l-slate-700">
+           
             <img alt="user profile"src="https://cdn.pixabay.com/photo/2018/08/28/13/29/avatar-3637561_960_720.png" className="w-7"/>
-            <div className="ml-6 flex flex-col justify-start">   
-                <h3 className="font-sans text-slate-100 text-md text-green-50 w-48 truncate ">{props.data.name}</h3>
+            <div className="ml-3 pr-1 w-8/12 flex flex-col justify-start">   
+                <h3 className="font-sans text-slate-100 text-md text-green-50  truncate ">{props.data.name}</h3>
 
-                <h3 className="font-sans text-grey w-2/3 truncate">Tasdfasdfasdfsadfsdfasdfsdfsadfest</h3>
+                <h3 className="font-sans text-grey truncate">Tasdfasdfasdfsadfsdfasdfsdfsadfest</h3>
                 
             </div>
+            
+           
 
             {/* message number component */}
             <div className='flex justify-center items-center flex-col' >

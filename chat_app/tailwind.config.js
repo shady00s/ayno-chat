@@ -30,8 +30,8 @@ module.exports = {
       },
       colors:{
         'theme':'rgba(8,8,8,0.7)',
-        'subBackGround':'#1C242D',
-        'background':'#1A1E23',
+        'subBackGround':'rgba(53,58,65,0.14)',
+        'background':'#0E1317',
         'black':'#030405',
         'grey':'#505045',
         'green':'#3C8C47',

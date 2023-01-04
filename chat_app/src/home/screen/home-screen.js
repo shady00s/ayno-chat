@@ -17,11 +17,12 @@ export default function HomeScreen(){
  
     return(
         <>
-             <main className=' bg-background'>
+             <main className='w-full bg-background'>
             
                 <Helmet>
                     <title>Ayno Chat - Home</title>
-                    <style>{'body { background-color: #1A1E23; }'}</style>
+                    <style>{'body { background-color: #0E1317; }'}</style>
+
                     <meta name="viewport" content="width=device-width,initial-scale=1"></meta>
                 </Helmet>
                 {/* top bar */}
@@ -29,7 +30,7 @@ export default function HomeScreen(){
     
                     <img alt="ayno logo" src={"./images/logo.png"} className=" w-40 p-3"/>
                   {
-                   width <= 1080?
+                   width <= 1070?
                 <div onClick={()=>{setContactInfoMobile(!contactInfoMobile)
                     }} className="flex p-2 items-center cursor-pointer">
                     <h1 className="text-slate-300 mr-2">contact info</h1>
@@ -38,7 +39,7 @@ export default function HomeScreen(){
                  :null}
                 </div>
                     
-                <div className="flex flex-wrap items-stretch justify-center ">
+                <div className="flex w-full items-stretch justify-start bg-background">
                     <Sidebar onClick={(event)=>{
                         setMenuSelected(()=>event.target.id)
                             console.log(event.target.id)
@@ -46,7 +47,7 @@ export default function HomeScreen(){
 
                         
                        {width >= 768 ?
-                            <ContactList isGroup={menuSelected === "Groups"?true:false}/>
+                            <ContactList />
                          : null} 
 
                         {menuSelected === "Settings"? <SettingsComponent/>:null}

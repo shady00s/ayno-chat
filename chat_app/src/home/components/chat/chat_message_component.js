@@ -1,40 +1,34 @@
 import { CheckCircle } from "react-feather";
+import StorageManager from "../../../utils/storage_manager";
 
 export default function ChatMessageComponent(props){
 
-    const guestMainContainerStyle = ' bg-sky-900 flex justify-center items-center  min-h-min rounded-lg pl-2 pr-2 mr-2';
-    const guestMainTitleContainerStyle = 'bg-contain h-12  w-32 pr-2 mr-2 '
+    const guestMainContainerStyle = ' bg-[#1E2329]  mr-2';
+    const ownerMainContainerStyle = 'bg-[#008FC6] float-right ml-2 ';
+    const userProfilePath = StorageManager.getDataFromStorage().profilePath
 
-    const ownerMainContainerStyle = 'bg-cyan-900 flex justify-center items-center   min-h-min rounded-lg pl-2 pr-2 ml-2';
-    const ownerTitleContainerStyle = 'bg-contain h-12 w-32 pl-2 ml-2';
-
-    const mainContainerDirection = 'flex-row-reverse'
     return (
-        <div  className={` border-gray-800 p-3  flex flex-col justify-between ${props.isUser===true? "items-start":"items-end"}`}>
+        <>      
 
-                <div   className={ `  flex   ${props.isUser !== true ? mainContainerDirection:null } p-1  justify-center items-center `}>
-                    {/* chat text container */}
-                    <div  className={ `${props.isUser === true ? ownerMainContainerStyle : guestMainContainerStyle}  relative pr-6`}>
+                   {/* main container */}
+                   <div className="w-full  mb-3 pb-4 border-b-2 p-2  border-b-[rgba(70,70,70,0.1)]">
+                    <div className={`flex ${props.isUser ? "float-right":"float-left"} items-end`}>
+                        {/* profile image */}
+                        <img alt="user profile" src={props.isUser?userProfilePath:props.message.profileImagePath} className="h-7 w-7 p-1 rounded-full"/>
+                    {/* text container */}
+                    <div  style={{maxWidth:"23rem" ,minWidth:"2rem",overflowWrap:"break-word"}} className={`${props.isUser?guestMainContainerStyle:ownerMainContainerStyle} relative rounded-md p-1  inline-block`}>
+                        <p className=" text-white pl-2 pr-2">{props.message.message}</p>  
+                        {/* seen container */}
+                        <div className=" absolute right-0 flex justify-center items-center">
+                            <span className="mr-2 text-slate-700 text-xs">seen</span>
+                            <CheckCircle className="w-2"  color={"#ffffff"}/>   
+                        </div>
 
-                    {/* user container image and name container */}
-
-
-                    <span className=" text-white p-2 leading-relaxed text-start">
-                        {props.message}
-                 
-                    </span>
-                    <CheckCircle className="w-2 absolute right-2 bottom-1"  color={"#ffffff"}/>            
+                        </div>
+                   
                     </div>
-                    <div style={{width:"25px"}} className= {` ${props.isUser === true ? ownerTitleContainerStyle : guestMainTitleContainerStyle} flex justify-center items-center`}>
-                    <img alt="user profile" src="https://cdn.pixabay.com/photo/2018/08/28/13/29/avatar-3637561_960_720.png" className="w-full"/>
-
-                    </div>
-
-                </div>
-
-                <div style={{backgroundColor:"rgba(70,70,70,0.1)" , height:"2px",}} className= "m-3 w-full ml-2"></div>
-
-        </div>
+                   </div>   
+        </>
         
     )
 }

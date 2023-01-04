@@ -12,7 +12,6 @@ const SignInComponent = ()=>{
     const navigate = useNavigate()
 
     const sendLoginData = ()=>{
-        console.log({user_name:userName,user_password:password})
         ApiCall.getUserLoginData({user_name:userName,user_password:password}).then(loginData=>{
             if(loginData.status===200){
                 if(rememberMe){

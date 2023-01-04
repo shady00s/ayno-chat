@@ -24,9 +24,9 @@ export default function MessageComponent() {
                 setSocket(() => socketRef)
 
                 if (message.body !== null) {
-                  
-                    setChat((prev)=>[...prev,message])
-                    scrollRef.current.scrollIntoView({behavior:"smooth"})
+
+                    setChat((prev) => [...prev, message])
+                    scrollRef.current.scrollIntoView({ behavior: "smooth" })
 
                 }
             })
@@ -41,24 +41,25 @@ export default function MessageComponent() {
             setChat(() => messages.data.conversations.messages)
         })
 
-        scrollRef.current.scrollIntoView({behavior:"smooth"})
+        scrollRef.current.scrollIntoView({ behavior: "smooth" })
 
 
     }, [])
     return (
-        <div  className='sm:h-home-screen flex flex-col relative overflow-scroll md:w-[45%] w-5/6  h-mobile-height'>
-           {chat.length !==0 ? 
-           chat.map(messages => <ChatMessageComponent key={Math.random().toString()} message={messages.message} isUser={messages.sender_id == user_id.id ? true : false} />) 
-           :<div className="w-full h-full justify-center items-center"><LoadingComponent/></div>} 
-                       <div ref={scrollRef}/>
+        <div className='sm:h-home-screen flex flex-col   overflow-y-scroll overflow-x-hidden md:w-[45%] w-5/6  h-mobile-height'>
+            {chat.length !== 0 ? 
+
+                chat.map(messages => <ChatMessageComponent key={Math.random().toString()} message={messages} isUser={messages.sender_id == user_id.id ? true : false} />)
+                : <div className="w-full h-full justify-center items-center"><LoadingComponent /></div>}
+            <div ref={scrollRef} />
+            <ChatMessageInputComponent socketMessage={(value) => { setText(value) }} conversation_id="63ab380966640e1bdf353f36" friend_id="63aaee37181289caad5cc5b4" />
 
             <div className='sticky bottom-0 w-full'>
 
-                <ChatMessageInputComponent socketMessage={(value) => { setText(value) }} conversation_id="63ab380966640e1bdf353f36" friend_id="63aaee37181289caad5cc5b4" />
-               
-            
+
+
             </div>
-            
+
         </div>
     )
 }
