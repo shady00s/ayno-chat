@@ -50,7 +50,7 @@ const SelectAvatarComponent = () => {
 
 
                 {avatar.length === 0 ? <LoadingComponent title={"Loading Avatars...."} /> : avatar.map((img, index) =>
-                    <img alt="avatars" onClick={(target) => {
+                    <img alt="avatars" loading='lazy' onClick={(target) => {
                         setSelectAvatar({ name: target.target.getAttribute('src'), index: index })
                     }} key={img + index} className={`w-12 p-1 ${selectAvatar.index === index ? "rounded-md border-2 border-teal-400 transition-all" : "border-transparent transition-all"}`} src={img} />
 

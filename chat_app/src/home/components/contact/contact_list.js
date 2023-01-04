@@ -1,11 +1,11 @@
 import ContactButton from "./contact_button"
 import EmptyContactComponent from "./empty_contacts_component";
-import StorageManager from "../../utils/storage_manager";
-import SearchComponent from "./search_component";
+import StorageManager from "../../../utils/storage_manager";
+import SearchComponent from "../search/search_component";
 import { useEffect, useState } from 'react';
-import ApiCall from './../api_call';
-import LoadingComponent from './../../reusable-components/loading_component';
-import NewFirendComponent from "./new_friend_component";
+import ApiCall from '../../api_call';
+import LoadingComponent from '../../../reusable-components/loading_component';
+import NewFirendComponent from "../new_friend_component";
 import { X } from "react-feather";
 
 export default function ContactList(props){
@@ -23,15 +23,15 @@ export default function ContactList(props){
     const getSearchResult = ()=>{
 
 
-        // ApiCall.getSearchData(search).then(value=>{
-        //     if(value.status === 200){
-        //         setSearchList((oldData)=>[...oldData,value.data.body])
+        ApiCall.getSearchData(search).then(value=>{
+            if(value.status === 200){
+                setSearchList((oldData)=>[...oldData,value.data.body])
                 
-        //     }
-        //     else if(value.status === 204){
-        //         alert('There is no user with name ' +search)
-        //     }
-        // })
+            }
+            else if(value.status === 204){
+                alert('There is no user with name ' +search)
+            }
+        })
     }
 
     let userData = StorageManager.getDataFromStorage()
@@ -58,7 +58,7 @@ export default function ContactList(props){
 
  
     return(
-        <div style={{borderRight:"3px solid rgba(60, 67, 60, 0.167)"}} className="flex flex-col h-home-screen  w-3/12 overflow-y-auto ">
+        <div style={{borderRight:"3px solid rgba(60, 67, 60, 0.167)",maxWidth:"24rem",width:"20rem" ,minWidth:"18rem"}} className="flex flex-col h-home-screen overflow-y-auto ">
             <SearchComponent title={props.isGroup?"Search for groups":"Search for friends"}  onInputClick={()=>{setSearchContainer(true)}} searchSubmit={getSearchResult} searchResult={(value)=>{setSearch(value.target.value)}}/>
                 {/* search result */}
             { searchContainer?

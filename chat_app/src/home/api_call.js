@@ -47,9 +47,9 @@ class ApiCall{
         
     }
 
-    static getUserLoginData = ()=>{
+    static getUserLoginData = (userLoginData)=>{
         try {
-            let userData = axiosInestance.get('/user/login').then(value=>value)
+            let userData = axiosInestance.post('/user/login',userLoginData).then(value=>value)
             return userData
         } catch (error) {
             console.log(error)

@@ -1,11 +1,11 @@
 import EmojiPicker from "emoji-picker-react";
 import { useState,useEffect } from "react";
 import { Smile } from "react-feather";
-import IconButtonWithText from "./icon_button_with_text";
+import IconButtonWithText from "../icon_button_with_text";
 import { Send } from "react-feather";
-import StorageManager from "../../utils/storage_manager";
-import ApiCall from '../api_call';
-import SocketClientManager from './../../sockets/message_socket';
+import StorageManager from "../../../utils/storage_manager";
+import ApiCall from '../../api_call';
+import SocketClientManager from '../../../sockets/message_socket';
 
 export default function ChatMessageInputComponent(props){
 

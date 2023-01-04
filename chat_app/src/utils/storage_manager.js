@@ -40,6 +40,10 @@ class StorageManager{
             }
          
     }
+    static removeUserData = ()=>{
+        localStorage.removeItem(userStorageName)
+        sessionStorage.removeItem(userStorageName)
+    }
 }
 
 export default StorageManager

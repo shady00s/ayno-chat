@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 import { UserX ,UserMinus } from 'react-feather';
-import useWindowDimensions from '../../utils/window_size';
+import useWindowDimensions from '../../../utils/window_size';
 
 const ContactInformation = (props)=>{
     const [isMobile,setIsMobile] = useState(false)
@@ -20,21 +20,25 @@ const ContactInformation = (props)=>{
                 setIsMobile(false)
             }
             return
-            }} className={isMobile? mobileConfigurationStyle :"w-3/12 pl-4 pr-4  transition-colors"}>
+            }} className={isMobile? mobileConfigurationStyle :"w-[16rem] pl-4 pr-4  transition-colors"}>
 
         
         <div  className={ width <=782? ` flex flex-col items-center justify-start transition-all  ${isMobile?"absolute top-0 w-4/5 md:w-2/5  bg-background right-0 h-full translate-x-0" :mobileInfoContainerStyle} `:"w-full visible h-full"}>
 
             <div className={`flex flex-col justify-start items-center p-4 border-b-2 border-b-slate-800 w-full `}>
                 <img  src={"https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/3.png"} className={"w-28 rounded-full"}/>
-                    <h1 className="text-slate-200 m-4 text-md">test name</h1>
+                    <h1 className="text-slate-200 m-4 text-xl">test name</h1>
+                    <div className='flex justify-between w-full'>
+                        <h4 className='text-slate-400'>ID</h4>
+                        <span className='text-slate-200'>12121212122</span>
+                    </div>
                     <span className="text-slate-600">121212 total messages</span>
                 
             </div>
 
             {/* media container */}
             <div className=" w-66 m-auto">
-                <h2 className="text-xl text-white p-3">Media </h2>
+                <h2 className="text-md text-white p-3">Media </h2>
 
                 <div className="flex w-full relative left-3.5 flex-wrap p-1 h-4/5 overflow-y-auto">
 

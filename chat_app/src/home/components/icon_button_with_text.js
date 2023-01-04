@@ -20,7 +20,7 @@ export default function IconButtonWithText(props) {
 
             </div>
 
-            {props.name === ""?<h1  id= {props.id} className={` xl:block p-1 hover:text-gray-100 hidden ${activeIconStyle}`}>{props.name}</h1>:null}
+            <h1  id= {props.id} className={` xl:block p-1 hover:text-gray-100 hidden ${activeIconStyle}`}>{props.name}</h1>
 
         </div>
     )

@@ -1,10 +1,10 @@
 import ChatMessageComponent from "./chat_message_component"
 import ChatMessageInputComponent from './chat_message_input_component';
 import { useState, useEffect, useRef } from 'react';
-import ApiCall from './../api_call';
-import StorageManager from './../../utils/storage_manager';
-import SocketClientManager from './../../sockets/message_socket';
-import LoadingComponent from './../../reusable-components/loading_component';
+import ApiCall from '../../api_call';
+import StorageManager from '../../../utils/storage_manager';
+import SocketClientManager from '../../../sockets/message_socket';
+import LoadingComponent from '../../../reusable-components/loading_component';
 
 const socketRef = SocketClientManager.socketInit()
 
@@ -46,7 +46,7 @@ export default function MessageComponent() {
 
     }, [])
     return (
-        <div  className='sm:h-home-screen flex flex-col relative overflow-scroll md:w-5/12 w-5/6  h-mobile-height'>
+        <div  className='sm:h-home-screen flex flex-col relative overflow-scroll md:w-[45%] w-5/6  h-mobile-height'>
            {chat.length !==0 ? 
            chat.map(messages => <ChatMessageComponent key={Math.random().toString()} message={messages.message} isUser={messages.sender_id == user_id.id ? true : false} />) 
            :<div className="w-full h-full justify-center items-center"><LoadingComponent/></div>} 

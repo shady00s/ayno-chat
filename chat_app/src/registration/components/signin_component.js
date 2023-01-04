@@ -2,16 +2,28 @@ import SubmitButton from "./submit_button"
 import React,{useState,useEffect} from "react"
 import InputTextComponent from './input_text_component';
 import ApiCall from './../../home/api_call';
+import StorageManager from "../../utils/storage_manager";
+import { useNavigate } from 'react-router-dom';
 
 const SignInComponent = ()=>{
     const [rememberMe,setRememberMe]=useState(false)
     const [userName,setUserName]=useState('')
     const [password,setPassword]=useState('')
-   
+    const navigate = useNavigate()
+
     const sendLoginData = ()=>{
-        ApiCall.getUserLoginData().then(loginData=>{
+        console.log({user_name:userName,user_password:password})
+        ApiCall.getUserLoginData({user_name:userName,user_password:password}).then(loginData=>{
             if(loginData.status===200){
-                
+                if(rememberMe){
+                    StorageManager.insertDataToStorage(loginData.data.body,"local")
+
+                }
+                else{
+                    StorageManager.insertDataToStorage(loginData.data.body,"session")
+
+                }
+                navigate("/ayno-chat/home")
             }
         })
     }
@@ -33,7 +45,7 @@ const SignInComponent = ()=>{
                     </div>
                     
                 </form>
-                <SubmitButton className="w-6/12 bg-indigo-800" onClick={()=>{console.log("test1")}} title={"Sign-in"}/>
+                <SubmitButton className="w-6/12 bg-indigo-800" onClick={()=>{sendLoginData()}} title={"Sign-in"}/>
 
             
        

@@ -1,10 +1,10 @@
-import { useState,useEffect } from "react";
+import { useState } from "react";
 import Sidebar from "../components/side_bar";
-import ContactList from "../components/contact_list";
-import MessageComponent from "../components/message_component";
+import ContactList from "../components/contact/contact_list";
+import MessageComponent from "../components/chat/message_component";
 import { Helmet } from "react-helmet-async";
 import useWindowDimensions from "../../utils/window_size";
-import ContactInformation from "../components/contact_information"
+import ContactInformation from "../components/contact/contact_information"
 import SettingsComponent from './../components/settings_component';
 
 
@@ -24,11 +24,12 @@ export default function HomeScreen(){
                     <style>{'body { background-color: #1A1E23; }'}</style>
                     <meta name="viewport" content="width=device-width,initial-scale=1"></meta>
                 </Helmet>
+                {/* top bar */}
                 <div className="h-22 flex justify-between items-center select-none">
     
                     <img alt="ayno logo" src={"./images/logo.png"} className=" w-40 p-3"/>
                   {
-                   width <= 782?
+                   width <= 1080?
                 <div onClick={()=>{setContactInfoMobile(!contactInfoMobile)
                     }} className="flex p-2 items-center cursor-pointer">
                     <h1 className="text-slate-300 mr-2">contact info</h1>
@@ -36,8 +37,8 @@ export default function HomeScreen(){
                 </div>
                  :null}
                 </div>
-    
-                <div className="flex flex-wrap items-stretch justify-items-stretch relative overflow-hidden h-5/6">
+                    
+                <div className="flex flex-wrap items-stretch justify-center ">
                     <Sidebar onClick={(event)=>{
                         setMenuSelected(()=>event.target.id)
                             console.log(event.target.id)
