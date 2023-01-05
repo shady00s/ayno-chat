@@ -17,7 +17,7 @@ export default function HomeScreen(){
  
     return(
         <>
-             <main className='w-full bg-background'>
+             <main className='w-full bg-background h-screen flex flex-col'>
             
                 <Helmet>
                     <title>Ayno Chat - Home</title>
@@ -26,7 +26,7 @@ export default function HomeScreen(){
                     <meta name="viewport" content="width=device-width,initial-scale=1"></meta>
                 </Helmet>
                 {/* top bar */}
-                <div className="h-22 flex justify-between items-center select-none">
+                <div className="h-12 flex justify-between items-center select-none">
     
                     <img alt="ayno logo" src={"./images/logo.png"} className=" w-40 p-3"/>
                   {
@@ -39,25 +39,22 @@ export default function HomeScreen(){
                  :null}
                 </div>
                     
-                <div className="flex w-full items-stretch justify-start bg-background">
+                <section className="flex w-full h-full items-stretch justify-start bg-background overflow-scroll">
                     <Sidebar onClick={(event)=>{
                         setMenuSelected(()=>event.target.id)
                             console.log(event.target.id)
                         }}/>
 
-                        
-                       {width >= 768 ?
-                            <ContactList />
-                         : null} 
+                            {/* <ContactList isOpened={menuSelected === "Contacts"? true:false} isMobile={width >= 768 ? true:false}/> */}
 
                         {menuSelected === "Settings"? <SettingsComponent/>:null}
                         
                     <MessageComponent />       
-                     <ContactInformation  isMobile={ contactInfoMobile}/>
+                     {/* <ContactInformation  isMobile={ contactInfoMobile}/> */}
                          
                             
                             
-                </div>
+                </section>
     
             </main>
         </>
