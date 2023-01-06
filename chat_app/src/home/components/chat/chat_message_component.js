@@ -17,7 +17,7 @@ export default function ChatMessageComponent(props){
                         <img alt="user profile" src={props.isUser?userProfilePath:props.message.profileImagePath} className="h-7 w-7 p-1 rounded-full"/>
                     {/* text container */}
                     <div  style={{maxWidth:"23rem" ,minWidth:"2rem",overflowWrap:"break-word"}} className={`${props.isUser?guestMainContainerStyle:ownerMainContainerStyle} relative rounded-md p-1  inline-block`}>
-                        <p className=" text-white pl-2 pr-2">{props.message.message}</p>  
+                        <p className=" text-slate-200 font-normal pl-2 pr-2">{props.message.message}</p>  
                         {/* seen container */}
                         <div className=" absolute right-0 flex justify-center items-center">
                             <span className="mr-2 text-slate-700 text-xs">seen</span>

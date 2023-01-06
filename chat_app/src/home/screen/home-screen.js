@@ -17,11 +17,11 @@ export default function HomeScreen(){
  
     return(
         <>
-             <main className='w-full bg-background h-screen flex flex-col'>
+             <main className='w-full bg-background h-screen overflow-x-hidden relative flex flex-col'>
             
                 <Helmet>
                     <title>Ayno Chat - Home</title>
-                    <style>{'body { background-color: #0E1317; }'}</style>
+                    <style>{'body { background-color: #101516; }'}</style>
 
                     <meta name="viewport" content="width=device-width,initial-scale=1"></meta>
                 </Helmet>
@@ -39,18 +39,18 @@ export default function HomeScreen(){
                  :null}
                 </div>
                     
-                <section className="flex w-full h-full items-stretch justify-start bg-background overflow-scroll">
+                <section className="flex w-full h-full items-stretch justify-start bg-background  overflow-y-scroll">
                     <Sidebar onClick={(event)=>{
                         setMenuSelected(()=>event.target.id)
                             console.log(event.target.id)
                         }}/>
 
-                            {/* <ContactList isOpened={menuSelected === "Contacts"? true:false} isMobile={width >= 768 ? true:false}/> */}
+                            <ContactList isOpened={menuSelected === "Contacts"? true:false} isMobile={width >= 648 ? true:false}/>
 
                         {menuSelected === "Settings"? <SettingsComponent/>:null}
                         
                     <MessageComponent />       
-                     {/* <ContactInformation  isMobile={ contactInfoMobile}/> */}
+                     <ContactInformation  isMobile={ contactInfoMobile}/>
                          
                             
                             

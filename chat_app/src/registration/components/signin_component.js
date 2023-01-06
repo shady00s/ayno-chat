@@ -44,6 +44,10 @@ const SignInComponent = ()=>{
                     </div>
                     
                 </form>
+
+                {/* register link */}
+
+                <span className="text-slate-400 p-4">Don't have profile?  <span className="text-orange-300 cursor-pointer ">Register</span></span>
                 <SubmitButton className="w-6/12 bg-indigo-800" onClick={()=>{sendLoginData()}} title={"Sign-in"}/>
 
             

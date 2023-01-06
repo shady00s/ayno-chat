@@ -49,7 +49,7 @@ export default function MessageComponent() {
 
     }, [])
     return (
-        <div className=' flex flex-col  h-[90%] overflow-y-scroll overflow-x-hidden md:w-[45%] w-[90%] '>
+        <div className=' flex flex-col  h-[90%] overflow-y-scroll overflow-x-hidden md:w-[50%] w-[95%] '>
             {chat.length !== 0 ? 
 
                 chat.map(messages => <ChatMessageComponent key={Math.random().toString()} message={messages} isUser={messages.sender_id == user_id.id ? true : false} />)

@@ -61,11 +61,11 @@ export default function ContactList(props){
     return(
         // desktop version
         <>{props.isMobile?
-            <div style={{borderRight:"3px solid rgba(60, 67, 60, 0.167)"}} className="flex flex-col h-home-screen overflow-y-auto bg-background">
+            <div style={{borderRight:"3px solid rgba(60, 67, 60, 0.167)",maxWidth:"40%"}} className="flex flex-col h-home-screen overflow-y-auto bg-background transition-transform ease-in-out duration-500">
         <SearchComponent title={"Search for friends"}  onInputClick={()=>{setSearchContainer(true)}} searchSubmit={getSearchResult} searchResult={(value)=>{setSearch(value.target.value)}}/>
             {/* search result */}
         { searchContainer?
-                <div style={{backgroundColor:"rgba(30, 41, 59,0.2)"}} className="max-h-3/4   overflow-y-auto rounded-sm p-2 ml-1 mr-1 -mt-1 mb-3  ">
+                <div style={{backgroundColor:"rgba(30, 41, 59,0.2)"}} className=" overflow-y-auto rounded-sm p-2 ml-1 mr-1 -mt-1 mb-3  ">
                         <div className="flex justify-between">
                             <h6 className="text-slate-200 text-left p-1 mb-5 ">Search results</h6>
 
@@ -88,8 +88,8 @@ export default function ContactList(props){
     </div>
 //    mobile version
 
-    :<div className={props.isOpened?"left-12 absolute w-[88%] h-5/6 bg-theme z-50":"hidden"}>
-        <div style={{borderRight:"3px solid rgba(60, 67, 60, 0.167)"}} className="flex flex-col h-full overflow-y-auto bg-background z-50 xl:w-7/12  w-8/12">
+    :<div className={ `${props.isOpened?"opacity-1 translate-x-0 ":"opacity-0 translate-x-[-999px] "} transition-all ease-in duration-300 left-10 absolute overflow-x-hidden w-[95%] h-[90%] bg-theme z-50`}>
+        <div style={{borderRight:"3px solid rgba(60, 67, 60, 0.167)"}} className={`${props.isOpened? "translate-x-0" :"translate-x-[-999px]"}  ease-in duration-400 flex flex-col h-full overflow-y-auto bg-background z-50 xl:w-7/12 transition-transform w-8/12`}>
         <SearchComponent title={"Search for friends"}  onInputClick={()=>{setSearchContainer(true)}} searchSubmit={getSearchResult} searchResult={(value)=>{setSearch(value.target.value)}}/>
             {/* search result */}
         { searchContainer?

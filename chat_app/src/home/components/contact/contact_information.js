@@ -10,59 +10,112 @@ const ContactInformation = (props)=>{
         setIsMobile(props.isMobile)
         
 
-    },[props.isMobile,width])
+    },[props.isMobile])
 
     const mobileConfigurationStyle ="absolute bg-theme w-full h-full transition-colors  z-50  top-0 left-0 overflow-y-auto"
     const mobileInfoContainerStyle = "w-0 h-0 -translate-x-full transition-transform invisible"
     return(
         <>
-        <div id='main' onClick={(event)=>{
-            if(event.target.id ==="main"){
-                setIsMobile(false)
-            }
-            return
-            }} className={isMobile? mobileConfigurationStyle :"w-[23rem] pl-4 pr-4  transition-colors"}>
+            {width <= 868?
+            // mobile version
+             <div className={ `${isMobile?"opacity-1 translate-x-0":"opacity-0 translate-x-[999px]"}  transition-all absolute flex justify-end h-full right-0 bg-theme  w-full ease-in duration-300`}>
+            {/* main container */}
+                <div className= {`${isMobile?"translate-x-0":"translate-x-[999px] "} sm:w-5/12 bg-background  w-5/6 h-full flex flex-col justify-start transition-transform ease-in-out duration-500`}>
+                        <img className=' ml-auto mr-auto  rounded-full w-20 mt-10' src={"https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/4.png"}/>
+                        <h1 className='mt-8 text-slate-200 text-xl mb-4  ml-auto mr-auto '>User name</h1>
 
-        
-        <div  className={ width <=782? ` flex flex-col items-center justify-start transition-all  ${isMobile?"absolute top-0 w-4/5 md:w-2/5  bg-background right-0 h-full translate-x-0" :mobileInfoContainerStyle} `:"w-full visible h-full"}>
+                       {/* ID container */}
 
-            <div className={`flex flex-col justify-start items-center p-4 border-b-2 border-b-slate-800 w-full `}>
-                <img  src={"https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/3.png"} className={"w-20 rounded-full"}/>
-                    <h1 className="text-slate-200 m-4 text-xl">test name</h1>
-                    <div className='flex justify-between w-full'>
-                        <h4 className='text-slate-400'>ID</h4>
-                        <span className='text-slate-200'>12121212122</span>
+
+                       <div className='flex mt-4 w-4/5 ml-auto mr-auto justify-evenly'>
+                        <h3 className='text-slate-300'>ID</h3>
+                        <span className='text-slate-400'>qe22sdfgd342fgdsf</span>
+                       </div>
+
+                       <div className='bg-slate-900 mt-10 mr-auto ml-auto w-10/12 h-[0.1rem]'></div>
+
+                       {/* Media container */}
+                       <h2 className='text-slate-200 text-md ml-4 mt-6 mb-4'>Media</h2>
+
+                        <div className='w-11/12 h-48 overflow-y-scroll pl-3 pr-3 ml-4  flex-wrap flex gap-2'>
+                            <img className='w-12 h-12' src={"https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/4.png"}/>
+                            <img className='w-12 h-12' src={"https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/4.png"}/>
+                            <img className='w-12 h-12' src={"https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/4.png"}/>
+                            <img className='w-12 h-12' src={"https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/4.png"}/>
+                            <img className='w-12 h-12' src={"https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/4.png"}/>
+                            <img className='w-12 h-12' src={"https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/4.png"}/>
+                            <img className='w-12 h-12' src={"https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/4.png"}/>
+                            <img className='w-12 h-12' src={"https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/4.png"}/>
+                            <img className='w-12 h-12' src={"https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/4.png"}/>
+                        
+                            <img className='w-12 h-12' src={"https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/4.png"}/>
+                            <img className='w-12 h-12' src={"https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/4.png"}/>
+                            <img className='w-12 h-12' src={"https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/4.png"}/>
+                            <img className='w-12 h-12' src={"https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/4.png"}/>
+                        
+                            <img className='w-12 h-12' src={"https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/4.png"}/>
+                            <img className='w-12 h-12' src={"https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/4.png"}/>
+                        
+                        
+                            <img className='w-12 h-12' src={"https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/4.png"}/>
+                            <img className='w-12 h-12' src={"https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/4.png"}/>
+                        
+                        
+                        
+                        </div>
+
                     </div>
-                    <span className="text-slate-600">121212 total messages</span>
-                
-            </div>
+             </div>
+             // desktop version
+             :  <div className='w-2/6'>
+                     <div className= {` bg-background w-full h-full flex flex-col justify-start transition-transform ease-in-out duration-500`}>
+                        <img className=' ml-auto mr-auto  rounded-full w-20 mt-10' src={"https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/4.png"}/>
+                        <h1 className='mt-8 text-slate-200 text-xl mb-4  ml-auto mr-auto '>User name</h1>
 
-            {/* media container */}
-            <div className=" w-66 m-auto">
-                <h2 className="text-md text-white p-3">Media </h2>
+                       {/* ID container */}
 
-                <div className="flex w-full relative left-3.5 flex-wrap p-1 h-4/5 overflow-y-auto">
 
-                <img  src={"https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/3.png"} className={"w-16 rounded-sm m-1"}/>
-                <img  src={"https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/3.png"} className={"w-16 rounded-sm m-1"}/>
-                <img  src={"https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/3.png"} className={"w-16 rounded-sm m-1"}/>
-                <img  src={"https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/3.png"} className={"w-16 rounded-sm m-1"}/>
-                <img  src={"https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/3.png"} className={"w-16 rounded-sm m-1"}/>
-                <img  src={"https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/3.png"} className={"w-16 rounded-sm m-1"}/>
-                <img  src={"https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/3.png"} className={"w-16 rounded-sm m-1"}/>
-                <img  src={"https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/3.png"} className={"w-16 rounded-sm m-1"}/>
-                <img  src={"https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/3.png"} className={"w-16 rounded-sm m-1"}/>
+                       <div className='flex mt-4 w-4/5 ml-auto mr-auto justify-evenly'>
+                        <h3 className='text-slate-300'>ID</h3>
+                        <span className='text-slate-400'>qe22sdfgd342fgdsf</span>
+                       </div>
+
+                       <div className='bg-slate-900 mt-10 mr-auto ml-auto w-10/12 h-[0.1rem]'></div>
+
+                       {/* Media container */}
+                       <h2 className='text-slate-200 text-md ml-4 mt-6 mb-4'>Media</h2>
+
+                        <div className='w-8/12 h-48 overflow-y-scroll pl-3 pr-3 ml-12  flex-wrap flex gap-2'>
+                            <img className='w-12 h-12' src={"https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/4.png"}/>
+                            <img className='w-12 h-12' src={"https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/4.png"}/>
+                            <img className='w-12 h-12' src={"https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/4.png"}/>
+                            <img className='w-12 h-12' src={"https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/4.png"}/>
+                            <img className='w-12 h-12' src={"https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/4.png"}/>
+                            <img className='w-12 h-12' src={"https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/4.png"}/>
+                            <img className='w-12 h-12' src={"https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/4.png"}/>
+                            <img className='w-12 h-12' src={"https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/4.png"}/>
+                            <img className='w-12 h-12' src={"https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/4.png"}/>
+                        
+                            <img className='w-12 h-12' src={"https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/4.png"}/>
+                            <img className='w-12 h-12' src={"https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/4.png"}/>
+                            <img className='w-12 h-12' src={"https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/4.png"}/>
+                            <img className='w-12 h-12' src={"https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/4.png"}/>
+                        
+                            <img className='w-12 h-12' src={"https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/4.png"}/>
+                            <img className='w-12 h-12' src={"https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/4.png"}/>
+                        
+                        
+                            <img className='w-12 h-12' src={"https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/4.png"}/>
+                            <img className='w-12 h-12' src={"https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/4.png"}/>
+                        
+                        
+                        
+                        </div>
+
+                    </div>
                 </div>
                 
-            </div>
-            {/* contact options */}
-
-            <div className="flex w-full justify-evenly mt-10 flex-wrap">
-                <button className=" p-2  text-orange-500 border-2 rounded-md border-slate-800 flex justify-center items-center"><UserMinus className='pl-1 pr-1'/> Unfriend</button>
-                <button className="p-2 text-red-600 border-2 rounded-md border-slate-800 flex justify-center items-center"><UserX className='pl-1 pr-1'/> Block </button>
-            </div>
-        </div>
-        </div> 
+                }
         </>
     )
 }

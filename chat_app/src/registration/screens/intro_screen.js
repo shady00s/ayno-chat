@@ -3,59 +3,41 @@ import RegistrationComponent from "../components/registeration_component"
 import SignInComponent from "../components/signin_component"
 import { useState } from 'react';
 
-export default function IntroScreen(){
+export default function IntroScreen() {
 
     const visibleContainer = "-translate-y-46 duration-400 transition-all ease-in"
     const hiddenContainer = "-translate-y-1/3 opacity-0 invisible  duration-300 transition-all ease-in"
-    const [close,setClose]=useState(false) 
-    return(<>
-    <div className="bg-slate-800 xl:overflow-hidden    flex flex-col w-full flex-wrap  xl:flex-row">
-        {/* intro container */}
+    const [close, setClose] = useState(false)
+    return (<>
+        {/* main container */}
+        <main className="w-full h-screen m-auto overflow-hidden flex justify-center items-center  animate-changeColor bg-400% bg-gradient">
 
-        <div className="w-full h-intro   xl:h-screen xl:w-1/2  animate-changeColor bg-400% bg-gradient"> 
-        <img alt="ayno logo" src={"./images/logo.png"} className=" w-40 p-3"/>
+            {/* registeration container */}
+            <div className="bg-background w-11/12  sm:w-9/12 m-auto h-[90%] rounded-3xl  overflow-scroll">
+                <div>
+                    <img className="w-36 m-6" src={"./images/logo.png"} />
+                </div>
 
-            <div className="relative m-auto top-1/4 p-3">
-            <h1 className=" text-slate-200 text-3xl pb-2">
-                Chat any one with no information needed.
-            </h1>
-            <span className="text-slate-400">No email or phone number needed just write your nickname and set password and chat with anoymous people</span>
+                <section className="flex justify-center items-center flex-wrap  w-full">
+                    {/* intro section */}
+                    <div className="flex flex-col md:border-b-0   border-b-2 border-b-slate-700 md:border-b-slate-700 items-center md:w-6/12 w-11/12 md:border-r-2 md:border-r-slate-700 p-2  m-auto md:h-4/5">
+                        <h1 className="text-3xl  xl:text-6xl md:p-4 p-8 text-slate-300">
+                            Chat any one with no information needed.
+                        </h1>
+                        <span className="text-slate-500 p-8">No email or phone number needed just write your nickname and set password and chat with anoynus people</span>
+
+                    </div>
+
+                    {/* signup and registration section */}
+                    <div className="p-10  w-full  md:w-6/12">
+                        <SignInComponent />
+                    </div>
+                </section>
 
             </div>
-            
-        </div>
-
-        {/* registration and sign in main container  */}
-        
-        <div className="p-3 xl:w-1/2 flex flex-col justify-center items-center  overflow-none  relative   max-w-lg w-screen m-auto   " >
-
-            {/* sign in container */}
-            <div style={{height:"70%"}} className={`${close? hiddenContainer : visibleContainer} m-auto absolute justify-center flex flex-col items-center overflow-scroll md:h-full`}>
-            <SignInComponent />
-            <div className="w-full m-auto before:rounded-sm before:border-2 before:w-1/2 before:border-gray-600 after:border-2 after:rounded-sm  after:w-1/2 after:border-gray-600 flex justify-center items-center  ">
-            
-            <span className="pl-1 pr-1 text-white" >OR</span></div>
-            {/* register show button */}
-            <div className={close? hiddenContainer:null +" w-full xl:top-2/4 mt-18  flex flex-col justify-center items-center "}>
-            <h1 className="p-2 w-6/12 text-slate-300"> Don't have account? </h1>
-             <SubmitButton  className="w-6/12 mt-0 bg-cyan-700"onClick={()=>{setClose(!close)}}  title={"Register"}/>
-            </div>
-            </div>
-                
-
-            {/* registration container */}
-            <div className={`${close?visibleContainer : hiddenContainer  }   overflow-scroll  h-registration`}>
-            <div className={"  w-full xl:top-2/4 mt-18 mb-4 top-2/4 flex flex-col justify-center items-center"}>
-            <h1 className="p-2 w-6/12 text-slate-300">Alrady have account?</h1>
-             <SubmitButton  className="w-6/12 mt-0 "onClick={()=>{setClose(false)}}  title={"Sign-In"}/>
-            </div>
-                <RegistrationComponent/>
-            </div>
-        </div>
-
-
-   
-    </div>
-    
+        </main>
     </>)
 }
+
+
+
