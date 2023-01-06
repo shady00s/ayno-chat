@@ -64,7 +64,7 @@ export default function ContactList(props){
     return(
         // desktop version
         <>{props.isMobile === false ?
-            <div style={{borderRight:"3px solid rgba(60, 67, 60, 0.167)",maxWidth:"40%"}} className="flex flex-col   bg-background transition-transform ease-in-out duration-500">
+            <div style={{borderRight:"3px solid rgba(60, 67, 60, 0.167)",maxWidth:"40%"}} className="flex flex-col  overflow-x-hidden bg-background transition-transform ease-in-out duration-500">
         <SearchComponent title={"Search for friends"}  onInputClick={()=>{setSearchContainer(true)}} searchSubmit={getSearchResult} searchResult={(value)=>{setSearch(value.target.value)}}/>
             {/* search result */}
         { searchContainer?

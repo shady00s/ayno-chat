@@ -67,11 +67,8 @@ export default function MessageComponent() {
             
             <div className='sticky bottom-0 left-0 w-full h-15'>
             <ChatMessageInputComponent socketMessage={(value) => { setText(value) }} conversation_id="63ab380966640e1bdf353f36" friend_id="63aaee37181289caad5cc5b4" />
-
-
-
             </div>
-
+                <div ref={scrollRef}/>
         </div>
     )
 }

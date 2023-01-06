@@ -25,7 +25,7 @@ export default function HomeScreen() {
     return (
         <>
             <NavigationContext.Provider value={navigationValue}>
-                <main className='w-full bg-background overflow-hidden  relative  h-screen justify-start'>
+                <main className='w-full bg-background overflow-x-hidden  relative  h-screen justify-start'>
 
                     <Helmet>
                         <title>Ayno Chat - Home</title>
@@ -50,7 +50,7 @@ export default function HomeScreen() {
                                 : null}
                     </div>
 
-                    <div className="flex h-full w-full ">
+                    <div className="flex h-[90%] w-full ">
                         <Sidebar />
 
                         <SettingsComponent />
