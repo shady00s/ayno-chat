@@ -8,6 +8,7 @@ const conversation_schema = new mongoose.Schema<conversationModel>({
     messages:[ {
         message:{type:String,required:true},
         sender_id:{type:mongoose.Schema.Types.ObjectId,required:true,ref:"UsersModel"},
+        sender_image_path:{type:String,required:true},
         seen:{type:Boolean,default:false},
         delivered:{type:Boolean,default:false},
         date:{type:Date,default:Date.now()}

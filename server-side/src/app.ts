@@ -45,7 +45,7 @@ try {
         })
 
       // SocketManager.connect(server)
-       SocketManager.messageSocket('hell','12345',server)
+       SocketManager.messageSocket(server)
     })
 
     

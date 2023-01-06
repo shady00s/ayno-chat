@@ -1,12 +1,16 @@
 import SelectAvatarComponent from "../../reusable-components/select_avatar_component"
 import InputTextComponent from "../../registration/components/input_text_component"
+import { useContext } from "react"
+import NavigationContext from "../../context/navigationContext"
+
 const SettingsComponent = () => {
+    const {component} = useContext(NavigationContext)
     return (
         <>
-            <div className="absolute  bg-background w-full h-full left-12 z-40">
+            <div className={`${component==="Settings"?"translate-x-0" :"translate-x-[-9999px]"} duration-500 transition-transform absolute  bg-background w-[89vw] overflow-x-hidden h-[90vh] left-12 z-40`}>
                 <h1 className="text-slate-200 text-xl p-5 mb-5 border-b-2 pb-4 border-b-slate-800">Settings</h1>
 
-                <div className="flex h-full w-full justify-evenly flex-wrap overflow-y-auto">
+                <div className="flex  w-full justify-evenly flex-wrap overflow-y-auto">
                      {/* personal info */}
                 <div className="   w-full flex flex-wrap h-5/6 overflow-y-auto">
                    

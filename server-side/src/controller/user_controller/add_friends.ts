@@ -3,6 +3,7 @@ import user_model from "../../model/user_model"
 import mongoose,{ObjectId} from "mongoose"
 import Logining from "../../logger"
 import conversation_model from "../../model/conversation_model"
+import { friendsModel } from "../../types/user_types"
 
 const postAddFriendController = async(req:Request,res:Response,next:NextFunction)=>{
     const user_id = req.query.user_id
@@ -23,7 +24,7 @@ const postAddFriendController = async(req:Request,res:Response,next:NextFunction
            
          user_model.findById({_id:user_id}).then(async result=>{
 
-            if(result.friends.find((data:string)=> data ==contact_id) === undefined){
+            if(result.friends.find((data:friendsModel)=> data.friendId.id.toString() == contact_id) === undefined){
 
                 try {
                     let sessionResult = await session.withTransaction(async()=>{
@@ -37,7 +38,7 @@ const postAddFriendController = async(req:Request,res:Response,next:NextFunction
             
                         //{$addToSet:{conversations:generatedConversationId,friends:user_id}},
             
-                        let contactInformation = await user_model.findByIdAndUpdate(contact_id,{$addToSet:{conversations:{conversation_Id:generatedConversationId,contact_Id:user_id},friends:contact_id}},{session,new:true}).then(contactValue =>{
+                        let contactInformation = await user_model.findByIdAndUpdate(contact_id,{$addToSet:{conversations:{conversation_Id:generatedConversationId,contact_Id:user_id},friends:user_id}},{session,new:true}).then(contactValue =>{
                             return contactValue
                         })
             

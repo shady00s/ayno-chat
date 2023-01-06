@@ -1,18 +1,25 @@
-import { useEffect } from 'react';
-
+import { useEffect,useContext } from 'react';
+import ContactContext from './../../../context/contactContext';
+import NavigationContext from './../../../context/navigationContext';
 
 
 export default function ContactButton(props){
+    const {contact,setContact} = useContext(ContactContext)
+    const {setComponent}= useContext(NavigationContext)
+    const getUserData =()=>{
+        setContact(props.data)
+        setComponent("")
+    }
     useEffect(()=>{
-        
-    },[])
+
+    },[contact])
     return(
-        <div className="flex group items-center justify-evenly p-1 w-full transition-colors  mb-2 cursor-pointer border-l-2 bg-subBackGround border-l-slate-800
+        <div onClick={getUserData} className="flex group items-center justify-evenly p-1 w-full transition-colors  mb-2 cursor-pointer border-l-2 bg-subBackGround border-l-slate-800
            rounded-sm hover:bg-slate-800  hover:border-l-slate-700">
            
-            <img alt="user profile"src="https://cdn.pixabay.com/photo/2018/08/28/13/29/avatar-3637561_960_720.png" className="w-7"/>
+            <img alt="user profile"src={contact.profilePath}className="w-7 rounded-full"/>
             <div className="ml-3 pr-1 w-8/12 flex flex-col justify-start">   
-                <h3 className="font-sans text-slate-100 text-md text-green-50  truncate ">{props.data.name}</h3>
+                <h3 className="font-sans text-slate-100 text-md   truncate ">{props.data.name}</h3>
 
                 <h3 className="font-sans text-grey truncate">Tasdfasdfasdfsadfsdfasdfsdfsadfest</h3>
                 

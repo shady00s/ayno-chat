@@ -12,17 +12,18 @@ export default function ChatMessageInputComponent(props){
     const [activated,setActivated] = useState(false)
     const [textVal,setTextVal] = useState('')
   
-    const user_id = StorageManager.getDataFromStorage().id
+    const userdata = StorageManager.getDataFromStorage()
     const conversation_id = props.conversation_id
 
     function sendMessage(){
        
         ApiCall.postUserMessage({
-            sender_id:user_id,
+            sender_id:userdata.id,
             conversation_id:conversation_id,
-            message_content:textVal
+            message_content:textVal,
+            imagePath:userdata.profilePath
         }).then(value =>{
-            props.socketMessage({message:textVal,sender_id:user_id})
+            props.socketMessage({message:textVal,sender_id:userdata.id,imagePath:userdata.profilePath})
         })
     }
 
@@ -32,8 +33,8 @@ export default function ChatMessageInputComponent(props){
 
 
                 {/* emoji picker container */}
-              { activated===true ?  <div  className="absolute bottom-10   right-2">
-                    <EmojiPicker lazyLoadEmojis={false} theme="dark" onEmojiClick={(emoji)=>{
+              { activated===true ?  <div  className={`${activated?"opacity-1":"opacity-0"} transition-opacity absolute bottom-10   right-2`}>
+                    <EmojiPicker  width={"21rem"} lazyLoadEmojis={false} theme="dark" onEmojiClick={(emoji)=>{
                         
 
                         setTextVal (textVal + emoji.emoji)

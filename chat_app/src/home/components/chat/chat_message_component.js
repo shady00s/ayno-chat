@@ -2,7 +2,6 @@ import { CheckCircle } from "react-feather";
 import StorageManager from "../../../utils/storage_manager";
 
 export default function ChatMessageComponent(props){
-
     const guestMainContainerStyle = ' bg-[#1E2329]  mr-2';
     const ownerMainContainerStyle = 'bg-[#008FC6] float-right ml-2 ';
     const userProfilePath = StorageManager.getDataFromStorage().profilePath
@@ -14,7 +13,7 @@ export default function ChatMessageComponent(props){
                    <div className="w-full  mb-3 pb-4 border-b-2 p-2  border-b-[rgba(70,70,70,0.1)]">
                     <div className={`flex ${props.isUser ? "float-right":"float-left"} items-end`}>
                         {/* profile image */}
-                        <img alt="user profile" src={props.isUser?userProfilePath:props.message.profileImagePath} className="h-7 w-7 p-1 rounded-full"/>
+                        <img alt="user profile" src={props.isUser?userProfilePath:props.message.sender_image_path} className="h-7 w-7 p-1 rounded-full"/>
                     {/* text container */}
                     <div  style={{maxWidth:"23rem" ,minWidth:"2rem",overflowWrap:"break-word"}} className={`${props.isUser?guestMainContainerStyle:ownerMainContainerStyle} relative rounded-md p-1  inline-block`}>
                         <p className=" text-slate-200 font-normal pl-2 pr-2">{props.message.message}</p>  

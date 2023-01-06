@@ -3,7 +3,7 @@ import { UserPlus } from "react-feather"
 const NewFirendComponent = (props)=>{
     return(<>
     <div className="flex items-center bg-subBackGround p-1 m-1 mb-3 rounded-md">
-        <img className="w-12 rounded-full" alt="profile" src={props.data.profileImagePath}/>
+        <img className="w-12 rounded-full" alt="profile" src={props.data.profilePath}/>
         <div className="ml-2 ">
             <h2 className="text-slate-200">{props.data.name}</h2>
             <p className="text-slate-500 ml-2 m-2">This user is not your friend.</p>

@@ -17,12 +17,14 @@ class SocketManager {
       
 
     }
-    static messageSocket=(message:string,conversation_id: string,server:http.Server)=>{
-        this.io = new Server(server,{cors:{origin:"*"}});
-      
+    static messageSocket=(server:http.Server)=>{
+        this.io = new Server(server,{cors:{origin:"http://localhost:3000"}});
+     
+        
         this.io.on("connection",(socket)=>{
             Logining.info(`client Socket ID ${socket.id} connected to server`)
-
+            
+            // send message
             socket.on("send-message", (messages) =>{
                 socket.emit("recive-message",messages)   
 
