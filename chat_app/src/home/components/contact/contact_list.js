@@ -4,7 +4,7 @@ import StorageManager from "../../../utils/storage_manager";
 import SearchComponent from "../search/search_component";
 import { useEffect, useState,useContext } from 'react';
 import ApiCall from '../../api_call';
-import LoadingComponent from '../../../reusable-components/loading_component';
+import LoadingComponent from '../../../reusable-components/loading/loading_component';
 import NewFirendComponent from "../new_friend_component";
 import { X } from "react-feather";
 import { useNavigate } from 'react-router-dom';

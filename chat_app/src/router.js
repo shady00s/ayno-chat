@@ -1,6 +1,6 @@
 import {Route,BrowserRouter as Router, Routes } from "react-router-dom"
 import HomeScreen from './home/screen/home-screen';
-import LoadingScreen from "./reusable-components/loading_screen";
+import LoadingScreen from "./reusable-components/loading/loading_screen";
 import IntroScreen from './registration/screens/intro_screen';
 import PrivateRoute from "./private_route";
 

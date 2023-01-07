@@ -5,7 +5,7 @@ import * as cartoonAvatar from 'cartoon-avatar'
 import SubmitButton from "./submit_button"
 import InputErrorComponent from "./input_error_component"
 import InputTextComponent from './input_text_component';
-import LoadingComponent from './../../reusable-components/loading_component';
+import LoadingComponent from './../../reusable-components/loading/loading_component';
 import ApiCall from './../../home/api_call';
 import RegisterValidation from './RegisterValidation';
 import { useNavigate,redirect } from "react-router-dom";

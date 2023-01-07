@@ -1,7 +1,7 @@
 import * as cartoonAvatar from 'cartoon-avatar'
 
 import { useState, useEffect } from 'react'
-import LoadingComponent from './loading_component'
+import LoadingComponent from './loading/loading_component'
 
 const SelectAvatarComponent = () => {
 

@@ -26,7 +26,7 @@ class SocketManager {
             
             // send message
             socket.on("send-message", (messages) =>{
-                socket.emit("recive-message",messages)   
+                this.io.emit("recive-message",messages)   
 
             })
         })
