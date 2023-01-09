@@ -10,6 +10,7 @@ import { X } from "react-feather";
 import { useNavigate } from 'react-router-dom';
 import NavigationContext from '../../../context/navigationContext';
 
+
 export default function ContactList(props){
     let userData = StorageManager.getDataFromStorage()
     const navigate = useNavigate()
@@ -26,7 +27,7 @@ export default function ContactList(props){
     const getSearchResult = ()=>{
 
 
-        ApiCall.getSearchData(search).then(value=>{
+        ApiCall.getSearchData(search,StorageManager.getDataFromStorage().id).then(value=>{
             if(value.status === 200){
                 setSearchList((oldData)=>[...oldData,value.data.body])
                 
@@ -41,7 +42,7 @@ export default function ContactList(props){
     useEffect(()=>{
 
         
-        if(userData !== {}){
+        if(Object.keys(userData).length !== 0){
             setLoading(true)
 
             ApiCall.getFriendsList(userData.id).then(value=>{
@@ -54,7 +55,6 @@ export default function ContactList(props){
             navigate("/ayno-chat/register")
             setContacts([])
         }
-        console.log(contacts)
 
 
         
@@ -112,7 +112,7 @@ export default function ContactList(props){
             <div className="p-1 ">
 
             <h6 className="text-slate-200 text-left p-1">{"Friends"}</h6>
-            {loading?<LoadingComponent/>: contacts.length !== 0 ?contacts.map((contactData)=><ContactButton key={contactData.name} data={contactData}/>):<EmptyContactComponent/>}
+            {loading?<LoadingComponent/>: contacts.length !== 0 ?contacts.map((contactData)=><ContactButton  key={contactData.name} data={contactData}/>):<EmptyContactComponent/>}
             
             </div>
 

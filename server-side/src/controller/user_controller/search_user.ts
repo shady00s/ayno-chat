@@ -3,9 +3,11 @@ import user_model from "../../model/user_model"
 
 const search_user = (req:Request,res:Response)=>{
     const contactName = req.query.contactName
+    const user_id = req.query.userId
 
     try {
         user_model.findOne({name:contactName}).then((dataRes)=>{
+            console.log(dataRes.friends);
 
             // check if the user found
             if(dataRes !== null){
@@ -13,7 +15,8 @@ const search_user = (req:Request,res:Response)=>{
                     message:"user found",
                     body: {
                         name:dataRes.name,
-                        profileImagePath:dataRes.profileImagePath
+                        profileImagePath:dataRes.profileImagePath,
+
                     }
                 })
             }

@@ -3,11 +3,13 @@ import useWindowDimensions from '../../../utils/window_size';
 import { useContext } from 'react';
 import ContactContext from './../../../context/contactContext';
 
+
 const ContactInformation = (props)=>{
     const [isMobile,setIsMobile] = useState(false)
-    const {width,height} = useWindowDimensions()
+    const {width} = useWindowDimensions()
 
-    const {contact,setContact}= useContext(ContactContext)
+    const {contact} = useContext(ContactContext)
+
     useEffect(()=>{
         setIsMobile(props.isMobile)
         
@@ -23,8 +25,8 @@ const ContactInformation = (props)=>{
              <div className={ `${isMobile?"opacity-1 translate-x-0":"opacity-0 translate-x-[999px]"}  transition-all absolute flex justify-end h-full right-0 bg-theme  w-full ease-in duration-300`}>
             {/* main container */}
                 <div className= {`${isMobile?"translate-x-0":"translate-x-[999px] "} sm:w-5/12 bg-background  w-5/6 h-full flex flex-col justify-start transition-transform ease-in-out duration-500`}>
-                        <img className=' ml-auto mr-auto  rounded-full w-20 mt-10' src={"https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/male/4.png"}/>
-                        <h1 className='mt-8 text-slate-200 text-xl mb-4  ml-auto mr-auto '>User name</h1>
+                        <img className=' ml-auto mr-auto  rounded-full w-20 mt-10' src={contact.profileImagePath}/>
+                        <h1 className='mt-8 text-slate-200 text-xl mb-4  ml-auto mr-auto '>{contact.name}</h1>
 
                        {/* ID container */}
 
@@ -71,7 +73,7 @@ const ContactInformation = (props)=>{
              // desktop version
              :  <div className='w-2/6'>
                      <div className= {` bg-background w-full h-full flex flex-col justify-start transition-transform ease-in-out duration-500`}>
-                        <img className=' ml-auto mr-auto  rounded-full w-20 mt-10' src={contact.profilePath}/>
+                        <img className=' ml-auto mr-auto  rounded-full w-20 mt-10' src={contact.profileImagePath}/>
                         <h1 className='mt-8 text-slate-200 text-xl mb-4  ml-auto mr-auto '>{contact.name}</h1>
 
                        {/* ID container */}
@@ -79,7 +81,7 @@ const ContactInformation = (props)=>{
 
                        <div className='flex mt-4 w-4/5 ml-auto mr-auto justify-evenly'>
                         <h3 className='text-slate-300'>ID</h3>
-                        <span className='text-slate-400'>{contact.friendId}</span>
+                        <span className='text-slate-400'>{contact._id}</span>
                        </div>
 
                        <div className='bg-slate-900 mt-10 mr-auto ml-auto w-10/12 h-[0.1rem]'></div>

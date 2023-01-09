@@ -37,18 +37,15 @@ export default function  Sidebar(props){
                   
                     <div  key={item.name} onClick={()=>{
 
-                        if(component !=="Log-out"){
-                            setActive(index)
-                            setComponent(item.name)
-                           
-                        }
+                        
+                            setActive(()=>index)
+                            setComponent(()=>item.name)                        
+                        
                        
+                       if(index === 3){
+                        logoutComponent()
+                       }
                        
-                        if(component ==="Log-out"){
-                            setComponent("")
-                            logoutComponent()
-                            
-                        }
                         
                         }} id={item.name} className='pb-4 pr-2 pl-1  z-10'>
 

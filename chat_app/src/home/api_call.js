@@ -31,10 +31,10 @@ class ApiCall{
             console.log(error)
         }
     }
-    static getSearchData = (userName)=>{
+    static getSearchData = (userName,userId)=>{
         try {
             let searchList = axiosInestance.get('/user/search',{
-                params:{contactName:userName}
+                params:{contactName:userName,userId}
             
             }).then((value)=>{
                
