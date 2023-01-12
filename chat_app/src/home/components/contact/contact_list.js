@@ -5,7 +5,7 @@ import SearchComponent from "../search/search_component";
 import { useEffect, useState,useContext } from 'react';
 import ApiCall from '../../api_call';
 import LoadingComponent from '../../../reusable-components/loading/loading_component';
-import NewFirendComponent from "../new_friend_component";
+import NewFirendComponent from "../search_result_component";
 import { X } from "react-feather";
 import { useNavigate } from 'react-router-dom';
 import NavigationContext from '../../../context/navigationContext';
@@ -102,7 +102,7 @@ export default function ContactList(props){
 
                             <span className="p-1 flex justify-center items-center h-7 cursor-pointer select-none rounded-md transition-colors text-slate-400 hover:bg-slate-600" onClick={()=>{setSearchContainer(false)}}><X/> Close</span>
                         </div>
-                    {searchList.length !== 0 ? searchList.map(data=><NewFirendComponent data={data}/>) : <div></div>}
+                    {searchList.length !== 0 ? searchList.map(data=><NewFirendComponent  data={data}/>) : <div></div>}
                     
                     
                 </div> :null

@@ -16,15 +16,14 @@ const ContactInformation = (props)=>{
 
     },[props.isMobile])
 
-    const mobileConfigurationStyle ="absolute bg-theme w-full h-full transition-colors  z-50  top-0 left-0 overflow-y-auto"
-    const mobileInfoContainerStyle = "w-0 h-0 -translate-x-full transition-transform invisible"
+
     return(
         <>
             {width <= 868?
             // mobile version
-             <div className={ `${isMobile?"opacity-1 translate-x-0":"opacity-0 translate-x-[999px]"}  transition-all absolute flex justify-end h-full right-0 bg-theme  w-full ease-in duration-300`}>
+             <div className={ `${isMobile?"opacity-1  visible":"opacity-0  invisible"} overflow-x-hidden     transition-opacity absolute flex justify-end  right-0 bg-theme w-full h-full ease-in duration-300`}>
             {/* main container */}
-                <div className= {`${isMobile?"translate-x-0":"translate-x-[999px] "} sm:w-5/12 bg-background  w-5/6 h-full flex flex-col justify-start transition-transform ease-in-out duration-500`}>
+                <div className= {`${isMobile?"translate-x-0":"translate-x-[999px] "} sm:w-5/12 bg-background  w-5/6  flex flex-col justify-start transition-transform ease-in-out duration-500`}>
                         <img className=' ml-auto mr-auto  rounded-full w-20 mt-10' src={contact.profileImagePath}/>
                         <h1 className='mt-8 text-slate-200 text-xl mb-4  ml-auto mr-auto '>{contact.name}</h1>
 

@@ -10,6 +10,7 @@ import ApiCall from './../../home/api_call';
 import RegisterValidation from './RegisterValidation';
 import { useNavigate,redirect } from "react-router-dom";
 import StorageManager from "../../utils/storage_manager";
+import SelectAvatarComponent from "../../reusable-components/select_avatar_component";
 const RegistrationComponent = () => {
     //router 
     const navigate = useNavigate();
@@ -111,7 +112,7 @@ const RegistrationComponent = () => {
     return (
 
         <>
-            <div className="p-3 flex flex-col justify-center items-start w-11/12">
+            <div className="p-3 flex flex-col justify-center items-start w-11/12 ">
                 <h2 className="text-slate-200 text-2xl mb-2">Register</h2>
                 <span className="text-slate-400 " >Just add any random name and password to get started!</span>
 
@@ -144,36 +145,15 @@ const RegistrationComponent = () => {
                     </div>
 
                 </form>
-                                        {/* choose avatar gender */}
-                                        <div className="flex justify-between items-center">
-                        <h2 className="text-slate-200 text-2xl mb-2 mt-5">Select your avatar</h2>
+                                      
 
-                           <div className="h-full flex justify-between items-center m-2 mt-5" >
-                            <button onClick={()=>{
-                                console.log('x')
-                                setGender("male")}} className={`${gender==="male"? "bg-blue-800 ":"bg-zinc-600 "} transition-colors w-16 h-10 m-1 rounded-md text-slate-200` }>Male</button>
-                            <button onClick={()=>{
-                                console.log('y')
-                                setGender("female")}} className={`${gender==="female"? "bg-pink-700 ":"bg-zinc-600 "} transition-colors w-16 h-10 bg-zinc-600 m-1 rounded-md text-slate-200 `}>Female</button>
-                            </div> 
-                        </div>
-
-                    <span className="text-slate-400 " >select how you like to appear to another contacts</span>
                     {/* Avatar Container */}
-                    <div className=" h-36 overflow-y-auto w-5/6 m-auto mt-4 mb-4 flex flex-wrap">
+                
+                    <SelectAvatarComponent/>
 
-                       
+                   
 
-                        {avatar.length ===0?<LoadingComponent title={"Loading Avatars...."}/>  :avatar.map((img, index) => 
-                                <img alt="avatars" onClick={(target)=>{
-                                    setSelectAvatar( {name:target.target.getAttribute('src') ,index:index})
-                                }} key={img+index} className={`w-12 p-1 ${selectAvatar.index === index ? "rounded-md border-2 border-teal-400 transition-all" : "border-transparent transition-all"}`} src={img}/>
-                           
-
-                        )}
-
-                    </div>
-               {loading? <LoadingComponent/>: <SubmitButton className="w-6/12 bg-indigo-800" onClick={() => { postRegisterData() }} title={"Register"} />}
+               {loading? <LoadingComponent/>: <SubmitButton className="w-6/12 bg-indigo-800 mt-2 mb-6 " onClick={() => { postRegisterData() }} title={"Register"} />}
 
             </div>
         </>

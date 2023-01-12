@@ -1,13 +1,13 @@
 import { Request,Response } from "express"
 import user_model from "../../model/user_model"
-import { userModel } from "../../types/user_types"
 const getUserFriendsController=(req:Request,res:Response)=>{
     const user_id = req.query.user_id
     try {
+        
         user_model.findById(user_id).then(async value=>{
             if(value !== null){
                 
-                 let friendData = await user_model.find({"_id":{$in : value.friends}}).select(['-password','-friends']).then(val=>val)
+                 let friendData = await user_model.find({"_id":{$in : value.friends,},"conversations.contactID": user_id}).select(['-password','-friends']).then(val=>val)
                     
                 res.status(200).json({
                     message:"succssess",

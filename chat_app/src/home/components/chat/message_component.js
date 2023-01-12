@@ -9,16 +9,16 @@ import EmptyMessageComponent from './empty_message_component';
 import {io} from "socket.io-client"
 import ContactContext from './../../../context/contactContext';
 
-// const socketRef = SocketClientManager.socketInit()
+const socketRef = SocketClientManager.socketInit()
 
 
+const socketData = io("ws://localhost:8080")
  function MessageComponent() {
-    const socketData = io("ws://localhost:8080")
-    const  {contact} = useContext(ContactContext)
 
+    const  {contact} = useContext(ContactContext)
     const user_id = StorageManager.getDataFromStorage()
     const [chat, setChat] = useState([])
-    const [socket] = useState(socketData)
+    const [socket] = useState(socketRef)
     const scrollRef= useRef(null)
 
 
@@ -27,44 +27,45 @@ import ContactContext from './../../../context/contactContext';
         scrollRef.current?.scrollIntoView({ behavior : "smooth" })
       }
 
-      const socketCall = useCallback(()=>{
+  useEffect(()=>{
+        scrollToBottom()
+  },[chat])
 
-        ApiCall.getUserChatMessages(user_id.id, contact._id).then(messages => {
-            setChat(() => messages.data.conversations.messages)
-            scrollToBottom()
-        })
-       
-       
-    
-      },[socket])
+  // when contact changes api call will triggered to insert new data
+  useEffect(()=>{
+    ApiCall.getUserChatMessages(user_id.id, contact._id).then(messages => {
+        setChat(() => messages.data.conversations.messages)
+    })
+
+  },[contact])
 
     useEffect(()=>{
-        
-        socketCall()    
         socket.on("recive-message", (message) => {
-            console.log(message)
             //add new message that comes from the socket to previous messages      
-            scrollToBottom()     
                return setChat((prev) => [...prev, message])
-        })
-            
-             
+        })    
              return () => socket.removeListener("recive-message")
                 
     },[socket])
     return (
-        <div className='relative flex flex-col overflow-y-auto   h-[90vh]  md:w-[50%] w-[95%] '>
+        <div className='relative flex flex-col  h-[80vh] md:w-[50%] w-[95%]'>
 
-           
+           <div className="flex flex-col  overflow-y-auto h-[95%]">
+
+          
             {chat.length !== 0 ? 
 
-                chat.map(messageComponent => <ChatMessageComponent key={Math.random().toString()} message={messageComponent} isUser={messageComponent.sender_id == user_id.id ? true : false} />)
-                    : <div className="w-full h-full justify-center items-center"><LoadingComponent /></div>}
-            <div ref={scrollRef}/>
+                chat.map(messageComponent =>
+                    
+                    <div className="m-1 pb-4 border-b-2 p-2  border-b-[rgba(70,70,70,0.1)]" ref={scrollRef}>
+                        
+                        <ChatMessageComponent key={Math.random().toString()} message={messageComponent} isUser={messageComponent.sender_id == user_id.id ? true : false} /></div>)
+                    : <div className="w-full md:h-[75vh] h-[85vh] justify-center items-center"><LoadingComponent /></div>}
+        
            
-          
+            </div>
             
-            <div className='sticky bottom-0 left-0 w-full h-15'>
+            <div className=' w-full '>
             <ChatMessageInputComponent socketMessage={(value) => {
                 socket.emit("send-message", value)
 

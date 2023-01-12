@@ -28,7 +28,7 @@ const SignInComponent = ()=>{
     }
     return(
         <>
-            <div className="p-3 w-11/12 flex-col flex justify-center">
+            <div className="p-3 w-11/12 h-full flex-col flex justify-center">
                 <h2 className="text-slate-200 text-2xl mb-2">Sign-in</h2>
                 <span className="text-slate-400" >Just add any random name and password to get started!</span>
 

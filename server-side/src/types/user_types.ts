@@ -5,18 +5,14 @@ interface conversation{
     contact_Id:mongoose.Types.ObjectId
 }
 
-interface friendsModel{
-    name:String,
-    friendId:mongoose.Types.ObjectId,
-    profilePath:String
-}
+
 
 interface userModel{
     name:String,
     password:String,
     profileImagePath:String,
     conversations:Array<conversation>,
-    friends:Array<friendsModel>,    
+    friends:Array<mongoose.Types.ObjectId>,    
 }
 
-export  {conversation,userModel,friendsModel}
+export  {conversation,userModel}
