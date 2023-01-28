@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
-import ApiCall from '../../api_call';
+import ApiCall from '../../../api_call';
 
 const SearchComponent= (props)=>{
     library.add(faMagnifyingGlass)

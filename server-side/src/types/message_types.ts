@@ -13,6 +13,7 @@ interface conversationModel{
     conversation_name:String,
     messages:Array<messageModelType>,
     members_ids:Array<mongoose.Types.ObjectId>,
+    media:Array<String>
 }
 
 export  {messageModelType, conversationModel}

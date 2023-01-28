@@ -6,13 +6,13 @@ interface conversation{
 }
 
 
-
 interface userModel{
     name:String,
     password:String,
     profileImagePath:String,
     conversations:Array<conversation>,
     friends:Array<mongoose.Types.ObjectId>,    
+    friendRequests:Array<mongoose.Types.ObjectId>,    
 }
 
 export  {conversation,userModel}

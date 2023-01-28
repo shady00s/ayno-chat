@@ -17,7 +17,7 @@ const navButtons = [
 
 
 export default function  Sidebar(props){
-    const {component,setComponent} = useContext(NavigationContext)
+    const {navigation,setNavigation} = useContext(NavigationContext)
 
     const [active,setActive]=useState(0)
     
@@ -39,7 +39,7 @@ export default function  Sidebar(props){
 
                         
                             setActive(()=>index)
-                            setComponent(()=>item.name)                        
+                            setNavigation(()=>item.name)                        
                         
                        
                        if(index === 3){

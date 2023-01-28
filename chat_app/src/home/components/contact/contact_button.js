@@ -4,10 +4,10 @@ import ContactContext from './../../../context/contactContext';
 
 
 export default function ContactButton(props){
-    const {setComponent}= useContext(NavigationContext)
+    const {setNavigation}= useContext(NavigationContext)
     const   {setContact} = useContext(ContactContext)
     const getUserData =()=>{
-        setComponent("")
+        setNavigation("")
         setContact(props.data)
     }
 

@@ -4,10 +4,10 @@ import { useContext } from "react"
 import NavigationContext from "../../context/navigationContext"
 
 const SettingsComponent = () => {
-    const {component} = useContext(NavigationContext)
+    const {navigation} = useContext(NavigationContext)
     return (
         <>
-            <div className={`${component==="Settings"?"translate-x-0" :"translate-x-[-9999px]"} duration-500 transition-transform absolute  bg-background w-[89vw] overflow-x-hidden h-[90vh] left-12 z-40`}>
+            <div className={`${navigation==="Settings"?"translate-x-0" :"translate-x-[-9999px]"} duration-500 transition-transform absolute  bg-background w-[89vw] overflow-x-hidden h-[90vh] left-12 z-40`}>
                 <h1 className="text-slate-200 text-xl p-5 mb-5 border-b-2 pb-4 border-b-slate-800">Settings</h1>
 
                 <div className="flex  w-full justify-evenly flex-wrap overflow-y-auto">

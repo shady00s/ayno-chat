@@ -1,4 +1,4 @@
-import axiosInestance from "../axios/inestance"
+import axiosInestance from "./axios/inestance"
 
 class ApiCall{
     static getFriendsList = (userID)=>{
@@ -55,7 +55,14 @@ class ApiCall{
             console.log(error)
         }
     }
-
+    static getMediaData = (conversation_id)=>{
+        try{
+            let media = axiosInestance.get('/user/get-media',{params:{conversation_id:conversation_id}}).then(val=>val)
+            return media
+        }catch(e){
+            console.log(e)
+        }
+    }
     static postUserRegisterData = (data)=>{
 
 
@@ -67,6 +74,13 @@ class ApiCall{
             console.log(error)
         }
 
+    }
+    static postMediaToServer(media){
+        try {
+            return axiosInestance.post('/user/send-image',media).then(val=>val)
+        } catch (error) {
+            console.log(error)
+        }
     }
     static postUserMessage = (data)=>{
         try{

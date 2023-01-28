@@ -3,7 +3,7 @@ import * as cartoonAvatar from 'cartoon-avatar'
 import { useState, useEffect } from 'react'
 import LoadingComponent from './loading/loading_component'
 
-const SelectAvatarComponent = () => {
+const SelectAvatarComponent = (props) => {
 
     const [avatar, setAvatar] = useState([])
     const [selectAvatar, setSelectAvatar] = useState({ name: avatar[0], index: 0 })
@@ -51,6 +51,7 @@ const SelectAvatarComponent = () => {
 
                 {avatar.length === 0 ? <LoadingComponent title={"Loading Avatars...."} /> : avatar.map((img, index) =>
                     <img alt="avatars" loading='lazy' onClick={(target) => {
+                        props.onClick(target)
                         setSelectAvatar({ name: target.target.getAttribute('src'), index: index })
                     }} key={img + index} className={`w-12 p-1 ${selectAvatar.index === index ? "rounded-md border-2 border-teal-400 transition-all" : "border-transparent transition-all"}`} src={img} />
 

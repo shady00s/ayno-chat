@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from "react"
-
-import * as cartoonAvatar from 'cartoon-avatar'
-
 import SubmitButton from "./submit_button"
 import InputErrorComponent from "./input_error_component"
 import InputTextComponent from './input_text_component';
 import LoadingComponent from './../../reusable-components/loading/loading_component';
-import ApiCall from './../../home/api_call';
+import ApiCall from '../../api_call';
 import RegisterValidation from './RegisterValidation';
-import { useNavigate,redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import StorageManager from "../../utils/storage_manager";
 import SelectAvatarComponent from "../../reusable-components/select_avatar_component";
 const RegistrationComponent = () => {
@@ -28,39 +25,23 @@ const RegistrationComponent = () => {
     const [rememberMe, setRememberMe] = useState(false)
 
     // avatar data
-    const [avatar, setAvatar] = useState([])
-    const [selectAvatar,setSelectAvatar] = useState({name:avatar[0],index:0})
-    const [gender,setGender] = useState("male")
+    const [avatar, setAvatar] = useState('')
  
     const usernameWhiteSpaceRegExp = /\s/
 
     useEffect(()=>{
         
         // get avatars from cartoon avatar api
-        function avatarGenerator(gneder,avatar) {
-            // to not render more images every refresh
-            if(avatar.length <=40 ){
-                setAvatar([])
-                for (let x = 0; x < 40; x++) {
-                    setAvatar((avatarItem) => [...avatarItem, cartoonAvatar.generate_avatar({ "gender": gneder, "id": x+1 })])
-        
-                }
-            }
-    
-            return 
-            
-        }
-        avatarGenerator(gender,avatar)
-
-
+        console.log(avatar)
         setRegisterData({
             username:username,
             password:pass,
-            profilePath:selectAvatar.name
+            profilePath:avatar
+
         })
+    
 
-
-    },[gender,username,pass,selectAvatar])
+    },[username,pass,avatar])
 
 
   
@@ -68,7 +49,7 @@ const RegistrationComponent = () => {
     const [loading,setLoading]=useState(false)
     const postRegisterData = ()=>{
         
-        if( RegisterValidation.nameValidation(username) ===true && RegisterValidation.passwordValidation(pass,confirmPass)===true && selectAvatar.name!=='' ){
+        if( RegisterValidation.nameValidation(username) ===true && RegisterValidation.passwordValidation(pass,confirmPass)===true && avatar.name!=='' ){
             setLoading(true)
            
 
@@ -97,6 +78,7 @@ const RegistrationComponent = () => {
                     navigate('/home')
                 }else{
                     setLoading(false)
+                    console.log(apiResponse.data)
                      alert('there is an problem '+apiResponse.data)   
                 }
             })
@@ -149,7 +131,7 @@ const RegistrationComponent = () => {
 
                     {/* Avatar Container */}
                 
-                    <SelectAvatarComponent/>
+                    <SelectAvatarComponent onClick={target=> {setAvatar( target.target.getAttribute('src'))}}/>
 
                    
 

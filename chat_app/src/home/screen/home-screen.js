@@ -7,6 +7,7 @@ import useWindowDimensions from "../../utils/window_size";
 import ContactInformation from "../components/contact/contact_information"
 import SettingsComponent from './../components/settings_component';
 import ContactContext from './../../context/contactContext';
+import NavigationContext from "../../context/navigationContext";
 
 
 export default function HomeScreen() {
@@ -14,6 +15,10 @@ export default function HomeScreen() {
     const [contactInfoMobile, setContactInfoMobile] = useState(false)
     const [contact,setContact] = useState({})
     const contactValue = useMemo(()=>({contact,setContact}),[contact])
+
+    const [navigation,setNavigation] = useState('Contacts')
+
+    const navigationValue = useMemo(()=>({navigation,setNavigation}),[navigation])
     return (
         <>
 
@@ -36,7 +41,7 @@ export default function HomeScreen() {
                             <div onClick={() => {
                                 setContactInfoMobile(!contactInfoMobile)
                             }} className="flex p-2 items-center cursor-pointer">
-                                <h1 className="text-slate-300 mr-2">{ Object.keys(contact).length !== 0?contact.name +"'s info":""}</h1>
+                                <h1 className="text-slate-300 mr-2 select-none">{ Object.keys(contact).length !== 0?contact.name +"'s info":""}</h1>
                                 <img src={contact.profileImagePath} className={'w-8 rounded-full'} />
                             </div>
                             : null}
@@ -44,13 +49,18 @@ export default function HomeScreen() {
 
 
                 <div className="w-full h-[98%] flex bg-background overflow-x-hidden">
+                <NavigationContext.Provider value={navigationValue}>
                 <Sidebar />
                 <ContactContext.Provider value={contactValue}>
+                    
+
+                   <SettingsComponent/>
                 <ContactList isMobile={width <= 648 ? true : false}/>
 
                 <MessageComponent />
                 <ContactInformation isMobile={contactInfoMobile} /> 
                 </ContactContext.Provider>
+                </NavigationContext.Provider>
                 </div>
 
             </main>

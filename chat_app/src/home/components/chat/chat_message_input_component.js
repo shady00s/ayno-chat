@@ -1,12 +1,10 @@
 import EmojiPicker from "emoji-picker-react";
-import { useState,useEffect } from "react";
-import { Smile } from "react-feather";
+import { useState } from "react";
+import { Smile,Send } from "react-feather";
 import IconButtonWithText from "../icon_button_with_text";
-import { Send } from "react-feather";
 import StorageManager from "../../../utils/storage_manager";
-import ApiCall from '../../api_call';
-import SocketClientManager from '../../../sockets/message_socket';
-
+import ApiCall from '../../../api_call';
+import AddImageComponent from "./add_image_component";
 export default function ChatMessageInputComponent(props){
 
     const [activated,setActivated] = useState(false)
@@ -41,7 +39,11 @@ export default function ChatMessageInputComponent(props){
                     }}/>
                 </div> : null }
             {/* emoji button */}
-            <Smile  color="#505045"  className="cursor-pointer ml-2" onClick={()=>{setActivated(!activated)}}/>
+            <Smile  color="#505045"  className="cursor-pointer ml-2 w-14" onClick={()=>{setActivated(!activated)}}/>
+            {/* attachButton */}
+            <AddImageComponent/>
+
+        {/* submit button */}
             <IconButtonWithText onClick={()=>{
 
                 sendMessage()

@@ -1,7 +1,7 @@
 import ChatMessageComponent from "./chat_message_component"
 import ChatMessageInputComponent from './chat_message_input_component';
 import React, { useState, useEffect, useRef,useContext, useCallback } from 'react';
-import ApiCall from '../../api_call';
+import ApiCall from '../../../api_call';
 import StorageManager from '../../../utils/storage_manager';
 import SocketClientManager from '../../../sockets/message_socket';
 import LoadingComponent from '../../../reusable-components/loading/loading_component';

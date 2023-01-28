@@ -13,14 +13,14 @@ export default function IconButtonWithText(props) {
             props.onClick(event)
           
             }} className=" flex p-1 rounded-md justify-center items-center cursor-pointer transition-all  hover:bg-slate-800 " >
-            <div  id= {props.id} className="w-5 h-5 m-1 flex justify-center items-center">
+            
                 
 
-                    <props.icon  id= {props.id} className={`${activeIconStyle}  hover:text-gray-100`} />
+                    <props.icon  id= {props.id} className={`${activeIconStyle}  w-5 h-5 m-1 flex justify-center items-center hover:text-gray-100`} />
 
-            </div>
+      
 
-            <h1  id= {props.id} className={` xl:block p-1 hover:text-gray-100 hidden ${activeIconStyle}`}>{props.name}</h1>
+            <h1  id= {props.id} className={` p-1 hover:text-gray-100 select-none  ${props.isHidden?"hidden":"visible"} ${activeIconStyle}`}>{props.name}</h1>
 
         </div>
     )

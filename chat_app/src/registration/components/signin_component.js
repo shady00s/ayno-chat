@@ -1,7 +1,7 @@
 import SubmitButton from "./submit_button"
-import React,{useState,useEffect} from "react"
+import React,{useState} from "react"
 import InputTextComponent from './input_text_component';
-import ApiCall from './../../home/api_call';
+import ApiCall from '../../api_call';
 import StorageManager from "../../utils/storage_manager";
 import { useNavigate } from 'react-router-dom';
 

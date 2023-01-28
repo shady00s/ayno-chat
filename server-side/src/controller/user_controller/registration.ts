@@ -9,7 +9,7 @@ import PasswordManager from "./utils/password_manager";
     const password = req.body.password;
    
     const profileImagePath = req.body.profilePath;
-
+    Logining.error(userName + " " + password+ " " +profileImagePath)
 // check if there is any body key have undefined value
     if(userName == undefined || password  == undefined ||  profileImagePath == undefined){
         res.status(204).json({message:"data is missing or corupted"})

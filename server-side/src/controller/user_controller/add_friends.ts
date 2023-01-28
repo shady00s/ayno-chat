@@ -1,12 +1,13 @@
 import { NextFunction, Request,Response } from "express"
 import user_model from "../../model/user_model"
-import mongoose,{ObjectId} from "mongoose"
+import mongoose from "mongoose"
 import Logining from "../../logger"
 import conversation_model from "../../model/conversation_model"
 
-const postAddFriendController = async(req:Request,res:Response,next:NextFunction)=>{
-    const user_id = req.query.user_id
-    const contact_id = req.query.contact_id
+const postAcceptFriendController = async(req:Request,res:Response,next:NextFunction)=>{
+    const user_id = req.body.user_id
+    const contact_id = req.body.contact_id
+
 
 
     // create transaction between user and contact to add each other and create conversation 
@@ -18,35 +19,31 @@ const postAddFriendController = async(req:Request,res:Response,next:NextFunction
 
 
     try {
-        //let contentID = new mongoose.mongo.ObjectId(contact_id.toString()) 
             // check if the contact is not inside friends array
            
          user_model.findById({_id:user_id}).then(async result=>{
 
-            if(result.friends.find((data)=> data.toString() == contact_id) === undefined){
+            if(result.friends.find((data)=> data.id == contact_id) === undefined){
 
                 try {
                     let sessionResult = await session.withTransaction(async()=>{
+                       
                         let userInformation =  await user_model.findByIdAndUpdate(user_id,
-                            
                             {$addToSet:{conversations:{conversation_Id:generatedConversationId,contact_Id:contact_id},friends:contact_id}},
                             
                             {session,new:true}).then(userValue=>{
                             return userValue
                         })
-            
-                        //{$addToSet:{conversations:generatedConversationId,friends:user_id}},
-            
+                        //remove id from friend request array
+                        await user_model.findByIdAndUpdate(contact_id,{$pull:{friendRequests:user_id}})
                         let contactInformation = await user_model.findByIdAndUpdate(contact_id,{$addToSet:{conversations:{conversation_Id:generatedConversationId,contact_Id:user_id},friends:user_id}},{session,new:true}).then(contactValue =>{
                             return contactValue
                         })
             
-                        let createConversation = await new conversation_model({conversation_name:" ",conversation_id:generatedConversationId,members_ids:[userInformation.id,contactInformation.id]}).save().then(result=>{return result })
+                         await new conversation_model({conversation_name:" ",conversation_id:generatedConversationId,members_ids:[userInformation.id,contactInformation.id]}).save().then(result=>{return result })
                         res.status(200).json({
                             message:"succssess",
-                            body:{userData :{conv:userInformation.conversations , friends:userInformation.friends}  ,
-                            
-                            contactData : {conv:contactInformation.conversations ,friends:createConversation}  ,}
+                           
                     })
                     })
                     if(sessionResult.ok !== 1){
@@ -56,6 +53,7 @@ const postAddFriendController = async(req:Request,res:Response,next:NextFunction
                 } catch (error) {
                     Logining.error(error)
                     res.status(400).json({message:"session catchs an error",body:error})
+                    next()
                 }finally{
                     session.endSession()
                     next()
@@ -91,4 +89,4 @@ const postAddFriendController = async(req:Request,res:Response,next:NextFunction
 }
 
 
-export default postAddFriendController
+export default postAcceptFriendController
