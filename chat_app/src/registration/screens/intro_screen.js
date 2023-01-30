@@ -12,7 +12,7 @@ export default function IntroScreen() {
  const RegistrationScreenValue = useMemo(()=>({screen,setScreen}),[screen,setScreen])
     return (<>
         {/* main container */}
-        <main className="w-full h-screen  flex justify-center items-center  animate-changeColor bg-400% bg-gradient">
+        <main className="w-full h-screen overflow-hidden flex justify-center items-center  animate-changeColor bg-400% bg-gradient">
 
             <RegisterScreenContext.Provider value={RegistrationScreenValue}>
 

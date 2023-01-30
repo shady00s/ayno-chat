@@ -34,7 +34,7 @@ const SelectAvatarComponent = (props) => {
         <>
         
         <div className='flex flex-col w-[43rem]'>  
-        <div className="flex justify-between items-end flex-wrap w-3/6">
+        <div className="flex justify-between items-end flex-wrap w-4/12">
                         <h2 className="text-slate-200 text-md mb-2 mt-5">Select your avatar</h2>
 
                            <div className="h-full flex justify-evenly  items-center m-2 mt-4" >
@@ -46,7 +46,7 @@ const SelectAvatarComponent = (props) => {
                                 setGender("female")}} className={`${gender==="female"? "bg-pink-700 ":"bg-zinc-600 "} transition-colors w-16 h-10 bg-zinc-600 m-1 rounded-md text-slate-200 `}>Female</button>
                             </div> 
                         </div>
-            <div  className='flex flex-wrap w-[50%] h-46 overflow-y-auto p-1'>
+            <div  className='flex flex-wrap w-[43%] md:w-[50%] h-46 overflow-y-auto p-1'>
 
 
                 {avatar.length === 0 ? <LoadingComponent title={"Loading Avatars...."} /> : avatar.map((img, index) =>
