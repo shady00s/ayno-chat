@@ -15,7 +15,7 @@ const getChatMessages= async (req:Request,res:Response)=>{
 
          let conversationById =  conversation.find((id)=> friend_id === id.contact_Id._id.toString())
 
-         conversation_model.findOne({conversation_id:conversationById.conversation_Id}).then(conversation=>{
+        await conversation_model.findOne({conversation_id:conversationById.conversation_Id}).then(conversation=>{
 
             res.status(200).json({
                 message:"succssess",
