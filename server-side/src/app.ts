@@ -40,7 +40,7 @@ try {
             Logining.info("connected to port 8080")
         })
         SocketManager.connect(server)
-        SocketManager.messageSocket()
+       // SocketManager.messageSocket()
        
     })
 

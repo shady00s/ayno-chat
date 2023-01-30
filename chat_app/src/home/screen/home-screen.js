@@ -54,7 +54,7 @@ export default function HomeScreen() {
                 <ContactContext.Provider value={contactValue}>
                     
 
-                   <SettingsComponent/>
+                <SettingsComponent/>
                 <ContactList isMobile={width <= 648 ? true : false}/>
 
                 <MessageComponent />

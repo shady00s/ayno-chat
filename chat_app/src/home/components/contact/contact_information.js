@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React,{ useState, useEffect } from 'react';
 import useWindowDimensions from '../../../utils/window_size';
 import { useContext } from 'react';
 import ContactContext from './../../../context/contactContext';
@@ -9,8 +9,8 @@ import SocketClientManager from '../../../sockets/message_socket';
 const socketRef = SocketClientManager.socketInit()
 
 
-const ContactInformation = (props) => {
-    const [socket,setSocket] = useState(socketRef)
+function ContactInformation (props) {
+    const [socket] = useState(socketRef)
     const [isMobile, setIsMobile] = useState(false)
     const { width } = useWindowDimensions()
     const [media, setMedia] = useState([])
@@ -30,11 +30,14 @@ const ContactInformation = (props) => {
 
     }, [props.isMobile, contact])
 
-    useEffect(()=>{
-            socket.on("image",(imageUrl)=>{
-                setMedia(prev=>[...prev,imageUrl.message])
-            })
-    },[socket])
+    useEffect(() => {
+        socket.on("image", (imageUrl) => {
+           return setMedia(prev => [...prev, imageUrl.message])
+        })
+        return () => {
+            socket.removeListener("image")
+        }
+    }, [socket])
 
     return (
         <>
@@ -110,4 +113,4 @@ const ContactInformation = (props) => {
     )
 }
 
-export default ContactInformation
+export default React.memo(ContactInformation) 

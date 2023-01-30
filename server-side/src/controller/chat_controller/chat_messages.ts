@@ -1,6 +1,7 @@
 import { Request,Response } from "express"
 import user_model from "../../model/user_model";
 import conversation_model from "../../model/conversation_model";
+import SocketManager from "../../sockets/socket_manager";
 
 const getChatMessages= async (req:Request,res:Response)=>{
     const user_id = req.query.user_id;
@@ -16,7 +17,7 @@ const getChatMessages= async (req:Request,res:Response)=>{
          let conversationById =  conversation.find((id)=> friend_id === id.contact_Id._id.toString())
 
         await conversation_model.findOne({conversation_id:conversationById.conversation_Id}).then(conversation=>{
-
+            
             res.status(200).json({
                 message:"succssess",
                 conversations:conversation

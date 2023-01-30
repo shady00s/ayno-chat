@@ -1,29 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect ,useContext} from 'react';
 import convertBase64 from '../../../utils/base64';
 import IconButtonWithText from '../icon_button_with_text';
 import IconButton from './../icons_button';
 import { Paperclip, Image, File, Folder } from 'react-feather';
 import ApiCall from './../../../api_call';
 import StorageManager from '../../../utils/storage_manager';
-import SocketClientManager from './../../../sockets/message_socket';
-const socketRef = SocketClientManager.socketInit()
+import ContactContext from './../../../context/contactContext';
 
 
 //convert selected images to base64 and return them into array and send them to the server
-async function imageConverter(imagesList) {
 
-
-    const userId = StorageManager.getDataFromStorage()
-    const convertedImageList = [];
-    for (let index = 0; index < imagesList.length; index++) {
-        convertedImageList.push(await convertBase64(imagesList[index]))
-    }
-
-    return await ApiCall.postMediaToServer({ media: convertedImageList, sender_id: userId.id, conversation_id: "63ab380966640e1bdf353f36", sender_image_path: userId.profilePath }).then(vals => vals)
-}
 
 const AddImageComponent = () => {
+    const {contact} = useContext(ContactContext)
+    async function imageConverter(imagesList) {
 
+        const conversation = contact.conversations[0].conversation_id
+        const userId = StorageManager.getDataFromStorage()
+        const convertedImageList = [];
+        for (let index = 0; index < imagesList.length; index++) {
+            convertedImageList.push(await convertBase64(imagesList[index]))
+        }
+    
+        return await ApiCall.postMediaToServer({ media: convertedImageList, sender_id: userId.id, conversation_id: conversation, sender_image_path: userId.profilePath }).then(vals => vals)
+    }
 
     const [open, setOpen] = useState(false)
 

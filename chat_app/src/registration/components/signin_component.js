@@ -1,16 +1,17 @@
 import SubmitButton from "./submit_button"
-import React,{useState} from "react"
+import React,{useState,useContext} from "react"
 import InputTextComponent from './input_text_component';
 import ApiCall from '../../api_call';
 import StorageManager from "../../utils/storage_manager";
 import { useNavigate } from 'react-router-dom';
+import RegisterScreenContext from './../../context/registrationContext';
 
 const SignInComponent = ()=>{
     const [rememberMe,setRememberMe]=useState(false)
     const [userName,setUserName]=useState('')
     const [password,setPassword]=useState('')
     const navigate = useNavigate()
-
+    const {setScreen} = useContext(RegisterScreenContext)
     const sendLoginData = ()=>{
         ApiCall.getUserLoginData({user_name:userName,user_password:password}).then(loginData=>{
             if(loginData.status===200){
@@ -28,7 +29,7 @@ const SignInComponent = ()=>{
     }
     return(
         <>
-            <div className="p-3 w-11/12 h-full flex-col flex justify-center">
+            <div className="p-3 w-11/12  flex-col flex ">
                 <h2 className="text-slate-200 text-2xl mb-2">Sign-in</h2>
                 <span className="text-slate-400" >Just add any random name and password to get started!</span>
 
@@ -47,7 +48,7 @@ const SignInComponent = ()=>{
 
                 {/* register link */}
 
-                <span className="text-slate-400 p-4">Don't have profile?  <span className="text-orange-300 cursor-pointer ">Register</span></span>
+                <span className="text-slate-400 p-4">Don't have profile?  <span onClick={()=>{setScreen("register")}} className="text-orange-300 cursor-pointer ">Register</span></span>
                 <SubmitButton className="w-6/12 bg-indigo-800" onClick={()=>{sendLoginData()}} title={"Sign-in"}/>
 
             

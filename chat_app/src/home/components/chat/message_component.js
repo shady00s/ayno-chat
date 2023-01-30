@@ -5,7 +5,6 @@ import ApiCall from '../../../api_call';
 import StorageManager from '../../../utils/storage_manager';
 import SocketClientManager from '../../../sockets/message_socket';
 import LoadingComponent from '../../../reusable-components/loading/loading_component';
-import {io} from "socket.io-client"
 import ContactContext from './../../../context/contactContext';
 
 const socketRef = SocketClientManager.socketInit()
@@ -32,6 +31,7 @@ const socketRef = SocketClientManager.socketInit()
   // when contact changes api call will triggered to insert new data
   useEffect(()=>{
     ApiCall.getUserChatMessages(user_id.id, contact._id).then(messages => {
+    
         setChat(() => messages.data.conversations.messages)
     })
 
@@ -39,6 +39,7 @@ const socketRef = SocketClientManager.socketInit()
 
     useEffect(()=>{
         socket.on("recive-message", (message) => {
+       
             //add new message that comes from the socket to previous messages      
                return setChat((prev) => [...prev, message])
         })    

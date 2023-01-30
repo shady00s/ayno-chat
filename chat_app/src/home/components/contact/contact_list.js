@@ -2,7 +2,7 @@ import ContactButton from "./contact_button"
 import EmptyContactComponent from "./empty_contacts_component";
 import StorageManager from "../../../utils/storage_manager";
 import SearchComponent from "../search/search_component";
-import { useEffect, useState,useContext } from 'react';
+import React,{ useEffect, useState, useContext } from 'react';
 import ApiCall from '../../../api_call';
 import LoadingComponent from '../../../reusable-components/loading/loading_component';
 import NewFirendComponent from "../search_result_component";
@@ -12,7 +12,7 @@ import NavigationContext from '../../../context/navigationContext';
 import FriendRequestComponent from "./friend_request";
 
 
-export default function ContactList(props){
+function ContactList(props){
     let userData = StorageManager.getDataFromStorage()
     const navigate = useNavigate()
 
@@ -130,3 +130,5 @@ export default function ContactList(props){
        
     )
 }
+
+export default React.memo(ContactList)
