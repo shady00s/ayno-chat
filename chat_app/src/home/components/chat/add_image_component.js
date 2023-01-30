@@ -1,22 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
 import convertBase64 from '../../../utils/base64';
 import IconButtonWithText from '../icon_button_with_text';
 import IconButton from './../icons_button';
 import {Paperclip,Image,File,Folder} from 'react-feather';
 import ApiCall from './../../../api_call';
 import StorageManager from '../../../utils/storage_manager';
+import SocketClientManager from './../../../sockets/message_socket';
+const socketRef = SocketClientManager.socketInit()
 
-async function imageConverter(imagesList){
-    const userId = StorageManager.getDataFromStorage().id
+
+//convert selected images to base64 and return them into array and send them to the server
+async function imageConverter(imagesList) {
+
+
+    const userId = StorageManager.getDataFromStorage()
     const convertedImageList = [];
         for (let index = 0; index < imagesList.length; index++) {
             convertedImageList.push(await convertBase64(imagesList[index]))
         }
 
-       ApiCall.postMediaToServer({media:convertedImageList, user_id:userId ,conversation_id : "63ab380966640e1bdf353f36"})
+      return await ApiCall.postMediaToServer({media:convertedImageList, sender_id:userId.id ,conversation_id : "63ab380966640e1bdf353f36",sender_image_path:userId.profilePath}).then(vals=>vals)
 } 
 
 const AddImageComponent =()=>{
+
+  
     const [open,setOpen]= useState(false)
    
     return(

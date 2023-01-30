@@ -5,14 +5,12 @@ import ApiCall from '../../../api_call';
 import StorageManager from '../../../utils/storage_manager';
 import SocketClientManager from '../../../sockets/message_socket';
 import LoadingComponent from '../../../reusable-components/loading/loading_component';
-import EmptyMessageComponent from './empty_message_component';
 import {io} from "socket.io-client"
 import ContactContext from './../../../context/contactContext';
 
 const socketRef = SocketClientManager.socketInit()
 
 
-const socketData = io("ws://localhost:8080")
  function MessageComponent() {
 
     const  {contact} = useContext(ContactContext)
@@ -44,7 +42,14 @@ const socketData = io("ws://localhost:8080")
             //add new message that comes from the socket to previous messages      
                return setChat((prev) => [...prev, message])
         })    
-             return () => socket.removeListener("recive-message")
+        socket.on("image",(imageUrl)=>{
+           return setChat((prev) => [...prev, imageUrl])
+        })
+             return () => {
+                socket.removeListener("recive-message")
+                socket.removeListener("image")
+            
+            }
                 
     },[socket])
     return (

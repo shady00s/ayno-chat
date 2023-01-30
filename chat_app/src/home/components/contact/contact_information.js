@@ -4,9 +4,13 @@ import { useContext } from 'react';
 import ContactContext from './../../../context/contactContext';
 import ApiCall from './../../../api_call';
 import { Image } from 'react-feather';
+import SocketClientManager from '../../../sockets/message_socket';
+
+const socketRef = SocketClientManager.socketInit()
 
 
 const ContactInformation = (props) => {
+    const [socket,setSocket] = useState(socketRef)
     const [isMobile, setIsMobile] = useState(false)
     const { width } = useWindowDimensions()
     const [media, setMedia] = useState([])
@@ -26,6 +30,11 @@ const ContactInformation = (props) => {
 
     }, [props.isMobile, contact])
 
+    useEffect(()=>{
+            socket.on("image",(imageUrl)=>{
+                setMedia(prev=>[...prev,imageUrl.message])
+            })
+    },[socket])
 
     return (
         <>

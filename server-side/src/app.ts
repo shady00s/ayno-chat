@@ -5,7 +5,7 @@ import mongoose from 'mongoose';
 import * as dotenv from 'dotenv' ;
 import chatRouter from './routes/chat_routes';
 import http from 'http'
-import SocketManager from "./sockets/message_socket";
+import SocketManager from "./sockets/socket_manager";
 dotenv.config()
 const app = express()
 app.use(express.json({limit:'50mb'}))
@@ -39,9 +39,9 @@ try {
        const server:http.Server = app.listen(8080,()=>{
             Logining.info("connected to port 8080")
         })
-
-      // SocketManager.connect(server)
-       SocketManager.messageSocket(server)
+        SocketManager.connect(server)
+        SocketManager.messageSocket()
+       
     })
 
     
