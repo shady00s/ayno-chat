@@ -12,8 +12,8 @@ const SignInComponent = ()=>{
     const [password,setPassword]=useState('')
     const navigate = useNavigate()
     const {setScreen} = useContext(RegisterScreenContext)
-    const sendLoginData = ()=>{
-        ApiCall.getUserLoginData({user_name:userName,user_password:password}).then(loginData=>{
+    const  sendLoginData = async ()=>{
+       await ApiCall.getUserLoginData({user_name:userName,user_password:password}).then(loginData=>{
             if(loginData.status===200){
                 if(rememberMe){
                     StorageManager.insertDataToStorage(loginData.data.body,"local")
@@ -49,7 +49,7 @@ const SignInComponent = ()=>{
                 {/* register link */}
 
                 <span className="text-slate-400 p-4">Don't have profile?  <span onClick={()=>{setScreen("register")}} className="text-orange-300 cursor-pointer ">Register</span></span>
-                <SubmitButton className="w-6/12 bg-indigo-800" onClick={()=>{sendLoginData()}} title={"Sign-in"}/>
+                <SubmitButton className="w-6/12 bg-indigo-800" onClick={()=>{sendLoginData().then(val=>{navigate("/ayno-chat/home")})}} title={"Sign-in"}/>
 
             
        

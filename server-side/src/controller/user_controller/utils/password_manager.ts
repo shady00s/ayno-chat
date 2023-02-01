@@ -6,7 +6,7 @@ class PasswordManager{
      }
 
      static decode = async(password:string,passwordFromDatabase:string):Promise<boolean>=>{
-        let decodedPass :boolean = await bcrypt.compare(password,passwordFromDatabase)
+        let decodedPass :boolean = await bcrypt.compare(password,passwordFromDatabase).then(val=>val)
         return decodedPass
      }
 }

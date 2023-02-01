@@ -18,7 +18,7 @@ export default function IntroScreen() {
 
            
             {/* registeration container */}
-            <div className={` ${screen === 'sign-in'?" md:w-4/12 md:h-[85%] ":"sm:w-9/12  md:h-[90%] "}  transition-all duration-300 ease bg-background w-11/12 p-4  pb-2 m-auto  rounded-3xl md:h-[70vh] `}>
+            <div className={` ${screen === 'sign-in'?" md:w-4/12 md:h-[78%] ":"sm:w-9/12  md:h-[90%] "} ${screen === 'register'?"md:h-[85%]":"md:h-[70%]"}  transition-all duration-300 ease bg-background w-11/12 p-4  pb-2 m-auto  rounded-3xl md:h-[85%] `}>
                 <div>
                     <img className="w-36 m-6" src={"./images/logo.png"} />
                 </div>
@@ -26,7 +26,7 @@ export default function IntroScreen() {
 
                 <div className={`${screen ==='sign-in'?"overflow-y-hidden items-end":"overflow-y-auto"}    overflow-hidden flex`}>
                  {/* intro section */}
-                <section className={`${screen === 'main' ? " translate-x-0":" -translate-x-[-99999px] w-0 h-0 hidden"}   transition-transform duration-300 ease-in flex justify-center items-center flex-wrap `}>
+                <section className={`${screen === 'main' ? " translate-x-0":" -translate-x-[-99999px] w-0 h-0 hidden"} md:overflow-hidden overflow-y-scroll  transition-transform duration-300 ease-in flex justify-center items-center flex-wrap md:h-full   h-[75vh]`}>
                     <div className="flex flex-col md:border-b-0   border-b-2 border-b-slate-700 md:border-b-slate-700 items-center md:w-6/12 w-11/12 md:border-r-2 md:border-r-slate-700 p-2 ml-4  m-auto md:h-4/5">
                         <h1 className="text-3xl  xl:text-6xl md:p-4 p-8 text-slate-300">
                             Chat any one with no information needed.

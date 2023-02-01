@@ -3,13 +3,12 @@ import user_model from "../../model/user_model";
 import Logining from './../../logger';
 import PasswordManager from "./utils/password_manager";
 
- const userRegistrationController = (req:Request,res:Response,next:NextFunction):void=>{
+ const userRegistrationController = (req:Request ,res:Response,next:NextFunction):void=>{
    
     const userName = req.body.username;
     const password = req.body.password;
    
     const profileImagePath = req.body.profilePath;
-    Logining.error(userName + " " + password+ " " +profileImagePath)
 // check if there is any body key have undefined value
     if(userName == undefined || password  == undefined ||  profileImagePath == undefined){
         res.status(204).json({message:"data is missing or corupted"})
@@ -23,6 +22,14 @@ import PasswordManager from "./utils/password_manager";
                     profileImagePath:profileImagePath
                 }) 
                 UserModel.save().then((val)=>{
+                    req.session.userData={
+                        userId:val.id ,
+                        userName:val.name,
+                        userProfilePath:val.profileImagePath
+                      }
+
+
+
                     Logining.info('Added to user database')
                     res.status(201).json({
                         message:"register-complete",
