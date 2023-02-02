@@ -4,13 +4,12 @@ import StorageManager from "../../../utils/storage_manager";
 import SearchComponent from "../search/search_component";
 import React,{ useEffect, useState, useContext } from 'react';
 import ApiCall from '../../../api_call';
-import LoadingComponent from '../../../reusable-components/loading/loading_component';
 import NewFirendComponent from "../search_result_component";
 import { X } from "react-feather";
 import { useNavigate } from 'react-router-dom';
 import NavigationContext from '../../../context/navigationContext';
 import FriendRequestComponent from "./friend_request";
-
+import { FriendListSkeleton } from "../../../reusable-components/skeleton/friend_list";
 
 function ContactList(props){
     let userData = StorageManager.getDataFromStorage()
@@ -88,7 +87,7 @@ function ContactList(props){
             <div className="p-1 ">
 
             <h6 className="text-slate-200 text-left p-2">Friends</h6>
-            {loading?<LoadingComponent/>: contacts.length !== 0 ?contacts.map((contactData)=><ContactButton key={contactData.name} data={contactData}/>):<EmptyContactComponent/>}
+            {loading?<FriendListSkeleton/>: contacts.length !== 0 ?contacts.map((contactData)=><ContactButton key={contactData.name} data={contactData}/>):<EmptyContactComponent/>}
             
             </div>
 
@@ -118,7 +117,7 @@ function ContactList(props){
             <div className="p-1 ">
 
             <h6 className="text-slate-200 text-left p-1">{"Friends"}</h6>
-            {loading?<LoadingComponent/>: contacts.length !== 0 ?contacts.map((contactData)=><ContactButton  key={contactData.name} data={contactData}/>):<EmptyContactComponent/>}
+            {loading?<FriendListSkeleton/>: contacts.length !== 0 ?contacts.map((contactData)=><ContactButton  key={contactData.name} data={contactData}/>):<EmptyContactComponent/>}
             
             </div>
 

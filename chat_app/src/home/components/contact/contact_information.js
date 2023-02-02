@@ -5,6 +5,7 @@ import ContactContext from './../../../context/contactContext';
 import ApiCall from './../../../api_call';
 import { Image } from 'react-feather';
 import SocketClientManager from '../../../sockets/message_socket';
+import { ContactSkeleton } from '../../../reusable-components/skeleton/contact_info';
 
 const socketRef = SocketClientManager.socketInit()
 
@@ -15,7 +16,9 @@ function ContactInformation (props) {
     const { width } = useWindowDimensions()
     const [media, setMedia] = useState([])
     const { contact } = useContext(ContactContext)
+    const [loading,setLoading]=useState(false)
     useEffect(() => {
+        setLoading(true)
         setIsMobile(props.isMobile)
         if (contact.conversations !== undefined) {
 
@@ -77,7 +80,7 @@ function ContactInformation (props) {
                 </div>
                 // desktop version
                 : <div className='w-2/6'>
-                    <div className={` bg-background w-full h-full flex flex-col justify-start transition-transform ease-in-out duration-500`}>
+                   {loading? <ContactSkeleton/>:<div className={` bg-background w-full h-full flex flex-col justify-start transition-transform ease-in-out duration-500`}>
                         <img className=' ml-auto mr-auto  rounded-full w-20 mt-10' src={contact.profileImagePath} />
                         <h1 className='mt-8 text-slate-200 text-xl mb-4  ml-auto mr-auto '>{contact.name}</h1>
 
@@ -105,7 +108,7 @@ function ContactInformation (props) {
 
                         </div>
 
-                    </div>
+                    </div>} 
                 </div>
 
             }

@@ -4,9 +4,8 @@ import React, { useState, useEffect, useRef,useContext, useCallback } from 'reac
 import ApiCall from '../../../api_call';
 import StorageManager from '../../../utils/storage_manager';
 import SocketClientManager from '../../../sockets/message_socket';
-import LoadingComponent from '../../../reusable-components/loading/loading_component';
 import ContactContext from './../../../context/contactContext';
-
+import { ChatSkeleton } from "../../../reusable-components/skeleton/chat";
 const socketRef = SocketClientManager.socketInit()
 
 
@@ -66,7 +65,7 @@ const socketRef = SocketClientManager.socketInit()
                     <div className="m-1 pb-4 border-b-2 p-2  border-b-[rgba(70,70,70,0.1)]" ref={scrollRef}>
                         
                         <ChatMessageComponent key={Math.random().toString()} message={messageComponent} isUser={messageComponent.sender_id == user_id.id ? true : false} /></div>)
-                    : <div className="w-full md:h-[75vh] h-[85vh] justify-center items-center"><LoadingComponent /></div>}
+                    : <div className="w-full md:h-[75vh] h-[85vh] justify-center items-center"><ChatSkeleton /></div>}
         
            
             </div>
