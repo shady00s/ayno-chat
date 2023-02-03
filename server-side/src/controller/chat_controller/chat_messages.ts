@@ -3,10 +3,9 @@ import user_model from "../../model/user_model";
 import conversation_model from "../../model/conversation_model";
 
 const getChatMessages= async (req:Request,res:Response)=>{
-    const user_id = req.session.userData;
+    const user_id = req.query.user_data ;
     let friend_id = req.query.friend_id;
 
-    console.log(req.session);
     if(user_id !== null){
         try {
            let conversation = await user_model.findById(user_id).then(responseData=>responseData.conversations).then(val=>val)

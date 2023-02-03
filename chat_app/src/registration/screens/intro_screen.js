@@ -18,13 +18,13 @@ export default function IntroScreen() {
 
            
             {/* registeration container */}
-            <div className={` ${screen === 'sign-in'?" md:w-4/12 md:h-[78%] ":"sm:w-9/12  md:h-[90%] "} ${screen === 'register'?"md:h-[85%]":"md:h-[70%]"}  transition-all duration-300 ease bg-background w-11/12 p-4  pb-2 m-auto  rounded-3xl md:h-[85%] `}>
+            <div className={` ${screen === 'sign-in'?" md:w-4/12 w-10/12 h-[78%] ":"  w-5/6  h-[90%] "} ${screen === 'register'?"md:h-[85%]":"md:h-[70%]"} w-[80%] transition-all duration-300 ease bg-background relative p-4  pb-2 m-auto overflow-hidden rounded-3xl md:h-[85%] `}>
                 <div>
                     <img className="w-36 m-6" src={"./images/logo.png"} />
                 </div>
         {/* main screen */}
 
-                <div className={`${screen ==='sign-in'?"overflow-y-hidden items-end":"overflow-y-auto"}    overflow-hidden flex`}>
+                <div className={`${screen ==='sign-in'?"overflow-y-hidden items-end":"overflow-y-auto"}    overflow-hidden `}>
                  {/* intro section */}
                 <section className={`${screen === 'main' ? " translate-x-0":" -translate-x-[-99999px] w-0 h-0 hidden"} md:overflow-hidden overflow-y-scroll  transition-transform duration-300 ease-in flex justify-center items-center flex-wrap md:h-full   h-[75vh]`}>
                     <div className="flex flex-col md:border-b-0   border-b-2 border-b-slate-700 md:border-b-slate-700 items-center md:w-6/12 w-11/12 md:border-r-2 md:border-r-slate-700 p-2 ml-4  m-auto md:h-4/5">
@@ -38,17 +38,20 @@ export default function IntroScreen() {
                     {/* signup and registration section */}
                     <div className="p-10  w-full  md:w-5/12">
                         <h3 className="text-slate-400 pt-3 pb-5">Sign in if you already have account</h3>
-                        <SubmitButton onClick={()=>{setScreen("sign-in")}} className={'bg-slate-800 mb-5 w-full'} title={"Sign-in"} />
+                        <SubmitButton future={false} onClick={()=>{setScreen("sign-in")}} className={'bg-slate-800 mb-5 w-full'} title={"Sign-in"} />
                         <h3 className="text-slate-400 pt-3 pb-5" >Don't have accout? then create one.</h3>
                             
-                            <SubmitButton className={'bg-slate-800 w-full'} title={"Register"} onClick={()=>{setScreen("register")}}/>
+                            <SubmitButton future={false} className={'bg-slate-800 w-full'} title={"Register"} onClick={()=>{setScreen("register")}}/>
 
                            
                     </div>
                 </section>
 
+                <div className="w-full h-full overflow-y-auto  md:overflow-y-hidden overflow-x-hidden">
+
+               
                 {/* sign in screen */}
-                <section className={`${screen === 'sign-in' ? "translate-x-0":"translate-x-[9999px] w-0 h-0 hidden"}  transition-transform duration-300  flex justify-center items-center   `}>
+                <section className={`${screen === 'sign-in' ? "translate-x-0":"translate-x-[9999px] w-0 h-0 "}  transition-transform duration-300   flex justify-center items-center   `}>
                   
                     <SignInComponent/>
 
@@ -56,7 +59,7 @@ export default function IntroScreen() {
                 </section>
                 {/* register screen */}
 
-                <section className={`${screen === 'register' ? "translate-x-0":"-translate-x-[-9999px] w-0 h-0 hidden"}  pb-2 transition-transform duration-300  w-full `}>
+                <section className={`${screen === 'register' ? "opacity-100 translate-x-0":"-translate-x-[-9999px] w-0 h-0 invisible "}  h-[29rem]  pb-2 transition-all duration-300 overflow-y-auto overflow-x-hidden w-full `}>
                 
                   <RegistrationComponent/>
 
@@ -65,7 +68,7 @@ export default function IntroScreen() {
 
                    
                 </section>
-
+                </div>
                 </div>
                 
             </div>

@@ -4,7 +4,7 @@ import InputTextComponent from './input_text_component';
 import ApiCall from '../../api_call';
 import StorageManager from "../../utils/storage_manager";
 import { useNavigate } from 'react-router-dom';
-import RegisterScreenContext from './../../context/registrationContext';
+import RegisterScreenContext from '../../context/registrationContext';
 
 const SignInComponent = ()=>{
     const [rememberMe,setRememberMe]=useState(false)
@@ -49,7 +49,7 @@ const SignInComponent = ()=>{
                 {/* register link */}
 
                 <span className="text-slate-400 p-4">Don't have profile?  <span onClick={()=>{setScreen("register")}} className="text-orange-300 cursor-pointer ">Register</span></span>
-                <SubmitButton className="w-6/12 bg-indigo-800" onClick={()=>{sendLoginData().then(val=>{navigate("/ayno-chat/home")})}} title={"Sign-in"}/>
+                <SubmitButton future className="w-6/12 bg-indigo-800" onClick={()=>{sendLoginData().then(val=>{navigate("/ayno-chat/home")})}} title={"Sign-in"}/>
 
             
        

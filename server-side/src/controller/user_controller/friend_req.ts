@@ -1,11 +1,11 @@
 import { Response,Request } from "express";
 import user_model from "../../model/user_model";
-import mongoose, { ObjectId } from 'mongoose';
 
 const addFriendRequestController = (req:Request,res:Response)=>{
     const friend_id = req.body.friend_id
     const user_id = req.body.user_id
 
+    console.log(friend_id);
     // check if the id is not empty 
     if(friend_id !== undefined && user_id !== undefined){
 
@@ -22,6 +22,11 @@ const addFriendRequestController = (req:Request,res:Response)=>{
             }
         })
     }
+    else{
+        res.status(500).json({message: "there is error with user id or contact id",})
+    }
+
+             
 
 }
 

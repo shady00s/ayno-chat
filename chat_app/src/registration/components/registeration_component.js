@@ -97,10 +97,10 @@ const RegistrationComponent = () => {
     return (
 
         <>
-            <div className=" flex flex-col justify-start p-4">
+            <div className=" flex flex-col h-full justify-start  p-4">
                 <h2 className="text-slate-200 text-2xl mb-2">Register</h2>
-                <span className="text-slate-400 " >Just add any random name and password to get started!</span>
-                <div className="flex justify-between flex-wrap h-[60vh] md:h-[65vh] m-auto  p-4 w-[95%] md:overflow-x-hidden md:overflow-y-auto">
+                <span className="text-slate-400" >Just add any random name and password to get started!</span>
+                <div className="flex justify-between flex-wrap   m-auto  p-4 w-[95%] ">
                 
                 <div className=" md:w-6/12 w-full  ">
                 <form className="p-3 flex flex-col items-start ">

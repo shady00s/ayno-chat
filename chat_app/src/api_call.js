@@ -90,6 +90,15 @@ class ApiCall{
         console.log(error)
     }
     }
+
+    static postFriendRequest = (data)=>{
+        try {
+            const friendReq = axiosInestance.post('/user/add-friend',data).then(value=>value)
+            return friendReq
+        } catch (error) {
+            console.log(error)
+        }
+    }
 }
 
 export default ApiCall

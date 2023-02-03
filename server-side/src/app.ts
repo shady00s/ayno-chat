@@ -9,7 +9,7 @@ import SocketManager from "./sockets/socket_manager";
 import cors from 'cors'
 import UserData from "./types/session_type";
 import {default as connectMongoDBSession}from "connect-mongodb-session"
-import session from "express-session";
+import cookieSession from "express-session";
 import "express-session";
 declare module "express-session"{
     interface SessionData{
@@ -18,7 +18,7 @@ declare module "express-session"{
 }
 dotenv.config()
 const app = express()
-const MongoDBStore = connectMongoDBSession(session);
+const MongoDBStore = connectMongoDBSession(cookieSession);
 const store = new MongoDBStore({
     uri:`mongodb+srv://${process.env.DATABASE_USER_NAME}:${process.env.DATABASE_PASSWORD}@chatdatabase.fnneyaw.mongodb.net/`,
     collection:"usermodels",
