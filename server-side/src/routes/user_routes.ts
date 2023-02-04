@@ -7,6 +7,7 @@ import sendImage from "../controller/user_controller/send_image";
 import postAcceptFriendController from "../controller/user_controller/add_friends";
 import addFriendRequestController from "../controller/user_controller/friend_req";
 import getMediaContoller from "../controller/get_media";
+import { logInFromSession, sessionMiddleware } from '../session';
 
 const userRouter = express.Router()
 
@@ -14,7 +15,9 @@ userRouter.post('/register',userRegistrationController)
 
 userRouter.post('/login',userLogin)
 
-userRouter.get('/friends',getUserFriendsController)
+userRouter.get('/loginAuth',logInFromSession)
+
+userRouter.get('/friends',sessionMiddleware,getUserFriendsController)
 
 userRouter.post('/add-friend',addFriendRequestController)
 

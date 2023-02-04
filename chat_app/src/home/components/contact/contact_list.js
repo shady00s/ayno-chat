@@ -12,7 +12,6 @@ import FriendRequestComponent from "./friend_request";
 import { FriendListSkeleton } from "../../../reusable-components/skeleton/friend_list";
 
 function ContactList(props){
-    let userData = StorageManager.getDataFromStorage()
     const navigate = useNavigate()
 
     const [searchContainer,setSearchContainer] = useState(false)
@@ -42,21 +41,13 @@ function ContactList(props){
     useEffect(()=>{
 
         
-        if(Object.keys(userData).length !== 0){
             setLoading(true)
 
-            ApiCall.getFriendsList(userData.id).then(value=>{
+            ApiCall.getFriendsList().then(value=>{
                 setLoading(false)
                    if(value.status ===200) setContacts(()=>value.data.body.friends)
 
             })  
-
-        }else{
-            navigate("/ayno-chat/register")
-            setContacts([])
-        }
-
-
         
     },[])
 

@@ -35,7 +35,7 @@ const RegistrationComponent = () => {
     useEffect(()=>{
         
         // get avatars from cartoon avatar api
-        console.log(avatar)
+       
         setRegisterData({
             username:username,
             password:pass,

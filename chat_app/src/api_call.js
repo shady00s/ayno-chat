@@ -5,6 +5,9 @@ class ApiCall{
         try {
             let friendsList =  axiosInestance.get('/user/friends'
             ,{
+                headers:{
+                    'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
+                }, withCredentials:true,
                   params:{
                       user_id:userID
                   }
@@ -18,10 +21,10 @@ class ApiCall{
 
      
     }
-    static getUserChatMessages = (userID,friendId)=>{
+    static getUserChatMessages = (friendId)=>{
         try {
-            let result = axiosInestance.post(`/chat/messages`,{},{params:{
-                user_id:userID, 
+            let result = axiosInestance.post(`/chat/messages`,{params:{
+               
                 friend_id:friendId
             }}).then(data=>{
                return data
@@ -49,7 +52,9 @@ class ApiCall{
 
     static getUserLoginData = (userLoginData)=>{
         try {
-            let userData = axiosInestance.post('/user/login',userLoginData).then(value=>value)
+            let userData = axiosInestance.post('/user/login',userLoginData,{headers:{
+                'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
+            }, withCredentials:true}).then(value=>value)
             return userData
         } catch (error) {
             console.log(error)

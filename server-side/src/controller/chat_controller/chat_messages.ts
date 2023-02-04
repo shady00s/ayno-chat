@@ -3,7 +3,7 @@ import user_model from "../../model/user_model";
 import conversation_model from "../../model/conversation_model";
 
 const getChatMessages= async (req:Request,res:Response)=>{
-    const user_id = req.query.user_data ;
+    const user_id = req.session.userData.userId ;
     let friend_id = req.query.friend_id;
 
     if(user_id !== null){

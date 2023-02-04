@@ -7,7 +7,7 @@ class SocketManager {
     private static io:Server;
 
     static connect = (server:http.Server)=>{
-        this.io = new Server(server,{cors:{origin:"http://localhost:3000",methods:["GET","POST"]}});
+        this.io = new Server(server,{cors:{origin:"*",methods:["GET","POST"]}});
 
 
             return  this.io.on("connection",(socket:Socket)=>{
