@@ -47,11 +47,11 @@ export default function IntroScreen() {
                     </div>
                 </section>
 
-                <div className="w-full h-full overflow-y-auto  md:overflow-y-hidden overflow-x-hidden">
+                <div className="w-full h-[23rem]  overflow-y-hidden">
 
                
                 {/* sign in screen */}
-                <section className={`${screen === 'sign-in' ? "translate-x-0":"translate-x-[9999px] w-0 h-0 "}  transition-transform duration-300   flex justify-center items-center   `}>
+                <section className={`${screen === 'sign-in' ? "translate-x-0":"translate-x-[9999px] w-0 h-0 "}  transition-transform duration-300   flex justify-center items-center  overflow-y-scroll`}>
                   
                     <SignInComponent/>
 

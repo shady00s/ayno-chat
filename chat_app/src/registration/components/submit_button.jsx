@@ -9,8 +9,8 @@ const SubmitButton = (props) => {
                 setloading(true)
 
                 if (props.future){
-                    setTimeout(()=>{
-                        props.onClick().then(()=>{
+                    setTimeout(async()=>{
+                      await  props.onClick().then(()=>{
                             setloading(false)
                         })
     

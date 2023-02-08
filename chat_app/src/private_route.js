@@ -1,11 +1,11 @@
-import { Outlet,Navigate } from "react-router-dom"
+import { Outlet,Navigate,Route } from "react-router-dom"
 import StorageManager from "./utils/storage_manager"
 const PrivateRoute = ()=>{
-    //checks if the user data is existed in the local / session storage to navigate to home page if not navigate to register page
 
-    let user_data = StorageManager.getDataFromStorage !== {} ? true:false
+    let user_data = Object.keys(StorageManager.getUserData()).length !== 0  
+   
     return(
-       user_data? <Outlet/> : <Navigate to={"/ayno-chat/register"}/>
+       user_data ==true? <Outlet/> : <Navigate to={"/ayno-chat/register"}/>
     )
 }
 

@@ -1,11 +1,11 @@
 import React, { useState, useEffect ,useContext} from 'react';
 import convertBase64 from '../../../utils/base64';
 import IconButtonWithText from '../icon_button_with_text';
-import IconButton from './../icons_button';
+import IconButton from '../icons_button';
 import { Paperclip, Image, File, Folder } from 'react-feather';
-import ApiCall from './../../../api_call';
+import ApiCall from '../../../api_call';
 import StorageManager from '../../../utils/storage_manager';
-import ContactContext from './../../../context/contactContext';
+import ContactContext from '../../../context/contactContext';
 
 
 //convert selected images to base64 and return them into array and send them to the server

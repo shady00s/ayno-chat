@@ -3,10 +3,11 @@ import user_model from "../../model/user_model";
 import conversation_model from "../../model/conversation_model";
 
 const getChatMessages= async (req:Request,res:Response)=>{
-    const user_id = req.session.userData.userId ;
+    
+    const user_id = req.session.userData.userId;
     let friend_id = req.query.friend_id;
 
-    if(user_id !== null){
+    if(friend_id !== null){
         try {
            let conversation = await user_model.findById(user_id).then(responseData=>responseData.conversations).then(val=>val)
 
@@ -29,7 +30,7 @@ const getChatMessages= async (req:Request,res:Response)=>{
         
     }else{
         res.status(204).json({
-            message:"invalid username or user not found",
+            message:"invalid arguments",
             
         })
     }

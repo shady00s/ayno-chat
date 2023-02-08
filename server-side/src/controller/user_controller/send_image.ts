@@ -8,7 +8,7 @@ export default async function sendImage(req: Request, res: Response, next: NextF
 
     const media: string[] = req.body.media
     const conversation_id: string = req.body.conversation_id
-    const sender_id:string = req.body.sender_id
+    const sender_id:string = req.session.userData.userId.id.toString()
     const sender_image_path:string = req.body.sender_image_path
 
     // check if the body is not null

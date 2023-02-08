@@ -6,13 +6,11 @@ import React,{ useEffect, useState, useContext } from 'react';
 import ApiCall from '../../../api_call';
 import NewFirendComponent from "../search_result_component";
 import { X } from "react-feather";
-import { useNavigate } from 'react-router-dom';
 import NavigationContext from '../../../context/navigationContext';
 import FriendRequestComponent from "./friend_request";
 import { FriendListSkeleton } from "../../../reusable-components/skeleton/friend_list";
 
 function ContactList(props){
-    const navigate = useNavigate()
 
     const [searchContainer,setSearchContainer] = useState(false)
     const [contacts,setContacts] = useState([])
@@ -26,7 +24,7 @@ function ContactList(props){
     const getSearchResult = ()=>{
 
 
-        ApiCall.getSearchData(search,StorageManager.getDataFromStorage().id).then(value=>{
+        ApiCall.getSearchData(search,StorageManager.getUserData().id).then(value=>{
             if(value.status === 200){
                 setSearchList((oldData)=>[...oldData,value.data.body])
                 
@@ -38,18 +36,15 @@ function ContactList(props){
     }
 
     
-    useEffect(()=>{
 
-        
-            setLoading(true)
 
             ApiCall.getFriendsList().then(value=>{
-                setLoading(false)
+                
                    if(value.status ===200) setContacts(()=>value.data.body.friends)
 
             })  
         
-    },[])
+ 
 
  
     return(
@@ -65,7 +60,7 @@ function ContactList(props){
 
                             <span className="p-1 flex justify-center items-center h-7 cursor-pointer select-none rounded-md transition-colors text-slate-400 hover:bg-slate-600" onClick={()=>{setSearchContainer(false)}}><X/> Close</span>
                         </div>
-                    {searchList.length !== 0 ? searchList.map(data=><NewFirendComponent data={data}/>) : <div></div>}
+                    {searchList.length !== 0 ? searchList.map(data=><NewFirendComponent key={data} data={data}/>) : <div></div>}
                     
                     
                 </div> :null

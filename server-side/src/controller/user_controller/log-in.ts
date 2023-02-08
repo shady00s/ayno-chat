@@ -9,8 +9,8 @@ const userLogin = (req:Request,res:Response,next:NextFunction)=>{
     const user_name = req.body.user_name
     const user_password = req.body.user_password
 
-    if(user_name !== undefined && user_password !== undefined)
-    try{
+    if(user_name !== undefined && user_password !== undefined){
+      try{
         user_model.findOne({name:user_name}).then(async userVal=>{
           if(userVal!== null){
            
@@ -25,21 +25,18 @@ const userLogin = (req:Request,res:Response,next:NextFunction)=>{
                 userName:userVal.name,
                 userProfilePath:userVal.profileImagePath
               }
+
              
-              req.session.save(function(error){
-                if(error){
-                  res.status(400).json({message:"session error",error})
+             
+              req.session.save(function(err){
+                if(err){
+                  res.status(400).json({message:"session err",err:err})
                  
                 }
-                  req.session.save(function(err){
-                    if(err){
-                      res.status(500).json({message:"session error",err})
-                    }
-                    else{
-                      res.redirect('/user/loginAuth')
+                else{
+                  res.redirect('/user/loginAuth')
 
-                    }
-                  })
+                }
                
               
               });
@@ -47,12 +44,25 @@ const userLogin = (req:Request,res:Response,next:NextFunction)=>{
              
               
             }
-          else{
-            res.status(500).json({message:`there is no account with name ${user_name}`})
-          }
-        }})
+            else{
+              res.status(500).json({message:`wrong email or password`})
+            }
+         
+        }
+        else{
+          res.status(500).json({message:`no user with name ${user_name}`})
+        }
+      
+      })
 
-    }catch(error){}
+   
+    }catch(error){
+      res.status(500).json({message:`error occured ${user_name}`})
+    }
+    }
+    else{
+      res.status(500).json({message:`user name or password are undefined`})
+    }
     // check if the user 
 }
 

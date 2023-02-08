@@ -19,15 +19,15 @@ userRouter.get('/loginAuth',logInFromSession)
 
 userRouter.get('/friends',sessionMiddleware,getUserFriendsController)
 
-userRouter.post('/add-friend',addFriendRequestController)
+userRouter.post('/add-friend',sessionMiddleware,addFriendRequestController)
 
-userRouter.post('/accept-friend',postAcceptFriendController)
+userRouter.post('/accept-friend',sessionMiddleware,postAcceptFriendController)
 
-userRouter.post('/send-image' ,sendImage)
+userRouter.post('/send-image' ,sessionMiddleware,sendImage)
 
-userRouter.get('/get-media',getMediaContoller)
+userRouter.get('/get-media',sessionMiddleware,getMediaContoller)
 
-userRouter.get('/search',search_user)
+userRouter.get('/search',sessionMiddleware,search_user)
 
 
 export default userRouter

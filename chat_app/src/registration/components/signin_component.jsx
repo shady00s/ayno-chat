@@ -3,21 +3,26 @@ import React,{useState,useContext} from "react"
 import InputTextComponent from './input_text_component';
 import ApiCall from '../../api_call';
 import StorageManager from "../../utils/storage_manager";
-import { useNavigate } from 'react-router-dom';
 import RegisterScreenContext from '../../context/registrationContext';
+import { useNavigate } from 'react-router-dom';
 
 const SignInComponent = ()=>{
+    const navigate = useNavigate()
     const [rememberMe,setRememberMe]=useState(false)
     const [userName,setUserName]=useState('')
     const [password,setPassword]=useState('')
-    const navigate = useNavigate()
+
     const {setScreen} = useContext(RegisterScreenContext)
     const  sendLoginData = async ()=>{
        await ApiCall.getUserLoginData({user_name:userName,user_password:password}).then(loginData=>{
-            if(loginData.status===200){
-                
                
-                navigate("/ayno-chat/home")
+            if(loginData.status===200){
+                  //  console.log(loginData.data.data)
+               StorageManager.setCookies(JSON.stringify(loginData.data.data))
+                navigate('/ayno-chat/home')
+            }
+            else{
+                alert("there is error")
             }
         })
     }

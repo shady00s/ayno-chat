@@ -1,24 +1,28 @@
 import { Request,Response,NextFunction } from 'express';
 
 export function sessionMiddleware(req:Request,res:Response,next:NextFunction){
-   if(req.session.userData !==null || req.session.userData !== undefined    ){
+   if(req.session.userData){
     next()
    }
    else{
-    res.status(500).json({message:"there is an error with session"})
+    res.status(500).json({message:"there is an error with session",seesionVal:req.session.userData})
    }
 
 }
 
 export function logInFromSession(req:Request,res:Response,next:NextFunction){
     const session = req.session.userData
-
-    if(req.session.userData !== undefined){
+    
+    if(req.session.userData){
         res.status(200).json({message:"succssess",data:{
             id:session.userId,
             name:session.userName,
             profilePath:session.userProfilePath
         }})
     }
-    res.status(500).json({message:"error with session"})
+    else{
+        res.status(500).json({message:"error with the session",session:session})
+
+    }
+    
 }

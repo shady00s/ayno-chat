@@ -1,7 +1,8 @@
 import { Request,Response } from "express"
 import user_model from "../../model/user_model"
 const getUserFriendsController=(req:Request,res:Response)=>{
-   const user_id:string | undefined = req.session.userData?.userId?.id.toString()
+   const user_id = req.session.userData.userId
+  
     try {
         if(user_id !== undefined){
             user_model.findById(user_id).then(async value=>{
@@ -13,8 +14,7 @@ const getUserFriendsController=(req:Request,res:Response)=>{
                         message:"succssess",
                         body:{
                             friends:friendData,
-                           
-                            
+
                         }
                     })
                 }else{

@@ -31,9 +31,9 @@ const RegistrationComponent = () => {
     const [avatar, setAvatar] = useState('')
  
     const usernameWhiteSpaceRegExp = /\s/
-
+    
     useEffect(()=>{
-        
+       
         // get avatars from cartoon avatar api
        
         setRegisterData({

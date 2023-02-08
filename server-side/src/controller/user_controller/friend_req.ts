@@ -3,7 +3,7 @@ import user_model from "../../model/user_model";
 
 const addFriendRequestController = (req:Request,res:Response)=>{
     const friend_id = req.body.friend_id
-    const user_id = req.body.user_id
+    const user_id = req.session.userData.userId
 
     console.log(friend_id);
     // check if the id is not empty 

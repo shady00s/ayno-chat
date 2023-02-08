@@ -4,10 +4,23 @@ import Cookies  from 'js-cookie'
 class StorageManager{
 
 
-    static getDataFromStorage = ()=>{
-        console.log(Cookies.get('userId'))
-     return  Cookies.get('userId')
-         
+    static setCookies = (data)=>{
+        
+      Cookies.set('userData',data,{sameSite:"strict"})
+      
+          
+    }
+   static getUserData = ()=>{
+    
+   
+   const data = Cookies.get('userData')
+   if (data !== undefined && Object.keys(data).length !== 0){
+    return JSON.parse(data)
+   }
+   else{
+    return {}
+   }
+     
     }
     static removeUserData = ()=>{
         localStorage.removeItem(userStorageName)

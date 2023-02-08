@@ -5,7 +5,7 @@ import Logining from "../../logger"
 import conversation_model from "../../model/conversation_model"
 
 const postAcceptFriendController = async(req:Request,res:Response,next:NextFunction)=>{
-    const user_id = req.body.user_id
+    const user_id = req.session.userData.userId
     const contact_id = req.body.contact_id
 
 

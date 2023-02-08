@@ -3,7 +3,7 @@ import conversation_model from "../../model/conversation_model";
 import SocketManager from '../../sockets/socket_manager';
 
 const postMessageController = (req:Request,res:Response)=>{
-    const sender_id = req.body.sender_id;
+    const sender_id = req.session.userData.userId;
     const conversation_id = req.body.conversation_id;
     const message_content = req.body.message_content;
     const sender_image = req.body.imagePath;

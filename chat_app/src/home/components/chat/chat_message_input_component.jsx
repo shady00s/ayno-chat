@@ -10,7 +10,7 @@ export default function ChatMessageInputComponent(props){
     const [activated,setActivated] = useState(false)
     const [textVal,setTextVal] = useState('')
   
-    const userdata = StorageManager.getDataFromStorage()
+    const userdata = StorageManager.getUserData()
     const conversation_id = props.conversation_id
 
     function sendMessage(){

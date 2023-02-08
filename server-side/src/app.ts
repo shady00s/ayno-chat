@@ -1,4 +1,4 @@
-import express from "express";
+import express, { NextFunction } from "express";
 import  Logining  from "./logger";
 import userRouter from "./routes/user_routes";
 import mongoose from 'mongoose';
@@ -10,6 +10,7 @@ import cors from 'cors'
 import UserData from "./types/session_type";
 import {default as connectMongoDBSession}from "connect-mongodb-session"
 import session from "express-session";
+import { Response,Request } from "express";
 import "express-session";
 declare module "express-session"{
     interface SessionData{
@@ -25,46 +26,51 @@ const store = new MongoDBStore({
     expires: 1000,
 })
 
-app.use(express.json({limit:'50mb'}))
-app.use(express.urlencoded({extended:false,limit:"50mb"}))
-app.enable('trust proxy')
 
-app.use((req,res,next)=>{
-    res.header('Access-Control-Allow-Credentials','true')
-   res.header('Access-Control-Allow-Origin','http://192.168.1.4:3000')
-    res.header('Access-Control-Allow-Methods','*')
-    res.header('Access-Control-Allow-Headers','*')
-
+app.use('/',(req:Request,res:Response,next:NextFunction)=>{
+    res.setHeader('Access-Control-Allow-Origin','http://192.168.1.4:3000')
+    res.setHeader(
+        'Access-Control-Allow-Methods',
+        'OPTIONS, GET, POST, PUT, PATCH, DELETE'
+      );
+      res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+      res.setHeader('Access-Control-Allow-Credentials', 'true')
     next()
 })
+app.use(express.json({limit:'50mb'}))
+app.use(express.urlencoded({extended:true,limit:"50mb"}))
+
+
+
+
 require('dotenv').config()
 // api rules
-app.set('trust proxy',1)
-app.use(session({
 
+app.use(session({
+    name:"ayno.sid",
     store:store,
-    resave: false,
+    resave: true,
     saveUninitialized: true,
      secret: process.env.SESSION_SECRET
      ,cookie:{
         path:'/',
-         maxAge: 900000,
-        secure:false,
+         maxAge:  Date.now() + 1000,
+       
         httpOnly:true
  
      }
  }))
 
 
-
-
-
-
 app.use('/user',userRouter)
 app.use('/chat',chatRouter)
-
+app.use('*',(req:Request,res:Response)=>{
+    res.json({message:"bad route"})
+})
 
 try {
+    mongoose.set('strictQuery',true)
+
     mongoose.connect(`mongodb+srv://${process.env.DATABASE_USER_NAME}:${process.env.DATABASE_PASSWORD}@chatdatabase.fnneyaw.mongodb.net/
     `,{retryWrites:true,w:'majority'}).then((val)=>{
         Logining.info('connected to mongo database '+val.connect.name)
@@ -78,7 +84,6 @@ try {
     })
 
     
-    mongoose.set('strictQuery',false)
 } catch (error) {
  Logining.error('faild to connect to mongo database'+error)   
 }

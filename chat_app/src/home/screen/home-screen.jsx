@@ -5,8 +5,8 @@ import MessageComponent from "../components/chat/message_component";
 import { Helmet } from "react-helmet-async";
 import useWindowDimensions from "../../utils/window_size";
 import ContactInformation from "../components/contact/contact_information"
-import SettingsComponent from './../components/settings_component';
-import ContactContext from './../../context/contactContext';
+import SettingsComponent from '../components/settings_component';
+import ContactContext from '../../context/contactContext';
 import NavigationContext from "../../context/navigationContext";
 
 

@@ -12,7 +12,7 @@ const socketRef = SocketClientManager.socketInit()
  function MessageComponent() {
 
     const  {contact} = useContext(ContactContext)
-    const user_id = StorageManager.getDataFromStorage()
+    const user_id = StorageManager.getUserData().id
     const [chat, setChat] = useState([])
     const [socket] = useState(socketRef)
     const scrollRef= useRef(null)
@@ -28,13 +28,13 @@ const socketRef = SocketClientManager.socketInit()
   },[chat])
 
   // when contact changes api call will triggered to insert new data
-  useEffect(()=>{
+
     ApiCall.getUserChatMessages(user_id.id, contact._id).then(messages => {
     
         setChat(() => messages.data.conversations.messages)
     })
 
-  },[contact])
+
 
     useEffect(()=>{
         socket.on("recive-message", (message) => {
