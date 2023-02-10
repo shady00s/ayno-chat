@@ -111,7 +111,7 @@ class ApiCall {
 
     static getFriendsRequestList = ()=>{
         try {
-            const getFriendRequestsList = axiosInestance.get('/get-friend-requests').then(val=>val)
+            const getFriendRequestsList = axiosInestance.get('/user/get-friend-requests').then(val=>val)
             return getFriendRequestsList
         } catch (error) {
             console.log(error)

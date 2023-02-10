@@ -8,7 +8,9 @@ import NewFirendComponent from "../search_result_component";
 import { X } from "react-feather";
 import NavigationContext from '../../../context/navigationContext';
 import { FriendListSkeleton } from "../../../reusable-components/skeleton/friend_list";
-import { FriendRequestComponent } from './../friend_request/friend_request_component';
+import { FriendRequestComponent } from '../friend_request/friend_request_component';
+import FriendsList from "./friends_list";
+import ChatGroupComponent from './../chat_group/chat_group_screen';
 
  function ContactList(props){
 
@@ -36,14 +38,7 @@ import { FriendRequestComponent } from './../friend_request/friend_request_compo
     }
 
     
-    useEffect(()=>{
-        ApiCall.getFriendsList().then(value=>{
-        
-        console.log(value.data.friends)})  
-
-    
-    },[])
-
+  
          
 
  
@@ -53,7 +48,9 @@ import { FriendRequestComponent } from './../friend_request/friend_request_compo
             <div style={{borderRight:"3px solid rgba(60, 67, 60, 0.167)",maxWidth:"40%"}} className="flex flex-col  overflow-x-hidden bg-background transition-transform ease-in-out duration-500">
         <SearchComponent title={"Search for friends"}  onInputClick={()=>{setSearchContainer(true)}} searchSubmit={getSearchResult} searchResult={(value)=>{setSearch(value.target.value)}}/>
             {/* search result */}
-        { searchContainer?
+
+            <div className="overflow-y-auto  h-full ">
+            { searchContainer?
                 <div style={{backgroundColor:"rgba(30, 41, 59,0.2)"}} className=" overflow-y-auto rounded-sm p-2 ml-1 mr-1 -mt-1 mb-3  ">
                         <div className="flex justify-between">
                             <h6 className="text-slate-200 text-left p-1 mb-5 ">Search results</h6>
@@ -70,12 +67,11 @@ import { FriendRequestComponent } from './../friend_request/friend_request_compo
 
             <FriendRequestComponent/>
             {/* friend list */}
-            <div className="p-1 ">
-
-            <h6 className="text-slate-200 text-left p-2">Friends</h6>
-            {loading?<FriendListSkeleton/>: contacts.length !== 0 ?contacts.map((contactData)=><ContactButton key={contactData.name} data={contactData}/>):<EmptyContactComponent/>}
-            
+           <FriendsList/>
+            {/* Group list */}
+            <ChatGroupComponent/>
             </div>
+     
 
     </div>
 //    mobile version
@@ -84,6 +80,10 @@ import { FriendRequestComponent } from './../friend_request/friend_request_compo
         <div style={{borderRight:"3px solid rgba(60, 67, 60, 0.167)"}} className={`${navigation==="Contacts"? "translate-x-0" :"translate-x-[-999px]"} transition-transform   ease-in-out duration-300 flex flex-col h-full overflow-y-auto bg-background z-50 xl:w-7/12 w-8/12`}>
         <SearchComponent title={"Search for friends"}  onInputClick={()=>{setSearchContainer(true)}} searchSubmit={getSearchResult} searchResult={(value)=>{setSearch(value.target.value)}}/>
             {/* search result */}
+       
+       
+            <div className="overflow-y-auto  h-full ">
+                
         { searchContainer?
                 <div style={{backgroundColor:"rgba(30, 41, 59,0.2)"}} className="max-h-3/4   overflow-y-auto rounded-sm p-2 ml-1 mr-1 -mt-1 mb-3  ">
                         <div className="flex justify-between">
@@ -100,13 +100,12 @@ import { FriendRequestComponent } from './../friend_request/friend_request_compo
 
             <FriendRequestComponent/>
              {/* friend list */}
-            <div className="p-1 ">
 
-            <h6 className="text-slate-200 text-left p-1">{"Friends"}</h6>
-            {loading?<FriendListSkeleton/>: contacts.length !== 0 ?contacts.map((contactData)=><ContactButton  key={contactData.name} data={contactData}/>):<EmptyContactComponent/>}
-            
-            </div>
+           <FriendsList/>
 
+           {/* Group list */}
+           <ChatGroupComponent/>
+           </div>
     </div>
     </div>
     

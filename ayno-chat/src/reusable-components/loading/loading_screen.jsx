@@ -1,38 +1,13 @@
-import React,{useEffect} from "react";
-import StorageManager from '../../utils/storage_manager';
-import { useNavigate } from "react-router-dom";
+import React from "react";
+
 import loadingScreenAnimation from "./loading_screen_animation";
- import ApiCall from "../../api_call";
 const LoadingScreen = ()=>{
-  const navigate = useNavigate()
-   
+
     
       loadingScreenAnimation()
-    //   const data = StorageManager.getUserData()
-    //   setTimeout(()=>{
-       
-    //     if (Object.keys(data).length === 0  ){
-    //       navigate("/ayno-chat/register")
-    //     } 
-    //     else{
-          
-    //     }
-       
-
-      
-
-    // },[])
+   
 
 
-    useEffect(()=>{
-      ApiCall.getAuthentication().then(data=>{
-        if (data.data.message==="authenticated"){
-          navigate("/ayno-chat/home")
-        }else{
-          navigate("/ayno-chat/register")
-        }
-      })
-    },[])
   
   return(
     <>
@@ -43,7 +18,7 @@ const LoadingScreen = ()=>{
 
     </div>
 
-    {/* {data === {} ? <Navigate to={"/ayno-chat/register"}/> : <Navigate to={"/ayno-chat/home"}/>} */}
+   
  </>
   ) 
 }

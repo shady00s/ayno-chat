@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { User,Users,Sliders,LogOut } from 'react-feather';
+import { User,Sliders,LogOut } from 'react-feather';
 import IconButton from './icons_button';
 import NavigationContext from '../../context/navigationContext';
 import { useContext } from 'react';
@@ -8,7 +8,7 @@ import { useContext } from 'react';
 const navButtons = [
     
     {name:"Contacts",icon:"user",icon:User},
-    {name:"Groups",icon:"users",icon:Users},
+   
     {name:"Settings",icon:"sliders",icon:Sliders},
     {name:"Log-out",icon:"log-out",icon:LogOut},
 
