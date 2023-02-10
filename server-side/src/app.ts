@@ -22,13 +22,13 @@ const app = express()
 const MongoDBStore = connectMongoDBSession(session);
 const store = new MongoDBStore({
     uri:`mongodb+srv://${process.env.DATABASE_USER_NAME}:${process.env.DATABASE_PASSWORD}@chatdatabase.fnneyaw.mongodb.net/`,
-    collection:"usermodels",
+    collection:"sessions",
     expires: 1000,
 })
 
 
 app.use('/',(req:Request,res:Response,next:NextFunction)=>{
-    res.setHeader('Access-Control-Allow-Origin','http://192.168.1.4:3000')
+    res.setHeader('Access-Control-Allow-Origin','http://127.0.0.1:5173')
     res.setHeader(
         'Access-Control-Allow-Methods',
         'OPTIONS, GET, POST, PUT, PATCH, DELETE'
@@ -49,8 +49,8 @@ require('dotenv').config()
 app.use(session({
     name:"ayno.sid",
     store:store,
-    resave: true,
-    saveUninitialized: true,
+    resave: false,
+    saveUninitialized: false,
      secret: process.env.SESSION_SECRET
      ,cookie:{
         path:'/',
@@ -70,7 +70,7 @@ app.use('*',(req:Request,res:Response)=>{
 
 try {
     mongoose.set('strictQuery',true)
-
+    
     mongoose.connect(`mongodb+srv://${process.env.DATABASE_USER_NAME}:${process.env.DATABASE_PASSWORD}@chatdatabase.fnneyaw.mongodb.net/
     `,{retryWrites:true,w:'majority'}).then((val)=>{
         Logining.info('connected to mongo database '+val.connect.name)

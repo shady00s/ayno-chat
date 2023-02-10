@@ -32,7 +32,9 @@ class SocketManager {
     static imageSocket = (imageUrl:any)=>{
         this.io.emit("image",imageUrl)
     }
-    
+    static friendRequestSocket = (friendRequest:any)=>{
+        this.io.emit('friend-request',friendRequest)
+    }
    
 }
 

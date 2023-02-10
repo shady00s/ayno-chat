@@ -22,6 +22,7 @@ import PasswordManager from "./utils/password_manager";
                     profileImagePath:profileImagePath
                 }) 
                 UserModel.save().then((val)=>{
+                    console.log(val);
                     req.session.userData={
                         userId:val.id ,
                         userName:val.name,
