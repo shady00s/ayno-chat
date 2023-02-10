@@ -1,6 +1,16 @@
 import {axiosInestance} from "./axios/inestance"
 
 class ApiCall {
+    static getAuthentication = ()=>{
+        try {
+            const data = axiosInestance.get('/user/checkAuthentication').then((value) => value)
+
+            return data
+        } catch (error) {
+            console.log(error)
+        }
+        
+    }
     static getFriendsList = () => {
         try {
             let friendsList = axiosInestance.get('/user/friends' ).then((value) => {

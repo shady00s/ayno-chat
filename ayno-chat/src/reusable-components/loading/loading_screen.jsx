@@ -1,37 +1,45 @@
-import React from "react";
+import React,{useEffect} from "react";
 import StorageManager from '../../utils/storage_manager';
 import { useNavigate } from "react-router-dom";
 import loadingScreenAnimation from "./loading_screen_animation";
- 
+ import ApiCall from "../../api_call";
 const LoadingScreen = ()=>{
   const navigate = useNavigate()
    
     
       loadingScreenAnimation()
-      const data = StorageManager.getUserData()
-      setTimeout(()=>{
+    //   const data = StorageManager.getUserData()
+    //   setTimeout(()=>{
        
-        if (Object.keys(data).length === 0  ){
-          navigate("/ayno-chat/register")
-        } 
-        else{
-          navigate("/ayno-chat/home")
-        }
+    //     if (Object.keys(data).length === 0  ){
+    //       navigate("/ayno-chat/register")
+    //     } 
+    //     else{
+          
+    //     }
        
 
       
 
-    },[])
+    // },[])
 
+
+    useEffect(()=>{
+      ApiCall.getAuthentication().then(data=>{
+        if (data.data.message==="authenticated"){
+          navigate("/ayno-chat/home")
+        }else{
+          navigate("/ayno-chat/register")
+        }
+      })
+    },[])
   
   return(
     <>
     <div className="flex justify-center bg-background w-screen h-screen items-center">
     
         
-        <div className=" w-32 h-32 "> 
        
-        </div>
 
     </div>
 

@@ -24,5 +24,14 @@ export function logInFromSession(req:Request,res:Response,next:NextFunction){
         res.status(500).json({message:"error with the session",session:session})
 
     }
+
+}
+
     
+export function checkSessionAuthenticationController(req:Request,res:Response,){
+        if (req.session.userData !== undefined){
+            res.status(200).json({message:"authenticated"})
+        }else{
+            res.status(200).json({message:"not authenticated"})
+        }
 }
