@@ -6,4 +6,12 @@ const axiosInestance = axios.create({
     withCredentials:true
 })
 
-export default axiosInestance
+
+// const axiosUserInestance = axios.create({
+//     baseURL:"http://192.168.1.4:8080/user",
+//     withCredentials:true
+// })
+
+
+
+export  {axiosInestance}

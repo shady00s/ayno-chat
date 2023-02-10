@@ -7,8 +7,8 @@ import ApiCall from '../../../api_call';
 import NewFirendComponent from "../search_result_component";
 import { X } from "react-feather";
 import NavigationContext from '../../../context/navigationContext';
-import FriendRequestComponent from "./friend_request";
 import { FriendListSkeleton } from "../../../reusable-components/skeleton/friend_list";
+import { FriendRequestComponent } from './../friend_request/friend_request_component';
 
  function ContactList(props){
 

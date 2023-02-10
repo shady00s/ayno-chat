@@ -1,13 +1,9 @@
-import axiosInestance from "./axios/inestance"
+import {axiosInestance} from "./axios/inestance"
 
 class ApiCall {
     static getFriendsList = () => {
         try {
-            let friendsList = axiosInestance.get('/user/friends'
-                , {
-
-
-                }).then((value) => {
+            let friendsList = axiosInestance.get('/user/friends' ).then((value) => {
                     return value
                 })
             return friendsList
@@ -103,9 +99,9 @@ class ApiCall {
         }
     }
 
-    static getFriendsRequestList = (data)=>{
+    static getFriendsRequestList = ()=>{
         try {
-            const getFriendRequestsList = axiosInestance.get('/user/get-friend-requests').then(val=>val)
+            const getFriendRequestsList = axiosInestance.get('/get-friend-requests').then(val=>val)
             return getFriendRequestsList
         } catch (error) {
             console.log(error)

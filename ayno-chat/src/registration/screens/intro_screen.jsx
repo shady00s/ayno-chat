@@ -3,7 +3,7 @@ import RegistrationComponent from "../components/registeration_component"
 import SignInComponent from "../components/signin_component"
 import { useState ,useMemo} from 'react';
 import RegisterScreenContext from "../../context/registrationContext";
-
+import {logo} from '../../constants'
 export default function IntroScreen() {
 
     
@@ -20,7 +20,7 @@ export default function IntroScreen() {
             {/* registeration container */}
             <div className={` ${screen === 'sign-in'?" md:w-4/12 w-10/12 h-[78%] ":"  w-5/6  h-[90%] "} ${screen === 'register'?"md:h-[85%]":"md:h-[70%]"} w-[80%] transition-all duration-300 ease bg-background relative p-4  pb-2 m-auto overflow-hidden rounded-3xl md:h-[85%] `}>
                 <div>
-                    <img className="w-36 m-6" src={"./images/logo.png"} />
+                    <img className="w-36 m-6" src={logo} />
                 </div>
         {/* main screen */}
 
