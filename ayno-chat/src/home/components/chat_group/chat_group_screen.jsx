@@ -3,6 +3,9 @@ import ApiCall from '../../../api_call';
 import EmptyContactComponent from '../friends/empty_contacts_component';
 import {ChevronDown} from 'react-feather'
 import { FriendListSkeleton } from '../../../reusable-components/skeleton/friend_list';
+import ContactButton from '../friends/contact_button';
+
+
 export default function ChatGroupComponent(){
     const [open, setOpen] = useState(false)
     const [groups, setGroups] = useState([])
@@ -11,10 +14,10 @@ export default function ChatGroupComponent(){
         setLoading(true)
         ApiCall.getFriendsRequestList().then(data => {
             if (data.status === 200) {
-                setFriends(() => data.data.friendRequests)
+                setGroups(() => data.data.friendRequests)
                 setLoading(false)
             } else {
-                setFriends(() => [])
+                setGroups(() => [])
                 setLoading(false)
             }
             
@@ -31,7 +34,7 @@ export default function ChatGroupComponent(){
                     <ChevronDown className="text-slate-200" />
                 </div>
                 <div className={`${open ? "h-[30rem]" : "h-[0rem] overflow-hidden"} overflow-y-auto  transition-all duration-300 ease-in-out`}>
-                    {loading ? <FriendListSkeleton /> : groups.length !== 0 ? groups.map(data => <ContactButton key={data.name} data={data} />) :
+                    {loading ? <FriendListSkeleton /> : groups.length !== 0 ? groups.map(data => <ContactButton key={data.name+"21"} data={data} />) :
                     
                     <div className="flex justify-center items-center w-full h-full
                     ">

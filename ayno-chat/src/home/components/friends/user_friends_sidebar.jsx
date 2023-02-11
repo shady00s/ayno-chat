@@ -1,13 +1,10 @@
-import ContactButton from "./contact_button"
-import EmptyContactComponent from "./empty_contacts_component";
-import StorageManager from "../../../utils/storage_manager";
 import SearchComponent from "../search/search_component";
 import React,{ useEffect, useState, useContext } from 'react';
 import ApiCall from '../../../api_call';
 import NewFirendComponent from "../search_result_component";
 import { X } from "react-feather";
 import NavigationContext from '../../../context/navigationContext';
-import { FriendListSkeleton } from "../../../reusable-components/skeleton/friend_list";
+
 import { FriendRequestComponent } from '../friend_request/friend_request_component';
 import FriendsList from "./friends_list";
 import ChatGroupComponent from './../chat_group/chat_group_screen';
@@ -15,9 +12,7 @@ import ChatGroupComponent from './../chat_group/chat_group_screen';
  function ContactList(props){
 
     const [searchContainer,setSearchContainer] = useState(false)
-    const [contacts,setContacts] = useState([])
     const [search,setSearch] = useState('')
-    const [loading,setLoading] = useState(false)
     const [searchList,setSearchList] = useState([])
 
 
@@ -26,7 +21,7 @@ import ChatGroupComponent from './../chat_group/chat_group_screen';
     const getSearchResult = ()=>{
 
 
-        ApiCall.getSearchData(search,StorageManager.getUserData().id).then(value=>{
+        ApiCall.getSearchData(search).then(value=>{
             if(value.status === 200){
                 setSearchList((oldData)=>[...oldData,value.data.body])
                 
@@ -37,11 +32,7 @@ import ChatGroupComponent from './../chat_group/chat_group_screen';
         })
     }
 
-    
-  
-         
 
- 
     return(
         // desktop version
         <>{props.isMobile === false ?

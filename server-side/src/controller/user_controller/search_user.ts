@@ -5,6 +5,7 @@ const search_user = (req:Request,res:Response)=>{
     const contactName = req.query.contactName
     const user_id = req.session.userData.userId
     let isFriend:boolean = false ;
+
     try {
         user_model.findOne({name:new RegExp('^'+contactName+'$', "i")}).then(async(dataRes)=>{
 

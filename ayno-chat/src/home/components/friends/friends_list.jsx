@@ -10,9 +10,10 @@ export default function FriendsList() {
     const [loading, setLoading] = useState(false)
     useEffect(() => {
         setLoading(true)
-        ApiCall.getFriendsRequestList().then(data => {
+        ApiCall.getFriendsList().then(data => {
+            console.log(data.data.body.friends)
             if (data.status === 200) {
-                setFriends(() => data.data.friendRequests)
+                setFriends(() => data.data.body.friends)
                 setLoading(false)
             } else {
                 setFriends(() => [])

@@ -9,15 +9,23 @@ import SettingsComponent from '../components/settings_component';
 import ContactContext from '../../context/contactContext';
 import NavigationContext from "../../context/navigationContext";
 import { logo } from "../../constants";
+import SocketContext from "../../context/socketContext";
+import SocketClientManager from './../../sockets/message_socket';
 export default function HomeScreen() {
     const { width } = useWindowDimensions()
-    const [contactInfoMobile, setContactInfoMobile] = useState(false)
-    const [contact,setContact] = useState({})
-    const contactValue = useMemo(()=>({contact,setContact}),[contact])
 
-    const [navigation,setNavigation] = useState('Contacts')
-   
-    const navigationValue = useMemo(()=>({navigation,setNavigation}),[navigation])
+    
+    const [contactInfoMobile, setContactInfoMobile] = useState(false)
+
+
+    //contact
+    const [contact, setContact] = useState({})
+    const contactValue = useMemo(() => ({ contact, setContact }), [contact])
+    // nav
+    const [navigation, setNavigation] = useState('Contacts')
+    const navigationValue = useMemo(() => ({ navigation, setNavigation }), [navigation])
+
+
     return (
         <>
 
@@ -40,7 +48,7 @@ export default function HomeScreen() {
                             <div onClick={() => {
                                 setContactInfoMobile(!contactInfoMobile)
                             }} className="flex p-2 items-center cursor-pointer">
-                                <h1 className="text-slate-300 mr-2 select-none">{ Object.keys(contact).length !== 0?contact.name +"'s info":""}</h1>
+                                <h1 className="text-slate-300 mr-2 select-none">{Object.keys(contact).length !== 0 ? contact.name + "'s info" : ""}</h1>
                                 <img src={contact.profileImagePath} className={'w-8 rounded-full'} />
                             </div>
                             : null}
@@ -48,18 +56,21 @@ export default function HomeScreen() {
 
 
                 <div className="w-full h-[91vh] flex bg-background overflow-hidden">
-                <NavigationContext.Provider value={navigationValue}>
-                <Sidebar />
-                <ContactContext.Provider value={contactValue}>
-                    
+                    <NavigationContext.Provider value={navigationValue}>
+                        <Sidebar />
+                       
 
-                <SettingsComponent/>
-                <ContactList isMobile={width <= 648 ? true : false}/>
+                            <SettingsComponent />
+                           
+                                <ContactList isMobile={width <= 648 ? true : false} />
 
-                <MessageComponent />
-                <ContactInformation isMobile={contactInfoMobile} /> 
-                </ContactContext.Provider>
-                </NavigationContext.Provider>
+                                <MessageComponent />
+                           
+                            <ContactInformation isMobile={contactInfoMobile} />
+
+
+                        
+                    </NavigationContext.Provider>
                 </div>
 
             </main>

@@ -33,9 +33,9 @@ export default function  Sidebar(props){
     return (
         
         <div className="border-r-2 border-r-slate-800 bg-[rgba(175,214,242,0.008)]">
-                {navButtons.map((item,index)=><>
+                {navButtons.map((item,index)=>
                   
-                    <div  key={index.toString()} onClick={()=>{
+                    <div  key={item.name} onClick={()=>{
 
                         
                             setActive(()=>index)
@@ -47,11 +47,11 @@ export default function  Sidebar(props){
                        }
                        
                         
-                        }} id={item.name} className='pb-4 pr-2 pl-1  z-10'>
+                        }} className='pb-4 pr-2 pl-1  z-10'>
 
-                        <IconButton id={item.name}  isActive={ active === index ? true :false}  key={item.icon}  icon={item.icon} name={""}/>
+                        <IconButton key={item.name}  isActive={ active === index ? true :false}   icon={item.icon} name={""}/>
                     </div>
-                </>
+              
                     
    )}
                 

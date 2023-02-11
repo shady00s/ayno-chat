@@ -13,7 +13,7 @@ class ApiCall {
     }
     static getFriendsList = () => {
         try {
-            let friendsList = axiosInestance.get('/user/friends' ).then((value) => {
+            let friendsList = axiosInestance.get('/user/friends').then((value) => {
                     return value
                 })
             return friendsList
@@ -40,10 +40,12 @@ class ApiCall {
             console.log(error)
         }
     }
-    static getSearchData = (userName, userId) => {
+    static getSearchData = (contactName) => {
         try {
             let searchList = axiosInestance.get('/user/search', {
-
+                    params:{
+                        contactName:contactName
+                    }
 
             }).then((value) => {
 
@@ -117,6 +119,15 @@ class ApiCall {
             console.log(error)
         }
        
+    }
+
+    static acceptFriendRequest= (contact_id)=>{
+        try {
+         const postFriendRequest = axiosInestance.post('/user/accept-friend',{contact_id:contact_id}).then(val=>val)
+         return postFriendRequest;   
+        } catch (error) {
+            console.log(error)
+        }
     }
 }
 

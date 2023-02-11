@@ -35,7 +35,7 @@ const postAcceptFriendController = async(req:Request,res:Response,next:NextFunct
                             return userValue
                         })
                         //remove id from friend request array
-                        await user_model.findByIdAndUpdate(contact_id,{$pull:{friendRequests:user_id}})
+                        await user_model.findByIdAndUpdate(user_id,{$pull:{friendRequests:contact_id}})
                         let contactInformation = await user_model.findByIdAndUpdate(contact_id,{$addToSet:{conversations:{conversation_Id:generatedConversationId,contact_Id:user_id},friends:user_id}},{session,new:true}).then(contactValue =>{
                             return contactValue
                         })

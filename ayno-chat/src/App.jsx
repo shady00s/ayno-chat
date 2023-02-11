@@ -1,20 +1,24 @@
-import NavigationContext from "./context/navigationContext";
 
+import React from "react";
+
+import SocketClientManager from "./sockets/message_socket";
 import { HelmetProvider } from 'react-helmet-async';
 import AppRouters from './router';
-import React,{useMemo,useState} from "react";
-function App() {
-  const [component, setComponent] = useState("");
 
-  const navigationValue = useMemo(() => ({ component, setComponent }), [component]);
+
+function App() {
+
+
   return (
     <>
+    
       <HelmetProvider>
-      <NavigationContext.Provider value={navigationValue}>
+      
       <AppRouters/>
-      </NavigationContext.Provider>
+
 
       </HelmetProvider>
+
     </>
     
    

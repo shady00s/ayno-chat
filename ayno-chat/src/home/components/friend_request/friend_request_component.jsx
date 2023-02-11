@@ -1,19 +1,31 @@
 import { ChevronDown,CloudRain} from "react-feather"
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef, useContext } from 'react';
 import ApiCall from './../../../api_call';
 import FriendRequestBody from "./friend_request_body";
 import { FriendListSkeleton } from "../../../reusable-components/skeleton/friend_list";
+import SocketClientManager from './../../../sockets/message_socket';
 
+let socket = SocketClientManager.socketInit()
 export function FriendRequestComponent() {
+  
+
     const [open, setOpen] = useState(false)
     const [friendRequest, setFriendRequest] = useState([])
     const [loading, setLoading] = useState(false)
+
+    useEffect(()=>{
+        ///console.log(socket)
+        socket.on('friend-request',(friendRequest)=>{
+            console.log()
+        })
+    },[socket])
 
     useEffect(() => {
         setLoading(true)
         ApiCall.getFriendsRequestList().then(data => {
            if(data.status === 200){
             setFriendRequest(()=>data.data.friendRequests)
+          
            }else{
             setFriendRequest(()=>[])
            }
@@ -31,7 +43,7 @@ export function FriendRequestComponent() {
                 </div>
 
                 <div className={`${open?"h-[30rem]":"h-[0rem] overflow-hidden"} overflow-y-auto  transition-all duration-300 ease-in-out`}>
-                    {loading?<FriendListSkeleton/>:friendRequest.length !==0?<FriendRequestBody/> :<div className="flex flex-col w-full h-full justify-center items-center">
+                    {loading?<FriendListSkeleton/>:friendRequest.length !==0?friendRequest.map(data=><FriendRequestBody data={data}/> ):<div className="flex flex-col w-full h-full justify-center items-center">
                                 <CloudRain size={44} className="p-1 stroke-slate-600 "/>
                             <h1 className="text-slate-400">There is no friend requests found</h1>
                         </div>}  

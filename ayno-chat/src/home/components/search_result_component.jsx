@@ -9,16 +9,13 @@ async function sendRequest(data){
 
         ApiCall.postFriendRequest({
             friend_id:data,
-            user_id: StorageManager.getDataFromStorage().id,
+            
         })
     }
 
 
 const SearchResultComponent = (props)=>{
 
-
-
-   
    
     const {contact,setContact}=useContext(ContactContext)
     return(<>
