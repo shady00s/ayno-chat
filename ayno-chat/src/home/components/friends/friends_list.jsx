@@ -32,7 +32,7 @@ export default function FriendsList() {
 
                     <ChevronDown className="text-slate-200" />
                 </div>
-                <div className={`${open ? "h-[30rem]" : "h-[0rem] overflow-hidden"} overflow-y-auto  transition-all duration-300 ease-in-out`}>
+                <div className={`${open ? "h-[30rem] p-1" : "h-[0rem] overflow-hidden"} overflow-y-auto  transition-all duration-300 ease-in-out`}>
                     {loading ? <FriendListSkeleton /> : friends.length !== 0 ? friends.map(data => <ContactButton key={data.name} data={data} />) :
                     
                     <div className="flex justify-center items-center w-full h-full
