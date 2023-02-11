@@ -9,6 +9,7 @@ import addFriendRequestController from "../controller/user_controller/friend_req
 import getMediaContoller from "../controller/get_media";
 import { checkSessionAuthenticationController, logInFromSession, sessionMiddleware } from '../session';
 import { friendRequestController } from "../controller/user_controller/friend_requests";
+import getGroupList from '../controller/user_controller/group_list';
 
 const userRouter = express.Router()
 
@@ -34,5 +35,6 @@ userRouter.get('/get-friend-requests',sessionMiddleware,friendRequestController)
 
 userRouter.get('/search',sessionMiddleware,search_user)
 
+userRouter.get('/get-groups',sessionMiddleware,getGroupList)
 
 export default userRouter
