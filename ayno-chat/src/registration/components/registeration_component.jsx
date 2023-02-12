@@ -60,16 +60,16 @@ const RegistrationComponent = () => {
             ApiCall.postUserRegisterData(registerData).then(apiResponse=>{
                 if(apiResponse.status===201){
                     setLoading(false)
-
-                    StorageManager.setCookies(JSON.stringify(apiResponse.data.data))
+                        
+                    StorageManager.setCookies(JSON.stringify(apiResponse.data.body))
             
 
 
-                    navigate('/ayno-chat/home')
+                 navigate('/ayno-chat/home')
                 }else{
                     setLoading(false)
-                    console.log(apiResponse.data)
-                     alert('there is an problem '+apiResponse.data)   
+                    
+                     alert('there is an problem '+apiResponse.data.message)   
                 }
             })
         }
@@ -84,7 +84,7 @@ const RegistrationComponent = () => {
     return (
 
         <>
-            <div className=" flex flex-col h-full justify-start  p-4">
+            <div className=" flex flex-col  justify-start p-4">
                 <h2 className="text-slate-200 text-2xl mb-2">Register</h2>
                 <span className="text-slate-400" >Just add any random name and password to get started!</span>
                 <div className="flex justify-between flex-wrap   m-auto  p-4 w-[95%] ">
@@ -126,7 +126,7 @@ const RegistrationComponent = () => {
                 
                       
                  {/* Avatar Container */}
-                 <div className={`${screen ==='register'? "opacity-100":"opacity-0"} md:w-6/12 w-full transition-opacity  duration-500 ease-linear`}>
+                 <div className={`${screen ==='register'? "opacity-100":"opacity-0"} duration-300 ease-in  w-[20rem] transition-opacity `}>
                     
                     <SelectAvatarComponent onClick={target=> {setAvatar( target.target.getAttribute('src'))}}/>
                     </div>  
@@ -134,7 +134,7 @@ const RegistrationComponent = () => {
                
                
                 
-                    <div className="w-full flex ">  {loading? <LoadingComponent/>:  <SubmitButton className="w-4/12 bg-indigo-800 mt-2 mb-6 m-auto " onClick={() => { postRegisterData() }} title={"Register"} />}</div>
+                    <div className="w-full flex">  {loading? <LoadingComponent/>:  <SubmitButton className="w-4/12 bg-indigo-800 mt-2 mb-6 m-auto " onClick={() => { postRegisterData() }} title={"Register"} />}</div>
 
                 
                 </div>

@@ -18,7 +18,7 @@ export default function IntroScreen() {
 
            
             {/* registeration container */}
-            <div className={` ${screen === 'sign-in'?" md:w-4/12 w-10/12 h-[78%] ":"  w-5/6  h-[90%] "} ${screen === 'register'?"md:h-[85%]":"md:h-[70%]"} w-[80%] transition-all duration-300 ease bg-background relative p-4  pb-2 m-auto overflow-hidden rounded-3xl md:h-[85%] `}>
+            <div className={` ${screen === 'sign-in'?" md:w-4/12 md:h-[73vh] h-[71vh]  w-10/12":"w-5/6 h-[80%]"} ${screen === 'register'?"md:h-[82%]":"md:h-[63%]"} w-[80%] transition-all duration-300 ease bg-background relative p-4  pb-2 m-auto overflow-hidden rounded-3xl `}>
                 <div>
                     <img className="w-36 m-6" src={logo} />
                 </div>
@@ -47,11 +47,11 @@ export default function IntroScreen() {
                     </div>
                 </section>
 
-                <div className="w-full h-[23rem]  overflow-y-hidden">
+                <div className="w-full h-[60vh]  overflow-y-hidden">
 
                
                 {/* sign in screen */}
-                <section className={`${screen === 'sign-in' ? "translate-x-0":"translate-x-[9999px] w-0 h-0 "}  transition-transform duration-300   flex justify-center items-center  overflow-y-scroll`}>
+                <section className={`${screen === 'sign-in' ? "translate-x-0 w-full h-full":"translate-x-[9999px] w-0 h-0 "}  transition-transform duration-300   flex justify-center items-center  overflow-y-auto`}>
                   
                     <SignInComponent/>
 
@@ -59,7 +59,7 @@ export default function IntroScreen() {
                 </section>
                 {/* register screen */}
 
-                <section className={`${screen === 'register' ? "opacity-100 translate-x-0":"-translate-x-[-9999px] w-0 h-0 invisible "}  h-[29rem]  pb-2 transition-all duration-300 overflow-y-auto overflow-x-hidden w-full `}>
+                <section className={`${screen === 'register' ? "opacity-100 translate-x-0 w-full h-full ":"-translate-x-[-9999px] w-0 h-0 invisible "} pb-2 transition-all duration-300 overflow-y-auto overflow-x-hidden `}>
                 
                   <RegistrationComponent/>
 
