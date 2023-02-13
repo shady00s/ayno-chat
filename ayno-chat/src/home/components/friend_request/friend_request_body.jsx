@@ -23,7 +23,29 @@ export default function FriendRequestBody(props){
                         setLoading(false)
                         
                         })}}><UserPlus className="mr-1 stroke-cyan-600" size={17}/>Add Friend</button>
-                    <button className=" p-1 pl-2 pr-2 rounded-md text-slate-300 border-2 border-slate-800 flex justify-center items-center text-sm"><Slash className="mr-1 stroke-pink-600" size={17}/>Ignore</button>
+                    <button
+                    onClick={()=>{
+                        setLoading(true)
+                        
+                        ApiCall.ignoreFriendRequest(props.data._id).then(val=> {
+                            console.log(val)
+                            if(val.status === 201){
+                            alert('user added removed succssessfully')
+                            setLoading(false)
+
+                            props.removeFriendRequest(props.data)
+                        }else{
+                            alert('There is an error')
+                            setLoading(false)
+
+
+                        }}
+                            )
+                    }
+
+                    }
+                    
+                    className=" p-1 pl-2 pr-2 rounded-md text-slate-300 border-2 border-slate-800 flex justify-center items-center text-sm"><Slash className="mr-1 stroke-pink-600" size={17}/>Ignore</button>
 
                     </div>}
                 </div>

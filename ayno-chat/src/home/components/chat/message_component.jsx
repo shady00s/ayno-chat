@@ -6,7 +6,9 @@ import ApiCall from '../../../api_call';
 import SocketClientManager from '../../../sockets/message_socket';
 //import ContactContext from '../../../context/contactContext';
 //import { ChatSkeleton } from "../../../reusable-components/skeleton/chat";
-const socketRef = SocketClientManager.socketInit()
+import { io } from 'socket.io-client';
+import { useMemo } from 'react';
+const socketRef =''
 
 
  function MessageComponent() {
@@ -14,14 +16,15 @@ const socketRef = SocketClientManager.socketInit()
     //const  {contact} = useContext(ContactContext)
     
     const [chat, setChat] = useState([])
-    const [socket] = useState(socketRef)
+    const socket = useRef()
     const scrollRef= useRef(null)
-
-
+   
+  //  const useSocketMemo = useMemo(()=>(socket.current = io("ws://192.168.1.4:8080",{transports:['websocket']})),[socket.current])
 
     const scrollToBottom = () => {
         scrollRef.current?.scrollIntoView({ behavior : "smooth" })
       }
+
 
   useEffect(()=>{
         scrollToBottom()
@@ -36,22 +39,22 @@ const socketRef = SocketClientManager.socketInit()
 
 
 
-    useEffect(()=>{
-        socket.on("recive-message", (message) => {
+    // useEffect(()=>{
+    //     useSocketMemo.on("recive-message", (message) => {
        
-            //add new message that comes from the socket to previous messages      
-               return setChat((prev) => [...prev, message])
-        })    
-        socket.on("image",(imageUrl)=>{
-           return setChat((prev) => [...prev, imageUrl])
-        })
-             return () => {
-                socket.removeListener("recive-message")
-                socket.removeListener("image")
+    //         //add new message that comes from the socket to previous messages      
+    //            return setChat((prev) => [...prev, message])
+    //     })    
+    //     useSocketMemo.on("image",(imageUrl)=>{
+    //        return setChat((prev) => [...prev, imageUrl])
+    //     })
+    //          return () => {
+    //             useSocketMemo.removeListener("recive-message")
+    //             useSocketMemo.removeListener("image")
             
-            }
+    //         }
                 
-    },[socket])
+    // },[useSocketMemo])
     return (
         <div className='relative flex flex-col  h-[80vh] md:w-[50%] w-[95%]'>
 

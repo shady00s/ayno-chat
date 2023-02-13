@@ -8,8 +8,9 @@ import postAcceptFriendController from "../controller/user_controller/add_friend
 import addFriendRequestController from "../controller/user_controller/friend_req";
 import getMediaContoller from "../controller/get_media";
 import { checkSessionAuthenticationController, logInFromSession, sessionMiddleware } from '../session';
-import { friendRequestController } from "../controller/user_controller/friend_requests";
+import { friendRequestController } from "../controller/user_controller/friend_requests_list";
 import getGroupList from '../controller/user_controller/group_list';
+import ignoreFriendRequest from './../controller/user_controller/ignore_friend_request';
 
 const userRouter = express.Router()
 
@@ -32,6 +33,8 @@ userRouter.post('/send-image' ,sessionMiddleware,sendImage)
 userRouter.get('/get-media',sessionMiddleware,getMediaContoller)
 
 userRouter.get('/get-friend-requests',sessionMiddleware,friendRequestController)
+
+userRouter.get('/ignore-friend-requests',sessionMiddleware,ignoreFriendRequest)
 
 userRouter.get('/search',sessionMiddleware,search_user)
 

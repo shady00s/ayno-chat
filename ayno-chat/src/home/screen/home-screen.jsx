@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef,useEffect } from "react";
 import Sidebar from "../components/side_bar";
 import ContactList from "../components/friends/user_friends_sidebar";
 import MessageComponent from "../components/chat/message_component";
@@ -11,12 +11,19 @@ import NavigationContext from "../../context/navigationContext";
 import { logo } from "../../constants";
 import SocketContext from "../../context/socketContext";
 import SocketClientManager from './../../sockets/message_socket';
+import { io } from "socket.io-client";
+
+
+
 export default function HomeScreen() {
-    const { width } = useWindowDimensions()
+const { width } = useWindowDimensions()
 
-    
+
     const [contactInfoMobile, setContactInfoMobile] = useState(false)
+    const socket = useRef(SocketClientManager.socketInit())
 
+
+    const socketSaved = useMemo(()=>(socket.current),[socket.current])
 
     //contact
     const [contact, setContact] = useState({})
@@ -24,6 +31,7 @@ export default function HomeScreen() {
     // nav
     const [navigation, setNavigation] = useState('Contacts')
     const navigationValue = useMemo(() => ({ navigation, setNavigation }), [navigation])
+
 
 
     return (
@@ -56,21 +64,19 @@ export default function HomeScreen() {
 
 
                 <div className="w-full h-[91vh] flex bg-background overflow-hidden">
-                    <NavigationContext.Provider value={navigationValue}>
-                        <Sidebar />
-                       
+                    <NavigationContext.Provider value={navigationValue}> 
+                         <Sidebar />
+                         <SettingsComponent />
+                         <SocketContext.Provider value={socketSaved} >
 
-                            <SettingsComponent />
-                           
-                                <ContactList isMobile={width <= 648 ? true : false} />
-
-                                <MessageComponent />
-                           
-                            <ContactInformation isMobile={contactInfoMobile} />
+                         <ContactList isMobile={width <= 648 ? true : false} />
+                         <MessageComponent/>
+                         <ContactInformation isMobile={contactInfoMobile}/>       
+                         </SocketContext.Provider>
 
 
                         
-                    </NavigationContext.Provider>
+                     </NavigationContext.Provider>
                 </div>
 
             </main>

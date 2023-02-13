@@ -8,8 +8,16 @@ import NavigationContext from '../../../context/navigationContext';
 import { FriendRequestComponent } from '../friend_request/friend_request_component';
 import FriendsList from "./friends_list";
 import ChatGroupComponent from './../chat_group/chat_group_screen';
+import SocketClientManager from './../../../sockets/message_socket';
+import { io } from 'socket.io-client';
+
+import { useRef } from "react";
+import SocketContext from './../../../context/socketContext';
+
 
  function ContactList(props){
+    const socket = useRef()
+
 
     const [searchContainer,setSearchContainer] = useState(false)
     const [search,setSearch] = useState('')
@@ -31,6 +39,7 @@ import ChatGroupComponent from './../chat_group/chat_group_screen';
             }
         })
     }
+
 
 
     return(

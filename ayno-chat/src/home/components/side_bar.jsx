@@ -7,10 +7,10 @@ import { useContext } from 'react';
 
 const navButtons = [
     
-    {name:"Contacts",icon:"user",icon:User},
+    {name:"Contacts",icon:User},
    
-    {name:"Settings",icon:"sliders",icon:Sliders},
-    {name:"Log-out",icon:"log-out",icon:LogOut},
+    {name:"Settings",icon:Sliders},
+    {name:"Log-out",icon:LogOut},
 
 ]
 

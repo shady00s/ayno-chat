@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import ImageManager from './utils/image_manager';
 import conversation_model from "../../model/conversation_model";
-import SocketManager from '../../sockets/socket_manager';
 import user_model from "../../model/user_model";
 
 export default async function sendImage(req: Request, res: Response, next: NextFunction) {
@@ -19,7 +18,7 @@ export default async function sendImage(req: Request, res: Response, next: NextF
             if (media[index].match(/^data:([A-Za-z-+/]+);base64,(.+)$/)) {
                 await ImageManager.uploadImage(media[index], conversation_id).then((data) => {
                     mediaLinks.push(data.url)
-                    SocketManager.imageSocket({message:data.url,sender_id:sender_id,sender_image_path:sender_image_path})    
+                //    new SocketManager().imageUrl ={message:data.url,sender_id:sender_id,sender_image_path:sender_image_path} 
                 })
             }
         }

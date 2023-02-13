@@ -129,6 +129,13 @@ class ApiCall {
             console.log(error)
         }
     }
+    static ignoreFriendRequest(friend_id){
+        const ignore = axiosInestance.get('/user/ignore-friend-requests',{params:{
+            friend_id:friend_id
+        }}).then(val=>val)
+
+        return ignore
+    }
 }
 
 export default ApiCall

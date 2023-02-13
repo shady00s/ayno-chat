@@ -1,6 +1,6 @@
 import { Response,Request } from "express";
 import user_model from "../../model/user_model";
-import SocketManager from "../../sockets/socket_manager";
+import {socketManager} from './../../sockets/socket_manager';
 
 const addFriendRequestController = (req:Request,res:Response)=>{
     const friend_id = req.body.friend_id
@@ -9,13 +9,14 @@ const addFriendRequestController = (req:Request,res:Response)=>{
     if(friend_id !== undefined && user_id !== undefined){
 
 try {
-    user_model.findById(friend_id).then(async friend=>{
-        if(friend !== null){
+    user_model.findById(user_id).then(async user=>{
+        if(user !== null){
             
            let friend_data = await user_model.findByIdAndUpdate(friend_id,{$addToSet:{friendRequests:user_id}}).then(val=>val)
            if( friend_data !==null){
-            SocketManager.friendRequestSocket({name:friend_data.name,profileImage:friend_data.profileImagePath})
-            res.json({message: "succsses , request was sent."})
+          //  SocketManager.friendRequestSocket({name:friend_data.name,profileImage:friend_data.profileImagePath})
+            socketManager.friendRequest({name:user.name,profileImage:user.profileImagePath})
+            res.status(200).json({message: "succsses , request was sent."})
            }
         }
         else{

@@ -7,7 +7,7 @@ import { Image } from 'react-feather';
 import SocketClientManager from '../../../sockets/message_socket';
 import { ContactSkeleton } from '../../../reusable-components/skeleton/contact_info';
 
-const socketRef = SocketClientManager.socketInit()
+const socketRef = 'SocketClientManager.socketInit()'
 
 
 function ContactInformation (props) {
@@ -33,14 +33,14 @@ function ContactInformation (props) {
 
     }, [props.isMobile, ])//contact
 
-    useEffect(() => {
-        socket.on("image", (imageUrl) => {
-           return setMedia(prev => [...prev, imageUrl.message])
-        })
-        return () => {
-            socket.removeListener("image")
-        }
-    }, [socket])
+    // useEffect(() => {
+    //     socket.on("image", (imageUrl) => {
+    //        return setMedia(prev => [...prev, imageUrl.message])
+    //     })
+    //     return () => {
+    //         socket.removeListener("image")
+    //     }
+    // }, [socket])
 
     return (
         <>

@@ -5,13 +5,15 @@ import mongoose from 'mongoose';
 import * as dotenv from 'dotenv' ;
 import chatRouter from './routes/chat_routes';
 import http from 'http'
-import SocketManager from "./sockets/socket_manager";
+import { socketManager } from "./sockets/socket_manager";
 import cors from 'cors'
 import UserData from "./types/session_type";
 import {default as connectMongoDBSession}from "connect-mongodb-session"
 import session from "express-session";
 import { Response,Request } from "express";
 import "express-session";
+
+import {Server} from "socket.io"
 declare module "express-session"{
     interface SessionData{
         userData:UserData
@@ -73,15 +75,22 @@ try {
     
     mongoose.connect(`mongodb+srv://${process.env.DATABASE_USER_NAME}:${process.env.DATABASE_PASSWORD}@chatdatabase.fnneyaw.mongodb.net/
     `,{retryWrites:true,w:'majority'}).then((val)=>{
-        Logining.info('connected to mongo database '+val.connect.name)
+        Logining.info('connected to mongo database ')
 
-       const server:http.Server = app.listen(8080,()=>{
+        const server = app.listen(8080,()=>{
             Logining.info("connected to port 8080")
+    
         })
-        SocketManager.connect(server)
-       SocketManager.messageSocket()
+        
+        socketManager.connectSocket(server).on('connection',(socket)=>{
+            Logining.info(`user connected to socket with ID ${socket.id}`)
+        })
+       
        
     })
+
+
+   
 
     
 } catch (error) {
