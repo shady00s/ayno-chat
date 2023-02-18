@@ -6,8 +6,8 @@ const getChatMessages= async (req:Request,res:Response)=>{
     
     const user_id = req.session.userData.userId;
     let friend_id = req.query.friend_id;
-
-    if(friend_id !== null){
+    
+    if(friend_id !== undefined){
         try {
            let conversation = await user_model.findById(user_id).then(responseData=>responseData.conversations).then(val=>val)
 

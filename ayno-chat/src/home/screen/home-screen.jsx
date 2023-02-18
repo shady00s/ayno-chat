@@ -1,4 +1,4 @@
-import { useState, useMemo, useRef,useEffect } from "react";
+import { useState, useMemo, useRef,useEffect,useContext } from "react";
 import Sidebar from "../components/side_bar";
 import ContactList from "../components/friends/user_friends_sidebar";
 import MessageComponent from "../components/chat/message_component";
@@ -11,7 +11,7 @@ import NavigationContext from "../../context/navigationContext";
 import { logo } from "../../constants";
 import SocketContext from "../../context/socketContext";
 import SocketClientManager from './../../sockets/message_socket';
-import { io } from "socket.io-client";
+import UserContext from './../../context/userContext';
 
 
 
@@ -20,11 +20,8 @@ const { width } = useWindowDimensions()
 
 
     const [contactInfoMobile, setContactInfoMobile] = useState(false)
-    const socket = useRef(SocketClientManager.socketInit())
-
-
-    const socketSaved = useMemo(()=>(socket.current),[socket.current])
-
+ 
+    const {user} = useContext(UserContext)
     //contact
     const [contact, setContact] = useState({})
     const contactValue = useMemo(() => ({ contact, setContact }), [contact])
@@ -32,7 +29,7 @@ const { width } = useWindowDimensions()
     const [navigation, setNavigation] = useState('Contacts')
     const navigationValue = useMemo(() => ({ navigation, setNavigation }), [navigation])
 
-
+    console.log(user)
 
     return (
         <>
@@ -67,12 +64,14 @@ const { width } = useWindowDimensions()
                     <NavigationContext.Provider value={navigationValue}> 
                          <Sidebar />
                          <SettingsComponent />
-                         <SocketContext.Provider value={socketSaved} >
+                            <ContactContext.Provider value={contactValue}>
 
+                           
+                        
                          <ContactList isMobile={width <= 648 ? true : false} />
                          <MessageComponent/>
-                         <ContactInformation isMobile={contactInfoMobile}/>       
-                         </SocketContext.Provider>
+                         <ContactInformation isMobile={contactInfoMobile}/>      
+                         </ContactContext.Provider> 
 
 
                         

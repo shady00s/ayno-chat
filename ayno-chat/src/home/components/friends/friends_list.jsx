@@ -18,7 +18,6 @@ export default function FriendsList() {
     useEffect(() => {
         setLoading(true)
         ApiCall.getFriendsList().then(data => {
-            console.log(data.data.body.friends)
             if (data.status === 200) {
                 setFriends(() => data.data.body.friends)
                 setLoading(false)

@@ -1,7 +1,7 @@
 import { NextFunction, Request,Response } from "express"
 import user_model from "../../model/user_model"
 import mongoose from "mongoose"
-import Logining from "../../logger"
+import Logining from "../../utils/logger"
 import conversation_model from "../../model/conversation_model"
 
 const postAcceptFriendController = async(req:Request,res:Response,next:NextFunction)=>{

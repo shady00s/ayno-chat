@@ -1,7 +1,6 @@
 import { NextFunction, Request,Response } from "express"
 import user_model from "../../model/user_model"
-import PasswordManager from './utils/password_manager';
-
+import PasswordManager from "../../utils/managers/password_manager"
 
 
 const userLogin = (req:Request,res:Response,next:NextFunction)=>{

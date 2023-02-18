@@ -1,6 +1,6 @@
 import cloudinary from 'cloudinary'
 import * as dotenv from 'dotenv' ;
-import Logining from '../../../logger';
+import Logining from '../logger';
 
 dotenv.config()
 

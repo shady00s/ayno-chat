@@ -5,7 +5,7 @@ import LoadingComponent from '../../../reusable-components/loading/loading_compo
 export default function FriendRequestBody(props){
     const [loading,setLoading]= useState(false)
     return(
-        <>
+      
          <div className="bg-[rgba(123,167,243,0.06)] rounded-lg p-1 m-2 flex-col w-[96%] flex items-center justify-center">
                     <div className="flex items-center w-[95%] pr-1 pt-1 pl-1">
                     <img src={props.data.profileImagePath} className="w-10 h-10 rounded-full object-fill"/>
@@ -49,6 +49,6 @@ export default function FriendRequestBody(props){
 
                     </div>}
                 </div>
-        </>
+    
     )
 }

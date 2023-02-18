@@ -15,7 +15,7 @@ try {
            let friend_data = await user_model.findByIdAndUpdate(friend_id,{$addToSet:{friendRequests:user_id}}).then(val=>val)
            if( friend_data !==null){
           //  SocketManager.friendRequestSocket({name:friend_data.name,profileImage:friend_data.profileImagePath})
-            socketManager.friendRequest({name:user.name,profileImage:user.profileImagePath})
+           // socketManager.friendRequest({name:user.name,profileImage:user.profileImagePath})
             res.status(200).json({message: "succsses , request was sent."})
            }
         }

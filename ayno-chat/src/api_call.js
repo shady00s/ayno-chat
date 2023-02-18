@@ -25,7 +25,7 @@ class ApiCall {
     }
     static getUserChatMessages = (friendId) => {
         try {
-            let result = axiosInestance.post(`/chat/messages`, {
+            let result = axiosInestance.get(`/chat/messages`, {
 
 
                 params: {
@@ -135,6 +135,11 @@ class ApiCall {
         }}).then(val=>val)
 
         return ignore
+    }
+    static editProfileData(profileData){
+        const profile = axiosInestance.post('/user/edit-profile',profileData).then(value=>value)
+
+        return profile
     }
 }
 

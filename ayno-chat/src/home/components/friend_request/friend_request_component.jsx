@@ -5,6 +5,8 @@ import FriendRequestBody from "./friend_request_body";
 import { FriendListSkeleton } from "../../../reusable-components/skeleton/friend_list";
 import SocketContext from "../../../context/socketContext";
 import { CounterComponent } from "../../../reusable-components/counter_component";
+
+
 export function FriendRequestComponent() {
   
 
@@ -63,7 +65,7 @@ export function FriendRequestComponent() {
                 </div>
 
                 <div className={`${open?"h-[30rem]":"h-[0rem] overflow-hidden"} overflow-y-auto  transition-all duration-300 ease-in-out`}>
-                    {loading?<FriendListSkeleton/>:friendRequest.length !==0?friendRequest.map(data=><FriendRequestBody data={data} removeFriendRequest={(removedId)=>{
+                    {loading?<FriendListSkeleton/>:friendRequest.length !==0?friendRequest.map(data=><FriendRequestBody key={data.name} data={data} removeFriendRequest={(removedId)=>{
                         const requests = friendRequest.filter(id=> id.name !== removedId.name )
                         
                         

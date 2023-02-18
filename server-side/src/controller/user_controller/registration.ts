@@ -1,8 +1,7 @@
 import { NextFunction, Router,Response,Request } from "express";
 import user_model from "../../model/user_model";
-import Logining from './../../logger';
-import PasswordManager from "./utils/password_manager";
-
+import Logining from '../../utils/logger';
+import PasswordManager from "../../utils/managers/password_manager";
  const userRegistrationController = (req:Request ,res:Response,next:NextFunction):void=>{
    
     const userName = req.body.username;
@@ -41,7 +40,7 @@ import PasswordManager from "./utils/password_manager";
                             Logining.info('Added to user database')
                             res.status(201).json({
                                 message:"register-complete",
-                                body:val
+                                body:{name:val.name,profileImagePath:val.profileImagePath}
                         })
                     })
         

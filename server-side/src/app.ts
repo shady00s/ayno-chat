@@ -1,19 +1,16 @@
 import express, { NextFunction } from "express";
-import  Logining  from "./logger";
+import  Logining  from "./utils/logger";
 import userRouter from "./routes/user_routes";
 import mongoose from 'mongoose';
 import * as dotenv from 'dotenv' ;
 import chatRouter from './routes/chat_routes';
-import http from 'http'
 import { socketManager } from "./sockets/socket_manager";
-import cors from 'cors'
 import UserData from "./types/session_type";
 import {default as connectMongoDBSession}from "connect-mongodb-session"
 import session from "express-session";
 import { Response,Request } from "express";
 import "express-session";
 
-import {Server} from "socket.io"
 declare module "express-session"{
     interface SessionData{
         userData:UserData
@@ -22,7 +19,7 @@ declare module "express-session"{
 dotenv.config()
 const app = express()
 const MongoDBStore = connectMongoDBSession(session);
-const store = new MongoDBStore({
+export const store = new MongoDBStore({
     uri:`mongodb+srv://${process.env.DATABASE_USER_NAME}:${process.env.DATABASE_PASSWORD}@chatdatabase.fnneyaw.mongodb.net/`,
     collection:"sessions",
     expires: 1000,
@@ -73,25 +70,20 @@ app.use('*',(req:Request,res:Response)=>{
 try {
     mongoose.set('strictQuery',true)
     
+
     mongoose.connect(`mongodb+srv://${process.env.DATABASE_USER_NAME}:${process.env.DATABASE_PASSWORD}@chatdatabase.fnneyaw.mongodb.net/
     `,{retryWrites:true,w:'majority'}).then((val)=>{
         Logining.info('connected to mongo database ')
 
         const server = app.listen(8080,()=>{
             Logining.info("connected to port 8080")
-    
+
+
+            socketManager.connectSocket(server)
+           
         })
-        
-        socketManager.connectSocket(server).on('connection',(socket)=>{
-            Logining.info(`user connected to socket with ID ${socket.id}`)
-        })
-       
-       
-    })
-
-
-   
-
+    })    
+           
     
 } catch (error) {
  Logining.error('faild to connect to mongo database'+error)   

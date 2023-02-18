@@ -1,19 +1,23 @@
-import { useEffect, useState } from "react";
-import { Outlet, Navigate, Route } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import StorageManager from "./utils/storage_manager";
+import { useEffect, useState, useContext } from "react";
+import { Outlet, Navigate } from "react-router-dom";
+
 import ApiCall from "./api_call";
 import LoadingComponent from './reusable-components/loading/loading_component';
+import UserContext from './context/userContext';
 
 const PrivateRoute = () => {
 
     const [user_data, setUserData] = useState()
-
+    const {setUser} = useContext(UserContext)
     useEffect(() => {
 
 
         ApiCall.getAuthentication().then(data => {
             if (data.data.message === "authenticated") {
+                setUser({
+                    name: data.data.body.name,
+                    profileImagePath: data.data.body.profileImagePath
+                  })
                 setUserData(() => true)
             } else {
                 setUserData(() => false)

@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import ImageManager from './utils/image_manager';
+import ImageManager from '../../utils/managers/image_manager';
 import conversation_model from "../../model/conversation_model";
 import user_model from "../../model/user_model";
 

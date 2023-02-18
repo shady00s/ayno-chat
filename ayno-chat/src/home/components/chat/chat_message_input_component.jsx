@@ -1,27 +1,24 @@
 import EmojiPicker from "emoji-picker-react";
-import { useState } from "react";
+import { useState,useContext } from "react";
 import { Smile,Send } from "react-feather";
 import IconButtonWithText from "../icon_button_with_text";
-import StorageManager from "../../../utils/storage_manager";
 import ApiCall from '../../../api_call';
 import AddImageComponent from "./add_image_component";
+import ContactContext from './../../../context/contactContext';
+import UserContext from './../../../context/userContext';
 export default function ChatMessageInputComponent(props){
 
     const [activated,setActivated] = useState(false)
     const [textVal,setTextVal] = useState('')
   
-    const userdata = StorageManager.getUserData()
     const conversation_id = props.conversation_id
-
+    const {user} = useContext(UserContext)
     function sendMessage(){
-       
-        ApiCall.postUserMessage({
-            sender_id:userdata.id,
+        ApiCall.postUserMessage({        
             conversation_id:conversation_id,
             message_content:textVal,
-            imagePath:userdata.profilePath
         }).then(value =>{
-            props.socketMessage({message:textVal,sender_id:userdata.id,imagePath:userdata.profilePath})
+            props.socketMessage({message:textVal})
         })
     }
 
