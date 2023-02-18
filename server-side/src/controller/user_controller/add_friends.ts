@@ -40,7 +40,7 @@ const postAcceptFriendController = async(req:Request,res:Response,next:NextFunct
                             return contactValue
                         })
             
-                         await new conversation_model({conversation_name:" ",conversation_id:generatedConversationId,members_ids:[userInformation.id,contactInformation.id]}).save().then(result=>{return result })
+                         await new conversation_model({conversation_id:generatedConversationId,members_ids:[userInformation.id,contactInformation.id]}).save().then(result=>{return result })
                         res.status(200).json({
                             message:"succssess",
                            

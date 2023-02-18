@@ -12,6 +12,7 @@ import { logo } from "../../constants";
 import SocketContext from "../../context/socketContext";
 import SocketClientManager from './../../sockets/message_socket';
 import UserContext from './../../context/userContext';
+import CreateChatGroupPopup from "../components/chat_group/create_chat_group_popup";
 
 
 
@@ -29,7 +30,6 @@ const { width } = useWindowDimensions()
     const [navigation, setNavigation] = useState('Contacts')
     const navigationValue = useMemo(() => ({ navigation, setNavigation }), [navigation])
 
-    console.log(user)
 
     return (
         <>
@@ -60,7 +60,7 @@ const { width } = useWindowDimensions()
                 </div>
 
 
-                <div className="w-full h-[91vh] flex bg-background overflow-hidden">
+                <div className="w-full h-[91vh] relative flex bg-background overflow-hidden">
                     <NavigationContext.Provider value={navigationValue}> 
                          <Sidebar />
                          <SettingsComponent />
@@ -74,7 +74,7 @@ const { width } = useWindowDimensions()
                          </ContactContext.Provider> 
 
 
-                        
+                        { navigation ==="create-Group"?<CreateChatGroupPopup/>:null}    
                      </NavigationContext.Provider>
                 </div>
 

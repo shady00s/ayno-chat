@@ -41,17 +41,15 @@ import http from "http"
 
 // export default SocketManager
 
-let io:Server; 
-let socketData:Socket;
+
 let socketManager = {
     connectSocket: (server:http.Server)=>{
-         io = new Server(server,{cors:{origin:"*",methods:["GET","POST"]}})
+        let io = new Server(server,{cors:{origin:"*",methods:["GET","POST"]}})
          io.on('connection',(socket)=>{
             io.emit('online',{isOnline:true})
             Logining.info(`user connected to socket with ID ${socket.id}`)
             // message socket
             socket.on('send-message',(messages)=>{
-        
                 io.emit('recive-message',messages)
                 
             })

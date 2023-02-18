@@ -13,6 +13,8 @@ import getGroupList from '../controller/user_controller/group_list';
 import ignoreFriendRequest from './../controller/user_controller/ignore_friend_request';
 import editProfileController from "../controller/user_controller/edit_profile";
 import { editProfileValidator } from "../utils/validators/editProfileValidators";
+import { groupValidator } from "../utils/validators/create_group_validation";
+import createGroup from "../controller/user_controller/create_group";
 
 const userRouter = express.Router()
 
@@ -42,6 +44,8 @@ userRouter.get('/search',sessionMiddleware,search_user)
 
 userRouter.get('/get-groups',sessionMiddleware,getGroupList)
 
-userRouter.post('/edit-profile',editProfileValidator,sessionMiddleware,editProfileController)
+userRouter.post('/edit-profile',sessionMiddleware,editProfileValidator,editProfileController)
+
+userRouter.post('/create-group',sessionMiddleware,groupValidator,createGroup)
 
 export default userRouter

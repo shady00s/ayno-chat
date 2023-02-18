@@ -10,10 +10,17 @@ interface messageModelType{
 }
 interface conversationModel{
     conversation_id:mongoose.Types.ObjectId,
-    conversation_name:String,
     messages:Array<messageModelType>,
     members_ids:Array<mongoose.Types.ObjectId>,
     media:Array<String>
 }
 
-export  {messageModelType, conversationModel}
+interface groupModel{
+    conversation_name:String,
+    conversation_id:mongoose.Types.ObjectId,
+    messages:Array<messageModelType>,
+    members_ids:Array<mongoose.Types.ObjectId>,
+    media:Array<String>
+}
+
+export  {messageModelType, conversationModel,groupModel}

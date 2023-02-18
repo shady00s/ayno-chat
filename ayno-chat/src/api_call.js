@@ -1,7 +1,7 @@
-import {axiosInestance} from "./axios/inestance"
+import { axiosInestance } from "./axios/inestance"
 
 class ApiCall {
-    static getAuthentication = ()=>{
+    static getAuthentication = () => {
         try {
             const data = axiosInestance.get('/user/checkAuthentication').then((value) => value)
 
@@ -9,13 +9,13 @@ class ApiCall {
         } catch (error) {
             console.log(error)
         }
-        
+
     }
     static getFriendsList = () => {
         try {
             let friendsList = axiosInestance.get('/user/friends').then((value) => {
-                    return value
-                })
+                return value
+            })
             return friendsList
         } catch (error) {
             console.log(error)
@@ -43,9 +43,9 @@ class ApiCall {
     static getSearchData = (contactName) => {
         try {
             let searchList = axiosInestance.get('/user/search', {
-                    params:{
-                        contactName:contactName
-                    }
+                params: {
+                    contactName: contactName
+                }
 
             }).then((value) => {
 
@@ -111,35 +111,59 @@ class ApiCall {
         }
     }
 
-    static getFriendsRequestList = ()=>{
+    static getFriendsRequestList = () => {
         try {
-            const getFriendRequestsList = axiosInestance.get('/user/get-friend-requests').then(val=>val)
+            const getFriendRequestsList = axiosInestance.get('/user/get-friend-requests').then(val => val)
             return getFriendRequestsList
         } catch (error) {
             console.log(error)
         }
-       
+
     }
 
-    static acceptFriendRequest= (contact_id)=>{
+    static acceptFriendRequest = (contact_id) => {
         try {
-         const postFriendRequest = axiosInestance.post('/user/accept-friend',{contact_id:contact_id}).then(val=>val)
-         return postFriendRequest;   
+            const postFriendRequest = axiosInestance.post('/user/accept-friend', { contact_id: contact_id }).then(val => val)
+            return postFriendRequest;
         } catch (error) {
             console.log(error)
         }
     }
-    static ignoreFriendRequest(friend_id){
-        const ignore = axiosInestance.get('/user/ignore-friend-requests',{params:{
-            friend_id:friend_id
-        }}).then(val=>val)
+    static ignoreFriendRequest(friend_id) {
+        try {
+            const ignore = axiosInestance.get('/user/ignore-friend-requests', {
+                params: {
+                    friend_id: friend_id
+                }
+            }).then(val => val)
 
-        return ignore
+            return ignore
+        } catch (error) {
+            console.log(error)
+        }
+
+
+
     }
-    static editProfileData(profileData){
-        const profile = axiosInestance.post('/user/edit-profile',profileData).then(value=>value)
+    static editProfileData(profileData) {
+        try {
+            const profile = axiosInestance.post('/user/edit-profile', profileData).then(value => value)
 
-        return profile
+            return profile
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
+
+    static createGroup(groupData) {
+        try {
+            const group = axiosInestance.post('/user/create-group',groupData).then(value => value)
+            return group
+        } catch (error) {
+            console.log(error)
+        }
+
     }
 }
 
