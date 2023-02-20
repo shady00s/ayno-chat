@@ -165,6 +165,10 @@ class ApiCall {
         }
 
     }
+    static getGroups(){
+        const groups = axiosInestance.get('/user/get-groups').then(value => value)
+        return groups
+    }
 }
 
 export default ApiCall

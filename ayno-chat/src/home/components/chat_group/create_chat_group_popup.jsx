@@ -54,10 +54,10 @@ export default function CreateChatGroupPopup(){
                                     </div>
                                     {
                                         loading ?  <FriendListSkeleton />:friendsList.length !==0? friendsList.map(friends=><Selectmember onClick={(data)=>{
-                                          let isExisted =   selected.some(selectedData => selectedData._id === data._id)
-
+                                          let isExisted =   selected.some(selectedData => selectedData === data._id)
+                                                                                        
                                           if(isExisted){
-                                            let friendListRemovedFromList = selected.filter(oldData=> oldData._id !== data._id)
+                                            let friendListRemovedFromList = selected.filter(oldData=> oldData !== data._id)
                                             setSelected(friendListRemovedFromList)
                                           }else{
                                             setSelected(prev=>[...prev,data._id])

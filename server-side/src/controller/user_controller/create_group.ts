@@ -8,7 +8,7 @@ export default async function createGroup(req:Request,res:Response){
     const userData = req.session.userData.userId
     const groupName = req.body.groupName;
     const groupMembers = req.body.groupMembers;
-    const genereatedConversationId = new mongoose.Types.ObjectId()
+    const genereatedConversationId = new mongoose.Types.ObjectId
     const allMembers = [...groupMembers,userData]
     const session = await mongoose.startSession();
 
@@ -23,7 +23,7 @@ export default async function createGroup(req:Request,res:Response){
 
         await new groups_model({conversation_id:genereatedConversationId,conversation_name:groupName,members_ids:allMembers},{session:session}).save().then(data=>data)
     
-         await user_model.updateMany({_id:{$in:allMembers}},{$addToSet:{conversations:{conversation_Id:genereatedConversationId}}},{session:session,new:true}).then(val=>val)
+         await user_model.updateMany({_id:{$in:allMembers}},{$addToSet:{groups:genereatedConversationId}},{session:session,new:true}).then(val=>val)
     
            await session.commitTransaction()
 

@@ -12,6 +12,7 @@ interface userModel{
     profileImagePath:String,
     conversations:Array<conversation>,
     friends:Array<mongoose.Types.ObjectId>,    
+    groups:Array<mongoose.Types.ObjectId>,    
     friendRequests:Array<mongoose.Types.ObjectId>,    
 }
 

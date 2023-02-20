@@ -9,12 +9,13 @@ import addFriendRequestController from "../controller/user_controller/friend_req
 import getMediaContoller from "../controller/get_media";
 import { checkSessionAuthenticationController, logInFromSession, sessionMiddleware } from '../utils/middlewares/session';
 import { friendRequestController } from "../controller/user_controller/friend_requests_list";
-import getGroupList from '../controller/user_controller/group_list';
+import getGroupInformation from '../controller/user_controller/group_information';
 import ignoreFriendRequest from './../controller/user_controller/ignore_friend_request';
 import editProfileController from "../controller/user_controller/edit_profile";
 import { editProfileValidator } from "../utils/validators/editProfileValidators";
 import { groupValidator } from "../utils/validators/create_group_validation";
 import createGroup from "../controller/user_controller/create_group";
+import getGroups from './../controller/user_controller/get_groups';
 
 const userRouter = express.Router()
 
@@ -42,7 +43,9 @@ userRouter.get('/ignore-friend-requests',sessionMiddleware,ignoreFriendRequest)
 
 userRouter.get('/search',sessionMiddleware,search_user)
 
-userRouter.get('/get-groups',sessionMiddleware,getGroupList)
+userRouter.get('/group-information',sessionMiddleware,getGroupInformation)
+
+userRouter.get('/get-groups',sessionMiddleware,getGroups)
 
 userRouter.post('/edit-profile',sessionMiddleware,editProfileValidator,editProfileController)
 

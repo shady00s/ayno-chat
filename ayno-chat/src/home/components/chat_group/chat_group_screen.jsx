@@ -17,9 +17,10 @@ export default function ChatGroupComponent(){
 
     useEffect(() => {
         setLoading(true)
-        ApiCall.getFriendsList().then(data => {
+        ApiCall.getGroups().then(data => {
+            console.log(data.data)
             if (data.status === 200) {
-                setGroups(() => data.data.body.friends)
+                setGroups(() => data.data.body)
                 setLoading(false)
             } else {
                 setGroups(() => [])
@@ -43,7 +44,7 @@ export default function ChatGroupComponent(){
                     </div>
                 </div>
                 <div className={`${open ? "h-[30rem] p-1" : "h-[0rem] overflow-hidden"} overflow-y-auto w-full transition-all duration-300 ease-in-out`}>
-                    {loading ? <FriendListSkeleton /> : groups.length !== 0 ? groups.map(data => <GroupChatButtonComponent key={data.name+"21"} data={data} />) :
+                    {loading ? <FriendListSkeleton /> : groups.length !== 0 ? groups.map(data => <GroupChatButtonComponent key={data.conversation_id} data={data} />) :
                     
                     <div className="flex justify-center items-center w-full h-full
                     ">
