@@ -1,9 +1,9 @@
 import { useEffect, useState, useContext } from 'react';
 import ApiCall from './../../../api_call';
 import ContactContext from './../../../context/contactContext';
+import SocketContext from './../../../context/socketContext';
 export default function GroupChatButtonComponent(props){
     const [contacts,setContacts]=useState([])
-
     const [indexSelected,setIndexSelected]=useState(-1)
     const {setContact} = useContext(ContactContext)
     useEffect(()=>{
@@ -13,6 +13,8 @@ export default function GroupChatButtonComponent(props){
             })
         }
     },[props.data])
+
+ 
     return(
     <div  onClick={()=>{
         ApiCall.getGroupsInfo(props.data.conversation_id).then(data=>{

@@ -1,4 +1,4 @@
-import React,{ useState, useEffect,useContext } from 'react';
+import React,{ useState, useEffect,useContext,useRef } from 'react';
 import useWindowDimensions from '../../../utils/window_size';
 import ApiCall from '../../../api_call';
 import { Image } from 'react-feather';
@@ -15,6 +15,7 @@ function ContactInformation (props) {
     const [media, setMedia] = useState([])
     const { contact } = useContext(ContactContext)
     const [loading,setLoading]=useState(false)
+    const [isUserOnline,setIsUserOnline] = useState()
     useEffect(() => {
         setLoading(true)
         setIsMobile(props.isMobile)
@@ -33,15 +34,16 @@ function ContactInformation (props) {
     }, [props.isMobile,contact ])//contact
 
     useEffect(() => {
+        
         socket.on("image", (imageUrl) => {
            return setMedia(prev => [...prev, imageUrl.message])
         })
-       
+       socket.on('online',(isOnline)=>{
+        console.log(isOnline)
 
-        return () => {
-            socket.removeListener("image")
-        }
-    }, [socket])
+        setIsUserOnline(isOnline) 
+       })
+    }, [socket,contact])
 
     return (
         <>

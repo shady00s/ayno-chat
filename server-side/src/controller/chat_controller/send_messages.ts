@@ -8,7 +8,8 @@ const postMessageController = (req:Request,res:Response)=>{
     const message_content = req.body.message_content;
     try {
     
-     
+        socketManager.messageSocket()
+
     conversation_model.findOneAndUpdate({conversation_id:conversation_id},{$push:{messages:{message:message_content,sender_id:sender_id,sender_image_path:req.session.userData.userProfilePath}}},{new:true}).then(results=>{
         res.status(201).json({message:"succsses",body:results})
      

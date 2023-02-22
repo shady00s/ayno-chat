@@ -82,6 +82,7 @@ try {
             
         })
         socketManager.connectSocket(server)
+        
     })    
            
     

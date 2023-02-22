@@ -9,7 +9,7 @@ export default function ContactButton(props){
 
     const getUserData =()=>{
         setNavigation("")
-        setContact({...props.data,type:'contact'})
+        setContact({...props.data,type:"contact"})
     }
 
     return(

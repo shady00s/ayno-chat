@@ -9,13 +9,16 @@ import UserContext from './../../../context/userContext';
 import GroupMessage from './group_message';
 
 export default function GroupMessageComponent(){
-    const {socket} = useContext(SocketContext)
+    const socket = useContext(SocketContext)
     const {contact} = useContext(ContactContext)
     const [messages,setMessages]=useState([])
     const [loading,setLoading]= useState(false)
     const {user}= useContext(UserContext)
     const user_id = user.id
     const scrollRef = useRef(null)
+    const scrollToBottom = () => {
+        scrollRef.current?.scrollIntoView({ behavior: "smooth" })
+    }
     useEffect(()=>{
         if(Object.keys(contact).length === 0) return
         setLoading(true)
@@ -29,7 +32,23 @@ export default function GroupMessageComponent(){
                 setLoading(false)
             }
         })
+        console.log(messages[0])
     },[contact])
+
+    useEffect(()=>{
+        scrollToBottom()
+    },[messages])
+
+    useEffect(()=>{
+
+        socket.on('recive-group-message',(message)=>{
+            console.log(message)
+           return setMessages(prev=>[...prev,message])
+        })
+
+        return()=>{socket.removeListener('recive-group-message')}
+    },[socket])
+
     return(
         <div className='relative flex flex-col  h-[80vh] md:w-[50%] w-[95%]'>
 

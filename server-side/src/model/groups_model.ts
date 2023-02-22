@@ -14,7 +14,8 @@ const groups_model = new mongoose.Schema<groupModel>({
         seen:{type:Boolean,default:false},
         delivered:{type:Boolean,default:false},
         date:{type:Date,default:Date.now()},
-       
+        sender_color:{type:String},
+        sender_name:{type:String}
     }]
 })
 

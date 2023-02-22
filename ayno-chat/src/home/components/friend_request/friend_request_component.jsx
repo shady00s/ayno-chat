@@ -14,14 +14,14 @@ export function FriendRequestComponent() {
     const [friendRequest, setFriendRequest] = useState([])
     const [loading, setLoading] = useState(false)
     const [numberofReq,setNumberOfReq]= useState(0)
-    const socketTest = useContext(SocketContext)
+    const socket = useContext(SocketContext)
 
 
 
     useEffect(()=>{
            // socketTest.emit('send-message',{message_content:'dfdfdfdf'})
 
-            socketTest.on('friend-request',(data)=>{
+           socket.on('friend-request',(data)=>{
                 if(data !== undefined){
                     console.log(data)
                     setFriendRequest((prev)=>[...prev,data])

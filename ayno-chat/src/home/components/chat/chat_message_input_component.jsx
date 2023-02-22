@@ -5,29 +5,36 @@ import IconButtonWithText from "../icon_button_with_text";
 import ApiCall from '../../../api_call';
 import AddImageComponent from "./add_image_component";
 import UserContext from './../../../context/userContext';
+import SocketContext from './../../../context/socketContext';
+import ContactContext from './../../../context/contactContext';
 export default function ChatMessageInputComponent(props){
 
     const [activated,setActivated] = useState(false)
     const [textVal,setTextVal] = useState('')
-  
+  const socket = useContext(SocketContext)
     const conversation_id = props.conversation_id
     const {user} = useContext(UserContext)
+    const{contact}=useContext(ContactContext)
     function sendMessage(){
-        if(user.type ==='contact'){
+        if(contact.type ==='contact'){
+            socket.emit('send-messages',{message:textVal,conversation_id,id:user.id})
             ApiCall.postUserMessage({        
                 conversation_id:conversation_id,
                 message_content:textVal,
             }).then(value =>{
-                props.socketMessage({message:textVal})
+                
             })
         }else{
+            socket.emit('send-group-message',{message:textVal,conversation_id,sender_image_path:user.profileImagePath,sender_name:user.name,                sender_id:user.id
+            })
             ApiCall.postGroupMessage({
                 conversation_id:conversation_id,
                 message_content:textVal,
-                sender_image_path:user.profileImagePath
+                sender_image_path:user.profileImagePath,
+                sender_name:user.name,
+               
 
             }).then(value =>{
-               console.log(value)
             })
         }
        
@@ -54,7 +61,7 @@ export default function ChatMessageInputComponent(props){
         {/* submit button */}
             <IconButtonWithText onClick={()=>{
 
-                sendMessage()
+               sendMessage()
                 setTextVal("")
                 }} name="Send" icon={Send} isActive={true}/>
             

@@ -17,21 +17,17 @@ function MessageComponent() {
     const socket = useContext(SocketContext)
     const user_id = contact.id
     //  const useSocketMemo = useMemo(()=>(socket.current = io("ws://192.168.1.4:8080",{transports:['websocket']})),[socket.current])
-
     const scrollToBottom = () => {
         scrollRef.current?.scrollIntoView({ behavior: "smooth" })
     }
-
 
     useEffect(() => {
         scrollToBottom()
     }, [chat])
 
-
     // when contact changes api call will triggered to insert new data
 
     useEffect(() => {
-       
         if (Object.keys(contact).length !== 0) {
         
             setLoading(true)
@@ -54,20 +50,19 @@ function MessageComponent() {
 
 
     useEffect(()=>{
-        socket.on('recive-message', (message) => {
-            console.log(message)
-                
-            setChat((prev) => [...prev, message])
+
+        socket.on('recive-message', (textVal) => {
+          return setChat((prev) => [...prev, textVal])
 
         })    
         socket.on("image",(imageUrl)=>{
            return setChat((prev) => [...prev, imageUrl])
         })
-            return ()=>{
-                socket.removeListener()
-            }   
-
-    },[socket])
+        return(()=>{
+            socket.removeListener('recive-message')
+            socket.removeListener("image")
+    })
+    },[])
     return (
         <div className='relative flex flex-col  h-[80vh] md:w-[50%] w-[95%]'>
 
@@ -97,10 +92,7 @@ function MessageComponent() {
             </div>
 
             <div className=' w-full '>
-                <ChatMessageInputComponent socketMessage={(value) => {
-                     
-                        socket.emit('send-message',value)
-                 }} conversation_id={Object.keys(contact).length !==0? contact.conversations[0].conversation_Id:""} friend_id={contact._id} />
+                <ChatMessageInputComponent  conversation_id={Object.keys(contact).length !==0? contact.conversations[0].conversation_Id:""} friend_id={contact._id} />
 
             </div>
 
