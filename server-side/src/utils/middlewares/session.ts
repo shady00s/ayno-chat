@@ -30,7 +30,7 @@ export function logInFromSession(req:Request,res:Response,next:NextFunction){
     
 export function checkSessionAuthenticationController(req:Request,res:Response,){
         if (req.session.userData !== undefined){
-            res.status(200).json({message:"authenticated",body:{profileImagePath:req.session.userData.userProfilePath,name:req.session.userData.userName}})    
+            res.status(200).json({message:"authenticated",body:{profileImagePath:req.session.userData.userProfilePath,name:req.session.userData.userName,id:req.session.userData.userId}})    
             
             
         }else{

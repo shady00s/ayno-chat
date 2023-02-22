@@ -50,6 +50,7 @@ const RegistrationComponent = () => {
   
         // send register data to the api
     const [loading,setLoading]=useState(false)
+
     const postRegisterData = ()=>{
         
         if( RegisterValidation.nameValidation(username) ===true && RegisterValidation.passwordValidation(pass,confirmPass)===true && avatar.name!=='' ){
@@ -60,10 +61,6 @@ const RegistrationComponent = () => {
             ApiCall.postUserRegisterData(registerData).then(apiResponse=>{
                 if(apiResponse.status===201){
                     setLoading(false)
-                        
-                    StorageManager.setCookies(JSON.stringify(apiResponse.data.body))
-            
-
 
                  navigate('/ayno-chat/home')
                 }else{
@@ -134,7 +131,9 @@ const RegistrationComponent = () => {
                
                
                 
-                    <div className="w-full flex">  {loading? <LoadingComponent/>:  <SubmitButton className="w-4/12 bg-indigo-800 mt-2 mb-6 m-auto " onClick={() => { postRegisterData() }} title={"Register"} />}</div>
+                    <div className="w-full flex">  <SubmitButton className="w-4/12 bg-indigo-800 mt-2 mb-6 m-auto " future={loading} onClick={
+                        
+                        () => { postRegisterData() }} title={"Register"} /></div>
 
                 
                 </div>

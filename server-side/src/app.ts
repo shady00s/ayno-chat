@@ -79,9 +79,9 @@ try {
             Logining.info("connected to port 8080")
 
 
-            socketManager.connectSocket(server)
-           
+            
         })
+        socketManager.connectSocket(server)
     })    
            
     

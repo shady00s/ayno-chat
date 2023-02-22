@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import { useCallback, useState, useContext,useEffect } from "react";
 import { Outlet, Navigate } from "react-router-dom";
 
 import ApiCall from "./api_call";
@@ -8,17 +8,19 @@ import UserContext from './context/userContext';
 const PrivateRoute = () => {
 
     const [user_data, setUserData] = useState()
-    const {setUser} = useContext(UserContext)
+    const {user,setUser} = useContext(UserContext)
+
     useEffect(() => {
-
-
+        if(Object.keys(user).length !== 0) return
         ApiCall.getAuthentication().then(data => {
             if (data.data.message === "authenticated") {
                 setUser({
                     name: data.data.body.name,
-                    profileImagePath: data.data.body.profileImagePath
+                    profileImagePath: data.data.body.profileImagePath,
+                    id:data.data.body.id
                   })
                 setUserData(() => true)
+
             } else {
                 setUserData(() => false)
             }
@@ -26,7 +28,6 @@ const PrivateRoute = () => {
 
 
     }, [])
-
 
     if (user_data != undefined) {
         return (

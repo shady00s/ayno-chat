@@ -1,12 +1,11 @@
 import { Request,Response } from "express";
-import conversation_model from "../../model/conversation_model";
+import groups_model from "../../model/groups_model";
 export default function getGroupMessages(req:Request,res:Response){
-    const user_id = req.session.userData.userId
     const conversation_id = req.query.conversation_id
 
     if(conversation_id !== ""){
         try {
-        conversation_model.findOne({conversation_id:conversation_id}).select(["-__v","-_id"]).then(val=>{
+        groups_model.findOne({conversation_id:conversation_id}).select(["-__v",'-members_ids',"-_id"]).then(val=>{
             if(val !==null){
                 res.status(200).json({message:"succssess",body:val})
             }else{

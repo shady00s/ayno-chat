@@ -11,7 +11,7 @@ const SignInComponent = ()=>{
     const [rememberMe,setRememberMe]=useState(false)
     const [userName,setUserName]=useState('')
     const [password,setPassword]=useState('')
-
+    const [loading,setloading]=useState(false)
     const {setScreen} = useContext(RegisterScreenContext)
     const  sendLoginData = async ()=>{
        await ApiCall.getUserLoginData({user_name:userName,user_password:password}).then(loginData=>{
@@ -48,7 +48,9 @@ const SignInComponent = ()=>{
                 {/* register link */}
 
                 <span className="text-slate-400 p-4">Don't have profile?  <span onClick={()=>{setScreen("register")}} className="text-orange-300 cursor-pointer ">Register</span></span>
-                <SubmitButton future className="w-6/12 bg-indigo-800" onClick={()=>{sendLoginData()}} title={"Sign-in"}/>
+                <SubmitButton future={loading} className="w-6/12 bg-indigo-800" onClick={()=>{
+                    setloading(true)
+                    sendLoginData().then(val=>setloading(false))}} title={"Sign-in"}/>
 
             
        

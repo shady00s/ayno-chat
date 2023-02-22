@@ -4,7 +4,6 @@ import { Smile,Send } from "react-feather";
 import IconButtonWithText from "../icon_button_with_text";
 import ApiCall from '../../../api_call';
 import AddImageComponent from "./add_image_component";
-import ContactContext from './../../../context/contactContext';
 import UserContext from './../../../context/userContext';
 export default function ChatMessageInputComponent(props){
 
@@ -14,12 +13,24 @@ export default function ChatMessageInputComponent(props){
     const conversation_id = props.conversation_id
     const {user} = useContext(UserContext)
     function sendMessage(){
-        ApiCall.postUserMessage({        
-            conversation_id:conversation_id,
-            message_content:textVal,
-        }).then(value =>{
-            props.socketMessage({message:textVal})
-        })
+        if(user.type ==='contact'){
+            ApiCall.postUserMessage({        
+                conversation_id:conversation_id,
+                message_content:textVal,
+            }).then(value =>{
+                props.socketMessage({message:textVal})
+            })
+        }else{
+            ApiCall.postGroupMessage({
+                conversation_id:conversation_id,
+                message_content:textVal,
+                sender_image_path:user.profileImagePath
+
+            }).then(value =>{
+               console.log(value)
+            })
+        }
+       
     }
 
     return(

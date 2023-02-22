@@ -169,6 +169,24 @@ class ApiCall {
         const groups = axiosInestance.get('/user/get-groups').then(value => value)
         return groups
     }
+
+    static getGroupContacts(id){
+        const contacts = axiosInestance.get('/user/get-group-contacts',{params:{groupId:id}}).then(value => value)
+        return contacts
+    }
+
+    static getGroupsInfo(id){
+        const groups = axiosInestance.get('/user/group-information',{params:{conversation_id:id}}).then(value => value)
+        return groups
+    }
+    static getGroupMessges(id){
+        const groups = axiosInestance.get('/user/get-group-messages',{params:{conversation_id:id}}).then(value => value)
+        return groups
+    }
+    static postGroupMessage(messageData){
+        const groups = axiosInestance.post('/chat/send-group-message',messageData).then(value => value)
+        return groups
+    }
 }
 
 export default ApiCall

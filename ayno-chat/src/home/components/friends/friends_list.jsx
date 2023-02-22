@@ -11,7 +11,7 @@ export default function FriendsList() {
     const [friends, setFriends] = useState([])
     const [loading, setLoading] = useState(false)
     const [numberofFriends,setNumberofFriends]= useState(0)
-
+    const [selectedIndex,setSelectedIndex] = useState()
 
     useEffect(()=>{
             setNumberofFriends(friends.length)
@@ -43,14 +43,14 @@ export default function FriendsList() {
                     </div>
                 </div>
                 <div className={`${open ? "h-[30rem] p-1" : "h-[0rem] overflow-hidden"} relative overflow-y-auto  transition-all duration-300 ease-in-out`}>
-                    {loading ? <FriendListSkeleton /> : friends.length !== 0 ? friends.map(data => <ContactButton key={data.name} data={data} />) :
+                    {loading ? <FriendListSkeleton /> : friends.length !== 0 ? friends.map((data,index) => <ContactButton onClick={()=>{
+                        setSelectedIndex(()=>index)
+                    }}  key={data.name} data={data}  selected={selectedIndex === index?true:false}/>) :
                     
                     <div className="flex justify-center items-center w-full h-full
                     ">
-
                     <EmptyContactComponent />
                     </div> }
-
                     <div className=" absolute bottom-8 right-10">
                         <CreateChatGroup/>
                     </div>

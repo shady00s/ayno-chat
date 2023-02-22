@@ -15,7 +15,7 @@ function MessageComponent() {
     const [loading, setLoading] = useState(false)
     const scrollRef = useRef(null)
     const socket = useContext(SocketContext)
-    const user_id = contact._id
+    const user_id = contact.id
     //  const useSocketMemo = useMemo(()=>(socket.current = io("ws://192.168.1.4:8080",{transports:['websocket']})),[socket.current])
 
     const scrollToBottom = () => {
@@ -74,14 +74,7 @@ function MessageComponent() {
             <div className="flex flex-col  overflow-y-auto h-[95%]">
 
 
-                {/* {chat.length !== 0 ? 
 
-                chat.map(messageComponent =>
-                    
-                    <div className="m-1 pb-4 border-b-2 p-2  border-b-[rgba(70,70,70,0.1)]" ref={scrollRef}>
-                        
-                        <ChatMessageComponent key={Math.random().toString()} message={messageComponent} isUser={messageComponent.sender_id == user_id.id ? true : false} /></div>)
-                    : <div className="w-full md:h-[75vh] h-[85vh] justify-center items-center"><ChatSkeleton /></div>} */}
 
                 { Object.keys(contact).length === 0? <div className="flex flex-col justify-center items-center h-full w-full">
                         <Feather className=" stroke-slate-600 m-2"/>
@@ -94,7 +87,7 @@ function MessageComponent() {
 
                         <div key={Math.random().toString()} className="m-1 pb-4 border-b-2 p-2  border-b-[rgba(70,70,70,0.1)]" ref={scrollRef}>
 
-                            <ChatMessageComponent  message={messageComponent} isUser={messageComponent.sender_id == user_id? true : false} /></div>)
+                            <ChatMessageComponent  message={messageComponent} isUser={messageComponent.message.sender_id === user_id? true : false} /></div>)
                     : <div className="flex flex-col justify-center items-center h-full w-full">
                     <Feather className=" stroke-slate-600 m-2"/>
                  <h1 className="text-slate-400">Say hi to your friends</h1>

@@ -16,6 +16,8 @@ import { editProfileValidator } from "../utils/validators/editProfileValidators"
 import { groupValidator } from "../utils/validators/create_group_validation";
 import createGroup from "../controller/user_controller/create_group";
 import getGroups from './../controller/user_controller/get_groups';
+import getGroupContacts from './../controller/user_controller/get_group_contacts';
+import getGroupMessages from './../controller/chat_controller/group_messages';
 
 const userRouter = express.Router()
 
@@ -50,5 +52,7 @@ userRouter.get('/get-groups',sessionMiddleware,getGroups)
 userRouter.post('/edit-profile',sessionMiddleware,editProfileValidator,editProfileController)
 
 userRouter.post('/create-group',sessionMiddleware,groupValidator,createGroup)
+userRouter.get('/get-group-contacts',sessionMiddleware,getGroupContacts)
+userRouter.get('/get-group-messages',sessionMiddleware,getGroupMessages)
 
 export default userRouter

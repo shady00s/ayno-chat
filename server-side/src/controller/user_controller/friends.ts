@@ -7,7 +7,7 @@ const getUserFriendsController=(req:Request,res:Response)=>{
         if(user_id !== undefined){
             user_model.findById(user_id).then(async value=>{
                 if(value !== null){
-                     let friendData = await user_model.find({"_id":{$in : value.friends,},"conversations.contactID": user_id}).select(['-password','-friends','-__v']).then(val=>val)
+                     let friendData = await user_model.find({"_id":{$in : value.friends,},"conversations.contactID": user_id}).select(['-password','-friendRequests','-friends','-__v']).then(val=>val)
                       
                      
                     res.status(200).json({

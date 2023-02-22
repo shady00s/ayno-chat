@@ -5,20 +5,21 @@ import {ChevronDown} from 'react-feather'
 import { FriendListSkeleton } from '../../../reusable-components/skeleton/friend_list';
 import GroupChatButtonComponent from './group_chat_component';
 import { CounterComponent } from '../../../reusable-components/counter_component';
+
+
 export default function ChatGroupComponent(){
     const [open, setOpen] = useState(false)
     const [groups, setGroups] = useState([])
     const [loading, setLoading] = useState(false)
     const [numberOfGroups,setNumberOfGroups]=useState(0)
+
     useEffect(()=>{
         setNumberOfGroups(groups.length)
 },[groups])
 
-
     useEffect(() => {
         setLoading(true)
         ApiCall.getGroups().then(data => {
-            console.log(data.data)
             if (data.status === 200) {
                 setGroups(() => data.data.body)
                 setLoading(false)
@@ -26,14 +27,12 @@ export default function ChatGroupComponent(){
                 setGroups(() => [])
                 setLoading(false)
             }
-            
         })
     }, [])
     return(
         
-        
           <>
-            <div className="pt-4 pd-4">
+            <div className="pt-4 pd-4 w-full">
                 <div onClick={() => { setOpen(!open) }} className="flex justify-between pl-2 pt-2 pb-2 pr-3 cursor-pointer hover:bg-[rgba(124,173,219,0.04)]">
                     <h1 className="text-slate-200 select-none">Groups</h1>
 
@@ -43,7 +42,7 @@ export default function ChatGroupComponent(){
                     <ChevronDown className="text-slate-200" />
                     </div>
                 </div>
-                <div className={`${open ? "h-[30rem] p-1" : "h-[0rem] overflow-hidden"} overflow-y-auto w-full transition-all duration-300 ease-in-out`}>
+                <div className={`${open ? "h-[30rem] p-1" : "h-[0rem] overflow-hidden"} flex flex-col items-center overflow-y-auto w-full transition-all duration-300 ease-in-out`}>
                     {loading ? <FriendListSkeleton /> : groups.length !== 0 ? groups.map(data => <GroupChatButtonComponent key={data.conversation_id} data={data} />) :
                     
                     <div className="flex justify-center items-center w-full h-full

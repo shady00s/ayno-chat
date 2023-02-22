@@ -1,11 +1,12 @@
+import { useEffect,useContext } from "react"; 
+import UserContext from "../../../context/userContext";
+import ContactContext from "../../../context/contactContext";
 import { CheckCircle } from "react-feather";
-import ContactContext from './../../../context/contactContext';
-import { useContext, useEffect } from "react";
-import UserContext from './../../../context/userContext';
-
-export default function ChatMessageComponent(props) {
+export default function GroupMessage(props){
+    console.log(props)
     const { contact } = useContext(ContactContext)
     const { user } = useContext(UserContext)
+    console.log(props.message)
     useEffect(() => { }, [props.message.sender_image_path])
     const guestMainContainerStyle = ' bg-[#1E2329]  mr-2';
     const ownerMainContainerStyle = 'bg-[#008FC6] float-right ml-2 ';
@@ -16,7 +17,7 @@ export default function ChatMessageComponent(props) {
         <div className="w-full h-full  mb-3">
             <div className={`flex ${props.isUser ? "float-right" : "float-left"} items-end`}>
                 {/* profile image */}
-                <img alt="user profile" src={props.isUser?user.profileImagePath:""} className="h-7 w-7 p-1 rounded-full" />
+                <img alt="user profile" src={props.isUser?user.profileImagePath:props.sender_image_path} className="h-7 w-7 p-1 rounded-full" />
                 {/* text container */}
                 {/* if the message is image link then it will be displayed as image */}
                 <div style={{ maxWidth: "23rem", minWidth: "2rem", overflowWrap: "break-word" }} className={`${props.isUser ? guestMainContainerStyle : ownerMainContainerStyle} relative rounded-md p-1  inline-block`}>
@@ -31,8 +32,5 @@ export default function ChatMessageComponent(props) {
                 </div>
 
             </div>
-        </div>
-
-
-    )
+        </div>)
 }

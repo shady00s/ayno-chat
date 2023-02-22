@@ -13,17 +13,14 @@ import SocketContext from "../../context/socketContext";
 import SocketClientManager from './../../sockets/message_socket';
 import UserContext from './../../context/userContext';
 import CreateChatGroupPopup from "../components/chat_group/create_chat_group_popup";
+import ChatBodyComponent from "../components/chat/chat_body";
 
 
 
 export default function HomeScreen() {
 const { width } = useWindowDimensions()
-
-
     const [contactInfoMobile, setContactInfoMobile] = useState(false)
- 
-    const {user} = useContext(UserContext)
-    //contact
+     //contact
     const [contact, setContact] = useState({})
     const contactValue = useMemo(() => ({ contact, setContact }), [contact])
     // nav
@@ -31,9 +28,10 @@ const { width } = useWindowDimensions()
     const navigationValue = useMemo(() => ({ navigation, setNavigation }), [navigation])
 
 
+
     return (
         <>
-
+ 
             <main className='w-full bg-background overflow-hidden relative h-[95%]  justify-start'>
 
                 <Helmet>
@@ -56,11 +54,12 @@ const { width } = useWindowDimensions()
                                 <h1 className="text-slate-300 mr-2 select-none">{Object.keys(contact).length !== 0 ? contact.name + "'s info" : ""}</h1>
                                 <img src={contact.profileImagePath} className={'w-8 rounded-full'} />
                             </div>
-                            : null}
+                            : <div></div>}
                 </div>
 
 
                 <div className="w-full h-[91vh] relative flex bg-background overflow-hidden">
+                   
                     <NavigationContext.Provider value={navigationValue}> 
                          <Sidebar />
                          <SettingsComponent />
@@ -69,12 +68,12 @@ const { width } = useWindowDimensions()
                            
                         
                          <ContactList isMobile={width <= 648 ? true : false} />
-                         <MessageComponent/>
+                         <ChatBodyComponent/>
                          <ContactInformation isMobile={contactInfoMobile}/>      
                          </ContactContext.Provider> 
 
 
-                        { navigation ==="create-Group"?<CreateChatGroupPopup/>:null}    
+                        <CreateChatGroupPopup/>   
                      </NavigationContext.Provider>
                 </div>
 
