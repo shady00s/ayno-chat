@@ -32,7 +32,6 @@ export default function GroupMessageComponent(){
                 setLoading(false)
             }
         })
-        console.log(messages[0])
     },[contact])
 
     useEffect(()=>{
@@ -42,7 +41,6 @@ export default function GroupMessageComponent(){
     useEffect(()=>{
 
         socket.on('recive-group-message',(message)=>{
-            console.log(message)
            return setMessages(prev=>[...prev,message])
         })
 

@@ -18,6 +18,7 @@ import createGroup from "../controller/user_controller/create_group";
 import getGroups from './../controller/user_controller/get_groups';
 import getGroupContacts from './../controller/user_controller/get_group_contacts';
 import getGroupMessages from './../controller/chat_controller/group_messages';
+import sendImageValidation from "../utils/validators/send_image_validation";
 
 const userRouter = express.Router()
 
@@ -35,7 +36,7 @@ userRouter.post('/add-friend',sessionMiddleware,addFriendRequestController)
 
 userRouter.post('/accept-friend',sessionMiddleware,postAcceptFriendController)
 
-userRouter.post('/send-image' ,sessionMiddleware,sendImage)
+userRouter.post('/send-image' ,sessionMiddleware,sendImageValidation,sendImage)
 
 userRouter.get('/get-media',sessionMiddleware,getMediaContoller)
 
@@ -52,7 +53,9 @@ userRouter.get('/get-groups',sessionMiddleware,getGroups)
 userRouter.post('/edit-profile',sessionMiddleware,editProfileValidator,editProfileController)
 
 userRouter.post('/create-group',sessionMiddleware,groupValidator,createGroup)
+
 userRouter.get('/get-group-contacts',sessionMiddleware,getGroupContacts)
+
 userRouter.get('/get-group-messages',sessionMiddleware,getGroupMessages)
 
 export default userRouter
