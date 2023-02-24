@@ -32,7 +32,7 @@ export default function  Sidebar(props){
     }
     return (
         
-        <div className="border-r-2 border-r-slate-800 bg-[rgba(175,214,242,0.008)]">
+        <div className=" z-50 border-r-2 border-r-slate-800 bg-[rgba(175,214,242,0.008)]">
                 {navButtons.map((item,index)=>
                   
                     <div  key={item.name} onClick={()=>{

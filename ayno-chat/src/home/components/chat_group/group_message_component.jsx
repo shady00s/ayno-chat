@@ -48,7 +48,7 @@ export default function GroupMessageComponent(){
     },[socket])
 
     return(
-        <div className='relative flex flex-col  h-[80vh] md:w-[50%] w-[95%]'>
+        <div className='relative flex flex-col  h-[88vh] md:w-[50%] w-[95%]'>
 
         <div className="flex flex-col  overflow-y-auto h-[95%]">
 

@@ -29,7 +29,6 @@ function MessageComponent() {
 
     useEffect(() => {
         if (Object.keys(contact).length !== 0) {
-        
             setLoading(true)
             ApiCall.getUserChatMessages(contact._id).then(messages => {
                 
@@ -64,7 +63,7 @@ function MessageComponent() {
     })
     },[])
     return (
-        <div className='relative flex flex-col  h-[80vh] md:w-[50%] w-[95%]'>
+        <div className='relative flex flex-col  h-[88vh] md:w-[50%] w-[95%]'>
 
             <div className="flex flex-col  overflow-y-auto h-[95%]">
 

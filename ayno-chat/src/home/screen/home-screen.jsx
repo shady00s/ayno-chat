@@ -28,7 +28,6 @@ const { width } = useWindowDimensions()
     const navigationValue = useMemo(() => ({ navigation, setNavigation }), [navigation])
 
 
-
     return (
         <>
  
