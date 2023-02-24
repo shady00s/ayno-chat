@@ -7,7 +7,8 @@ export default function getGroups(req:Request,res:Response){
     const user_id = req.session.userData.userId
     // get groups
     user_model.findById(user_id).then(userData=>{
-        const groups:string[] = []
+        if(userData !==null){
+ const groups:string[] = []
         for (let index = 0; index < userData.groups.length; index++) {
 
             let ids = userData.groups[index]._id.toString();
@@ -21,5 +22,7 @@ export default function getGroups(req:Request,res:Response){
                 }
             })
         }
+        }
+       
     })
 }

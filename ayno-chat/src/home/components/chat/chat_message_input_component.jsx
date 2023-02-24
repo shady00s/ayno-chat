@@ -1,5 +1,5 @@
 import EmojiPicker from "emoji-picker-react";
-import { useState,useContext } from "react";
+import { useState,useContext,useEffect,useRef } from "react";
 import { Smile,Send } from "react-feather";
 import IconButtonWithText from "../icon_button_with_text";
 import ApiCall from '../../../api_call';
@@ -11,31 +11,44 @@ export default function ChatMessageInputComponent(props){
 
     const [activated,setActivated] = useState(false)
     const [textVal,setTextVal] = useState('')
+    const [socketUsed,setSocketUsed] = useState(false)
   const socket = useContext(SocketContext)
     const conversation_id = props.conversation_id
     const {user} = useContext(UserContext)
     const{contact}=useContext(ContactContext)
+
+    const finalText = useRef("")
+    useEffect(()=>{
+        finalText.current = textVal
+    },[textVal])
+
     function sendMessage(){
+        
         if(contact.type ==='contact'){
-            socket.emit('send-messages',{message:textVal,conversation_id,id:user.id})
+            setSocketUsed(true)
             ApiCall.postUserMessage({        
                 conversation_id:conversation_id,
-                message_content:textVal,
-            }).then(value =>{
-                
+                message_content: finalText.current,
             })
+            const textVal = {message: finalText.current,conversation_id,id:user.id}
+            socket.emit('send-messages',textVal,conversation_id)
+
+            setTextVal("")
+
         }else{
-            socket.emit('send-group-message',{message:textVal,conversation_id,sender_image_path:user.profileImagePath,sender_name:user.name,                sender_id:user.id
-            })
+           
             ApiCall.postGroupMessage({
                 conversation_id:conversation_id,
-                message_content:textVal,
+                message_content: finalText.current,
                 sender_image_path:user.profileImagePath,
                 sender_name:user.name,
                
 
-            }).then(value =>{
+            }) 
+            socket.emit('send-group-message',{message: finalText.current,conversation_id,sender_image_path:user.profileImagePath,sender_name:user.name,sender_id:user.id
             })
+            setTextVal("")
+
         }
        
     }
@@ -62,7 +75,6 @@ export default function ChatMessageInputComponent(props){
             <IconButtonWithText onClick={()=>{
 
                sendMessage()
-                setTextVal("")
                 }} name="Send" icon={Send} isActive={true}/>
             
         </div>

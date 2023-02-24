@@ -11,6 +11,10 @@ let socketManager = {
         io = new Server(server, { cors: { origin: "*", methods: ["GET", "POST"] } })
         io.on('connection', (socket) => {
             Logining.info('connection at socket ' + socket.id)
+            socket.on('disconnect',()=>{
+                Logining.error('client disconnected with id '+ socket.id)
+     
+            })
         })
         return io
     },
@@ -20,10 +24,11 @@ let socketManager = {
             return
         }
         io.on('connection', (socket) => {
-            socket.on('send-messages', (textVal) => {
-                io.emit('recive-message', textVal);
+            socket.on('send-messages', (textVal,conversation_id) => {
+                console.log(textVal);
+                socket.to(conversation_id).emit('recive-message', textVal);
             })
-
+            
         })
 
     },
@@ -33,10 +38,16 @@ let socketManager = {
             return
         }
         io.on('connection',(socket)=>{
-            socket.on('send-group-message',(message)=>{
-                io.emit('recive-group-message',message)
+            socket.on('send-group-message',(message,conversation_id)=>{
+                io.to(conversation_id).emit('recive-group-message',message)
+
+                socket.on('disconnect',()=>{
+                    Logining.error('client disconnected with id '+ socket.id)
+         
+                })
             })
         })
+       
     },
     imageSocket: () => {
         io.on('connection', (socket) => {

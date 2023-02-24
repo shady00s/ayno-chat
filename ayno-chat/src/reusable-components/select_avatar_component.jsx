@@ -39,9 +39,9 @@ const SelectAvatarComponent = (props) => {
 
                            <div className="h-full flex justify-evenly  items-center m-2 mt-4" >
                             <button onClick={()=>{
-                                setGender("male")}} className={`${gender==="male"? "bg-blue-800 ":"bg-zinc-600 "} transition-colors w-16 h-10 m-1 rounded-md text-slate-200` }>Male</button>
+                                setGender(()=>"male")}} className={`${gender==="male"? "bg-blue-800 ":"bg-zinc-600 "} transition-colors w-16 h-10 m-1 rounded-md text-slate-200` }>Male</button>
                           {props.changeGender?  <button onClick={()=>{
-                                setGender("female")}} className={`${gender==="female"? "bg-pink-700 ":"bg-zinc-600 "} transition-colors w-16 h-10 bg-zinc-600 m-1 rounded-md text-slate-200 `}>Female</button>:null}
+                                setGender(()=>"female")}} className={`${gender==="female"? "bg-pink-700 ":"bg-zinc-600 "} transition-colors w-16 h-10 bg-zinc-600 m-1 rounded-md text-slate-200 `}>Female</button>:null}
                             </div> 
                         </div>
             <div  className='flex flex-wrap h-46 overflow-y-auto p-1'>

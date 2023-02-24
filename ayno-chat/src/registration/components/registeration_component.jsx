@@ -125,7 +125,7 @@ const RegistrationComponent = () => {
                  {/* Avatar Container */}
                  <div className={`${screen ==='register'? "opacity-100":"opacity-0"} duration-300 ease-in  w-[20rem] transition-opacity `}>
                     
-                    <SelectAvatarComponent onClick={target=> {setAvatar( target.target.getAttribute('src'))}}/>
+                    <SelectAvatarComponent changeGender onClick={target=> {setAvatar( target.target.getAttribute('src'))}}/>
                     </div>  
 
                

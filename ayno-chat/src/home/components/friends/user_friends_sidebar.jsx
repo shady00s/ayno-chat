@@ -13,16 +13,24 @@ import { io } from 'socket.io-client';
 
 import { useRef } from "react";
 import SocketContext from './../../../context/socketContext';
+import useWindowDimensions from './../../../utils/window_size';
 
 
  function ContactList(props){
     const socket = useRef()
 
+   const {width} = useWindowDimensions()
 
+   const [isMobile,setIsMobile] = useState(false)
     const [searchContainer,setSearchContainer] = useState(false)
     const [search,setSearch] = useState('')
     const [searchList,setSearchList] = useState([])
 
+    useEffect(()=>{
+        width > 770 ? setIsMobile(false):setIsMobile(true)
+
+        console.log(isMobile)
+    },[width])
 
     const {navigation} = useContext(NavigationContext)
 
@@ -44,8 +52,8 @@ import SocketContext from './../../../context/socketContext';
 
     return(
         // desktop version
-        <>{props.isMobile === false ?
-            <div style={{borderRight:"3px solid rgba(60, 67, 60, 0.167)",maxWidth:"40%"}} className="flex flex-col  overflow-x-hidden bg-background transition-transform ease-in-out duration-500">
+        <>{isMobile === false ?
+            <div style={{borderRight:"3px solid rgba(60, 67, 60, 0.167)"}} className="flex flex-col md:w-4/12 w-3/12  overflow-x-hidden bg-background transition-transform ease-in-out duration-500">
         <SearchComponent title={"Search for friends"}  onInputClick={()=>{setSearchContainer(true)}} searchSubmit={getSearchResult} searchResult={(value)=>{setSearch(value.target.value)}}/>
             {/* search result */}
 
@@ -77,7 +85,7 @@ import SocketContext from './../../../context/socketContext';
 //    mobile version
 
     :<div className={ `${navigation==="Contacts"?"opacity-1 translate-x-0" :"opacity-0 translate-x-[-999px]"}  transition-opacity ease-in duration-500 left-10 absolute overflow-x-hidden w-[95%] h-[90%] bg-theme z-50`}>
-        <div style={{borderRight:"3px solid rgba(60, 67, 60, 0.167)"}} className={`${navigation==="Contacts"? "translate-x-0" :"translate-x-[-999px]"} transition-transform   ease-in-out duration-300 flex flex-col h-full overflow-y-auto bg-background z-50 xl:w-7/12 w-8/12`}>
+        <div style={{borderRight:"3px solid rgba(60, 67, 60, 0.167)"}} className={`${navigation==="Contacts"? "translate-x-0" :"translate-x-[-999px]"} transition-transform   ease-in-out duration-300 flex flex-col h-full overflow-y-auto bg-background z-50 xl:w-7/12 w-7/12`}>
         <SearchComponent title={"Search for friends"}  onInputClick={()=>{setSearchContainer(true)}} searchSubmit={getSearchResult} searchResult={(value)=>{setSearch(value.target.value)}}/>
             {/* search result */}
        

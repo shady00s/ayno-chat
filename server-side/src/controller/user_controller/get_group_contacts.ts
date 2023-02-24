@@ -4,7 +4,7 @@ import user_model from "../../model/user_model";
 
 export default function getGroupContacts(req:Request,res:Response){
     const user_id = req.session.userData.userId;
-        const group_id = req.query.groupId
+    const group_id = req.query.groupId
         groups_model.findOne({conversation_id:group_id}).then(async group=>{
             if(group !==null){
                      const contacts:string[] = []

@@ -46,7 +46,7 @@ const { width } = useWindowDimensions()
 
                     <img alt="ayno logo" src={logo} className=" w-40 p-3" />
                     {
-                        width <= 1070 ?
+                        width <=    770 ?
                             <div onClick={() => {
                                 setContactInfoMobile(!contactInfoMobile)
                             }} className="flex p-2 items-center cursor-pointer">
@@ -66,7 +66,7 @@ const { width } = useWindowDimensions()
 
                            
                         
-                         <ContactList isMobile={width <= 648 ? true : false} />
+                         <ContactList  />
                          <ChatBodyComponent/>
                          <ContactInformation isMobile={contactInfoMobile}/>      
                          </ContactContext.Provider> 

@@ -1,6 +1,6 @@
 import ChatMessageComponent from "./chat_message_component"
 import ChatMessageInputComponent from './chat_message_input_component';
-import React, { useState, useEffect, useRef, useContext,useMemo } from 'react';
+import React, { useState, useEffect, useRef, useContext, useMemo } from 'react';
 import ApiCall from '../../../api_call';
 import ContactContext from '../../../context/contactContext';
 import { ChatSkeleton } from './../../../reusable-components/skeleton/chat';
@@ -31,7 +31,7 @@ function MessageComponent() {
         if (Object.keys(contact).length !== 0) {
             setLoading(true)
             ApiCall.getUserChatMessages(contact._id).then(messages => {
-                
+
                 if (messages.status === 200) {
                     setChat(() => messages.data.conversations.messages)
                     setLoading(false)
@@ -48,20 +48,21 @@ function MessageComponent() {
 
 
 
-    useEffect(()=>{
-
-        socket.on('recive-message', (textVal) => {
-          return setChat((prev) => [...prev, textVal])
-
-        })    
-        socket.on("image",(imageUrl)=>{
-           return setChat((prev) => [...prev, imageUrl])
+    useEffect(() => {
+       
+            socket.on('recive-message', (textVal) => {
+                console.log(textVal)
+                return setChat((prev) => [...prev, textVal])
+    
+            })
+        
+        
+        socket.on("image", (imageUrl) => {
+            return setChat((prev) => [...prev, imageUrl])
         })
-        return(()=>{
-            socket.removeListener('recive-message')
-            socket.removeListener("image")
-    })
-    },[])
+        return (() => {
+        })
+    }, [socket])
     return (
         <div className='relative flex flex-col  h-[88vh] md:w-[50%] w-[95%]'>
 
@@ -70,30 +71,36 @@ function MessageComponent() {
 
 
 
-                { Object.keys(contact).length === 0? <div className="flex flex-col justify-center items-center h-full w-full">
-                        <Feather className=" stroke-slate-600 m-2"/>
-                     <h1 className="text-slate-400">Say hi to your friends</h1>
-                     <h4 className="text-slate-600 text-sm p-2">Select friend from your contact list and say hi or start to make new connections</h4>
-                     
-                     </div> :loading ? <ChatSkeleton /> : chat.length !== 0 ?
+                {Object.keys(contact).length === 0 ? <div className="flex flex-col justify-center items-center h-full w-full">
+                    <Feather className=" stroke-slate-600 m-2" />
+                    <h1 className="text-slate-400">Say hi to your friends</h1>
+                    <h4 className="text-slate-600 text-sm p-2">Select friend from your contact list and say hi or start to make new connections</h4>
 
-                    chat.map(messageComponent =>
+                </div> : loading ? <ChatSkeleton /> : chat.length !== 0 ?
+                    <div className="h-full p-1 w-full  overflow-x-hidden flex flex-col">
+                        <div className="h-full p-1 w-full  overflow-x-hidden flex flex-col">
+                            {chat.map(messageComponent => <div key={Math.random().toString()} className="m-1 pb-4 border-b-2 p-2  border-b-[rgba(70,70,70,0.1)]" ref={scrollRef}>
 
-                        <div key={Math.random().toString()} className="m-1 pb-4 border-b-2 p-2  border-b-[rgba(70,70,70,0.1)]" ref={scrollRef}>
+                                <ChatMessageComponent message={messageComponent} isUser={messageComponent.message.sender_id === user_id ? true : false} /></div>)}
 
-                            <ChatMessageComponent  message={messageComponent} isUser={messageComponent.message.sender_id === user_id? true : false} /></div>)
+                        </div>
+                        <div className=' w-full '>
+                            <ChatMessageInputComponent conversation_id={Object.keys(contact).length !== 0 ? contact.conversations[0].conversation_Id : ""} friend_id={contact._id} />
+
+                        </div>
+                    </div>
+
+
+
                     : <div className="flex flex-col justify-center items-center h-full w-full">
-                    <Feather className=" stroke-slate-600 m-2"/>
-                 <h1 className="text-slate-400">Say hi to your friends</h1>
-                 <h4 className="text-slate-600 text-sm p-2">Select friend from your contact list and say hi or start to make new connections</h4>
-                 
-                 </div> }
+                        <Feather className=" stroke-slate-600 m-2" />
+                        <h1 className="text-slate-400">Say hi to your friends</h1>
+                        <h4 className="text-slate-600 text-sm p-2">Select friend from your contact list and say hi or start to make new connections</h4>
+
+                    </div>}
             </div>
 
-            <div className=' w-full '>
-                <ChatMessageInputComponent  conversation_id={Object.keys(contact).length !==0? contact.conversations[0].conversation_Id:""} friend_id={contact._id} />
 
-            </div>
 
         </div>
     )

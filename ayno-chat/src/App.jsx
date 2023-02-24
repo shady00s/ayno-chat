@@ -8,7 +8,7 @@ import SocketContext from "./context/socketContext";
 function App() {
 
 
-  const socket = useRef(SocketClientManager.socketInit())
+  const socket = useRef(new SocketClientManager().socketInit())
   const socketSaved = useMemo(()=>(socket.current),[socket.current])
   return (
       <SocketContext.Provider value={socketSaved}>
