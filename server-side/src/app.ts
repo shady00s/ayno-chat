@@ -10,6 +10,7 @@ import {default as connectMongoDBSession}from "connect-mongodb-session"
 import session from "express-session";
 import { Response,Request } from "express";
 import "express-session";
+import { createServer } from "http";
 
 declare module "express-session"{
     interface SessionData{
@@ -67,7 +68,11 @@ app.use('*',(req:Request,res:Response)=>{
     res.json({message:"bad route"})
 })
 
+
+
 try {
+    const server = createServer(app)
+    socketManager.connectSocket(server)
     mongoose.set('strictQuery',true)
     
 
@@ -75,14 +80,12 @@ try {
     `,{retryWrites:true,w:'majority'}).then((val)=>{
         Logining.info('connected to mongo database ')
 
-        const server = app.listen(8080,()=>{
+        server.listen(8080,()=>{
             Logining.info("connected to port 8080")
-
-
+        
+        
             
         })
-        socketManager.connectSocket(server)
-        
     })    
            
     

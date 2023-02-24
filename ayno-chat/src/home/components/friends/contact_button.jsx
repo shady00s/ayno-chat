@@ -2,12 +2,15 @@ import { useEffect,useContext,useState } from 'react';
 import NavigationContext from '../../../context/navigationContext';
 import ContactContext from '../../../context/contactContext';
 import { CounterComponent } from '../../../reusable-components/counter_component';
+import SocketContext from './../../../context/socketContext';
 
 export default function ContactButton(props){
     const {setNavigation}= useContext(NavigationContext)
     const {setContact} = useContext(ContactContext)
-
+    const socket = useContext(SocketContext)
     const getUserData =()=>{
+        //
+        socket.emit("join-conversation",props.data.conversations[0].conversation_Id)
         setNavigation("")
         setContact({...props.data,type:"contact"})
     }

@@ -8,17 +8,17 @@ import SocketContext from "./context/socketContext";
 function App() {
 
 
-  const socket = useRef(new SocketClientManager().socketInit())
-  const socketSaved = useMemo(()=>(socket.current),[socket.current])
+  const socket = useRef( SocketClientManager.socketInit())
+
   return (
-      <SocketContext.Provider value={socketSaved}>
-     
+    
+      <SocketContext.Provider value={socket.current}>
     <HelmetProvider>
 
       <AppRouters />
     </HelmetProvider>
-
     </SocketContext.Provider >
+
 
 
   );

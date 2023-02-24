@@ -50,7 +50,7 @@ function MessageComponent() {
 
     useEffect(() => {
        
-            socket.on('recive-message', (textVal) => {
+            socket.on("recive-message", (textVal) => {
                 console.log(textVal)
                 return setChat((prev) => [...prev, textVal])
     
@@ -60,8 +60,7 @@ function MessageComponent() {
         socket.on("image", (imageUrl) => {
             return setChat((prev) => [...prev, imageUrl])
         })
-        return (() => {
-        })
+  
     }, [socket])
     return (
         <div className='relative flex flex-col  h-[88vh] md:w-[50%] w-[95%]'>
