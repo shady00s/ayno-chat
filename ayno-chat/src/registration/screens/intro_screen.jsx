@@ -18,7 +18,7 @@ export default function IntroScreen() {
 
            
             {/* registeration container */}
-            <div className={` ${screen === 'sign-in'?" md:w-4/12 md:h-[73vh] h-[71vh]  w-10/12":"w-5/6 h-[80%]"} ${screen === 'register'?"md:h-[82%]":"md:h-[63%]"} w-[80%] transition-all duration-300 ease bg-background relative p-4  pb-2 m-auto overflow-hidden rounded-3xl `}>
+            <div className={` ${screen === 'sign-in'?" md:w-4/12 h-[70%] w-10/12":screen === 'register'?"md:h-[73%]":"md:h-[63%] h-[83%]"}  w-[80%] transition-all duration-300 ease bg-background relative p-4  pb-2 m-auto overflow-hidden rounded-3xl `}>
                 <div>
                     <img className="w-36 m-6" src={logo} />
                 </div>

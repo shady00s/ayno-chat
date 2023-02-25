@@ -30,7 +30,7 @@ export default function CreateChatGroupPopup(){
     },[])
     return( <>{navigation =='create-Group'?  <div  className=" absolute flex justify-center items-center w-screen h-screen bg-theme">
 
-    <div className=" bg-slate-800 w-3/6 rounded-xl p-2 transition-all duration-100 ease-in">
+    <div className=" bg-slate-800  w-4/6 lg:w-5/12  rounded-xl p-2 transition-all duration-100 ease-in">
         <div className="flex justify-between items-center">
         <h1 className="text-slate-200 p-2">Create new Group</h1>
         <div onClick={()=>{setNavigation('Contacts')}} className="flex select-none cursor-pointer p-2 rounded-md transition-all duration-75 ease-in hover:bg-[rgba(116,121,219,0.2)]">
