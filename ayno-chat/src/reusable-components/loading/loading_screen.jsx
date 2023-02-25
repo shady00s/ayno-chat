@@ -10,7 +10,7 @@ const LoadingScreen = () => {
   const nav = useNavigate()
 
   useEffect(() => { 
-    if(Object.keys(user).length !== 0) return
+    if(Object.keys(user).length !== 0)  nav('/ayno-chat/home')
 
     ApiCall.getAuthentication().then(val => {
       if (val.data.message === "authenticated") {
@@ -20,13 +20,13 @@ const LoadingScreen = () => {
           id:val.data.body.id
         })
         nav('/ayno-chat/home')
-        console.log(user)
       }
       else {
         nav('/ayno-chat/register')
       }
     })
   }, [])
+  console.log(xxa)
 
   //loadingScreenAnimation()
 

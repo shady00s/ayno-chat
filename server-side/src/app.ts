@@ -73,6 +73,7 @@ app.use('*',(req:Request,res:Response)=>{
 try {
     const server = createServer(app)
     socketManager.connectSocket(server)
+    socketManager.messageSocket()
     mongoose.set('strictQuery',true)
     
 

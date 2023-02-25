@@ -12,7 +12,7 @@ let socketManager = {
         io.on('connection', (socket) => {
             Logining.info('connection at socket ' + socket.id)
             users.push(socket.id)    
-                
+            
     
             socket.on('disconnect',()=>{
                 Logining.error('client disconnected with id '+ socket.id)
@@ -26,13 +26,18 @@ let socketManager = {
             Logining.error('error at socket')
             return
         }
+
+       
         io.on('connection',(socket)=>{
-            socket.on('join-conversation',(conversation)=>{
+            socket.on("join-conversation",(conversation)=>{
                 socket.join(conversation)
             })
+            socket.on("isTyping", ({name,conversation_id,isTyping})=>{
+                socket.to(conversation_id).emit("typing-data",name,isTyping)
+            })
         
-            socket.on('send-messages', (textVal,conversation_id) => {
-                io.in(conversation_id).emit('recive-message', textVal);
+            socket.on("send-messages", (textVal,conversation_id) => {
+                io.in(conversation_id).emit("recive-message", textVal);
             })
         })
        
@@ -60,6 +65,10 @@ let socketManager = {
        
     },
     imageSocket: () => {
+        if (!io) {
+            Logining.error('error at socket')
+            return
+        }
         // io.on('connection', (socket) => {
         //     io.emit('image')
         // })

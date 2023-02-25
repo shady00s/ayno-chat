@@ -11,21 +11,21 @@ export default function ChatMessageInputComponent(props){
 
     const [activated,setActivated] = useState(false)
     const [textVal,setTextVal] = useState('')
-    const [socketUsed,setSocketUsed] = useState(false)
   const socket = useContext(SocketContext)
     const conversation_id = props.conversation_id
     const {user} = useContext(UserContext)
     const{contact}=useContext(ContactContext)
-
+    const [userTyping,setUserTyping]=useState(false)
     const finalText = useRef("")
     useEffect(()=>{
         finalText.current = textVal
     },[textVal])
 
+
+  
     function sendMessage(){
         
         if(contact.type ==='contact'){
-            setSocketUsed(true)
             ApiCall.postUserMessage({        
                 conversation_id:conversation_id,
                 message_content: finalText.current,
@@ -52,10 +52,27 @@ export default function ChatMessageInputComponent(props){
         }
        
     }
+    useEffect(()=>{
+        socket.emit("isTyping", {name:user.name, conversation_id, isTyping:userTyping})
+
+    },[userTyping])
+
 
     return(
         <div className=" justify-between items-center border-2 border-gray-800 rounded-md sticky bottom-0 pl-4 pr-4 w-full  bg-background flex">
-            <input autoFocus value={textVal} onChange={val =>{ setTextVal( val.target.value)}}   placeholder="Write your text here" className="border-r-2 border-r-slate-700  p-1 w-9/12 bg-transparent text-gray-200" type={'text'}/>
+            <input onKeyDown={(key)=>{
+                if(key.key==="Enter"){
+                        setUserTyping(false)
+                        sendMessage()
+                }else{
+                    setUserTyping(true)
+                }
+            }} autoFocus value={textVal} onChange={val =>{
+               
+
+                
+                
+                setTextVal( val.target.value)}}   placeholder="Write your text here" className="border-r-2 border-r-slate-700  p-1 w-9/12 bg-transparent text-gray-200" type={'text'}/>
 
 
                 {/* emoji picker container */}
@@ -73,7 +90,7 @@ export default function ChatMessageInputComponent(props){
 
         {/* submit button */}
             <IconButtonWithText onClick={()=>{
-
+                setUserTyping(false)
                sendMessage()
                 }} name="Send" icon={Send} isActive={true}/>
             
