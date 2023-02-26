@@ -74,9 +74,15 @@ let socketManager = {
             Logining.error('error at socket')
             return
         }
-        // io.on('connection', (socket) => {
-        //     io.emit('image')
-        // })
+        io.on('connection',(socket)=>{
+            socket.on("send-image",(conversation_ids,images)=>{
+                io.in(conversation_ids).emit("images",images)
+
+            })
+
+        })
+      
+      
     }
 
 

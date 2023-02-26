@@ -21,10 +21,12 @@ export default function FriendsList() {
             setNumberofFriends(friends.length)
  },[friends])
     useEffect(() => {
+        if(socket.connected){
+            socket.emit('online',user.id)
+    
+            socket.on('online-users', (users)=>{setOnline(()=>users)})
 
-        socket.emit('online',user.id)
-
-        socket.on('online-users', (users)=>{setOnline(()=>users)})
+        }
         setLoading(true)
         ApiCall.getFriendsList().then(data => {
             if (data.status === 200) {
@@ -44,8 +46,8 @@ export default function FriendsList() {
             <div className="pt-4 pd-4 ">
                 <div onClick={() => { setOpen(!open) }} className=" flex justify-between pl-3 pt-2 pb-2 pr-3 cursor-pointer hover:bg-[rgba(124,173,219,0.04)]">
                     <h1 className="text-slate-200 select-none">Friends</h1>
-                    <div className="flex justify-evenly w-[5rem]">
-                        <CounterComponent number={numberofFriends}/>
+                    <div className="flex justify-evenly w-[8rem]">
+                        <div ><span className="text-sm text-slate-400">{friends.length} friends</span></div>
                     
                     <ChevronDown className="text-slate-200" />
                     </div>

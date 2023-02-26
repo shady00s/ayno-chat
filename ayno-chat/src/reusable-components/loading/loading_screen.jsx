@@ -1,12 +1,13 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 
 //import loadingScreenAnimation from "./loading_screen_animation";
 import ApiCall from './../../api_call';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import UserContext from './../../context/userContext';
 import LoadingComponent from "./loading_component";
 const LoadingScreen = () => {
   const{user,setUser} = useContext(UserContext)
+  const [authenticated,setAuthenticated]= useState()
   const nav = useNavigate()
 
   useEffect(() => { 
@@ -19,31 +20,41 @@ const LoadingScreen = () => {
           profileImagePath: val.data.body.profileImagePath,
           id:val.data.body.id
         })
-        nav('/ayno-chat/home')
+        setAuthenticated(true)
       }
       else {
-        nav('/ayno-chat/register')
+        setAuthenticated(false)
       }
     })
   }, [])
 
   //loadingScreenAnimation()
 
+  if(authenticated === undefined){
+    return (
+      <>
+        <div className="flex justify-center bg-background w-screen h-screen items-center">
+  
+        <LoadingComponent />
+  
+        </div>
+  
+  
+      </>
+    ) 
+  }
+  else{
+    return(
+      
+  
+          authenticated? <Navigate to={'/ayno-chat/home'}/>:<Navigate to={'/ayno-chat/register'}/>
+
+ 
+    )
+  }
 
 
 
-  return (
-    <>
-      <div className="flex justify-center bg-background w-screen h-screen items-center">
-
-      <LoadingComponent />
-
-
-      </div>
-
-
-    </>
-  )
 }
 
 

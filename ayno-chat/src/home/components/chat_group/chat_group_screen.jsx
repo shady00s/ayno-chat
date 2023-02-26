@@ -36,8 +36,8 @@ export default function ChatGroupComponent(){
                 <div onClick={() => { setOpen(!open) }} className="flex justify-between pl-2 pt-2 pb-2 pr-3 cursor-pointer hover:bg-[rgba(124,173,219,0.04)]">
                     <h1 className="text-slate-200 select-none">Groups</h1>
 
-                    <div className="flex justify-evenly w-[5rem]">
-                        <CounterComponent number={numberOfGroups}/>
+                    <div className="flex justify-evenly w-[8rem]">
+                    <div ><span className="text-sm text-slate-400">{groups.length} groups</span></div>
                     
                     <ChevronDown className="text-slate-200" />
                     </div>

@@ -53,20 +53,21 @@ function MessageComponent() {
         }
     }, [contact])
 
-
-
     useEffect(() => {
-       
-            socket.on("recive-message",newMessage )
-            socket.on("typing-data",(name,isTyping)=>{
-                setTyping(isTyping)
-                console.log(name,isTyping)
-            
-            })
-            setTyping(false)
-        socket.on("image", (imageUrl) => {
-            return setChat((prev) => [...prev, imageUrl])
-        })
+       if(socket.connected){
+            console.log(socket);
+           socket.on("recive-message",newMessage )
+           socket.on("images",(images)=>{
+            console.log(images);
+           })
+           socket.on("typing-data",(name,isTyping)=>{
+               setTyping(isTyping)
+               console.log(name,isTyping)
+           
+           })
+           setTyping(false)
+    
+       }
         return(()=>{
             socket.off("recive-message")
             socket.off("typing-data")

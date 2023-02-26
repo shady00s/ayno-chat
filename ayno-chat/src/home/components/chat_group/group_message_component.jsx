@@ -39,12 +39,14 @@ export default function GroupMessageComponent() {
     }, [messages])
 
     useEffect(() => {
+        if(socket.connected){
+            socket.on('recive-group-message', (message) => {
+                return setMessages(prev => [...prev, message])
+            })
 
-        socket.on('recive-group-message', (message) => {
-            return setMessages(prev => [...prev, message])
-        })
+        }
 
-        return () => { socket.removeListener('recive-group-message') }
+        return () => { socket.off('recive-group-message') }
     }, [socket])
 
     return (

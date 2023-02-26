@@ -18,23 +18,22 @@ export default function IntroScreen() {
 
            
             {/* registeration container */}
-            <div className={` ${screen === 'sign-in'?" md:w-4/12 h-[74%] w-10/12":screen === 'register'?"md:h-[73%]":"md:h-[63%] h-[83%]"}  w-[80%] transition-all duration-300 ease bg-background relative p-4  pb-2 m-auto overflow-hidden rounded-3xl `}>
+            <div className={` ${screen === 'sign-in'?" md:w-4/12 h-[90%] w-10/12":screen === 'register'?"md:h-[81%]":"h-[76%]"}  w-[85%] transition-all duration-300 ease bg-background relative p-4  pb-2  overflow-hidden rounded-3xl `}>
                 <div>
                     <img className="w-36 m-6" src={logo} />
                 </div>
         {/* main screen */}
 
-                <div className={`${screen ==='sign-in'?"overflow-y-hidden items-end":"overflow-y-auto"}    overflow-hidden `}>
+                <div className={`${screen ==='sign-in'?"overflow-y-hidden":"overflow-y-auto"} flex flex-col h-[82vh] w-full`}>
                  {/* intro section */}
-                <section className={`${screen === 'main' ? " translate-x-0":" -translate-x-[-99999px] w-0 h-0 hidden"} md:overflow-hidden overflow-y-scroll  transition-transform duration-300 ease-in flex justify-center items-center flex-wrap md:h-full   h-[75vh]`}>
-                    <div className="flex flex-col md:border-b-0   border-b-2 border-b-slate-700 md:border-b-slate-700 items-center md:w-6/12 w-11/12 md:border-r-2 md:border-r-slate-700 p-2 ml-4  m-auto md:h-4/5">
-                        <h1 className="text-3xl  xl:text-6xl md:p-4 p-8 text-slate-300">
+                <section className={`${screen === 'main' ? " translate-x-0 w-full h-[99%]":" -translate-x-[-99999px] w-0 h-0 hidden"}  overflow-y-auto  transition-transform duration-300 ease-in flex justify-center items-start flex-wrap `}>
+                    <div className="flex flex-col md:border-b-0   border-b-2 border-b-slate-700 md:border-b-slate-700 items-start justify-start md:w-6/12 w-11/12 md:border-r-2 md:border-r-slate-700 p-1 pl-3 ml-4 m-auto ">
+                        <h1 className="text-3xl  xl:text-6xl md:p-2 p-6 text-slate-300">
                             Chat any one with no information needed.
                         </h1>
                         <span className="text-slate-500 p-8">No email or phone number needed just write your nickname and set password and chat with anoynus people</span>
 
                     </div>
-
                     {/* signup and registration section */}
                     <div className="p-10  w-full  md:w-5/12">
                         <h3 className="text-slate-400 pt-3 pb-5">Sign in if you already have account</h3>
@@ -47,7 +46,7 @@ export default function IntroScreen() {
                     </div>
                 </section>
 
-                <div className="w-full h-[60vh]  overflow-y-hidden">
+                <div className="w-full h-[72vh]  overflow-y-hidden">
 
                
                 {/* sign in screen */}

@@ -131,7 +131,7 @@ const RegistrationComponent = () => {
                
                
                 
-                    <div className="w-full flex">  <SubmitButton className="w-4/12 bg-indigo-800 mt-2 mb-6 m-auto " future={loading} onClick={
+                    <div className="w-full flex">  <SubmitButton className="md:w-4/12 w-7/12 bg-indigo-800 mt-2 mb-6 m-auto " future={loading} onClick={
                         
                         () => { postRegisterData() }} title={"Register"} /></div>
 

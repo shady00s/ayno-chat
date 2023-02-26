@@ -11,7 +11,7 @@ const PrivateRoute = () => {
     const {user,setUser} = useContext(UserContext)
 
     useEffect(() => {
-        if(Object.keys(user).length !== 0) return
+        if(Object.keys(user).length !== 0) return setUserData(true)
         ApiCall.getAuthentication().then(data => {
             if (data.data.message === "authenticated") {
                 setUser({

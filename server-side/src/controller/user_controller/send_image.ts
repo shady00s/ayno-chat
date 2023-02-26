@@ -2,12 +2,13 @@ import { NextFunction, Request, Response } from "express";
 import ImageManager from '../../utils/managers/image_manager';
 import conversation_model from "../../model/conversation_model";
 import groups_model from "../../model/groups_model";
+import { socketManager } from "../../sockets/socket_manager";
 
 export default async function sendImage(req: Request, res: Response, next: NextFunction) {
     const user_name = req.session.userData.userName
     const media: string[] = req.body.media
     const conversation_id: string = req.body.conversation_id
-    const sender_id: string = req.session.userData.userId.id.toString()
+    const sender_id = req.session.userData.userId
     const sender_image_path: string = req.body.sender_image_path
     const conversation_type = req.body.type
     // check if the body is not null
@@ -19,6 +20,7 @@ export default async function sendImage(req: Request, res: Response, next: NextF
                 await ImageManager.uploadImage(media[index], conversation_id).then((data) => {
                     mediaLinks.push(data.url)
                     //    new SocketManager().imageUrl ={message:data.url,sender_id:sender_id,sender_image_path:sender_image_path} 
+                
                 })
             }
         }
@@ -29,15 +31,16 @@ export default async function sendImage(req: Request, res: Response, next: NextF
 
         sendDataToCloudinary().then(async (value) => {
             if (value.length !== 0) {
+
                 if(conversation_type === 'contact'){
                     for (let index = 0; index < value.length; index++) {
-                        await conversation_model.findOneAndUpdate({ conversation_id: conversation_id }, { $push: { media: value[index], messages: { sender_id: sender_id, sender_image_path: sender_image_path, message: value[index] } } },)
+                        await conversation_model.findOneAndUpdate({ conversation_id: conversation_id }, { $push: { media: value[index], messages: { sender_id: sender_id, sender_image_path: sender_image_path, message: value[index] } } },).then(val=>val)
     
-    
+
                     }
                 }else{
                     for (let index = 0; index < value.length; index++) {
-                        await groups_model.findOneAndUpdate({ conversation_id: conversation_id }, { $push: { media: value[index], messages: { sender_id: sender_id, sender_image_path: sender_image_path, message: value[index] ,sender_name:user_name} } },)
+                        await groups_model.findOneAndUpdate({ conversation_id: conversation_id }, { $push: { media: value[index], messages: { sender_id: sender_id, sender_image_path: sender_image_path, message: value[index] ,sender_name:user_name} } },).then(val=>val)
     
     
                     }
