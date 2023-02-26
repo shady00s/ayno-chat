@@ -90,22 +90,22 @@ const RegistrationComponent = () => {
                 <form className="p-3 flex flex-col items-start ">
                     <InputTextComponent onChange={(value) => { setUsername(value.target.value) }} placeHolder={"Name"}/>
                     {/* check if the username is not less than 4 characters*/}
-                    {username.length <=4 && username !==''? <InputErrorComponent title={"username is too short it must be at least 4 characters"} />:null  }
+                     <InputErrorComponent show={username.length <=4 && username !==''?true:false} title={"username is too short it must be at least 4 characters"} />
                     
                     {/* check if the username have whitespace*/}
-                    {usernameWhiteSpaceRegExp.test(username)? <InputErrorComponent title={"username cannot contain whitespace"} />:null  }
+                    <InputErrorComponent show={usernameWhiteSpaceRegExp.test(username)?true:false} title={"username cannot contain whitespace"} />
 
                      <InputTextComponent onChange={(value) => { setPass(value.target.value) }} placeHolder={"Password"}/>
 
                     {/* check if the  password is more than 8 characters */}
-                    {pass.length <=8 && pass.length !==0?
-                    <InputErrorComponent title={"The password is soo weak ! it must be 8 characters at least."} />:null}
+                    
+                    <InputErrorComponent show={pass.length <=8 && pass.length !==0? true:false} title={"The password is soo weak ! it must be 8 characters at least."} />
 
                     
                     <InputTextComponent onChange={(value) => { setConfirmPass(value.target.value) }} placeHolder={"Confirm password"}/>
 
                      {/* check if the confirm password is like password */}
-                    {confirmPass !== pass? <InputErrorComponent title={"The two passwords are not the same!"} />:null  }
+                  <InputErrorComponent show={  confirmPass !== pass? true:false }  title={"The two passwords are not the same!"} />
                    
 
                     {/* remember me container */}

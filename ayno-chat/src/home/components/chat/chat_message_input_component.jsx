@@ -21,7 +21,6 @@ export default function ChatMessageInputComponent(props){
         finalText.current = textVal
     },[textVal])
 
-
   
     function sendMessage(){
         
@@ -29,8 +28,9 @@ export default function ChatMessageInputComponent(props){
             ApiCall.postUserMessage({        
                 conversation_id:conversation_id,
                 message_content: finalText.current,
+                user_id:user._id
             })
-            const textVal = {message: finalText.current,conversation_id,id:user.id}
+            const textVal = {message: finalText.current,conversation_id,sender_id:user.id}
             socket.emit('send-messages',textVal,conversation_id)
 
             setTextVal("")

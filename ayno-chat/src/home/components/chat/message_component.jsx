@@ -7,10 +7,12 @@ import { ChatSkeleton } from './../../../reusable-components/skeleton/chat';
 
 import { Feather } from "react-feather";
 import SocketContext from './../../../context/socketContext';
+import UserContext from './../../../context/userContext';
 
 function MessageComponent() {
 
     const { contact } = useContext(ContactContext)
+    const {user}=useContext(UserContext)
     const [chat, setChat] = useState([])
     const [loading, setLoading] = useState(false)
     const [typing,setTyping] = useState(false)
@@ -21,7 +23,7 @@ function MessageComponent() {
         return setChat((prev) => [...prev, textVal])
 
     })
-    const user_id = contact.id
+
     //  const useSocketMemo = useMemo(()=>(socket.current = io("ws://192.168.1.4:8080",{transports:['websocket']})),[socket.current])
     const scrollToBottom = () => {
         scrollRef.current?.scrollIntoView({ behavior: "smooth" })
@@ -50,7 +52,6 @@ function MessageComponent() {
             })
         }
     }, [contact])
-
 
 
 
@@ -89,7 +90,7 @@ function MessageComponent() {
                         <div className="h-full p-1 w-full  overflow-x-hidden flex flex-col">
                             {chat.map(messageComponent => <div key={Math.random().toString()} className="m-1 pb-4 border-b-2 p-2  border-b-[rgba(70,70,70,0.1)]" ref={scrollRef}>
 
-                                <ChatMessageComponent message={messageComponent} isUser={messageComponent.message.sender_id === user_id ? true : false} /></div>)}
+                                <ChatMessageComponent message={messageComponent}  /></div>)}
 
                         </div>
                         {/* typing container */}

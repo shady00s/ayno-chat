@@ -11,12 +11,17 @@ let socketManager = {
          io = new Server(server, { cors: { origin: "*", methods: ["GET", "POST"] } })
         io.on('connection', (socket) => {
             Logining.info('connection at socket ' + socket.id)
-            users.push(socket.id)    
-            
+            socket.on('online',(id)=>{
+                
+                users.push({socket:socket.id,id})  
+                
+                io.emit('online-users',users)
+            })
     
             socket.on('disconnect',()=>{
                 Logining.error('client disconnected with id '+ socket.id)
-                users = users.filter(data=>data !== socket.id)
+                users = users.filter(data=>data.socket !== socket.id)
+                io.emit('online-users',users)
             })
         })
         return io

@@ -29,7 +29,6 @@ import useWindowDimensions from './../../../utils/window_size';
     useEffect(()=>{
         width > 770 ? setIsMobile(false):setIsMobile(true)
 
-        console.log(isMobile)
     },[width])
 
     const {navigation} = useContext(NavigationContext)

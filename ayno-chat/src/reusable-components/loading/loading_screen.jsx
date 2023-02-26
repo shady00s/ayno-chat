@@ -26,7 +26,6 @@ const LoadingScreen = () => {
       }
     })
   }, [])
-  console.log(xxa)
 
   //loadingScreenAnimation()
 
