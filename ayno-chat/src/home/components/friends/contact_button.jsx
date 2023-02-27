@@ -14,7 +14,6 @@ export default function ContactButton(props){
         setNavigation("")
         setContact({...props.data,type:"contact"})
     }
-    console.log(props.isActive)
     return(
         <div onClick={()=>{
             getUserData()

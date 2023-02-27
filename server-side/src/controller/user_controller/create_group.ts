@@ -20,8 +20,7 @@ export default async function createGroup(req:Request,res:Response){
             session.startTransaction()
             // let createdConversation = await new conversation_model({conversation_name:gro})
         // create new group conversation 
-
-        await new groups_model({conversation_id:genereatedConversationId,conversation_name:groupName,members_ids:allMembers},{session:session}).save().then(data=>data)
+        await new groups_model({conversation_id:genereatedConversationId,conversation_name:groupName,members_ids:[...allMembers]},{session:session}).save().then(data=>data)
     
          await user_model.updateMany({_id:{$in:allMembers}},{$addToSet:{groups:genereatedConversationId}},{session:session,new:true}).then(val=>val)
     
@@ -30,7 +29,7 @@ export default async function createGroup(req:Request,res:Response){
         res.status(200).json({message:"done"})
         }else{
             session.abortTransaction()
-            res.status(401).json({message:"error occured",errors})
+            res.status(401).json({message:"session error",errors})
         }
      
         

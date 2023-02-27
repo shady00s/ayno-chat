@@ -11,6 +11,10 @@ let socketManager = {
          io = new Server(server, { cors: { origin: "*", methods: ["GET", "POST"] } })
         io.on('connection', (socket) => {
             Logining.info('connection at socket ' + socket.id)
+            socket.on("join-conversation",(conversation)=>{
+                console.log(conversation);
+                socket.join(conversation)
+            })
             socket.on('online',(id)=>{
                 
                 users.push({socket:socket.id,id})  
@@ -34,9 +38,7 @@ let socketManager = {
 
        
         io.on('connection',(socket)=>{
-            socket.on("join-conversation",(conversation)=>{
-                socket.join(conversation)
-            })
+
             socket.on("isTyping", ({name,conversation_id,isTyping})=>{
                 socket.to(conversation_id).emit("typing-data",name,isTyping)
             })
@@ -69,19 +71,14 @@ let socketManager = {
         })
        
     },
-    imageSocket: () => {
+    imageSocket: (conversation_ids:string,images:object) => {
+        console.log('connected');
         if (!io) {
             Logining.error('error at socket')
             return
         }
-        io.on('connection',(socket)=>{
-            socket.on("send-image",(conversation_ids,images)=>{
-                io.in(conversation_ids).emit("images",images)
+            io.in(conversation_ids).emit("images",images)
 
-            })
-
-        })
-      
       
     }
 

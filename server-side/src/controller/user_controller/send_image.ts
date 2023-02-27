@@ -28,26 +28,38 @@ export default async function sendImage(req: Request, res: Response, next: NextF
     }
 
     try {
-
         sendDataToCloudinary().then(async (value) => {
+           
+       
             if (value.length !== 0) {
 
                 if(conversation_type === 'contact'){
+                    const mediaMessage = []
                     for (let index = 0; index < value.length; index++) {
-                        await conversation_model.findOneAndUpdate({ conversation_id: conversation_id }, { $push: { media: value[index], messages: { sender_id: sender_id, sender_image_path: sender_image_path, message: value[index] } } },).then(val=>val)
-    
+                        mediaMessage.push({sender_id:sender_id,message:value[index],sender_image_path:sender_image_path,})
+                        socketManager.imageSocket(conversation_id,{sender_id:sender_id,message:value[index],sender_image_path:sender_image_path,})
+        
+                    }
+                        await conversation_model.findOneAndUpdate({ conversation_id: conversation_id }, { $push: { media:{$each:value} , messages:{$each:mediaMessage} } },{new:true}).then(val=>{
+                            return val
+                        })
 
-                    }
                 }else{
+                    const mediaMessage = []
                     for (let index = 0; index < value.length; index++) {
-                        await groups_model.findOneAndUpdate({ conversation_id: conversation_id }, { $push: { media: value[index], messages: { sender_id: sender_id, sender_image_path: sender_image_path, message: value[index] ,sender_name:user_name} } },).then(val=>val)
-    
-    
+                        mediaMessage.push({sender_id:sender_id,message:value[index],sender_image_path:sender_image_path,})
+                        socketManager.imageSocket(conversation_id,{sender_id:sender_id,message:value[index],sender_image_path:sender_image_path,})
+        
                     }
+
+                    await groups_model.findByIdAndUpdate({ conversation_id: conversation_id }, { $push: { media:{$each:value} , messages:{$each:mediaMessage} } },{new:true}).then(val=>{
+                        return val
+                    })
+
                 }
                 
 
-                res.status(200).json({ message: "images added successfully", images: value })
+                res.status(201).json({ message: "images added successfully", images: value })
             }
             else {
                 res.status(500).json({ message: "There is an error , try again" })
@@ -58,7 +70,8 @@ export default async function sendImage(req: Request, res: Response, next: NextF
     }
 
     catch (error) {
-        console.log(error);
+        res.status(500).json({ message: "There is an error , try again",error })
+
     }
 
 

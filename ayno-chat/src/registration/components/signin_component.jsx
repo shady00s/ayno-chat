@@ -18,7 +18,7 @@ const SignInComponent = ()=>{
                
             if(loginData.status===200){
                   //  console.log(loginData.data.data)
-               StorageManager.setCookies(JSON.stringify(loginData.data.data))
+               //StorageManager.setCookies(JSON.stringify(loginData.data.data))
                 navigate('/ayno-chat/home')
             }
             else{

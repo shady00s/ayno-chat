@@ -7,13 +7,16 @@ import EmptyContactComponent from "../friends/empty_contacts_component";
 import Selectmember from "./selectMemeber";
 import SubmitButton from "../../../registration/components/submit_button";
 import {X} from 'react-feather'
+import InputErrorComponent from "../../../registration/components/input_error_component";
 export default function CreateChatGroupPopup(){
     const {navigation,setNavigation}=useContext(NavigationContext)
     const [loading,setLoading]= useState(false)
     const [loadingReq,setLoadingReq]= useState(false)
     const [friendsList,setFriendsList]= useState([])
     const [selected,setSelected] = useState([])
-    const groupName = useRef()
+    const [errorName,setErrorName] = useState(false)
+    const [errorList,setErrorList] = useState(false)
+    const groupName = useRef("")
     useEffect(()=>{
 
         setLoading(true)
@@ -40,8 +43,12 @@ export default function CreateChatGroupPopup(){
         
         </div>
         <div className="flex flex-wrap justify-center h-full w-full transition-all duration-100 ease-in items-center ">
-        <div className="md:w-6/12 w-full">
-            <InputTextComponent onChange={(val)=>{groupName.current = val.target.value}} placeHolder={"Conversation name"}/>
+        <div className="md:w-6/12 w-11/12">
+            <InputTextComponent onChange={(val)=>{
+                groupName.current = val.target.value
+                setErrorName(false)
+                }} placeHolder={"Conversation name"}/>
+            <InputErrorComponent title={"please type Group's name"} show={errorName}/>
         </div>
         <div className="md:w-6/12 w-full flex flex-col justify-center overflow-y-auto">
             <div className="flex justify-between items-center p-2">
@@ -49,29 +56,48 @@ export default function CreateChatGroupPopup(){
             <h1 className="text-sm p-2 text-slate-200">Choose your friends</h1>
             <span className="text-sm text-slate-500">{selected.length} Selected</span>
             </div>
+            <InputErrorComponent title={"please select at least one friend"} show={errorList}/>
+
             {
                 loading ?  <FriendListSkeleton />:friendsList.length !==0? friendsList.map(friends=><Selectmember onClick={(data)=>{
                   let isExisted =   selected.some(selectedData => selectedData === data._id)
-                                                                
+                                     setErrorList(false)                           
                   if(isExisted){
                     let friendListRemovedFromList = selected.filter(oldData=> oldData !== data._id)
                     setSelected(friendListRemovedFromList)
                   }else{
+
                     setSelected(prev=>[...prev,data._id])
                   }
                 }} key={friends.name} data={friends} /> ):<EmptyContactComponent/>
             }
         </div>
         <SubmitButton future={loadingReq} onClick={()=>{
-            setLoadingReq(true)
-            ApiCall.createGroup({
-                groupName:groupName.current,
-                groupMembers:selected,
-            }).then(val=>{
-                setLoadingReq(false)
-                setNavigation("Contacts")
-            })
+            
+          
+             if(groupName.current===""){
+                setErrorName(true)
+            }
+            if(selected.length=== 0){
+                setErrorList(true)
+            }
+            else{
+                setErrorList(true)
+                setErrorName(true)
+               setLoadingReq(true)
+                setError("")
+                ApiCall.createGroup({
+                    groupName:groupName.current,
+                    groupMembers:selected,
+                }).then(val=>{
+                    setLoadingReq(false)
+                    setNavigation("Contacts")
+                })
+            }
+           
         }}  className='bg-emerald-600 p-2' title={'Create group'}/>
+
+        
         </div>
 
     </div>

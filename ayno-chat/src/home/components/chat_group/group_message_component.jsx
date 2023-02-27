@@ -61,7 +61,7 @@ export default function GroupMessageComponent() {
                     <h1 className="text-slate-400">Say hi to your friends</h1>
                     <h4 className="text-slate-600 text-sm p-2">Select friend from your contact list and say hi or start to make new connections</h4>
 
-                </div> : loading ? <ChatSkeleton /> : chat.length !== 0 ?
+                </div> : loading ? <ChatSkeleton /> : messages.length !== 0 ?
 
 <div className="h-full p-1 w-full  overflow-x-hidden flex flex-col">
 <div className="h-full p-1 w-full  overflow-x-hidden flex flex-col">

@@ -56,7 +56,6 @@ export default function FriendsList() {
                     {loading ? <FriendListSkeleton /> : friends.length !== 0 ? friends.map((data,index) => <ContactButton
                     isActive={online.find(id=>id.id === data._id) !== undefined?true:false}
                     onClick={()=>{ 
-                        console.log(data)
                         setSelectedIndex(()=>index)
                     }}  key={data.name} data={data}  selected={selectedIndex === index?true:false}/>) :
                     

@@ -11,6 +11,7 @@ export default function getGroupContacts(req:Request,res:Response){
                 for (let index = 0; index < group.members_ids.length; index++) {
         
                     let ids = group.members_ids[index]._id.toString();
+                    
                     if(ids === user_id.toString()) continue
                     contacts.push(ids)
                     

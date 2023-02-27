@@ -10,8 +10,6 @@ import ContactContext from '../../context/contactContext';
 import NavigationContext from "../../context/navigationContext";
 import { logo } from "../../constants";
 import SocketContext from "../../context/socketContext";
-import SocketClientManager from './../../sockets/message_socket';
-import UserContext from './../../context/userContext';
 import CreateChatGroupPopup from "../components/chat_group/create_chat_group_popup";
 import ChatBodyComponent from "../components/chat/chat_body";
 
@@ -26,6 +24,7 @@ const { width } = useWindowDimensions()
     // nav
     const [navigation, setNavigation] = useState('Contacts')
     const navigationValue = useMemo(() => ({ navigation, setNavigation }), [navigation])
+    // online
  
 
     return (
@@ -45,17 +44,17 @@ const { width } = useWindowDimensions()
                 <div className="flex justify-between items-center select-none">
 
                     <img alt="ayno logo" src={logo} className=" w-40 p-3" />
-                    {
-                        width <=    770 ?
+                   
+                       
                             <div onClick={() => {
                                 setContactInfoMobile(!contactInfoMobile)
-                            }} className="flex p-2 items-center cursor-pointer">
+                            }} className={`${ width <=    770 ?"flex":"hidden"}  p-2 items-center cursor-pointer`}>
                                 <h1 className="text-slate-300 mr-2 select-none">{Object.keys(contact).length !== 0 ? contact.name + "'s info" : ""}</h1>
                                <div className="relative w-8"> 
                                <img src={contact.profileImagePath} className={'w-8 rounded-full'} />
                                </div>
                             </div>
-                            : <div></div>}
+                            
                 </div>
 
 

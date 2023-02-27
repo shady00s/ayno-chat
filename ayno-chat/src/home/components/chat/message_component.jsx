@@ -18,7 +18,14 @@ function MessageComponent() {
     const [typing,setTyping] = useState(false)
     const scrollRef = useRef(null)
     const socket = useContext(SocketContext)
+    
     const newMessage = useCallback((textVal) => {
+        console.log(textVal)
+        return setChat((prev) => [...prev, textVal])
+
+    })
+
+    const newImage = useCallback((textVal) => {
         console.log(textVal)
         return setChat((prev) => [...prev, textVal])
 
@@ -55,11 +62,10 @@ function MessageComponent() {
 
     useEffect(() => {
        if(socket.connected){
-            console.log(socket);
            socket.on("recive-message",newMessage )
-           socket.on("images",(images)=>{
-            console.log(images);
-           })
+        
+           socket.on("images",newImage) 
+
            socket.on("typing-data",(name,isTyping)=>{
                setTyping(isTyping)
                console.log(name,isTyping)
@@ -71,6 +77,7 @@ function MessageComponent() {
         return(()=>{
             socket.off("recive-message")
             socket.off("typing-data")
+            socket.off("images")
         })
     }, [socket])
     return (
