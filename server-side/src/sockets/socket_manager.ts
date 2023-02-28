@@ -12,7 +12,6 @@ let socketManager = {
         io.on('connection', (socket) => {
             Logining.info('connection at socket ' + socket.id)
             socket.on("join-conversation",(conversation)=>{
-                console.log(conversation);
                 socket.join(conversation)
             })
             socket.on('online',(id)=>{

@@ -23,14 +23,14 @@ class ApiCall {
 
 
     }
-    static getUserChatMessages = (friendId) => {
+    static getUserChatMessages = (conversation_id,page) => {
         try {
             let result = axiosInestance.get(`/chat/messages`, {
 
 
                 params: {
-
-                    friend_id: friendId
+                    conversation_id:conversation_id,
+                    page:page
                 }
             }).then(data => {
                 return data

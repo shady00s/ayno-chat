@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef, useContext, useMemo ,useCallback} f
 import ApiCall from '../../../api_call';
 import ContactContext from '../../../context/contactContext';
 import { ChatSkeleton } from './../../../reusable-components/skeleton/chat';
-
+import LoadingComponent from '../../../reusable-components/loading/loading_component' 
 import { Feather } from "react-feather";
 import SocketContext from './../../../context/socketContext';
 import UserContext from './../../../context/userContext';
@@ -12,16 +12,20 @@ import UserContext from './../../../context/userContext';
 function MessageComponent() {
 
     const { contact } = useContext(ContactContext)
-    const {user}=useContext(UserContext)
     const [chat, setChat] = useState([])
     const [loading, setLoading] = useState(false)
+    const [loadingPagination,setLoadingPagination] = useState(false)
     const [typing,setTyping] = useState(false)
     const scrollRef = useRef(null)
     const socket = useContext(SocketContext)
-    
+    const [isUserScrollBack,setIsUserScrollBack]=useState(false)
+    const paginationRef = useRef()
+    const [page,setPage] = useState(0)
+    const [newMessages,setNewMessage]=useState(false)
     const newMessage = useCallback((textVal) => {
         console.log(textVal)
-        return setChat((prev) => [...prev, textVal])
+        setNewMessage(true)
+        return setChat((prev) => [...prev, {messages:{...textVal}}])
 
     })
 
@@ -37,18 +41,26 @@ function MessageComponent() {
     }
 
     useEffect(() => {
-        scrollToBottom()
-    }, [chat])
+        if(isUserScrollBack===false && page ===0){
+            scrollToBottom()
+        }
+        if(newMessages){
+            scrollToBottom()
+        }
+    }, [chat,newMessages])
 
     // when contact changes api call will triggered to insert new data
 
     useEffect(() => {
+        setIsUserScrollBack(false)
         if (Object.keys(contact).length !== 0) {
+            setPage(0)
             setLoading(true)
-            ApiCall.getUserChatMessages(contact._id).then(messages => {
+            setNewMessage(false)
+            ApiCall.getUserChatMessages(contact.conversations[0].conversation_Id,0).then(messages => {
 
                 if (messages.status === 200) {
-                    setChat(() => messages.data.conversations.messages)
+                    setChat(() => messages.data.conversations)
                     setLoading(false)
                 }
 
@@ -80,6 +92,7 @@ function MessageComponent() {
             socket.off("images")
         })
     }, [socket])
+    
     return (
         <div className='relative flex flex-col  h-[88vh] md:w-[50%] w-[95%]'>
 
@@ -95,7 +108,30 @@ function MessageComponent() {
 
                 </div> : loading ? <ChatSkeleton /> : chat.length !== 0 ?
                     <div className="h-full p-1 w-full  overflow-x-hidden flex flex-col justify-center items-start">
-                        <div className="h-full p-1 w-full  overflow-x-hidden flex flex-col">
+                        <div ref={paginationRef} onScroll={()=>{
+                            let pages = page
+                            if(paginationRef.current.scrollTop === 0){
+                               setPage(prev=>pages++)
+                               console.log(page);
+                               setLoadingPagination(true)
+                               setNewMessage(false)
+
+                               ApiCall.getUserChatMessages(contact.conversations[0].conversation_Id,page).then(messages => {
+
+                                if (messages.status === 200) {
+                                    setChat((prev) => [...messages.data.conversations,...prev])
+                                    setLoadingPagination(false)
+                                    console.log(chat.length);
+                                }
+                
+                                else {
+                                    alert('There is an error please try again')
+                                }
+                            })
+
+                            }
+                        }} className="h-full p-1 w-full  overflow-x-hidden flex flex-col">
+                            {loadingPagination? <div><LoadingComponent/></div>:<></>}
                             {chat.map(messageComponent => <div key={Math.random().toString()} className="m-1 pb-4 border-b-2 p-2  border-b-[rgba(70,70,70,0.1)]" ref={scrollRef}>
 
                                 <ChatMessageComponent message={messageComponent}  /></div>)}
