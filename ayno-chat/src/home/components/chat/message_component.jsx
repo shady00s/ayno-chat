@@ -31,7 +31,9 @@ function MessageComponent() {
 
     const newImage = useCallback((textVal) => {
         console.log(textVal)
-        return setChat((prev) => [...prev, textVal])
+        setNewMessage(true)
+
+         setChat((prev) => [...prev,{messages: {...textVal}}])
 
     })
 

@@ -22,10 +22,9 @@ function ContactInformation(props) {
   useEffect(() => {
     setIsMobile(props.isMobile);
   }, [props.isMobile]);
-
   useEffect(() => {
     socket.on("online-users", (users) => {
-      users.find((data) => data.id === data.id) !== undefined
+      users.find((soketId) => soketId.id === data.id) !== undefined
         ? setIsUserOnline(true)
         : setIsUserOnline(false);
     });
@@ -219,7 +218,6 @@ function ContactInformation(props) {
                 <div className="  flex flex-col justify-center items-center w-full">
                   <div className="relative w-20">
                     <img
-                      
                       className=" rounded-full w-20 mt-10"
                       src={contact.profileImagePath}
                     />
@@ -334,7 +332,7 @@ function ContactInformation(props) {
                     ) : (
                       media.map((data) => (
                         <img
-                        key={data}
+                          key={data}
                           className="w-14 h-14 -scroll-mt-40 object-contain hover:scale-150 transition-transform cursor-pointer"
                           src={data}
                           alt="media"
