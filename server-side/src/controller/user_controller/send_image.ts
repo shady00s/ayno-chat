@@ -47,12 +47,12 @@ export default async function sendImage(req: Request, res: Response, next: NextF
                 }else{
                     const mediaMessage = []
                     for (let index = 0; index < value.length; index++) {
-                        mediaMessage.push({sender_id:sender_id,message:value[index],sender_image_path:sender_image_path,})
-                        socketManager.imageSocket(conversation_id,{sender_id:sender_id,message:value[index],sender_image_path:sender_image_path,})
+                        mediaMessage.push({sender_id:sender_id,message:value[index],sender_image_path:sender_image_path,sender_name:req.session.userData.userName})
+                        socketManager.imageSocket(conversation_id,{sender_id:sender_id,message:value[index],sender_image_path:sender_image_path,sender_name:req.session.userData.userName})
         
                     }
 
-                    await groups_model.findByIdAndUpdate({ conversation_id: conversation_id }, { $push: { media:{$each:value} , messages:{$each:mediaMessage} } },{new:true}).then(val=>{
+                    await groups_model.findOneAndUpdate({ conversation_id: conversation_id }, { $push: { media:{$each:value} , messages:{$each:mediaMessage} } },{new:true}).then(val=>{
                         return val
                     })
 

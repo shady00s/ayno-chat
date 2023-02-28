@@ -18,16 +18,18 @@ const AddImageComponent = () => {
     const {user} = useContext(UserContext)
     const socket = useContext(SocketContext)
     async function imageConverter(imagesList) {
-        const conversation = contact.conversations[0].conversation_Id
+        
+            const conversation = contact.type==="contact"? contact.conversations[0].conversation_Id:contact.conversation_id
 
-        console.log(conversation)
+        
+
         const convertedImageList = [];
         for (let index = 0; index < imagesList.length; index++) {
             convertedImageList.push(await convertBase64(imagesList[index]))
         }
 
         return await ApiCall.postMediaToServer({ media: convertedImageList, sender_id: user.id, conversation_id: conversation, sender_image_path: user.profileImagePath,type:contact.type }).then(vals => {
-            socket.emit("join-conversation", contact.conversations[0].conversation_Id)
+            socket.emit("join-conversation", conversation)
 
         })
     }

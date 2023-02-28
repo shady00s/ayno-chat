@@ -22,10 +22,10 @@ export default function GroupMessageComponent() {
     useEffect(() => {
         if (Object.keys(contact).length === 0) return
         setLoading(true)
-        ApiCall.getGroupMessges(contact.conversation_id).then(val => {
+        ApiCall.getGroupMessges(contact.conversation_id,0).then(val => {
 
             if (val.status === 200) {
-                setMessages(() => val.data.body.messages)
+                setMessages(() => val.data.conversations)
                 setLoading(false)
             } else {
                 setMessages(() => [])
@@ -41,12 +41,18 @@ export default function GroupMessageComponent() {
     useEffect(() => {
         if(socket.connected){
             socket.on('recive-group-message', (message) => {
-                return setMessages(prev => [...prev, message])
+              return setMessages(prev => [...prev,{messages:{...message}}])
+            })
+            socket.on("images",(images)=>{
+                 setMessages(prev => [...prev,{messages:{...images}}])
             })
 
         }
 
-        return () => { socket.off('recive-group-message') }
+        return () => { 
+            socket.off('recive-group-message') 
+            socket.off('images')
+    }
     }, [socket])
 
     return (
@@ -65,13 +71,13 @@ export default function GroupMessageComponent() {
 
 <div className="h-full p-1 w-full  overflow-x-hidden flex flex-col">
 <div className="h-full p-1 w-full  overflow-x-hidden flex flex-col">
-    {chat.map(messageComponent => <div key={Math.random().toString()} className="m-1 pb-4 border-b-2 p-2  border-b-[rgba(70,70,70,0.1)]" ref={scrollRef}>
+    {messages.map(messageComponent => <div key={Math.random().toString()} className="m-1 pb-4 border-b-2 p-2  border-b-[rgba(70,70,70,0.1)]" ref={scrollRef}>
 
-        <GroupMessage message={messageComponent} isUser={messageComponent.message.sender_id === user_id ? true : false} /></div>)}
+        <GroupMessage message={messageComponent.messages} isUser={messageComponent.messages.sender_id === user_id ? true : false} /></div>)}
 
 </div>
 <div className=' w-full '>
-    <ChatMessageInputComponent conversation_id={Object.keys(contact).length !== 0 ? contact.conversations[0].conversation_Id : ""} friend_id={contact._id} />
+    <ChatMessageInputComponent conversation_id={Object.keys(contact).length !== 0 ? contact.conversation_id : ""} friend_id={contact._id} />
 
 </div>
 </div>
@@ -79,13 +85,20 @@ export default function GroupMessageComponent() {
 
 
 
-                    : <div className="flex flex-col justify-center items-center h-full w-full">
+                    :<div className='overflow-hidden h-[99%] w-full flex flex-col'>
+                        <div className="flex flex-col justify-center items-center h-full w-full">
                         <Feather className=" stroke-slate-600 m-2" />
                         <h1 className="text-slate-400">Say hi to your friends   </h1>
                         <h4 className="text-slate-600 text-sm p-2">Select friend from your contact list and say hi or start to make new connections</h4>
 
-                    </div>}
+                    </div>
+                    <div className=' w-full '>
+    <ChatMessageInputComponent conversation_id={Object.keys(contact).length !== 0 ? contact.conversation_id : ""} friend_id={contact._id} />
 
+</div>
+
+                    </div> 
+                    }
 
             </div>
 

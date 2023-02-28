@@ -74,6 +74,7 @@ try {
     const server = createServer(app)
     socketManager.connectSocket(server)
     socketManager.messageSocket()
+    socketManager.groupMessageSocket()
     mongoose.set('strictQuery',true)
     
 

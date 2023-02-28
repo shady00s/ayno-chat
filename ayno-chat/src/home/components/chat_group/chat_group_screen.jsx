@@ -3,7 +3,7 @@ import ApiCall from '../../../api_call';
 import EmptyContactComponent from '../friends/empty_contacts_component';
 import {ChevronDown} from 'react-feather'
 import { FriendListSkeleton } from '../../../reusable-components/skeleton/friend_list';
-import GroupChatButtonComponent from './group_chat_component';
+import GroupChatButtonComponent from './group_chat_button_component';
 import { CounterComponent } from '../../../reusable-components/counter_component';
 
 
@@ -42,7 +42,7 @@ export default function ChatGroupComponent(){
                     <ChevronDown className="text-slate-200" />
                     </div>
                 </div>
-                <div className={`${open ? "h-[30rem] p-1" : "h-[0rem] overflow-hidden"} flex flex-col items-center overflow-y-auto w-full transition-all duration-300 ease-in-out`}>
+                <div className={`${open ? "h-[30rem] p-1" : "h-[0rem] overflow-hidden"} flex flex-col verflow-y-auto w-full transition-all duration-300 ease-in-out`}>
                     {loading ? <FriendListSkeleton /> : groups.length !== 0 ? groups.map(data => <GroupChatButtonComponent key={data.conversation_id} data={data} />) :
                     
                     <div className="flex justify-center items-center w-full h-full

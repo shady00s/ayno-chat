@@ -1,11 +1,12 @@
 import { useEffect, useState, useContext } from 'react';
-import ApiCall from './../../../api_call';
-import ContactContext from './../../../context/contactContext';
-import SocketContext from './../../../context/socketContext';
+import ApiCall from '../../../api_call';
+import ContactContext from '../../../context/contactContext';
+import SocketContext from '../../../context/socketContext';
 export default function GroupChatButtonComponent(props){
+    const socket = useContext(SocketContext)
     const [contacts,setContacts]=useState([])
     const [indexSelected,setIndexSelected]=useState(-1)
-    const {setContact} = useContext(ContactContext)
+    const {contact,setContact} = useContext(ContactContext)
     useEffect(()=>{
         if(props.data.conversation_id !== undefined){
             ApiCall.getGroupContacts(props.data.conversation_id).then(val =>{
@@ -19,6 +20,7 @@ export default function GroupChatButtonComponent(props){
     <div  onClick={()=>{
         ApiCall.getGroupsInfo(props.data.conversation_id).then(data=>{
             setContact({conversation_id:data.data.body.conversation_id,type:'group'})
+            socket.emit('join-group-conversation',data.data.body.conversation_id)
         })
 }} className="cursor-pointer hover:bg-[rgba(153,190,253,0.2)] w-[95%] m-1  bg-[rgba(123,167,243,0.06)] rounded-lg flex-col  flex  justify-center">
         <div className='flex items-center w-[94%] pl-1 relative'>

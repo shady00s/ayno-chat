@@ -48,7 +48,7 @@ export default function ChatMessageInputComponent(props) {
         sender_image_path: user.profileImagePath,
         sender_name: user.name,
         sender_id: user.id,
-      });
+      },contact.conversation_id);
       setTextVal("");
     }
   }

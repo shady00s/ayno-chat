@@ -129,7 +129,7 @@ function ContactInformation(props) {
                   </h2>
                   <div className="flex justify-evenly w-[70%] overflow-x-auto overflow-y-hidden">
                     {groupMembers.map((data, index) => (
-                      <div key={data.name} className="p-1 m-1">
+                      <div key={data.name} className="p-1 w-14 m-1">
                         <img
                           onMouseEnter={() => {
                             setSelectedGroupMemberData(data);
@@ -259,7 +259,7 @@ function ContactInformation(props) {
                       </h2>
                       <div className="flex justify-evenly w-[70%] overflow-x-auto overflow-y-hidden">
                         {groupMembers.map((data, index) => (
-                          <div key={data.name} className="p-1 m-1">
+                          <div key={data.name} className="p-1 w-14 m-1">
                             <img
                               onMouseEnter={() => {
                                 setSelectedGroupMemberData(data);

@@ -5,14 +5,20 @@ import http from "http"
 
 // export default SocketManager
 let io:Server;
-let users = []
+let users = [];
+let oldConversation:string;
 let socketManager = {
     connectSocket: (server: http.Server): Server => {
          io = new Server(server, { cors: { origin: "*", methods: ["GET", "POST"] } })
         io.on('connection', (socket) => {
             Logining.info('connection at socket ' + socket.id)
             socket.on("join-conversation",(conversation)=>{
+                oldConversation = conversation
                 socket.join(conversation)
+            })
+            socket.on('join-group-conversation',(groupConversation)=>{
+                socket.leave(oldConversation)
+                socket.join(groupConversation)
             })
             socket.on('online',(id)=>{
                 
@@ -25,6 +31,8 @@ let socketManager = {
                 Logining.error('client disconnected with id '+ socket.id)
                 users = users.filter(data=>data.socket !== socket.id)
                 io.emit('online-users',users)
+
+                
             })
         })
         return io
@@ -56,26 +64,26 @@ let socketManager = {
             return
         }
         io.on('connection',(socket)=>{
+            socket.on("isTyping", ({name,conversation_id,isTyping})=>{
+                socket.to(conversation_id).emit("typing-data",name,isTyping)
+            })
             socket.on('join-group-conversation',(conversation)=>{
                 socket.join(conversation)
             })
             socket.on('send-group-message',(message,conversation_id)=>{
                 io.in(conversation_id).emit('recive-group-message',message)
 
-                socket.on('disconnect',()=>{
-                    Logining.error('client disconnected with id '+ socket.id)
-         
-                })
+            
             })
         })
        
     },
     imageSocket: (conversation_ids:string,images:object) => {
-        console.log('connected');
         if (!io) {
             Logining.error('error at socket')
             return
         }
+
             io.in(conversation_ids).emit("images",images)
 
       

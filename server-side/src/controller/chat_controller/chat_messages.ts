@@ -7,7 +7,7 @@ const getChatMessages= async (req:Request,res:Response)=>{
     // const user_id = req.session.userData.userId;
     // let friend_id = req.query.friend_id;
     const conversation_id = req.query.conversation_id
-    const pageNumber = req.query.page;
+    const pageNumber = req.query.page || 0;
     if(conversation_id !== undefined){
         try {
      
@@ -36,7 +36,10 @@ const getChatMessages= async (req:Request,res:Response)=>{
                 }
             })
         } catch (error) {
-            console.log(error);
+            res.status(500).json({
+                message:"therer is an error",
+                error
+            })  
         }
         
     }else{
