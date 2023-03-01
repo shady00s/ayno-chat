@@ -7,7 +7,9 @@ import SocketContext from './../../../context/socketContext';
 import { ChatSkeleton } from './../../../reusable-components/skeleton/chat';
 import UserContext from './../../../context/userContext';
 import GroupMessage from './group_message';
-
+import { Plus } from 'react-feather';
+import NavigationContext from './../../../context/navigationContext';
+import AddNewVote from './vote/add_new_vote_component';
 export default function GroupMessageComponent() {
     const socket = useContext(SocketContext)
     const { contact } = useContext(ContactContext)
@@ -16,6 +18,7 @@ export default function GroupMessageComponent() {
     const { user } = useContext(UserContext)
     const user_id = user.id
     const scrollRef = useRef(null)
+    const {setNavigation} = useContext(NavigationContext)
     const scrollToBottom = () => {
         scrollRef.current?.scrollIntoView({ behavior: "smooth" })
     }
@@ -57,7 +60,6 @@ export default function GroupMessageComponent() {
 
     return (
         <div className='relative flex flex-col  h-[88vh] md:w-[50%] w-[95%]'>
-
             <div className="flex flex-col  overflow-y-auto h-[95%]">
 
 
@@ -69,8 +71,14 @@ export default function GroupMessageComponent() {
 
                 </div> : loading ? <ChatSkeleton /> : messages.length !== 0 ?
 
-<div className="h-full p-1 w-full  overflow-x-hidden flex flex-col">
-<div className="h-full p-1 w-full  overflow-x-hidden flex flex-col">
+<div className="h-full p-1 w-full  overflow-x-hidden flex flex-col relative">
+    <div className='flex justify-end p-1'>
+        <div onClick={()=>[
+            setNavigation('vote-menu')
+        ]} className='flex cursor-pointer hover:bg-[rgba(120,120,120,0.2)] p-1 rounded-md'><Plus className=' stroke-slate-500'/> <span className='text-slate-500'>Add vote</span></div>
+    </div>
+    <AddNewVote/>
+<div className=" p-1 w-full  overflow-hidden flex flex-col">
     {messages.map(messageComponent => <div key={Math.random().toString()} className="m-1 pb-4 border-b-2 p-2  border-b-[rgba(70,70,70,0.1)]" ref={scrollRef}>
 
         <GroupMessage message={messageComponent.messages} isUser={messageComponent.messages.sender_id === user_id ? true : false} /></div>)}

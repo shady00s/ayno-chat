@@ -61,7 +61,7 @@ export default function ChatMessageInputComponent(props) {
   }, [userTyping]);
 
   return (
-    <div className=" justify-between items-center border-2 border-gray-800 rounded-md sticky bottom-0 pl-4 pr-4 w-full  bg-background flex">
+    <div className="z-20 justify-between items-center border-2 border-gray-800 rounded-md sticky bottom-0 pl-4 pr-4 w-full  bg-background flex">
       <input
         onKeyDown={(key) => {
           if (key.key === "Enter") {
