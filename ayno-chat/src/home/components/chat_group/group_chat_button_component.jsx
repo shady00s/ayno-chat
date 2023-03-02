@@ -2,11 +2,15 @@ import { useEffect, useState, useContext } from 'react';
 import ApiCall from '../../../api_call';
 import ContactContext from '../../../context/contactContext';
 import SocketContext from '../../../context/socketContext';
+import {Plus } from 'react-feather'
+import NavigationContext from './../../../context/navigationContext';
 export default function GroupChatButtonComponent(props){
+
     const socket = useContext(SocketContext)
     const [contacts,setContacts]=useState([])
     const [indexSelected,setIndexSelected]=useState(-1)
     const {contact,setContact} = useContext(ContactContext)
+    const {setNavigation}=useContext(NavigationContext)
     useEffect(()=>{
         if(props.data.conversation_id !== undefined){
             ApiCall.getGroupContacts(props.data.conversation_id).then(val =>{
@@ -18,13 +22,15 @@ export default function GroupChatButtonComponent(props){
  
     return(
     <div  onClick={()=>{
+        setNavigation('')
         ApiCall.getGroupsInfo(props.data.conversation_id).then(data=>{
             setContact({conversation_id:data.data.body.conversation_id,type:'group'})
             socket.emit('join-group-conversation',data.data.body.conversation_id)
         })
 }} className="cursor-pointer hover:bg-[rgba(153,190,253,0.2)] w-[95%] m-1  bg-[rgba(123,167,243,0.06)] rounded-lg flex-col  flex  justify-center">
-        <div className='flex items-center w-[94%] pl-1 relative'>
+        <div className='flex items-center w-[94%] pl-1 relative justify-between p-1'>
             <h1 className='ml-4   text-ellipsis text-slate-200 select-none'>{props.data.conversation_name}</h1>
+                <Plus/>
         </div>
                 <h6 className='p-1 pl-3 text-slate-400 text-sm select-none'>members</h6>
 
