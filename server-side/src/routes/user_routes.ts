@@ -12,13 +12,13 @@ import { friendRequestController } from "../controller/user_controller/friend_re
 import getGroupInformation from '../controller/user_controller/group_information';
 import ignoreFriendRequest from './../controller/user_controller/ignore_friend_request';
 import editProfileController from "../controller/user_controller/edit_profile";
-import { editProfileValidator } from "../utils/validators/editProfileValidators";
-import { groupValidator } from "../utils/validators/create_group_validation";
+import { editProfileValidator } from "../utils/middlewares/validators/editProfileValidators";
+import { groupValidator } from "../utils/middlewares/validators/create_group_validation";
 import createGroup from "../controller/user_controller/create_group";
 import getGroups from './../controller/user_controller/get_groups';
 import getGroupContacts from './../controller/user_controller/get_group_contacts';
 import getGroupMessages from './../controller/chat_controller/group_messages';
-import sendImageValidation from "../utils/validators/send_image_validation";
+import sendImageValidation from "../utils/middlewares/validators/send_image_validation";
 
 const userRouter = express.Router()
 
@@ -36,7 +36,7 @@ userRouter.post('/add-friend',sessionMiddleware,addFriendRequestController)
 
 userRouter.post('/accept-friend',sessionMiddleware,postAcceptFriendController)
 
-userRouter.post('/send-image' ,sessionMiddleware,sendImageValidation,sendImage)
+userRouter.post('/send-image' ,sendImageValidation,sessionMiddleware,sendImage)
 
 userRouter.get('/get-media',sessionMiddleware,getMediaContoller)
 

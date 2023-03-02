@@ -1,10 +1,13 @@
 import { Request,Response } from "express";
 import groups_model from "../../model/groups_model";
 import mongoose from "mongoose";
+import { validationResult } from "express-validator";
 export default function getGroupMessages(req:Request,res:Response){
     const conversation_id = req.query.conversation_id
     const pageNumber = req.query.page || 0
-    if(conversation_id !== ""){
+
+    const errors = validationResult(req)
+    if(errors.isEmpty()){
         try {
      
 
@@ -38,7 +41,7 @@ export default function getGroupMessages(req:Request,res:Response){
                 })  
             }
     }else{
-        res.status(500).json({message:"conversation_id is empty"})
+        res.status(500).json({message:"there is errors",errors})
     }
     
 }
