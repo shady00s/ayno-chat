@@ -4,6 +4,8 @@ import { Outlet, Navigate } from "react-router-dom";
 import ApiCall from "./api_call";
 import LoadingComponent from './reusable-components/loading/loading_component';
 import UserContext from './context/userContext';
+import {ReactComponent as Loading } from './reusable-components/loading/loading.svg'
+import loadingScreenAnimation from "./reusable-components/loading/loading_screen_animation";
 
 const PrivateRoute = () => {
 
@@ -11,6 +13,8 @@ const PrivateRoute = () => {
     const {user,setUser} = useContext(UserContext)
 
     useEffect(() => {
+
+        loadingScreenAnimation()
         if(Object.keys(user).length !== 0) return setUserData(true)
         ApiCall.getAuthentication().then(data => {
             if (data.data.message === "authenticated") {
@@ -38,7 +42,10 @@ const PrivateRoute = () => {
     } else {
         return <>
             <div className="flex justify-center items-center w-screen h-screen">
-                <LoadingComponent />
+            <div className="w-12 h-12">
+            <Loading/>
+
+          </div>
             </div>
         </>
     }

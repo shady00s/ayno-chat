@@ -187,6 +187,11 @@ class ApiCall {
         const groups = axiosInestance.post('/chat/send-group-message',messageData).then(value => value)
         return groups
     }
+    static createVote(voteData){
+        const vote = axiosInestance.post('/chat/create-vote',voteData).then(res=>res)
+   
+            return vote
+    }
 }
 
 export default ApiCall

@@ -10,6 +10,7 @@ import GroupMessage from './group_message';
 import { Plus } from 'react-feather';
 import NavigationContext from './../../../context/navigationContext';
 import AddNewVote from './vote/add_new_vote_component';
+import VoteComponent from './vote/vote_component';
 export default function GroupMessageComponent() {
     const socket = useContext(SocketContext)
     const { contact } = useContext(ContactContext)
@@ -78,10 +79,12 @@ export default function GroupMessageComponent() {
         ]} className='flex cursor-pointer hover:bg-[rgba(120,120,120,0.2)] p-1 rounded-md'><Plus className=' stroke-slate-500'/> <span className='text-slate-500'>Add vote</span></div>
     </div>
     <AddNewVote/>
-<div className=" p-1 w-full  overflow-hidden flex flex-col">
-    {messages.map(messageComponent => <div key={Math.random().toString()} className="m-1 pb-4 border-b-2 p-2  border-b-[rgba(70,70,70,0.1)]" ref={scrollRef}>
-
-        <GroupMessage message={messageComponent.messages} isUser={messageComponent.messages.sender_id === user_id ? true : false} /></div>)}
+<div className=" p-1 w-full  overflow-y-auto flex flex-col">
+    {messages.map((messageComponent,index) => <div>
+    
+    <div key={Math.random().toString()} className="m-1 pb-4 border-b-2 p-2  border-b-[rgba(70,70,70,0.1)]" ref={scrollRef}>
+        {messageComponent.messages.type === "vote" ? <VoteComponent message={messageComponent.messages}/> :<GroupMessage message={messageComponent.messages} isUser={messageComponent.messages.sender_id === user_id ? true : false} />}
+        </div></div>)}
 
 </div>
 <div className=' w-full '>

@@ -6,7 +6,6 @@ import userLogin from './../controller/user_controller/log-in';
 import sendImage from "../controller/user_controller/send_image";
 import postAcceptFriendController from "../controller/user_controller/add_friends";
 import addFriendRequestController from "../controller/user_controller/friend_req";
-import getMediaContoller from "../controller/get_media";
 import { checkSessionAuthenticationController, logInFromSession, sessionMiddleware } from '../utils/middlewares/session';
 import { friendRequestController } from "../controller/user_controller/friend_requests_list";
 import getGroupInformation from '../controller/user_controller/group_information';
@@ -19,6 +18,7 @@ import getGroups from './../controller/user_controller/get_groups';
 import getGroupContacts from './../controller/user_controller/get_group_contacts';
 import getGroupMessages from './../controller/chat_controller/group_messages';
 import sendImageValidation from "../utils/middlewares/validators/send_image_validation";
+import getMediaContoller from "../controller/user_controller/get_media";
 
 const userRouter = express.Router()
 

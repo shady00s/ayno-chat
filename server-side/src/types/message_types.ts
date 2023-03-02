@@ -10,6 +10,7 @@ interface messageModelType{
 }
 
 interface groupMessageModelType{
+    vote:voteModel,
     message:String,
     sender_id:mongoose.Types.ObjectId,
     sender_image_path:String,
@@ -17,6 +18,7 @@ interface groupMessageModelType{
     delivered:Boolean,
     date:Date,
     sender_name:String,
+    type:String
 }
 interface conversationModel{
     conversation_id:mongoose.Types.ObjectId,
@@ -33,5 +35,11 @@ interface groupModel{
     media:Array<String>
     
 }
+interface voteModel{
+    voteCreator:{creatorName:String,creatorProfilePath:String},
+    voteQuestion:String,
+    voteChoices:[{voteId:{type:mongoose.Types.ObjectId},voteData:{type:String}}],
+    voteParticepents:[{particepentChoice:{type:String},prticipentId:{type:mongoose.Schema.Types.ObjectId}}]
+}
 
-export  {messageModelType, conversationModel,groupModel,groupMessageModelType}
+export  {messageModelType, conversationModel,groupModel,groupMessageModelType,voteModel}

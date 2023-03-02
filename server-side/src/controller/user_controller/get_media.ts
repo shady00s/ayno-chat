@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import conversation_model from "../model/conversation_model";
+import conversation_model from "../../model/conversation_model";
 
 const getMediaContoller = (req:Request,res:Response)=>{
     const conversation_id = req.query.conversation_id
