@@ -10,10 +10,15 @@ export default function getGroupInformation(req: Request, res: Response) {
             // get all conversation groups (every conversation with conversation_name is group)
             try {
                 // get group conversation 
-              await groups_model.findOne({conversation_id:conversation_id}).select(['-__v','-messages','-members_ids']).then(groupVal=>{
+              await groups_model.findOne({conversation_id:conversation_id}).select(['-_id','-__v','-messages']).then(groupVal=>{
                 if(groupVal !== null){
                   
-                            res.status(200).json({ message: "succssess", body:groupVal })
+                            res.status(200).json({ message: "succssess", body:{
+                                conversation_id:groupVal.conversation_id,
+                                conversation_name:groupVal.conversation_name,
+                                media:groupVal.media,
+                                members_count:groupVal.members_ids.length
+                            }})
                         }})
     
                    

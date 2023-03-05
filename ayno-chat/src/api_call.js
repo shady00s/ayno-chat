@@ -192,6 +192,11 @@ class ApiCall {
    
             return vote
     }
+    static sendVoteParticipent (voteSubmitData){
+        const vote = axiosInestance.post('/chat/send-vote-particepent',voteSubmitData).then(res=>res)
+   
+            return vote
+    }
 }
 
 export default ApiCall

@@ -12,7 +12,7 @@ const groups_model = new mongoose.Schema<groupModel>({
             voteQuestion: {type:String},
             voteCreator:{creatorName:{type:String},creatorProfilePath:{type:String}},
              voteChoices: [{ voteId:{type:String}, voteData:{type:String}}],
-            voteParticepents: [{ particepentChoice: {type:mongoose.Schema.Types.ObjectId}, prticipentId: {type:mongoose.Types.ObjectId },default:[]}]
+            voteParticepents: [{ particepentChoice: {type:String}, prticipentId: {type:mongoose.Types.ObjectId },default:[]}]
         },
         message: { type: String, required: true },
         sender_id: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "UsersModel" },
