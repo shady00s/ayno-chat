@@ -31,19 +31,23 @@ export default function VoteComponent(props) {
 
 
         }
-        console.log(newArray)
         setVoteRatio(() => [...newArray])
 
     }
 
     const getSelectedVote = () => {
-        for (let index1 = 0; index1 < props.message.votingData.voteChoices.length; index1++) {
-            for (let index = 0; index < props.message.votingData.voteParticepents.length; index++) {
-                if(props.message.votingData.voteChoices[index1].voteId === props.message.votingData.voteParticepents[index].particepentChoice){
-                   setSelected(props.message.votingData.voteChoices[index1])
+        if(props.message.votingData.voteParticepents !== undefined){
+            for (let index1 = 0; index1 < props.message.votingData.voteChoices.length; index1++) {
+                for (let index = 0; index < props.message.votingData.voteParticepents.length; index++) {
+                    if(props.message.votingData.voteChoices[index1].voteId === props.message.votingData.voteParticepents[index].particepentChoice){
+                       setSelected(props.message.votingData.voteChoices[index1])
+                    }
+                    
                 }
-                
-            }
+
+        }}else{
+            setSelected(-1)
+        }
            
 
                 // console.log({choice:{...props.message.votingData.voteChoices[index]}})
@@ -53,7 +57,7 @@ export default function VoteComponent(props) {
                 
               
             
-        }
+        
     }
 
     const getUserParticipation = ()=>{
@@ -88,8 +92,8 @@ export default function VoteComponent(props) {
                 {props.message.votingData.voteChoices.map((data, index) => <div className="p-1 items-center relative m-1 w-full h-[3rem] flex"><input disabled={particeped} onChange={() => {
                     setSelected(() => data)
                 }} value={data} checked={selected.voteId === data.voteId} type="radio" /> <p className="text-slate-300 break-words p-1 h-[2rem] w-[80%]">{data.voteData}</p>
-                    <div className={` w-[${voteRatio[index]}%] rounded-md left-0 top-0 absolute flex justify-end items-center bg-[rgba(182,192,232,0.1)] h-full`}>
-                        {voteRatio[index] !== 0 ? <span className=' text-sm text-slate-500 p-1'>{voteRatio[index] + " %"}</span> : ""}
+                    <div className={` w-[${voteRatio.length!==0?voteRatio[index]:"0"}%] rounded-md left-0 top-0 absolute flex justify-end items-center bg-[rgba(182,192,232,0.1)] h-full`}>
+                        {voteRatio[index] !== 0 && voteRatio[index] !== undefined? <span className=' text-sm text-slate-500 p-1'>{voteRatio[index] + " %"}</span> : ""}
                     </div>
                 </div>
                 )}
