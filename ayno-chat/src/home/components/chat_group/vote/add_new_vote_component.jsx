@@ -59,7 +59,7 @@ export default function AddNewVote(){
                     </div>
                     <InputErrorComponent show={error.choice!==null?true:false} title="You can't add empty vote choice"/>
                     <span className="text-slate-300 text-sm">Vote poll choices</span>
-                        <div className="p-1 m-1">
+                        <div className="p-1 m-1 w-full">
                             {pollChoices.length !==0 ? <div className="flex flex-col w-[70%] h-auto">
                                 {pollChoices.map((data,index)=> <div className="flex justify-between items-center h-[2.5rem] m-1 w-full p-1"><p className=" break-words w-[80%] text-slate-200" key={data.data+"s"}> {data.voteData}</p><div
                                 

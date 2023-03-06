@@ -10,7 +10,7 @@ interface messageModelType{
 }
 
 interface groupMessageModelType{
-    vote:voteModel,
+    votingData:voteModel,
     message:String,
     sender_id:mongoose.Types.ObjectId,
     sender_image_path:String,
@@ -36,6 +36,7 @@ interface groupModel{
     
 }
 interface voteModel{
+    voteId:{type:mongoose.Schema.Types.ObjectId}
     voteCreator:{creatorName:String,creatorProfilePath:String},
     voteQuestion:String,
     voteChoices:[{voteId:{type:mongoose.Types.ObjectId},voteData:{type:String}}],

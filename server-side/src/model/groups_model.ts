@@ -8,7 +8,8 @@ const groups_model = new mongoose.Schema<groupModel>({
     media: [{ type: String, default: [] }],
     members_ids: [{ type: mongoose.Schema.Types.ObjectId, required: true, ref: "UsersModel" }],
     messages: [{
-        vote: {
+        votingData: {
+            voteId:{type:mongoose.Schema.Types.ObjectId},
             voteQuestion: {type:String},
             voteCreator:{creatorName:{type:String},creatorProfilePath:{type:String}},
              voteChoices: [{ voteId:{type:String}, voteData:{type:String}}],

@@ -23,7 +23,8 @@ export default function createVoteController(req:Request,res:Response){
             $push:{
             messages:{
                 message:message,
-                vote:{
+                votingData:{
+                    voteId:generatedVoteId,
                     voteQuestion:vote_question,
                     voteChoices:vote_choices,
                     voteCreator:{creatorName:user.userName,creatorProfilePath:user.userProfilePath},
