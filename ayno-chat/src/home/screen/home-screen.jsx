@@ -24,6 +24,7 @@ const { width } = useWindowDimensions()
     // nav
     const [navigation, setNavigation] = useState('Contacts')
     const navigationValue = useMemo(() => ({ navigation, setNavigation }), [navigation])
+
     // online
  
 
@@ -49,7 +50,7 @@ const { width } = useWindowDimensions()
                             <div onClick={() => {
                                 setContactInfoMobile(!contactInfoMobile)
                             }} className={`${ width <=    770 ?"flex":"hidden"}  p-2 items-center cursor-pointer`}>
-                                <h1 className="text-slate-300 mr-2 select-none">{Object.keys(contact).length !== 0 ? contact.name + "'s info" : ""}</h1>
+                                <h1 className="text-slate-300 mr-2 select-none">{Object.keys(contact).length !== 0 && contact.type=='contact'? contact.name + "'s info" :contact.type=='group'? contact.groupName +" 's info" :"" }</h1>
                                <div className="relative w-8"> 
                                <img src={contact.profileImagePath} className={'w-8 rounded-full'} />
                                </div>
