@@ -6,6 +6,8 @@ import { Plus,Trash2 } from "react-feather";
 import SubmitButton from './../../../../registration/components/submit_button';
 import ApiCall from "../../../../api_call";
 import ContactContext from "../../../../context/contactContext";
+import UserContext from './../../../../context/userContext';
+import SocketContext from './../../../../context/socketContext';
 
 export default function AddNewVote(){
     const {navigation,setNavigation}= useContext(NavigationContext)
@@ -14,7 +16,9 @@ export default function AddNewVote(){
     const [voteQuestion,setVoteQuestion]= useState('')
     const {contact} = useContext(ContactContext)
     const [error,setError] = useState({question:null,choice:null,isEmpty:null})
-    
+    const {user}=useContext(UserContext)
+    const socket = useContext(SocketContext)
+    const [loading,setLoading]= useState(false)
     return(
         <>
         {/* main container */}
@@ -77,19 +81,33 @@ export default function AddNewVote(){
                         </div>
                     </div>
                     <div className="w-full flex flex-col justify-center items-center">
-                    <SubmitButton onClick={()=>{
+                    <SubmitButton future={loading} onClick={()=>{
                          if(pollChoices.length  < 1){
                             setError((prev)=>({...prev,isEmpty:true}))
                         } if(error.choice ===null && error.isEmpty === null && error.question === null){
-                           
-                           
+                            socket.emit('send-group-message',{
+                                message: "s",
+                                type:"vote",
+                                votingData:{
+                                    voteQuestion:voteQuestion,
+                                    voteChoices:pollChoices,
+                                    voteParticepents:[]
+                                },
+                                conversation_id:contact.conversation_id,
+                                sender_image_path: user.profileImagePath,
+                                sender_name: user.name,
+                                sender_id: user.id,
+                              },contact.conversation_id)
+                              setLoading(true)
                             ApiCall.createVote({
                                 voteQuestion:voteQuestion,
                                 voteChoices:pollChoices,
                                 message:"s",
                                 conversation_id:contact.conversation_id
-                            }).then(result => console.log(result.data))
-                        }console.log(contact);
+                            }).then(result => {
+                                setLoading(false)
+                                setNavigation("")})
+                        };
                     }} className=' w-[12rem] bg-sky-600' title={'add vote'}/>
                     <InputErrorComponent show={error.isEmpty!==null?true:false} title="You can't add empty vote choice"/>
 

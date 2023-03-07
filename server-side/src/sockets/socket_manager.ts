@@ -64,6 +64,7 @@ let socketManager = {
             return
         }
         io.on('connection',(socket)=>{
+            
             socket.on("isTyping", ({name,conversation_id,isTyping})=>{
                 socket.to(conversation_id).emit("typing-data",name,isTyping)
             })
@@ -72,8 +73,10 @@ let socketManager = {
             })
             socket.on('send-group-message',(message,conversation_id)=>{
                 io.in(conversation_id).emit('recive-group-message',message)
+            })
+            socket.on('send-vote-participent',(participent,conversation_id)=>{
+                io.in(conversation_id).emit('recive-vote-participent',participent)
 
-            
             })
         })
        

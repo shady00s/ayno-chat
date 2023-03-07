@@ -37,7 +37,6 @@ interface groupModel{
 }
 interface voteModel{
     voteId:{type:mongoose.Schema.Types.ObjectId}
-    voteCreator:{creatorName:String,creatorProfilePath:String},
     voteQuestion:String,
     voteChoices:[{voteId:{type:mongoose.Types.ObjectId},voteData:{type:String}}],
     voteParticepents:[{particepentChoice:{type:String},prticipentId:{type:mongoose.Schema.Types.ObjectId}}]

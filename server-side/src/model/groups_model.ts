@@ -11,7 +11,6 @@ const groups_model = new mongoose.Schema<groupModel>({
         votingData: {
             voteId:{type:mongoose.Schema.Types.ObjectId},
             voteQuestion: {type:String},
-            voteCreator:{creatorName:{type:String},creatorProfilePath:{type:String}},
              voteChoices: [{ voteId:{type:String}, voteData:{type:String}}],
             voteParticepents: [{ particepentChoice: {type:String}, prticipentId: {type:mongoose.Types.ObjectId },default:[]}]
         },

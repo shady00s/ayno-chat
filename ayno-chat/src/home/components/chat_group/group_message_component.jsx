@@ -45,6 +45,7 @@ export default function GroupMessageComponent() {
     useEffect(() => {
         if(socket.connected){
             socket.on('recive-group-message', (message) => {
+
               return setMessages(prev => [...prev,{messages:{...message}}])
             })
             socket.on("images",(images)=>{
