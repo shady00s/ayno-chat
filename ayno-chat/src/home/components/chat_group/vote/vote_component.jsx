@@ -1,10 +1,10 @@
-import { useContext, useState, useEffect, useCallback } from 'react';
+import React,{ useContext, useState, useEffect, useCallback } from 'react';
 import ApiCall from '../../../../api_call';
 import SubmitButton from '../../../../registration/components/submit_button'
 import UserContext from '../../../../context/userContext'
 import ContactContext from '../../../../context/contactContext'
 import SocketContext from './../../../../context/socketContext';
-export default function VoteComponent(props) {
+const VoteComponent = (props)=> {
     const socket = useContext(SocketContext)
     const { contact } = useContext(ContactContext)
     const [selected, setSelected] = useState(-1)
@@ -13,7 +13,7 @@ export default function VoteComponent(props) {
     const { user } = useContext(UserContext)
     const [voteParticipations, setVoteParticipations] = useState(props.message.votingData.voteParticepents)
     const [loading,setLoading]=useState(false)
-    const voteOptionsRatio = () => {
+    const voteOptionsRatio = useCallback(() => {
 
 
         let voteVal = 0
@@ -39,15 +39,14 @@ export default function VoteComponent(props) {
         }
         setVoteRatio(() => [...newArray])
 
-    }
+    },[voteParticipations])
 
-    const getSelectedVote = () => {
+    const getSelectedVote = useCallback(() => {
 
 
         if (voteParticipations !== undefined) {
             for (let index1 = 0; index1 < props.message.votingData.voteChoices.length; index1++) {
-                console.log(props.message.votingData)
-                console.log(voteParticipations)
+
                 for (let index = 0; index < voteParticipations.length; index++) {
                     if (props.message.votingData.voteChoices[index1].voteId === voteParticipations[index].particepentChoice) {
                         setSelected(props.message.votingData.voteChoices[index1])
@@ -60,9 +59,9 @@ export default function VoteComponent(props) {
             setSelected(-1)
         }
 
-    }
+    },[voteParticipations])
 
-    const getUserParticipation = () => {
+    const getUserParticipation = useCallback(() => {
 
         if (voteParticipations.length !== 0) {
 
@@ -76,13 +75,13 @@ export default function VoteComponent(props) {
 
             }
         }
-    }
+    },[voteParticipations])
     useEffect(() => {
         voteOptionsRatio()
         getSelectedVote()
         getUserParticipation()
 
-    }, [voteParticipations])
+    }, [voteParticipations,props.message.votingData])
 
     useEffect(() => {
         socket.on('recive-vote-participent', (participentData) => {
@@ -132,3 +131,6 @@ export default function VoteComponent(props) {
         </div>
     )
 }
+
+
+export default React.memo(VoteComponent)
