@@ -10,11 +10,11 @@ export default function IconButtonWithText(props) {
 
 
         <div id= {props.id} onClick={
-            props.onClick} className=" flex p-1 rounded-md justify-center items-center cursor-pointer transition-all  hover:bg-slate-800 " >
+            props.onClick} className={`${props.className} overflow-hidden flex rounded-md justify-center items-center cursor-pointer transition-all duration-100 hover:bg-slate-800 `} >
             
                 
 
-                    <props.icon  id= {props.id} className={`${activeIconStyle}  w-5 h-5 m-1 flex justify-center items-center hover:text-gray-100`} />
+                    <props.icon size={25} id= {props.id} className={`${activeIconStyle} m-1 flex justify-center items-center hover:text-gray-100`} />
 
       
 

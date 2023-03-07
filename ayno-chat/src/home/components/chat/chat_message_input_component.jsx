@@ -16,6 +16,8 @@ export default function ChatMessageInputComponent(props) {
   const { contact } = useContext(ContactContext);
   const [userTyping, setUserTyping] = useState(false);
   const finalText = useRef("");
+
+  const isEmptyString = /^\s*$/
   useEffect(() => {
     finalText.current = textVal;
   }, [textVal]);
@@ -115,6 +117,7 @@ export default function ChatMessageInputComponent(props) {
 
       {/* submit button */}
       <IconButtonWithText
+      className={`${isEmptyString.test(textVal)== true?"w-0 p-0":"w-auto p-1"}`}
         onClick={() => {
           setUserTyping(false);
           sendMessage();

@@ -17,26 +17,24 @@ const VoteComponent = (props)=> {
 
 
         let voteVal = 0
-        let vote = 0
+        let vote = {}
         let newArray = []
-        for (let index = 0; index < props.message.votingData.voteChoices.length; index++) {
-            for (let index1 = 0; index1 < voteParticipations.length; index1++) {
 
-                if (voteParticipations[index1].particepentChoice === props.message.votingData.voteChoices[index].voteId) {
-                    vote++
-                    voteVal = Math.round((vote / contact.members_number) * 100)
-
-                    newArray.push(voteVal)
-
+        const lengthOfAnArray = Math.min(props.message.votingData.voteChoices.length,voteParticipations.length)
+        for (let index = 0; index < lengthOfAnArray; index++) {
+            
+                if (voteParticipations[index].particepentChoice !== props.message.votingData.voteChoices[index].voteId ) {
+                    vote[voteParticipations[index].particepentChoice] = 0
                 } else {
-                    newArray.push(0)
-
+                    vote[voteParticipations[index].particepentChoice] = 1
+                    voteVal = Math.round((vote[voteParticipations[index].particepentChoice] / contact.members_number) * 100)
                 }
+            
+
+                
             }
-
-
-
-        }
+            console.log(vote);
+        console.log(newArray);
         setVoteRatio(() => [...newArray])
 
     },[voteParticipations])
@@ -66,7 +64,7 @@ const VoteComponent = (props)=> {
         if (voteParticipations.length !== 0) {
 
             for (let x = 0; x < voteParticipations.length; x++) {
-                if (voteParticipations[x].prticipentId === user.id) {
+                if (voteParticipations[x].prticipentId === user._id) {
                     setParticeped(true)
                 }
                 else {
