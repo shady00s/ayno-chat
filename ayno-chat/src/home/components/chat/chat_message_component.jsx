@@ -2,6 +2,7 @@ import { CheckCircle } from "react-feather";
 import ContactContext from './../../../context/contactContext';
 import { useContext, useEffect } from "react";
 import UserContext from './../../../context/userContext';
+import ImageContainer from "../friends/image_container";
 
 export default function ChatMessageComponent(props) {
     const { contact } = useContext(ContactContext)
@@ -20,9 +21,9 @@ export default function ChatMessageComponent(props) {
                 <img alt="user profile" src={props.message.messages.sender_id ===user.id?user.profileImagePath:userProfilePath} className="h-7 w-7 p-1 rounded-full" />
                 {/* text container */}
                 {/* if the message is image link then it will be displayed as image */}
-                <div style={{ maxWidth: "23rem", minWidth: "2rem", overflowWrap: "break-word" }} className={`${props.message.messages.sender_id ===user.id ? guestMainContainerStyle : ownerMainContainerStyle} relative rounded-md p-1  inline-block`}>
+                <div style={{ maxWidth: "23rem", minWidth: "2rem"}} className={`${props.message.messages.sender_id ===user.id ? guestMainContainerStyle : ownerMainContainerStyle} relative rounded-md p-1 break-words inline-block`}>
 
-                    {imageMessageTester.test(props.message.messages.message) === true ? <img className="w-30 h-30 object-cover rounded-md p-1 " src={props.message.messages.message} /> : <p className=" text-slate-200 font-normal pl-2 pr-2">{props.message.messages.message}</p>}
+                    {imageMessageTester.test(props.message.messages.message) === true ?  <ImageContainer image={props.message.messages.message}/>: <p className=" text-slate-200 font-normal pl-2 pr-2">{props.message.messages.message}</p>}
                     {/* seen container */}
                     <div className=" absolute right-0 flex justify-center items-center">
                         <span className="mr-2 text-slate-700 text-xs">seen</span>

@@ -117,7 +117,7 @@ export default function ChatMessageInputComponent(props) {
 
       {/* submit button */}
       <IconButtonWithText
-      className={`${isEmptyString.test(textVal)== true?"w-0 p-0":"w-auto p-1"}`}
+      className={`${isEmptyString.test(textVal) == true?"w-0 p-0":"w-auto p-1"}`}
         onClick={() => {
           setUserTyping(false);
           sendMessage();

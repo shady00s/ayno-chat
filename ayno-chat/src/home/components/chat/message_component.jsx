@@ -22,12 +22,12 @@ function MessageComponent() {
     const paginationRef = useRef()
     const [page,setPage] = useState(0)
     const [newMessages,setNewMessage]=useState(false)
+
     const newMessage = useCallback((textVal) => {
-        console.log(textVal)
         setNewMessage(true)
         return setChat((prev) => [...prev, {messages:{...textVal}}])
 
-    })
+    },[socket])
 
     const newImage = useCallback((textVal) => {
         console.log(textVal)
@@ -35,9 +35,7 @@ function MessageComponent() {
 
          setChat((prev) => [...prev,{messages: {...textVal}}])
 
-    })
-
-    //  const useSocketMemo = useMemo(()=>(socket.current = io("ws://192.168.1.4:8080",{transports:['websocket']})),[socket.current])
+    },[socket])
     const scrollToBottom = () => {
         scrollRef.current?.scrollIntoView({ behavior: "smooth" })
     }

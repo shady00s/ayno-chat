@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import useWindowDimensions from "../../../utils/window_size";
 import ApiCall from "../../../api_call";
 import { Image } from "react-feather";
@@ -6,9 +6,10 @@ import { ContactSkeleton } from "../../../reusable-components/skeleton/contact_i
 import ContactContext from "./../../../context/contactContext";
 import SocketContext from "./../../../context/socketContext";
 import { MessageSquare } from "react-feather";
+import NavigationContext from "../../../context/navigationContext";
+
 function ContactInformation(props) {
   const socket = useContext(SocketContext);
-  const [isMobile, setIsMobile] = useState(false);
   const { width } = useWindowDimensions();
   const [media, setMedia] = useState([]);
   const { contact, setContact } = useContext(ContactContext);
@@ -18,10 +19,8 @@ function ContactInformation(props) {
   const [groupMembers, setGroupMembers] = useState([]);
   const [selectedGroupMember, setSelectedGroupMember] = useState(-1);
   const [selectedGroupMemberData, setSelectedGroupMemberData] = useState({});
-
-  useEffect(() => {
-    setIsMobile(props.isMobile);
-  }, [props.isMobile]);
+  const {navigation,setNavigation} = useContext(NavigationContext)
+  
   useEffect(() => {
     socket.on("online-users", (users) => {
       users.find((soketId) => soketId.id === data.id) !== undefined
@@ -65,23 +64,23 @@ function ContactInformation(props) {
     }
   }, [contact]); //contact
 
-  // useEffect(() => {
-
-  // }, [socket,contact])
 
   return (
     <>
-      {width <= 868 ? (
+      {width <= 770 ? (
         // mobile version
-        <div
+        <div id="bg-contact"
+          onClick={()=>{
+            setNavigation("")
+          }}
           className={`${
-            isMobile ? "opacity-1  visible" : "opacity-0   translate-x-[999px]"
-          } overflow-x-hidden     transition-all absolute flex justify-end  right-0 bg-theme w-full h-full ease-in duration-100`}
+            navigation ==="contact-information" ? "opacity-1  visible" : "opacity-0   translate-x-[999px]"
+          } overflow-x-hidden     transition-opacity absolute flex justify-end  right-0 bg-theme w-full h-full ease-in-out duration-100`}
         >
           {/* main container */}
           <div
             className={`${
-              isMobile ? "translate-x-0" : "translate-x-[999px] "
+              navigation ==="contact-information" ? "translate-x-0" : "translate-x-[999px] "
             } sm:w-5/12 bg-background  w-5/6  flex flex-col justify-start transition-transform ease-in-out duration-500`}
           >
             <div className="  flex flex-col justify-center items-center w-full">
