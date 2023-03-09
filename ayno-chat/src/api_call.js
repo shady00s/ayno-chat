@@ -1,4 +1,4 @@
-import { axiosInestance } from "./axios/inestance"
+import { axiosInestance, userInstance } from "./axios/inestance"
 
 class ApiCall {
     static getAuthentication = () => {
@@ -13,7 +13,7 @@ class ApiCall {
     }
     static getFriendsList = () => {
         try {
-            let friendsList = axiosInestance.get('/user/friends').then((value) => {
+            let friendsList = userInstance.get('/friends').then((value) => {
                 return value
             })
             return friendsList

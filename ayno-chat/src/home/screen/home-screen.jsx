@@ -12,11 +12,16 @@ import { logo } from "../../constants";
 import SocketContext from "../../context/socketContext";
 import CreateChatGroupPopup from "../components/chat_group/create_chat_group_popup";
 import ChatBodyComponent from "../components/chat/chat_body";
+import LoadingContext from "../../context/loadingContext";
 
 
 
 export default function HomeScreen() {
 const { width } = useWindowDimensions()
+
+const {loading}=useContext(LoadingContext)
+
+console.log(loading);
     const [contactInfoMobile, setContactInfoMobile] = useState(false)
      //contact
     const [contact, setContact] = useState({})
