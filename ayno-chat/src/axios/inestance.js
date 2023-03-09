@@ -2,7 +2,7 @@ import axios from "axios";
 
 
 const axiosInestance = axios.create({
-    baseURL:"http://192.168.202.246:8080",
+    baseURL:"http://192.168.31.246:8080",
     withCredentials:true
 })
 

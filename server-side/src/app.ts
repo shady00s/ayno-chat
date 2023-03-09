@@ -28,7 +28,7 @@ export const store = new MongoDBStore({
 
 
 app.use('/',(req:Request,res:Response,next:NextFunction)=>{
-    res.setHeader('Access-Control-Allow-Origin','http://192.168.202.246:3000')
+    res.setHeader('Access-Control-Allow-Origin','http://192.168.31.246:3000')
     res.setHeader(
         'Access-Control-Allow-Methods',
         'OPTIONS, GET, POST, PUT, PATCH, DELETE'
