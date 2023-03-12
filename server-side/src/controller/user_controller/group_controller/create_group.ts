@@ -1,7 +1,7 @@
 import { Response,Request } from "express";
-import user_model from "../../model/user_model";
+import user_model from "../../../model/user_model";
 import mongoose from 'mongoose';
-import groups_model from "../../model/groups_model";
+import groups_model from "../../../model/groups_model";
 import { validationResult } from 'express-validator';
 
 export default async function createGroup(req:Request,res:Response){

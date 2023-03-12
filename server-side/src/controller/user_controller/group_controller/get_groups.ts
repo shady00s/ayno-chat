@@ -1,7 +1,7 @@
 
 import { Request,Response } from 'express';
-import user_model from '../../model/user_model';
-import groups_model from '../../model/groups_model';
+import user_model from '../../../model/user_model';
+import groups_model from '../../../model/groups_model';
 
 export default function getGroups(req:Request,res:Response){
     const user_id = req.session.userData.userId

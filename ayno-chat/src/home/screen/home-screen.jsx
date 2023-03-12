@@ -13,6 +13,7 @@ import SocketContext from "../../context/socketContext";
 import CreateChatGroupPopup from "../components/chat_group/create_chat_group_popup";
 import ChatBodyComponent from "../components/chat/chat_body";
 import LoadingContext from "../../context/loadingContext";
+import AddNewContact from "../components/chat_group/add_new_contact";
 
 
 
@@ -74,6 +75,7 @@ console.log(loading);
                          <ContactList  />
                          <ChatBodyComponent/>
                          <ContactInformation isMobile={contactInfoMobile}/>      
+                         <AddNewContact/>
                          </ContactContext.Provider> 
 
 

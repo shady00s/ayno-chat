@@ -1,5 +1,5 @@
 import { Request,Response } from "express"
-import user_model from "../../model/user_model"
+import user_model from "../../../model/user_model"
 const getUserFriendsController=(req:Request,res:Response)=>{
    const user_id = req.session.userData.userId
   

@@ -75,7 +75,6 @@ const VoteComponent = (props) => {
     voteOptionsRatio();
     getSelectedVote();
     getUserParticipation();
-    console.log(voteRatio);
 
   },[voteParticipations]);
 

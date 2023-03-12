@@ -1,6 +1,6 @@
 import { Response,Request } from "express";
-import user_model from "../../model/user_model";
-import {socketManager} from './../../sockets/socket_manager';
+import user_model from "../../../model/user_model";
+import {socketManager} from '../../../sockets/socket_manager';
 
 const addFriendRequestController = (req:Request,res:Response)=>{
     const friend_id = req.body.friend_id

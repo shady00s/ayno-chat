@@ -197,6 +197,11 @@ class ApiCall {
    
             return vote
     }
+    static addContactToGroup(contactData){
+        const contact = axiosInestance.post('/user/add-contact-to-group',contactData).then(res=>res)
+        
+        return contact
+    }
 }
 
 export default ApiCall

@@ -21,7 +21,8 @@ export default function GroupChatButtonComponent(props){
 
  
     return(
-    <div  onClick={()=>{
+    <div  onClick={(e)=>{
+                e.stopPropagation()
         setNavigation('')
         ApiCall.getGroupsInfo(props.data.conversation_id).then(data=>{
             setContact({conversation_id:data.data.body.conversation_id,type:'group',groupName:data.data.body.conversation_name,members_number:data.data.body.members_count})
@@ -30,7 +31,17 @@ export default function GroupChatButtonComponent(props){
 }} className="cursor-pointer hover:bg-[rgba(153,190,253,0.2)] w-[95%] m-1  bg-[rgba(123,167,243,0.06)] rounded-lg flex-col  flex  justify-center">
         <div className='flex items-center w-[94%] pl-1 relative justify-between p-1'>
             <h1 className='ml-4   text-ellipsis text-slate-200 select-none'>{props.data.conversation_name}</h1>
-                <Plus/>
+
+            <div  onClick={(e)=>{
+                e.stopPropagation()
+                setContact({conversation_id:props.data.conversation_id,type:'group'})
+                setNavigation('add-contact-group')
+
+            }} className='flex items-center p-1 hover:bg-slate-600 rounded-md'>
+
+                <Plus className='stroke-gray-500'/>
+                <span className='text-sm  text-gray-400'>Add contact</span>
+            </div>
         </div>
                 <h6 className='p-1 pl-3 text-slate-400 text-sm select-none'>members</h6>
 

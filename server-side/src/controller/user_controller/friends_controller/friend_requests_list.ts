@@ -1,7 +1,7 @@
 
 import { Request,Response } from 'express';
-import user_model from '../../model/user_model';
-import { userModel } from '../../types/user_types';
+import user_model from '../../../model/user_model';
+import { userModel } from '../../../types/user_types';
 
 export function friendRequestController(req:Request,res:Response){
         const user_id = req.session.userData.userId
