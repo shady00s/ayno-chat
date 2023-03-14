@@ -23,7 +23,8 @@ const groups_model = new mongoose.Schema<groupModel>({
         sender_color: { type: String },
         sender_name: { type: String },
         type: { type: String, enum: ['message', 'vote'], default: 'message' }
-    }]
+    }],
+    message_colors:[{id:{type:mongoose.Schema.Types.ObjectId,ref:"UsersModel"},color:{type:String}}]
 })
 
 export default mongoose.model('groups_collection', groups_model)

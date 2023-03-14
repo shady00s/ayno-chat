@@ -25,7 +25,7 @@ export default function GroupMessageComponent() {
     }
     useEffect(() => {
         if (Object.keys(contact).length === 0 ) return
-        if(contact.type ==='group') {
+        
             setLoading(true)
             ApiCall.getGroupMessges(contact.conversation_id,0).then(val => {
     
@@ -38,8 +38,7 @@ export default function GroupMessageComponent() {
                 }
             })
 
-        } 
-        console.log(contact.type);
+        
 
     }, [contact])
 
@@ -89,7 +88,7 @@ export default function GroupMessageComponent() {
     {messages.map((messageComponent,index) => <div>
     
     <div key={Math.random().toString()} className="m-1 pb-4 border-b-2 p-2  border-b-[rgba(70,70,70,0.1)]" ref={scrollRef}>
-        {messageComponent.messages.type === "vote" && messageComponent.messages.message==="s"? <VoteComponent key={Math.random().toString()} message={messageComponent.messages}/> :<GroupMessage key={Math.random().toString()} message={messageComponent.messages} isUser={messageComponent.messages.sender_id === user_id ? true : false} />}
+        {messageComponent.messages.type === "vote" && messageComponent.messages.message==="s"? <VoteComponent key={Math.random().toString()} message={messageComponent.messages}/> :<GroupMessage  key={Math.random().toString()} message={messageComponent.messages} isUser={messageComponent.messages.sender_id === user_id ? true : false} />}
         </div></div>)}
 
 </div>

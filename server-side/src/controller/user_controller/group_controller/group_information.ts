@@ -17,7 +17,8 @@ export default function getGroupInformation(req: Request, res: Response) {
                                 conversation_id:groupVal.conversation_id,
                                 conversation_name:groupVal.conversation_name,
                                 media:groupVal.media,
-                                members_count:groupVal.members_ids.length
+                                members_count:groupVal.members_ids.length,
+                                members_color:groupVal.message_colors
                             }})
                         }})
     

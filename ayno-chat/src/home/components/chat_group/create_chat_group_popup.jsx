@@ -8,14 +8,15 @@ import Selectmember from "./selectMemeber";
 import SubmitButton from "../../../registration/components/submit_button";
 import {X} from 'react-feather'
 import InputErrorComponent from "../../../registration/components/input_error_component";
+import { list } from "postcss";
 export default function CreateChatGroupPopup(){
     const {navigation,setNavigation}=useContext(NavigationContext)
     const [loading,setLoading]= useState(false)
     const [loadingReq,setLoadingReq]= useState(false)
     const [friendsList,setFriendsList]= useState([])
     const [selected,setSelected] = useState([])
-    const [errorName,setErrorName] = useState(false)
-    const [errorList,setErrorList] = useState(false)
+    const [error,setError]=useState({name:false,list:false})
+   
     const groupName = useRef("")
     useEffect(()=>{
 
@@ -46,9 +47,9 @@ export default function CreateChatGroupPopup(){
         <div className="md:w-6/12 w-11/12">
             <InputTextComponent onChange={(val)=>{
                 groupName.current = val.target.value
-                setErrorName(false)
+                setError(()=>({...error,name:false}))
                 }} placeHolder={"Conversation name"}/>
-            <InputErrorComponent title={"please type Group's name"} show={errorName}/>
+            <InputErrorComponent title={"please type Group's name"} show={error.name}/>
         </div>
         <div className="md:w-6/12 w-full flex flex-col justify-center overflow-y-auto">
             <div className="flex justify-between items-center p-2">
@@ -56,12 +57,12 @@ export default function CreateChatGroupPopup(){
             <h1 className="text-sm p-2 text-slate-200">Choose your friends</h1>
             <span className="text-sm text-slate-500">{selected.length} Selected</span>
             </div>
-            <InputErrorComponent title={"please select at least one friend"} show={errorList}/>
+            <InputErrorComponent title={"please select at least one friend"} show={error.list}/>
 
             {
                 loading ?  <FriendListSkeleton />:friendsList.length !==0? friendsList.map(friends=><Selectmember onClick={(data)=>{
                   let isExisted =   selected.some(selectedData => selectedData === data._id)
-                                     setErrorList(false)                           
+                   setError(()=>({...error,list:false}))                           
                   if(isExisted){
                     let friendListRemovedFromList = selected.filter(oldData=> oldData !== data._id)
                     setSelected(friendListRemovedFromList)
@@ -76,16 +77,14 @@ export default function CreateChatGroupPopup(){
             
           
              if(groupName.current===""){
-                setErrorName(true)
+                setError(()=>({...error,name:true}))
             }
             if(selected.length=== 0){
-                setErrorList(true)
+                setError(()=>({...error,list:true}))
             }
             else{
-                setErrorList(true)
-                setErrorName(true)
+                
                setLoadingReq(true)
-                setError("")
                 ApiCall.createGroup({
                     groupName:groupName.current,
                     groupMembers:selected,

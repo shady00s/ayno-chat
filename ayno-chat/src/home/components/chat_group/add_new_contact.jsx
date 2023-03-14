@@ -42,7 +42,6 @@ export default function AddNewContact(){
                     
                 }
                     setNewFriends(()=>newList)
-                    console.log(newList);
           
             setLoading(false)
 
@@ -65,7 +64,7 @@ export default function AddNewContact(){
 
     },[navigation.conversation_id])
     return(<div className={`${navigation.name === "add-contact-group"?"translate-x-0 flex justify-center items-center opacity-100":"translate-x-[9999px] opacity-0"} transition-opacity duration-100 ease-out absolute z-30 w-full h-full bg-theme`}>
-            <div className="md:w-[30%] w-4/5 bg-slate-800  rounded-md h-[60%] overflow-hidden">
+            <div className="md:w-[30%] w-4/5 bg-slate-800  rounded-md  overflow-hidden">
                 {/* title and close container */}
                 <div className="flex justify-between items-center m-auto p-1 mt-3 w-[90%]">
                     <span className="text-slate-300">Add new contact to group</span>
@@ -94,7 +93,7 @@ export default function AddNewContact(){
                             ) :<div><span>no friend selected</span></div>}
                 </div>
                 {/* friends list */}
-                <div  className="flex flex-col">{loading?<FriendListSkeleton/>: newFriends.length !==0 ? newFriends.map(data=>
+                <div  className="flex flex-col h-[8rem] overflow-y-auto">{loading?<FriendListSkeleton/>: newFriends.length !==0 ? newFriends.map(data=>
                             <div onClick={()=>{
                                 setError(false)
                                 if(selectedFriends.filter(friendData=>friendData._id === data._id).length === 0){

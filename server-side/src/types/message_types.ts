@@ -26,13 +26,17 @@ interface conversationModel{
     members_ids:Array<mongoose.Types.ObjectId>,
     media:Array<String>
 }
-
+interface colorModel{
+    id:mongoose.Types.ObjectId,
+    color:String,
+}
 interface groupModel{
     conversation_name:String,
     conversation_id:mongoose.Types.ObjectId,
     messages:Array<groupMessageModelType>,
     members_ids:Array<mongoose.Types.ObjectId>,
-    media:Array<String>
+    media:Array<String>,
+    message_colors:Array<colorModel>
     
 }
 interface voteModel{
