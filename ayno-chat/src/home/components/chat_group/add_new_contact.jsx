@@ -7,7 +7,7 @@ import SubmitButton from '../../../registration/components/submit_button'
 import InputErrorComponent from '../../../registration/components/input_error_component'
 import {FriendListSkeleton} from '../../../reusable-components/skeleton/friend_list'
 export default function AddNewContact(){
-    const {contact}=useContext(ContactContext)
+    const {contact,setContact}=useContext(ContactContext)
     const {navigation,setNavigation}=useContext(NavigationContext)
     const [friends,setFriends]= useState([])
     const [groupContacts,setGroupContacts]= useState([])
@@ -15,44 +15,56 @@ export default function AddNewContact(){
     const [selectedFriends,setSelectedFriends]= useState([])
     const [error,setError]=useState(false)
     const [loading,setLoading]=useState(false)
-    const getFriendsList = ()=>{
+    const getFriendsList = useCallback(async()=>{
         
-        ApiCall.getFriendsList().then(val=>{
+       await ApiCall.getFriendsList().then(val=>{
             setFriends(()=> val.data.body.friends)
-          
         })
          
-    }
+    },[navigation.conversation_id])
 
-    const getGroupContact =  ()=>{
-        ApiCall.getGroupContacts(contact.conversation_id).then(val =>{
-              setGroupContacts(() => val.data.body);
-              let newContactArray = friends.filter(friendsData=> groupContacts.some(groupData=> friendsData._id !== groupData._id))
-              setNewFriends(()=>newContactArray)
+    const getGroupContact =  useCallback(async()=>{
+
+        await ApiCall.getGroupContacts(navigation.conversation_id).then(val =>{
+              setGroupContacts(() => val.data.body);                
          });
-    }
+    },[navigation.conversation_id])
 
-    const newContacts = ()=>{
-        let newContactArray = friends.filter(friendsData=> groupContacts.some(groupData=> friendsData._id !== groupData._id))
-        setNewFriends(()=>newContactArray)
-        setLoading(false)
-    }
+    const newContacts = useCallback(()=>{
+        if(friends.length !== 0 && groupContacts.length !==0){
+            const newList = []
+                for (let index = 0; index < friends.length; index++) {
+                    for (let index2 = 0; index2 < groupContacts.length; index2++) {
+                        if (friends[index]._id!== groupContacts[index2]._id) {
+                            newList.push(friends[index])
+                        }   
+                    }
+                    
+                }
+                    setNewFriends(()=>newList)
+                    console.log(newList);
+          
+            setLoading(false)
 
+        }
+    },[friends,groupContacts])
 
     useEffect(()=>{
-        if(contact.conversation_id !== undefined){
+        newContacts()  
+    },[friends,groupContacts])
+    useEffect(()=>{
+        if(navigation.conversation_id !== undefined){
             setLoading(true)
 
            getFriendsList()
            getGroupContact()
-           newContacts()    
 
                     
-
+           
         }
 
-    },[contact])
-    return(<div className={`${navigation === "add-contact-group"?"translate-x-0 flex justify-center items-center opacity-100":"translate-x-[9999px] opacity-0"} transition-opacity duration-100 ease-out absolute z-30 w-full h-full bg-theme`}>
+    },[navigation.conversation_id])
+    return(<div className={`${navigation.name === "add-contact-group"?"translate-x-0 flex justify-center items-center opacity-100":"translate-x-[9999px] opacity-0"} transition-opacity duration-100 ease-out absolute z-30 w-full h-full bg-theme`}>
             <div className="md:w-[30%] w-4/5 bg-slate-800  rounded-md h-[60%] overflow-hidden">
                 {/* title and close container */}
                 <div className="flex justify-between items-center m-auto p-1 mt-3 w-[90%]">
@@ -60,7 +72,6 @@ export default function AddNewContact(){
                     <div className="flex cursor-pointer hover:bg-gray-700 p-1 rounded-md items-center
                     " onClick={()=>{
                         setNavigation("")
-
                     }
 
                     }>

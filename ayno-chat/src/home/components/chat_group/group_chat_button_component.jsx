@@ -22,7 +22,6 @@ export default function GroupChatButtonComponent(props){
  
     return(
     <div  onClick={(e)=>{
-                e.stopPropagation()
         setNavigation('')
         ApiCall.getGroupsInfo(props.data.conversation_id).then(data=>{
             setContact({conversation_id:data.data.body.conversation_id,type:'group',groupName:data.data.body.conversation_name,members_number:data.data.body.members_count})
@@ -34,8 +33,7 @@ export default function GroupChatButtonComponent(props){
 
             <div  onClick={(e)=>{
                 e.stopPropagation()
-                setContact({conversation_id:props.data.conversation_id,type:'group'})
-                setNavigation('add-contact-group')
+                setNavigation({name:'add-contact-group',conversation_id:props.data.conversation_id})
 
             }} className='flex items-center p-1 hover:bg-slate-600 rounded-md'>
 

@@ -24,18 +24,23 @@ export default function GroupMessageComponent() {
         scrollRef.current?.scrollIntoView({ behavior: "smooth" })
     }
     useEffect(() => {
-        if (Object.keys(contact).length === 0) return
-        setLoading(true)
-        ApiCall.getGroupMessges(contact.conversation_id,0).then(val => {
+        if (Object.keys(contact).length === 0 ) return
+        if(contact.type ==='group') {
+            setLoading(true)
+            ApiCall.getGroupMessges(contact.conversation_id,0).then(val => {
+    
+                if (val.status === 200) {
+                    setMessages(() => val.data.conversations)
+                    setLoading(false)
+                } else {
+                    setMessages(() => [])
+                    setLoading(false)
+                }
+            })
 
-            if (val.status === 200) {
-                setMessages(() => val.data.conversations)
-                setLoading(false)
-            } else {
-                setMessages(() => [])
-                setLoading(false)
-            }
-        })
+        } 
+        console.log(contact.type);
+
     }, [contact])
 
     useEffect(() => {
