@@ -11,7 +11,7 @@ import getGroupInformation from '../controller/user_controller/group_controller/
 import ignoreFriendRequest from './../controller/user_controller/ignore_friend_request';
 import editProfileController from "../controller/user_controller/edit_profile";
 import { editProfileValidator } from "../utils/middlewares/validators/editProfileValidators";
-import { groupValidator } from "../utils/middlewares/validators/create_group_validation";
+import { groupValidator } from "../utils/middlewares/validators/group_route_validators/create_group_validation";
 import createGroup from "../controller/user_controller/group_controller/create_group";
 import getGroups from '../controller/user_controller/group_controller/get_groups';
 import getGroupContacts from '../controller/user_controller/group_controller/get_group_contacts';
@@ -21,12 +21,21 @@ import getMediaContoller from "../controller/user_controller/get_media";
 import addContactToGroup from "../controller/user_controller/group_controller/add_contact_group";
 import add_contact_group_validator from '../utils/middlewares/validators/group_route_validators/add_contact_group_validator';
 import getUserFriendsController from "../controller/user_controller/friends_controller/friends";
+import friendReqValidator from '../utils/middlewares/validators/friends_routes_validators/friend_req_validator';
+import getMediaValidator from "../utils/middlewares/validators/get_media_validator";
+import ignoreFriendRequestValidator from "../utils/middlewares/validators/chat_routes_validators/ignore_friend_request";
+import searchValidator from "../utils/middlewares/validators/search_validator";
+import groupInformationValidation from "../utils/middlewares/validators/group_route_validators/group_information";
+import getGroupContactValidator from "../utils/middlewares/validators/group_route_validators/get_group_contacts_validator";
+import groupMessageValidation from "../utils/middlewares/validators/group_route_validators/send_group_message_validation";
+import loginValidator from "../utils/middlewares/validators/login_validator";
+import registerValidator from '../utils/middlewares/validators/register_validator';
 
 const userRouter = express.Router()
 
-userRouter.post('/register',userRegistrationController)
+userRouter.post('/register',registerValidator,userRegistrationController)
 
-userRouter.post('/login',userLogin)
+userRouter.post('/login',loginValidator,userLogin)
 
 userRouter.get('/checkAuthentication',checkSessionAuthenticationController)
 
@@ -34,21 +43,21 @@ userRouter.get('/loginAuth',logInFromSession)
 
 userRouter.get('/friends',sessionMiddleware,getUserFriendsController)
 
-userRouter.post('/add-friend',sessionMiddleware,addFriendRequestController)
+userRouter.post('/add-friend',friendReqValidator,sessionMiddleware,addFriendRequestController)
 
 userRouter.post('/accept-friend',sessionMiddleware,postAcceptFriendController)
 
-userRouter.post('/send-image' ,sendImageValidation,sessionMiddleware,sendImage)
+userRouter.post('/send-image' ,sessionMiddleware,sendImageValidation,sendImage)
 
-userRouter.get('/get-media',sessionMiddleware,getMediaContoller)
+userRouter.get('/get-media',sessionMiddleware,getMediaValidator,getMediaContoller)
 
 userRouter.get('/get-friend-requests',sessionMiddleware,friendRequestController)
 
-userRouter.get('/ignore-friend-requests',sessionMiddleware,ignoreFriendRequest)
+userRouter.get('/ignore-friend-requests',sessionMiddleware,ignoreFriendRequestValidator,ignoreFriendRequest)
 
-userRouter.get('/search',sessionMiddleware,search_user)
+userRouter.get('/search',sessionMiddleware,searchValidator,search_user)
 
-userRouter.get('/group-information',sessionMiddleware,getGroupInformation)
+userRouter.get('/group-information',sessionMiddleware,groupInformationValidation,getGroupInformation)
 
 userRouter.get('/get-groups',sessionMiddleware,getGroups)
 
@@ -56,9 +65,9 @@ userRouter.post('/edit-profile',sessionMiddleware,editProfileValidator,editProfi
 
 userRouter.post('/create-group',sessionMiddleware,groupValidator,createGroup)
 
-userRouter.get('/get-group-contacts',sessionMiddleware,getGroupContacts)
+userRouter.get('/get-group-contacts',sessionMiddleware,getGroupContactValidator,getGroupContacts)
 
-userRouter.get('/get-group-messages',sessionMiddleware,getGroupMessages)
+userRouter.get('/get-group-messages',sessionMiddleware,groupMessageValidation,getGroupMessages)
 
 userRouter.post('/add-contact-to-group',add_contact_group_validator,addContactToGroup)
 

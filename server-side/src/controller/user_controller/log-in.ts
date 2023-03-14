@@ -1,14 +1,15 @@
 import { NextFunction, Request,Response } from "express"
 import user_model from "../../model/user_model"
 import PasswordManager from "../../utils/managers/password_manager"
+import { validationResult } from 'express-validator';
 
 
 const userLogin = (req:Request,res:Response,next:NextFunction)=>{
 
     const user_name = req.body.user_name
     const user_password = req.body.user_password
-
-    if(user_name !== undefined && user_password !== undefined){
+    const errors = validationResult(req)
+    if(errors.isEmpty()){
       try{
         user_model.findOne({name:user_name}).then(async userVal=>{
           if(userVal!== null){

@@ -2,15 +2,16 @@ import { NextFunction, Router,Response,Request } from "express";
 import user_model from "../../model/user_model";
 import Logining from '../../utils/logger';
 import PasswordManager from "../../utils/managers/password_manager";
+import { validationResult } from 'express-validator';
  const userRegistrationController = (req:Request ,res:Response,next:NextFunction):void=>{
    
     const userName = req.body.username;
     const password = req.body.password;
     const profileImagePath = req.body.profilePath;
-
+    const errors = validationResult(req)
 // check if there is any body key have undefined value
-    if(userName == "" || password  == "" ||  profileImagePath == ""){
-        res.status(204).json({message:"data is missing or corupted"})
+    if(!errors.isEmpty()){
+        res.status(204).json({message:"data is missing or corupted",errors})
     }
     else{
         try {

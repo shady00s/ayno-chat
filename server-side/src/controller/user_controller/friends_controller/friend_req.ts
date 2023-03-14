@@ -1,12 +1,14 @@
 import { Response,Request } from "express";
 import user_model from "../../../model/user_model";
 import {socketManager} from '../../../sockets/socket_manager';
+import { validationResult } from 'express-validator';
 
 const addFriendRequestController = (req:Request,res:Response)=>{
     const friend_id = req.body.friend_id
     const user_id = req.session.userData.userId
     // check if the id is not empty 
-    if(friend_id !== undefined && user_id !== undefined){
+    const errors = validationResult(req)
+    if(errors.isEmpty()){
 
 try {
     user_model.findById(user_id).then(async user=>{

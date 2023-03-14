@@ -1,12 +1,15 @@
 import { Request, Response } from "express";
 import user_model from "../../../model/user_model";
 import groups_model from "../../../model/groups_model";
+import { validationResult } from 'express-validator';
 
 export default function getGroupInformation(req: Request, res: Response) {
     const user_id = req.session.userData.userId;
     const conversation_id = req.query.conversation_id
+
+    const errors = validationResult(req)
     user_model.findById(user_id).then(async userData => {
-        if (userData !== null) {
+        if (errors.isEmpty()) {
             // get all conversation groups (every conversation with conversation_name is group)
             try {
                 // get group conversation 
@@ -33,6 +36,9 @@ export default function getGroupInformation(req: Request, res: Response) {
             }
 
 
+
+        }else{
+            res.status(500).json({ message: "there is error", errors})
 
         }
     })

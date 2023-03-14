@@ -1,9 +1,11 @@
 import { Request, Response } from "express";
 import conversation_model from "../../model/conversation_model";
+import { validationResult } from 'express-validator';
 
 const getMediaContoller = (req:Request,res:Response)=>{
     const conversation_id = req.query.conversation_id
-    if(conversation_id !== ""){
+    const errors = validationResult(req)
+    if(errors.isEmpty()){
 
         try{
             conversation_model.findOne({conversation_id}).then(conv=>{
