@@ -12,10 +12,15 @@ let socketManager = {
          io = new Server(server, { cors: { origin: "*", methods: ["GET", "POST"] } })
         io.on('connection', (socket) => {
             Logining.info('connection at socket ' + socket.id)
+            // the global conversation for person to send persponal/group message notifications
+            // to join personal conversation
+
+           
             socket.on("join-conversation",(conversation)=>{
                 oldConversation = conversation
                 socket.join(conversation)
             })
+            // to join group conversation
             socket.on('join-group-conversation',(groupConversation)=>{
                 socket.leave(oldConversation)
                 socket.join(groupConversation)
@@ -52,11 +57,30 @@ let socketManager = {
         
             socket.on("send-messages", (textVal,conversation_id) => {
                 io.in(conversation_id).emit("recive-message", textVal);
+                socket.to(conversation_id).emit("newMessage",{newMessage:1,conversation_id})
             })
+
+            
         })
        
        
 
+    },
+    notificationSocket:()=>{
+        if (!io) {
+            Logining.error('error at socket')
+            return
+        }else{
+            io.on('connection',(socket)=>{
+
+                socket.on('global-id',(id)=>{
+                    socket.join(id)
+                })
+                socket.on("new-message-notification",(id)=>{
+                    socket.to(id.id).emit('message-notification',{id:id,newMessage:1})
+                })
+            })
+        }
     },
     groupMessageSocket:()=>{
         if (!io) {

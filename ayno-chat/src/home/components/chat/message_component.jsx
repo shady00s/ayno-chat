@@ -58,7 +58,6 @@ function MessageComponent() {
             setLoading(true)
             setNewMessage(false)
             ApiCall.getUserChatMessages(contact.conversations[0].conversation_Id,0).then(messages => {
-
                 if (messages.status === 200) {
                     setChat(() => messages.data.conversations)
                     setLoading(false)
@@ -80,9 +79,9 @@ function MessageComponent() {
 
            socket.on("typing-data",(name,isTyping)=>{
                setTyping(isTyping)
-               console.log(name,isTyping)
            
            })
+
            setTyping(false)
     
        }

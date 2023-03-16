@@ -9,13 +9,12 @@ import SettingsComponent from '../components/settings_component';
 import ContactContext from '../../context/contactContext';
 import NavigationContext from "../../context/navigationContext";
 import { logo } from "../../constants";
-import SocketContext from "../../context/socketContext";
 import CreateChatGroupPopup from "../components/chat_group/create_chat_group_popup";
 import ChatBodyComponent from "../components/chat/chat_body";
 import LoadingContext from "../../context/loadingContext";
 import AddNewContact from "../components/chat_group/add_new_contact";
 import RemoveFriendAlert from "../components/remove_friend_alert";
-
+import NotificationContext from "../../context/notificationContext"
 
 
 export default function HomeScreen() {
@@ -23,7 +22,6 @@ const { width } = useWindowDimensions()
 
 const {loading}=useContext(LoadingContext)
 
-console.log(loading);
     const [contactInfoMobile, setContactInfoMobile] = useState(false)
      //contact
     const [contact, setContact] = useState({})
@@ -32,7 +30,9 @@ console.log(loading);
     const [navigation, setNavigation] = useState('Contacts')
     const navigationValue = useMemo(() => ({ navigation, setNavigation }), [navigation])
 
-    // online
+    // notification 
+    const [notifications,setNotifications] = useState({messageNotification:[],groupNotification:[],friendRequestNotification:[]})
+    const notificationVal = useMemo(()=>({notifications,setNotifications}),[notifications])
  
 
     return (
@@ -71,9 +71,11 @@ console.log(loading);
                          <SettingsComponent />
                             <ContactContext.Provider value={contactValue}>
 
-                           
+                           <NotificationContext.Provider value={notificationVal}>
+                                 <ContactList  />
+
+                           </NotificationContext.Provider>
                         
-                         <ContactList  />
                          <ChatBodyComponent/>
                          <ContactInformation isMobile={contactInfoMobile}/>      
                          <AddNewContact/>

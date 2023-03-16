@@ -28,7 +28,6 @@ export default function GroupMessageComponent() {
         
             setLoading(true)
             ApiCall.getGroupMessges(contact.conversation_id,0).then(val => {
-    
                 if (val.status === 200) {
                     setMessages(() => val.data.conversations)
                     setLoading(false)

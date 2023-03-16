@@ -5,11 +5,12 @@ import ApiCall from './../../api_call';
 import { Navigate, useNavigate } from 'react-router-dom';
 import UserContext from './../../context/userContext';
 import LoadingComponent from "./loading_component";
+import SocketContext from "../../context/socketContext";
 const LoadingScreen = () => {
   const{user,setUser} = useContext(UserContext)
   const [authenticated,setAuthenticated]= useState()
   const nav = useNavigate()
-  
+  const socket = useContext(SocketContext)
   useEffect(() => { 
     if(Object.keys(user).length !== 0)  nav('/ayno-chat/home')
 
@@ -20,6 +21,7 @@ const LoadingScreen = () => {
           profileImagePath: val.data.body.profileImagePath,
           id:val.data.body.id
         })
+        socket.emit('global-id',val.data.body.id)
         setAuthenticated(true)
       }
       else {

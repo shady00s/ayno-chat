@@ -9,21 +9,34 @@ import { FriendRequestComponent } from '../friend_request/friend_request_compone
 import FriendsList from "./friends_list";
 import ChatGroupComponent from './../chat_group/chat_group_screen';
 
-
-import { useRef } from "react";
+import NotificationContext from "../../../context/notificationContext";
 import useWindowDimensions from './../../../utils/window_size';
+import SocketContext from "../../../context/socketContext";
 
 
- function ContactList(props){
-    const socket = useRef()
+ function ContactList(){
 
-   const {width} = useWindowDimensions()
-
-   const [isMobile,setIsMobile] = useState(false)
+    const {width} = useWindowDimensions()
+    const [isMobile,setIsMobile] = useState(false)
     const [searchContainer,setSearchContainer] = useState(false)
     const [search,setSearch] = useState('')
     const [searchList,setSearchList] = useState([])
+    const socket = useContext(SocketContext)
 
+        const {notifications,setNotifications} = useContext(NotificationContext)
+    useEffect(()=>{
+        socket.on('message-notification',(data)=>{
+            switch (data.type) {
+                case "message":
+                    
+                    //setNotifications(()=>({...notifications,notifications.messageNotification:[]}))
+            
+                default:
+                    return;
+            }
+        })
+    },[])
+   console.log(notifications); 
     useEffect(()=>{
         width > 770 ? setIsMobile(false):setIsMobile(true)
 

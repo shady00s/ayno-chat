@@ -75,6 +75,7 @@ try {
     socketManager.connectSocket(server)
     socketManager.messageSocket()
     socketManager.groupMessageSocket()
+    socketManager.notificationSocket()
     mongoose.set('strictQuery',true)
     
 

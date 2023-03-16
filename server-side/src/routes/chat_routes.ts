@@ -19,7 +19,7 @@ const chatRouter = express.Router()
 chatRouter.get('/messages',getUserMessagesValidator,sessionMiddleware,getChatMessages )
 
 chatRouter.post('/send-message',sendMessageValidator,sessionMiddleware,postMessageController)
-chatRouter.get('/group-message',groupMessagesValidator,sessionMiddleware,getGroupMessages)
+chatRouter.get('/group-messages',groupMessagesValidator,sessionMiddleware,getGroupMessages)
 chatRouter.post('/send-group-message',sendgroupMessageValidation,sessionMiddleware,sendGroupMessage)
 chatRouter.post('/create-vote',createVoteValidator,sessionMiddleware,createVoteController)
 chatRouter.post('/send-vote-particepent',sendVoteParticepentValidator,sessionMiddleware,sendVoteParticipent)

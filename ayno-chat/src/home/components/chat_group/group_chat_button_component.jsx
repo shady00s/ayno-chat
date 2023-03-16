@@ -24,6 +24,7 @@ export default function GroupChatButtonComponent(props){
     <div  onClick={(e)=>{
         setNavigation('')
         ApiCall.getGroupsInfo(props.data.conversation_id).then(data=>{
+
             setContact({conversation_id:data.data.body.conversation_id,type:'group',groupName:data.data.body.conversation_name,
             members_number:data.data.body.members_count,
             members_colors:data.data.body.members_color

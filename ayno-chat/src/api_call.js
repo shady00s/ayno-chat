@@ -179,8 +179,8 @@ class ApiCall {
         const groups = axiosInestance.get('/user/group-information',{params:{conversation_id:id}}).then(value => value)
         return groups
     }
-    static getGroupMessges(id){
-        const groups = axiosInestance.get('/chat/group-messages',{params:{conversation_id:id}}).then(value => value)
+    static getGroupMessges(id,page){
+        const groups = axiosInestance.get('/chat/group-messages',{params:{conversation_id:id,page}}).then(value => value)
         return groups
     }
     static postGroupMessage(messageData){

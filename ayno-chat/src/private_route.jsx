@@ -1,6 +1,6 @@
 import { useCallback, useState, useContext,useEffect } from "react";
 import { Outlet, Navigate } from "react-router-dom";
-
+import SocketContext from "./context/socketContext";
 import ApiCall from "./api_call";
 import LoadingComponent from './reusable-components/loading/loading_component';
 import UserContext from './context/userContext';
@@ -11,6 +11,7 @@ const PrivateRoute = () => {
 
     const [user_data, setUserData] = useState()
     const {user,setUser} = useContext(UserContext)
+    const socket = useContext(SocketContext)
 
     useEffect(() => {
 
@@ -23,6 +24,8 @@ const PrivateRoute = () => {
                     profileImagePath: data.data.body.profileImagePath,
                     id:data.data.body.id
                   })
+                  socket.emit('global-id',data.data.body.id)
+
                 setUserData(() => true)
 
             } else {
