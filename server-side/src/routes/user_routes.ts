@@ -30,6 +30,7 @@ import getGroupContactValidator from "../utils/middlewares/validators/group_rout
 import groupMessageValidation from "../utils/middlewares/validators/group_route_validators/send_group_message_validation";
 import loginValidator from "../utils/middlewares/validators/login_validator";
 import registerValidator from '../utils/middlewares/validators/register_validator';
+import removeFriend from "../controller/user_controller/friends_controller/remove_friend";
 
 const userRouter = express.Router()
 
@@ -68,5 +69,7 @@ userRouter.post('/create-group',sessionMiddleware,groupValidator,createGroup)
 userRouter.get('/get-group-contacts',sessionMiddleware,getGroupContactValidator,getGroupContacts)
 
 userRouter.post('/add-contact-to-group',add_contact_group_validator,addContactToGroup)
+
+userRouter.post('/remove-friend',sessionMiddleware,removeFriend)
 
 export default userRouter

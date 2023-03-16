@@ -14,6 +14,7 @@ import CreateChatGroupPopup from "../components/chat_group/create_chat_group_pop
 import ChatBodyComponent from "../components/chat/chat_body";
 import LoadingContext from "../../context/loadingContext";
 import AddNewContact from "../components/chat_group/add_new_contact";
+import RemoveFriendAlert from "../components/remove_friend_alert";
 
 
 
@@ -76,6 +77,7 @@ console.log(loading);
                          <ChatBodyComponent/>
                          <ContactInformation isMobile={contactInfoMobile}/>      
                          <AddNewContact/>
+                            <RemoveFriendAlert/>
                          </ContactContext.Provider> 
 
 

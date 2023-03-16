@@ -7,7 +7,7 @@ import ContactContext from "./../../../context/contactContext";
 import SocketContext from "./../../../context/socketContext";
 import { MessageSquare } from "react-feather";
 import NavigationContext from "../../../context/navigationContext";
-
+import { UserMinus } from "react-feather";
 function ContactInformation(props) {
   const socket = useContext(SocketContext);
   const { width } = useWindowDimensions();
@@ -201,6 +201,8 @@ function ContactInformation(props) {
                   ))
                 )}
               </div>
+
+
             </div>
           </div>
         </div>
@@ -316,6 +318,7 @@ function ContactInformation(props) {
                     <div></div>
                   )}
                   {/* Media container */}
+
                   <h2 className="text-slate-200 text-md ml-12 mt-6 mb-4">
                     Media
                   </h2>
@@ -339,6 +342,10 @@ function ContactInformation(props) {
                       ))
                     )}
                   </div>
+
+                  <button onClick={()=>{
+                    setNavigation("remove-friend_alert")
+                  }} className="p-1 m-2 border-2 border-gray-800 rounded-lg flex items-center text-sm text-slate-400 cursor-pointer"><UserMinus className="mr-2 stroke-red-600"/> Remove friend</button>
                 </div>
               </div>
             )

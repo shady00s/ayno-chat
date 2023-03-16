@@ -202,6 +202,10 @@ class ApiCall {
         
         return contact
     }
+    static deleteFriend(contact_id){
+        const friend = axiosInestance.post('/user/remove-friend',{friend_id:contact_id})
+        return friend
+    }
 }
 
 export default ApiCall
