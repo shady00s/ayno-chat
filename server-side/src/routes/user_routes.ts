@@ -67,8 +67,6 @@ userRouter.post('/create-group',sessionMiddleware,groupValidator,createGroup)
 
 userRouter.get('/get-group-contacts',sessionMiddleware,getGroupContactValidator,getGroupContacts)
 
-userRouter.get('/get-group-messages',sessionMiddleware,groupMessageValidation,getGroupMessages)
-
 userRouter.post('/add-contact-to-group',add_contact_group_validator,addContactToGroup)
 
 export default userRouter

@@ -1,18 +1,16 @@
 import SearchComponent from "../search/search_component";
 import React,{ useEffect, useState, useContext } from 'react';
 import ApiCall from '../../../api_call';
-import NewFirendComponent from "../search_result_component";
+import NewFirendComponent from "../search/search_result_component";
 import { X } from "react-feather";
 import NavigationContext from '../../../context/navigationContext';
 
 import { FriendRequestComponent } from '../friend_request/friend_request_component';
 import FriendsList from "./friends_list";
 import ChatGroupComponent from './../chat_group/chat_group_screen';
-import SocketClientManager from './../../../sockets/message_socket';
-import { io } from 'socket.io-client';
+
 
 import { useRef } from "react";
-import SocketContext from './../../../context/socketContext';
 import useWindowDimensions from './../../../utils/window_size';
 
 
@@ -36,10 +34,14 @@ import useWindowDimensions from './../../../utils/window_size';
     const getSearchResult = ()=>{
 
 
-        ApiCall.getSearchData(search).then(value=>{
+        ApiCall.getSearchData(search.toLowerCase()).then(value=>{
             if(value.status === 200){
-                setSearchList((oldData)=>[...oldData,value.data.body])
-                
+                let isExisted = searchList.some(oldData=>oldData.id === value.data.body.id)
+                if(!isExisted){
+                    setSearchList((oldData)=>[...oldData,value.data.body])
+
+                }
+                console.log(value.data.body);
             }
             else if(value.status === 204){
                 alert('There is no user with name ' +search)

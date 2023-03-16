@@ -1,6 +1,6 @@
 import { body } from "express-validator";
 
-const groupMessageValidation = [
+const sendgroupMessageValidation = [
     body('conversation_id').isEmpty(),
     body('message_content').isEmpty().isString(),
     body('sender_image_path').isEmpty().isString(),
@@ -8,4 +8,4 @@ const groupMessageValidation = [
     body('sender_name').isEmpty().isString()
 ]
 
-export default groupMessageValidation
+export default sendgroupMessageValidation

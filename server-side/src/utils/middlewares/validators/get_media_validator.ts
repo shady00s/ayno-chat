@@ -1,7 +1,7 @@
-import { body } from "express-validator";
+import { query } from "express-validator";
 
 const getMediaValidator = [
-    body('conversation_id').notEmpty().isString()
+    query('conversation_id').notEmpty().isString()
 ]
 
 export default getMediaValidator
