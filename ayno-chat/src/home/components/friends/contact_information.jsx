@@ -193,6 +193,9 @@ function ContactInformation(props) {
                 ) : (
                   media.map((data) => (
                     <img
+                      onClick={(()=>{
+                        setNavigation({navigate:"showImage",link:data})
+                      })}
                       key={data}
                       className="w-14 h-14 -scroll-mt-40 object-contain hover:scale-150 transition-transform cursor-pointer"
                       src={data}
@@ -334,6 +337,9 @@ function ContactInformation(props) {
                     ) : (
                       media.map((data) => (
                         <img
+                        onClick={(()=>{
+                          setNavigation({navigate:"showImage",link:data})
+                        })}
                           key={data}
                           className="w-14 h-14 -scroll-mt-40 object-contain hover:scale-150 transition-transform cursor-pointer"
                           src={data}

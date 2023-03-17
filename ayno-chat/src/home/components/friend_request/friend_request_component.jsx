@@ -58,7 +58,7 @@ export function FriendRequestComponent() {
                 <div className={`${open?"h-[30rem]":"h-[0rem] overflow-hidden"} overflow-y-auto  transition-all duration-300 ease-in-out`}>
                     {loading?<FriendListSkeleton/>:friendRequest.length !==0?friendRequest.map(data=><FriendRequestBody key={data.name} data={data} removeFriendRequest={(removedId)=>{
                         const requests = friendRequest.filter(id=> id.name !== removedId.name )
-                       // setFriendRequest(requests)
+                      setFriendRequest(requests)
                     }}/> ):<div className="flex flex-col w-full h-full justify-center items-center">
                                 <CloudRain size={44} className="p-1 stroke-slate-600 "/>
                             <h1 className="text-slate-400">There is no friend requests found</h1>

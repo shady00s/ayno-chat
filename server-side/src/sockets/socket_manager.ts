@@ -12,8 +12,7 @@ let socketManager = {
          io = new Server(server, { cors: { origin: "*", methods: ["GET", "POST"] } })
         io.on('connection', (socket) => {
             Logining.info('connection at socket ' + socket.id)
-            // the global conversation for person to send persponal/group message notifications
-            // to join personal conversation
+           
 
            
             socket.on("join-conversation",(conversation)=>{

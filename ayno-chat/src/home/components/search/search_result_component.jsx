@@ -76,15 +76,15 @@ const SearchResultComponent = (props) => {
                     setLoading(true);
                     socket.emit("new-notification",{ name:props.data.name, id:props.data.id, profileImagePath:props.data.profileImagePath, type:"friend-request"})
 
-                  //  sendRequest(props.data.id).then((val) => {
-                  //     if (val.status !== 200) {
-                  //       alert("There is an error");
-                  //       setLoading(false);
-                  //     } else {
-                  //       alert("Request has been sent");
-                  //       setLoading(false);
-                  //     }
-                  //   });
+                   sendRequest(props.data.id).then((val) => {
+                      if (val.status !== 200) {
+                        alert("There is an error");
+                        setLoading(false);
+                      } else {
+                        alert("Request has been sent");
+                        setLoading(false);
+                      }
+                    });
                   }}
                   className="m-auto p-1 rounded-md text-slate-300 border-2 border-slate-800 flex justify-center items-center text-sm"
                 >

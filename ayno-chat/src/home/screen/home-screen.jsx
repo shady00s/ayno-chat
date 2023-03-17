@@ -15,7 +15,7 @@ import LoadingContext from "../../context/loadingContext";
 import AddNewContact from "../components/chat_group/add_new_contact";
 import RemoveFriendAlert from "../components/remove_friend_alert";
 import NotificationContext from "../../context/notificationContext"
-
+import ViewImageComponent from "../components/viewImageComponent";
 
 export default function HomeScreen() {
 const { width } = useWindowDimensions()
@@ -83,7 +83,8 @@ const {loading}=useContext(LoadingContext)
                          </ContactContext.Provider> 
 
 
-                        <CreateChatGroupPopup/>   
+                        <CreateChatGroupPopup/>  
+                        <ViewImageComponent/> 
                      </NavigationContext.Provider>
                 </div>
 
