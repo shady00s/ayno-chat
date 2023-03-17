@@ -34,7 +34,7 @@ export default function ChatMessageInputComponent(props) {
         sender_id: user.id,
       };
       socket.emit("send-messages", textVal, conversation_id);
-      socket.emit("new-message-notification",{ conversation_id, id:contact._id, user:user.id, type:"message"})
+      socket.emit("new-notification",{ conversation_id, id:contact._id, user:user.id, type:"message"})
       setTextVal("");
     } else {
       ApiCall.postGroupMessage({

@@ -24,7 +24,8 @@ import SocketContext from "../../../context/socketContext";
     const socket = useContext(SocketContext)
         const {notifications,setNotifications} = useContext(NotificationContext)
     useEffect(()=>{
-        socket.on('message-notification',(data)=>{
+        socket.on('notification',(data)=>{
+            console.log(data)
             let notificationData = {...notifications}
            
             switch (data.type) {
@@ -43,14 +44,31 @@ import SocketContext from "../../../context/socketContext";
                         notificationData.messageNotification.push({id:data.id, userId:data.userId, newMessage:data.newMessage})
                     }
                     setNotifications(()=>({...notificationData}))
-                   
+                    break
+                 case "friend-request":
+                    let friendRequestExist = notificationData.friendRequestNotification.some(oldData=> oldData.id === data.id)
+                    if(friendRequestExist || Object.keys(notificationData.friendRequestNotification).length !== 0 ){
+                        for (let index = 0; index < notificationData.friendRequestNotification.length; index++) {
+                            if(notificationData.friendRequestNotification[index].id === data.id){
+                             notificationData.friendRequestNotification[index] = notificationData.friendRequestNotification[index]
+                            }
+                             
+                         }
+
+                    }else{
+                        notificationData.friendRequestNotification.push(data)
+                    }
+                        setNotifications(()=>({...notificationData}))
+
+                        break  
                 default:
                     return; 
             }
         })
-
-        return (()=>{socket.off('message-notification')})
+        
+        return (()=>{socket.off('notification')})
     },[socket])
+    console.log(notifications)
     useEffect(()=>{
         width > 770 ? setIsMobile(false):setIsMobile(true)
 
@@ -68,7 +86,6 @@ import SocketContext from "../../../context/socketContext";
                     setSearchList((oldData)=>[...oldData,value.data.body])
 
                 }
-                console.log(value.data.body);
             }
             else if(value.status === 204){
                 alert('There is no user with name ' +search)

@@ -4,6 +4,7 @@ import ApiCall from '../../../api_call'
 import LoadingComponent from '../../../reusable-components/loading/loading_component'
 export default function FriendRequestBody(props){
     const [loading,setLoading]= useState(false)
+    
     return(
       
          <div className="bg-[rgba(123,167,243,0.06)] rounded-lg p-1 m-2 flex-col w-[96%] flex items-center justify-center">
@@ -18,7 +19,6 @@ export default function FriendRequestBody(props){
                     <button className=" p-1 pl-2 pr-2  rounded-md text-slate-300 border-2 border-slate-800 flex justify-center items-center text-sm" onClick={()=>{
                             setLoading(true)
                         ApiCall.acceptFriendRequest(props.data._id).then(val=> {
-                        console.log(val)
                         alert('user added succssessfully')
                         setLoading(false)
                         

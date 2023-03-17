@@ -76,8 +76,18 @@ let socketManager = {
                 socket.on('global-id',(id)=>{
                     socket.join(id)
                 })
-                socket.on("new-message-notification",(id)=>{
-                    socket.to(id.id).emit('message-notification',{id:id.id,message:id.message,type:id.type,userId:id.user,newMessage:1})
+                socket.on("new-notification",(id)=>{
+                    switch (id.type) {
+                        case "message":
+                            socket.to(id.id).emit('notification',{...id})
+                            break;
+                        case "friend-request":
+                          
+                            socket.to(id.id).emit('notification',{...id})
+                            break
+                        default:
+                            break;
+                    }
                 })
             })
         }

@@ -6,6 +6,7 @@ import NavigationContext from "../../../context/navigationContext";
 import ApiCall from "../../../api_call";
 import LoadingComponent from "../../../reusable-components/loading/loading_component";
 import UserContext from "../../../context/userContext";
+import SocketContext from './../../../context/socketContext';
 async function sendRequest(data) {
   return await ApiCall.postFriendRequest({
     friend_id: data,
@@ -16,6 +17,7 @@ const SearchResultComponent = (props) => {
   const { user } = useContext(UserContext);
   const { setNavigation } = useContext(NavigationContext);
   const { setContact } = useContext(ContactContext);
+  const socket = useContext(SocketContext)
   const [loading, setLoading] = useState(false);
   return (
     <>
@@ -72,15 +74,17 @@ const SearchResultComponent = (props) => {
                 <button
                   onClick={() => {
                     setLoading(true);
-                    sendRequest(props.data.id).then((val) => {
-                      if (val.status !== 200) {
-                        alert("There is an error");
-                        setLoading(false);
-                      } else {
-                        alert("Request has been sent");
-                        setLoading(false);
-                      }
-                    });
+                    socket.emit("new-notification",{ name:props.data.name, id:props.data.id, profileImagePath:props.data.profileImagePath, type:"friend-request"})
+
+                  //  sendRequest(props.data.id).then((val) => {
+                  //     if (val.status !== 200) {
+                  //       alert("There is an error");
+                  //       setLoading(false);
+                  //     } else {
+                  //       alert("Request has been sent");
+                  //       setLoading(false);
+                  //     }
+                  //   });
                   }}
                   className="m-auto p-1 rounded-md text-slate-300 border-2 border-slate-800 flex justify-center items-center text-sm"
                 >

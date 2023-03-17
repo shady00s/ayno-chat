@@ -4,7 +4,7 @@ import ApiCall from './../../../api_call';
 import FriendRequestBody from "./friend_request_body";
 import { FriendListSkeleton } from "../../../reusable-components/skeleton/friend_list";
 import SocketContext from "../../../context/socketContext";
-import { CounterComponent } from "../../../reusable-components/counter_component";
+import NotificationContext from './../../../context/notificationContext';
 
 
 export function FriendRequestComponent() {
@@ -16,42 +16,33 @@ export function FriendRequestComponent() {
     const [numberofReq,setNumberOfReq]= useState(0)
     const socket = useContext(SocketContext)
 
-
-
-    useEffect(()=>{
-           // socketTest.emit('send-message',{message_content:'dfdfdfdf'})
-
-           socket.on('friend-request',(data)=>{
-                if(data !== undefined){
-                    console.log(data)
-                    setFriendRequest((prev)=>[...prev,data])
-                   
-                }
-               
-            })
-    },[])
+    const {notifications,setNotifications} = useContext(NotificationContext)
+   
+  
 
     useEffect(()=>{
         setNumberOfReq(friendRequest.length)
 
     },[friendRequest])
 
+    useEffect(()=>{
+        setFriendRequest(()=>[...friendRequest,...notifications.friendRequestNotification])
 
+    },[notifications])
 
     useEffect(() => {
-        setLoading(true)
-        ApiCall.getFriendsRequestList().then(data => {
-           if(data.status === 200){
-            setFriendRequest(()=>data.data.friendRequests)
-            setNumberOfReq(friendRequest.length)
+            setLoading(true)
+            ApiCall.getFriendsRequestList().then(data => {
+               if(data.status === 200 && data.data.friendRequests.length !==0){
+                setFriendRequest(()=>[...friendRequest,...data.data.friendRequests])
 
-           }else{
-            setFriendRequest(()=>[])
-           }
-           setLoading(false)
-            
-        })
+               }
+               setLoading(false)
+                
+            })
+
     }, [])
+    console.log(friendRequest)
     return (
         <>
             <div className="pt-4 pd-4">
@@ -67,10 +58,7 @@ export function FriendRequestComponent() {
                 <div className={`${open?"h-[30rem]":"h-[0rem] overflow-hidden"} overflow-y-auto  transition-all duration-300 ease-in-out`}>
                     {loading?<FriendListSkeleton/>:friendRequest.length !==0?friendRequest.map(data=><FriendRequestBody key={data.name} data={data} removeFriendRequest={(removedId)=>{
                         const requests = friendRequest.filter(id=> id.name !== removedId.name )
-                        
-                        
-                        
-                        setFriendRequest(requests)
+                       // setFriendRequest(requests)
                     }}/> ):<div className="flex flex-col w-full h-full justify-center items-center">
                                 <CloudRain size={44} className="p-1 stroke-slate-600 "/>
                             <h1 className="text-slate-400">There is no friend requests found</h1>
