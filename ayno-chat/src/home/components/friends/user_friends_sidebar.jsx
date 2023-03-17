@@ -50,7 +50,9 @@ import SocketContext from "../../../context/socketContext";
                     if(friendRequestExist || Object.keys(notificationData.friendRequestNotification).length !== 0 ){
                         for (let index = 0; index < notificationData.friendRequestNotification.length; index++) {
                             if(notificationData.friendRequestNotification[index].id === data.id){
-                             notificationData.friendRequestNotification[index] = notificationData.friendRequestNotification[index]
+                                console.log(true)
+
+                             notificationData.friendRequestNotification[index] = friendRequestNotification[index]
                             }
                              
                          }
