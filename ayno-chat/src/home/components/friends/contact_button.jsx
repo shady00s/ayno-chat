@@ -3,19 +3,43 @@ import NavigationContext from '../../../context/navigationContext';
 import ContactContext from '../../../context/contactContext';
 import { CounterComponent } from '../../../reusable-components/counter_component';
 import SocketContext from './../../../context/socketContext';
+import NotificationContext from '../../../context/notificationContext';
 
 export default function ContactButton(props){
     const {setNavigation}= useContext(NavigationContext)
     const {setContact} = useContext(ContactContext)
     const socket = useContext(SocketContext)
+    const [number,setNumber] = useState(0)
+    const {notifications,setNotifications} = useContext(NotificationContext)
     const getUserData =()=>{
         //
         socket.emit("join-conversation",props.data.conversations[0].conversation_Id)
         setNavigation("")
         setContact({...props.data,type:"contact"})
     }
+    useEffect(()=>{
+        
+
+        for (let index = 0; index < notifications.messageNotification.length; index++) {
+
+            if(props.data._id === notifications.messageNotification[index].userId){
+                setNumber(notifications.messageNotification[index].newMessage)
+            }
+            
+        }
+        
+    })
     return(
-        <div onClick={()=>{
+        <div onClick={()=>{ 
+            let resetObject = {...notifications}
+
+            for (let index = 0; index < notifications.messageNotification.length; index++) {
+                if(props.data._id === notifications.messageNotification[index].userId){
+                    resetObject.messageNotification[index].newMessage = 0
+                }
+                
+            }
+            setNotifications(()=>({...resetObject}))
             getUserData()
             props.onClick()
         }}  className={`${props.selected?"bg-[rgba(124,154,230,0.2)]":"bg-subBackGround"} p-2 flex group items-center justify-evenly  w-full transition-colors  mb-2 cursor-pointer border-l-2  border-l-slate-800
@@ -34,7 +58,7 @@ export default function ContactButton(props){
 
             {/* message number component */}
            
-                <CounterComponent number="1"/>
+                <CounterComponent number={number}/>
                 
 
          

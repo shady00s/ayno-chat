@@ -4,7 +4,7 @@ import LoadingContext from "../context/loadingContext";
 
 
 const axiosInestance = axios.create({
-    baseURL:"http://192.168.1.9:8080",
+    baseURL:"http://192.168.1.4:8080",
     withCredentials:true
 })
 
@@ -15,7 +15,7 @@ const axiosInestance = axios.create({
 // })
 
 const userInstance = axios.create({
-    baseURL:"http://192.168.1.9:8080/user",
+    baseURL:"http://192.168.1.4:8080/user",
     withCredentials:true
 })
 

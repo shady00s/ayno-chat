@@ -4,7 +4,7 @@ import svgr from 'vite-plugin-svgr'
 // https://vitejs.dev/config/
 export default defineConfig({
   server:{
-    host:'192.168.1.9',
+    host:'192.168.1.4',
     port:3000,
    
   },

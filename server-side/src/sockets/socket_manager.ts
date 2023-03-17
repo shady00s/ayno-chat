@@ -77,7 +77,8 @@ let socketManager = {
                     socket.join(id)
                 })
                 socket.on("new-message-notification",(id)=>{
-                    socket.to(id.id).emit('message-notification',{id:id,newMessage:1})
+                    console.log(id);
+                    socket.to(id.id).emit('message-notification',{id:id.id,message:id.message,type:id.type,userId:id.user,newMessage:1})
                 })
             })
         }

@@ -22,21 +22,35 @@ import SocketContext from "../../../context/socketContext";
     const [search,setSearch] = useState('')
     const [searchList,setSearchList] = useState([])
     const socket = useContext(SocketContext)
-
         const {notifications,setNotifications} = useContext(NotificationContext)
     useEffect(()=>{
         socket.on('message-notification',(data)=>{
+            let notificationData = {...notifications}
+           
             switch (data.type) {
                 case "message":
-                    
-                    //setNotifications(()=>({...notifications,notifications.messageNotification:[]}))
-            
+                   
+                    let contactExist = notificationData.messageNotification.some(oldData=> oldData.id === data.id)
+                    if(contactExist || Object.keys(notificationData.messageNotification).length !== 0 ){
+                        for (let index = 0; index < notificationData.messageNotification.length; index++) {
+                            if(notificationData.messageNotification[index].userId === data.userId){
+                             notificationData.messageNotification[index].newMessage = notificationData.messageNotification[index].newMessage + 1
+                            }
+                             
+                         }
+
+                    }else{
+                        notificationData.messageNotification.push({id:data.id, userId:data.userId, newMessage:data.newMessage})
+                    }
+                    setNotifications(()=>({...notificationData}))
+                   
                 default:
-                    return;
+                    return; 
             }
         })
-    },[])
-   console.log(notifications); 
+
+        return (()=>{socket.off('message-notification')})
+    },[socket])
     useEffect(()=>{
         width > 770 ? setIsMobile(false):setIsMobile(true)
 
