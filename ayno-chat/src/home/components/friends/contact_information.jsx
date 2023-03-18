@@ -1,14 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
 import useWindowDimensions from "../../../utils/window_size";
 import ApiCall from "../../../api_call";
-import { Image } from "react-feather";
 import { ContactSkeleton } from "../../../reusable-components/skeleton/contact_info";
 import ContactContext from "./../../../context/contactContext";
 import SocketContext from "./../../../context/socketContext";
-import { MessageSquare } from "react-feather";
 import NavigationContext from "../../../context/navigationContext";
-import { UserMinus } from "react-feather";
-function ContactInformation(props) {
+import { UserMinus,Image,MessageSquare,UserPlus } from "react-feather";
+function ContactInformation() {
   const socket = useContext(SocketContext);
   const { width } = useWindowDimensions();
   const [media, setMedia] = useState([]);
@@ -17,8 +15,10 @@ function ContactInformation(props) {
   const [isUserOnline, setIsUserOnline] = useState();
   const [data, setData] = useState({ name: "", id: "" });
   const [groupMembers, setGroupMembers] = useState([]);
+  const [viewdGroupMembers, setViewdGroupMembers] = useState([]);
   const [selectedGroupMember, setSelectedGroupMember] = useState(-1);
   const [selectedGroupMemberData, setSelectedGroupMemberData] = useState({});
+  const [friends,setFriends] = useState([])
   const {navigation,setNavigation} = useContext(NavigationContext)
   
   useEffect(() => {
@@ -56,15 +56,39 @@ function ContactInformation(props) {
           });
           setMedia(groupVal.data.body.media);
         });
+        ApiCall.getFriendsList().then(val=>{
+          setFriends(()=>val.data.body.friends)
+        })
         ApiCall.getGroupContacts(contact.conversation_id).then((val) => {
-          setGroupMembers(val.data.body);
-          setLoading(false);
+        
+        
+          setGroupMembers(()=>val.data.body)
         });
+
+        
+      
+        setLoading(false);
       }
     }
   }, [contact]); //contact
 
+  useEffect(()=>{
+    let editedList = []
+    for (let index = 0; index < groupMembers.length; index++) {
+      for (let index1 = 0; index1 < friends.length; index1++) {
+        if(groupMembers[index]._id !== friends[index1]._id){
+          groupMembers[index].isFriend = false
+          editedList.push(groupMembers[index])
+        }else{
+          groupMembers[index].isFriend = true
+          editedList.push(groupMembers[index])
+        }
+        
+      }
 
+  }
+  setViewdGroupMembers(()=>editedList)
+  },[loading])
   return (
     <>
       {width <= 770 ? (
@@ -115,7 +139,7 @@ function ContactInformation(props) {
 
             {/* group contacts container */}
             <div className="overflow-y-auto h-[67rem]">
-              {groupMembers.length !== 0 && contact.type === "group" ? (
+              {viewdGroupMembers.length !== 0 && contact.type === "group" ? (
                 <div
                   onMouseLeave={() => {
                     setSelectedGroupMember(-1);
@@ -126,8 +150,8 @@ function ContactInformation(props) {
                   <h2 className="text-slate-200 text-md ml-12 mt-6 mb-4">
                     Conversation members
                   </h2>
-                  <div className="flex justify-evenly w-[70%] overflow-x-auto overflow-y-hidden">
-                    {groupMembers.map((data, index) => (
+                  <div className="flex justify-start items-start w-[70%] overflow-x-auto overflow-y-hidden">
+                    {viewdGroupMembers.map((data, index) => (
                       <div key={data.name} className="p-1 w-14 m-1">
                         <img
                           onMouseEnter={() => {
@@ -163,7 +187,7 @@ function ContactInformation(props) {
                       </div>
                     </div>
                     <div className=" w-10/12">
-                      <div
+                      {selectedGroupMemberData.isFriend? <div
                         onClick={() => {
                           setContact({
                             ...selectedGroupMemberData,
@@ -174,7 +198,18 @@ function ContactInformation(props) {
                       >
                         <MessageSquare className="mr-1" />{" "}
                         <span>Message {selectedGroupMemberData.name}</span>
-                      </div>
+                      </div>: <div
+                        onClick={() => {
+                          setContact({
+                            ...selectedGroupMemberData,
+                            type: "contact",
+                          });
+                        }}
+                        className="ml-4 pl-2 items-center justify-center flex pr-2 p-1 rounded-md cursor-pointer mt-2 text-slate-100 bg-blue-700"
+                      >
+                        <UserPlus className="mr-1" />{" "}
+                        <span>Add Friend {selectedGroupMemberData.name}</span>
+                      </div>}
                     </div>
                   </div>
                 </div>
@@ -205,6 +240,9 @@ function ContactInformation(props) {
                 )}
               </div>
 
+              <button onClick={()=>{
+                    setNavigation("remove-friend_alert")
+                  }} className="p-1 m-2 border-2 border-gray-800 rounded-lg flex items-center text-sm text-slate-400 cursor-pointer"><UserMinus className="mr-2 stroke-red-600"/> Remove friend</button>
 
             </div>
           </div>
@@ -249,8 +287,8 @@ function ContactInformation(props) {
 
                 <div className="bg-slate-900 mt-10 mr-auto ml-auto w-10/12 h-[0.1rem]"></div>
                 {/* group contacts container */}
-                <div className="overflow-y-auto h-[67rem]">
-                  {groupMembers.length !== 0 && contact.type === "group" ? (
+                <div className="overflow-y-auto h-[67rem] ">
+                  {viewdGroupMembers.length !== 0 && contact.type === "group" ? (
                     <div
                       onMouseLeave={() => {
                         setSelectedGroupMember(-1);
@@ -262,7 +300,7 @@ function ContactInformation(props) {
                         Conversation members
                       </h2>
                       <div className="flex justify-evenly w-[70%] overflow-x-auto overflow-y-hidden">
-                        {groupMembers.map((data, index) => (
+                        {viewdGroupMembers.map((data, index) => (
                           <div key={data.name} className="p-1 w-14 m-1">
                             <img
                               onMouseEnter={() => {
@@ -302,7 +340,7 @@ function ContactInformation(props) {
                           </div>
                         </div>
                         <div className=" w-6/12">
-                          <div
+                          {selectedGroupMemberData.isFriend?<div
                             onClick={() => {
                               setContact({
                                 ...selectedGroupMemberData,
@@ -313,7 +351,18 @@ function ContactInformation(props) {
                           >
                             <MessageSquare className="mr-1" />{" "}
                             <span>Message {selectedGroupMemberData.name}</span>
-                          </div>
+                          </div>:<div
+                            onClick={() => {
+                              setContact({
+                                ...selectedGroupMemberData,
+                                type: "contact",
+                              });
+                            }}
+                            className="ml-4 pl-2 items-center justify-center flex pr-2 p-1 rounded-md cursor-pointer mt-2 text-slate-100 bg-blue-700"
+                          >
+                            <UserPlus className="mr-1" />{" "}
+                            <span>Add friend {selectedGroupMemberData.name}</span>
+                          </div>}
                         </div>
                       </div>
                     </div>

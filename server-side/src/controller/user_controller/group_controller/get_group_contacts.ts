@@ -21,7 +21,7 @@ export default function getGroupContacts(req:Request,res:Response){
                         contacts.push(ids)
                         
                     }
-                   await user_model.find({_id:{$in:[...contacts]},"conversations.contactID":user_id}).select(['-password','-friends','-friendRequests','-groups' ]).then(users=>{
+                   await user_model.find({_id:{$in:[...contacts]}},).select(['-conversations','-password','-friends','-friendRequests','-groups' ]).then(users=>{
                         if(users!==null){
                             res.status(200).json({message:"succssess",body:users})
                         }
