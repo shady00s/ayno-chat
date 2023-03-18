@@ -21,6 +21,11 @@ function ContactInformation() {
   const [friends,setFriends] = useState([])
   const {navigation,setNavigation} = useContext(NavigationContext)
   
+  async function sendRequest(data) {
+    return await ApiCall.postFriendRequest({
+      friend_id: data,
+    }).then((val) => val);
+  }
   useEffect(() => {
     socket.on("online-users", (users) => {
       users.find((soketId) => soketId.id === data.id) !== undefined
@@ -63,11 +68,12 @@ function ContactInformation() {
         
         
           setGroupMembers(()=>val.data.body)
+          setLoading(false);
+
         });
 
         
       
-        setLoading(false);
       }
     }
   }, [contact]); //contact
@@ -80,6 +86,7 @@ function ContactInformation() {
           groupMembers[index].isFriend = false
           editedList.push(groupMembers[index])
         }else{
+          
           groupMembers[index].isFriend = true
           editedList.push(groupMembers[index])
         }
@@ -87,6 +94,7 @@ function ContactInformation() {
       }
 
   }
+  editedList = editedList.filter((friend,index,self)=> index === self.findIndex(res=>(res._id=== friend._id)))
   setViewdGroupMembers(()=>editedList)
   },[loading])
   return (
@@ -200,10 +208,7 @@ function ContactInformation() {
                         <span>Message {selectedGroupMemberData.name}</span>
                       </div>: <div
                         onClick={() => {
-                          setContact({
-                            ...selectedGroupMemberData,
-                            type: "contact",
-                          });
+                          sendRequest(selectedGroupMemberData._id).then(vl=>{window.alert("Friend Request send succssessfully")})
                         }}
                         className="ml-4 pl-2 items-center justify-center flex pr-2 p-1 rounded-md cursor-pointer mt-2 text-slate-100 bg-blue-700"
                       >
@@ -353,10 +358,8 @@ function ContactInformation() {
                             <span>Message {selectedGroupMemberData.name}</span>
                           </div>:<div
                             onClick={() => {
-                              setContact({
-                                ...selectedGroupMemberData,
-                                type: "contact",
-                              });
+                              sendRequest(selectedGroupMemberData._id).then(vl=>{window.alert("Friend Request send succssessfully")})
+
                             }}
                             className="ml-4 pl-2 items-center justify-center flex pr-2 p-1 rounded-md cursor-pointer mt-2 text-slate-100 bg-blue-700"
                           >

@@ -5,14 +5,17 @@ import NavigationContext from "../../context/navigationContext"
 import UserContext from './../../context/userContext';
 import SubmitButton from './../../registration/components/submit_button';
 import ApiCall from './../../api_call';
+import { useNavigate } from 'react-router-dom';
 
 const SettingsComponent = () => {
     const {navigation} = useContext(NavigationContext)
     const {user} = useContext(UserContext)
     const [avatar,setAvatar]= useState(user.profileImagePath)
+    const [loading,setLoading]=useState(false)
     const userName = useRef("")
     const newPassword = useRef("")
     const newProfileImagePath= useRef("")
+    const nav = useNavigate()
     return (
         <>
             <div className={`${navigation==="Settings"?"translate-x-0" :"translate-x-[-9999px]"} duration-500 transition-transform absolute  bg-background w-[93vw] overflow-x-hidden h-[90vh] left-11 z-40`}>
@@ -44,7 +47,7 @@ const SettingsComponent = () => {
                         </div>
 
                         <div className="ml-8 mt-2">
-                            <SelectAvatarComponent changeGender ={false} onClick={(avatarVal)=>{
+                            <SelectAvatarComponent changeGender ={true} onClick={(avatarVal)=>{
                                 newProfileImagePath.current = avatarVal.target.src
                                 setAvatar(avatarVal.target.src)}}/>
                             </div>
@@ -54,9 +57,15 @@ const SettingsComponent = () => {
                
                 </div>
                       
-                <SubmitButton onClick={async()=>{
-                   
-                      await  ApiCall.editProfileData({newUserName:userName.current,newUserPassword:newPassword.current,newProfileImagePath:newProfileImagePath.current}).then(val =>console.log(val))
+                <SubmitButton future={loading} onClick={async()=>{
+                        setLoading(true)
+                      await  ApiCall.editProfileData({newUserName:userName.current,newUserPassword:newPassword.current,newProfileImagePath:newProfileImagePath.current}).then(val =>{
+                       if(val.status === 201){
+                        nav('/')
+                       }
+                       
+                        setLoading(false)
+                      })
                     
                   //  ApiCall.editProfileData({newUserName:userName.current,newUserPassword:newPassword})
                 }} title={"save changes"} className={'bg-green-600 m-auto mt-4 translate-x-[-40%]'}/>

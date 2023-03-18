@@ -206,6 +206,11 @@ class ApiCall {
         const friend = axiosInestance.post('/user/remove-friend',{friend_id:contact_id})
         return friend
     }
+
+    static logOut(){
+        const logOut = axiosInestance.post('/user/logout')
+        return logOut
+    }
 }
 
 export default ApiCall

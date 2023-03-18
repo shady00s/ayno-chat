@@ -61,7 +61,25 @@ import SocketContext from "../../../context/socketContext";
                         setNotifications(()=>({...notificationData}))
 
                         break  
-                default:
+                
+                case "group-message":
+                    let groupMessageExist = notificationData.groupNotification.some(oldData=> oldData.id === data.id)
+                    if(groupMessageExist || Object.keys(notificationData.groupNotification).length !== 0 ){
+                        for (let index = 0; index < notificationData.groupNotification.length; index++) {
+                            if(notificationData.groupNotification[index].userId === data.userId){
+                             notificationData.groupNotification[index].newMessage = notificationData.groupNotification[index].newMessage + 1
+                            }
+                             
+                         }
+
+                    }else{
+                        notificationData.groupNotification.push({id:data.id, userId:data.userId, newMessage:data.newMessage})
+                    }
+                    setNotifications(()=>({...notificationData}))
+
+                        break  
+
+                        default:
                     return; 
             }
         })

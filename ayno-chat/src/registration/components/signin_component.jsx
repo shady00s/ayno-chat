@@ -37,11 +37,7 @@ const SignInComponent = ()=>{
                     <InputTextComponent onChange={(event)=>{setUserName(event.target.value)} }placeHolder={"Name:"}/>
                     <InputTextComponent onChange={(event)=>{setPassword(event.target.value)} }placeHolder={"Password:"}/>
                     
-                    {/* remember me container */}
-                     <div className="flex justify-evenly m-3 cursor-pointer" onClick={()=>{setRememberMe(!rememberMe)}}>
-                    <input checked={rememberMe} onChange={(value)=>{setRememberMe(!rememberMe)}} type={"checkbox"} name={'rememberMe'}/>
-                    <label  className="pl-2 text-slate-200 select-none" form="rememberMe">Remember me?</label>
-                    </div>
+                 
                     
                 </form>
 

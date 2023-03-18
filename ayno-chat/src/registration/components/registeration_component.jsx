@@ -2,11 +2,9 @@ import React, { useState, useEffect,useContext } from "react"
 import SubmitButton from "./submit_button"
 import InputErrorComponent from "./input_error_component"
 import InputTextComponent from './input_text_component';
-import LoadingComponent from '../../reusable-components/loading/loading_component';
 import ApiCall from '../../api_call';
 import RegisterValidation from './RegisterValidation';
 import { useNavigate } from "react-router-dom";
-import StorageManager from "../../utils/storage_manager";
 import SelectAvatarComponent from "../../reusable-components/select_avatar_component";
 import RegisterScreenContext from '../../context/registrationContext';
 
@@ -25,10 +23,10 @@ const RegistrationComponent = () => {
     const [username, setUsername] = useState('')
     const [pass, setPass] = useState('')
     const [confirmPass, setConfirmPass] = useState('')
-    const [rememberMe, setRememberMe] = useState(false)
 
     // avatar data
     const [avatar, setAvatar] = useState('')
+    const [choosenAvatar,setChoosenAvatar]=useState(false)
  
     const usernameWhiteSpaceRegExp = /\s/
     
@@ -52,8 +50,10 @@ const RegistrationComponent = () => {
     const [loading,setLoading]=useState(false)
 
     const postRegisterData = ()=>{
-        
-        if( RegisterValidation.nameValidation(username) ===true && RegisterValidation.passwordValidation(pass,confirmPass)===true && avatar.name!=='' ){
+            if(avatar===''){
+                setChoosenAvatar(true)
+            }
+       else if( RegisterValidation.nameValidation(username) ===true && RegisterValidation.passwordValidation(pass,confirmPass)===true && avatar.name!=='' ){
             setLoading(true)
            
 
@@ -108,12 +108,7 @@ const RegistrationComponent = () => {
                   <InputErrorComponent show={  confirmPass !== pass? true:false }  title={"The two passwords are not the same!"} />
                    
 
-                    {/* remember me container */}
-
-                    <div className="flex justify-evenly m-3 " onClick={() => { setRememberMe(!rememberMe) }}>
-                        <input className="cursor-pointer" checked={rememberMe} onChange={() => { setRememberMe(!rememberMe) }} type={"checkbox"} name={'rememberMe'} />
-                        <label className="pl-2 text-slate-200 select-none cursor-pointer" form="rememberMe">Remember me?</label>
-                    </div>
+                    
 
                 </form>
 
@@ -124,8 +119,12 @@ const RegistrationComponent = () => {
                       
                  {/* Avatar Container */}
                  <div className={`${screen ==='register'? "opacity-100":"opacity-0"} duration-300 ease-in  w-[20rem] transition-opacity `}>
-                    
-                    <SelectAvatarComponent changeGender onClick={target=> {setAvatar( target.target.getAttribute('src'))}}/>
+
+                    <SelectAvatarComponent changeGender onClick={target=> {
+                        setAvatar( target.target.getAttribute('src'))
+                        setChoosenAvatar(false)
+                        }}/>
+                <div><InputErrorComponent show={choosenAvatar}  title={"Please select avatar image"} /></div>  
                     </div>  
 
                

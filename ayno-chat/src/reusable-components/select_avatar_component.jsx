@@ -8,22 +8,24 @@ const SelectAvatarComponent = (props) => {
     const [avatar, setAvatar] = useState([])
     const [selectAvatar, setSelectAvatar] = useState({ name: avatar[0], index: -1 })
     const [gender,setGender] = useState("male")
+
+    // get avatars from cartoon avatar api
+    function avatarGenerator(gneder, avatar) {
+        // to not render more images every refresh
+        if (avatar.length <= 40) {
+            setAvatar([])
+            for (let x = 0; x < 40; x++) {
+                setAvatar((avatarItem) => [...avatarItem, cartoonAvatar.generate_avatar({ "gender": gneder, "id": x + 1 })])
+
+            }
+        }
+
+        return
+
+    }
     useEffect(() => {
 
-        // get avatars from cartoon avatar api
-        function avatarGenerator(gneder, avatar) {
-            // to not render more images every refresh
-            if (avatar.length <= 40) {
-                setAvatar([])
-                for (let x = 0; x < 40; x++) {
-                    setAvatar((avatarItem) => [...avatarItem, cartoonAvatar.generate_avatar({ "gender": gneder, "id": x + 1 })])
-
-                }
-            }
-
-            return
-
-        }
+      
         avatarGenerator(gender, avatar)
 
 

@@ -3,6 +3,8 @@ import { User,Sliders,LogOut } from 'react-feather';
 import IconButton from './icons_button';
 import NavigationContext from '../../context/navigationContext';
 import { useContext } from 'react';
+import ApiCall from './../../api_call';
+import { useNavigate } from 'react-router-dom';
 
 
 const navButtons = [
@@ -18,15 +20,21 @@ const navButtons = [
 
 export default function  Sidebar(props){
     const {navigation,setNavigation} = useContext(NavigationContext)
-
+    const nav = useNavigate()
     const [active,setActive]=useState(0)
     
 
     function logoutComponent(){
         const logOutPopup = window.confirm("Are you sure uou want to log-out")
-        if(logOutPopup) StorageManager.removeUserData()
+        if(logOutPopup){
+            ApiCall.logOut().then(val=>{
+                if(val.status === 201){
+                    nav('/')
+                }
+            })
+        }
 
-       return
+        return
         
 
     }
@@ -42,14 +50,14 @@ export default function  Sidebar(props){
                             setNavigation(()=>item.name)                        
                         
                        
-                       if(index === 3){
+                       if(index === 2){
                         logoutComponent()
                        }
                        
                         
                         }} className='pb-4 pr-2 pl-1  z-10'>
 
-                        <IconButton key={item.name}  isActive={ active === index ? true :false}   icon={item.icon} name={""}/>
+                        <IconButton key={item.name} onClick={()=>{}}  isActive={ active === index ? true :false}   icon={item.icon} name={""}/>
                     </div>
               
                     

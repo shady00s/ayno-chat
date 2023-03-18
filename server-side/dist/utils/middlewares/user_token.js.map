@@ -1,0 +1,1 @@
+{"version":3,"file":"user_token.js","sourceRoot":"","sources":["../../../src/utils/middlewares/user_token.ts"],"names":[],"mappings":";;;;;AAAA,gEAA+B;AAM/B,MAAM,kBAAkB,GAAE,CAAC,QAAsB,EAAQ,EAAE;IACvD,MAAM,SAAS,GAAU,sBAAG,CAAC,IAAI,CAAC,QAAQ,EAAC,OAAO,CAAC,GAAG,CAAC,iBAAiB,EAAC,EAAC,SAAS,EAAC,OAAO,EAAC,CAAC,CAAA;IAE7F,OAAO,SAAS,CAAA;AACpB,CAAC,CAAA;AAED,kBAAe,kBAAkB,CAAA"}

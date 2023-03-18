@@ -50,7 +50,7 @@ export default async function editProfileController(req: Request, res: Response)
 
             user_model.findByIdAndUpdate({ _id: user_data.userId }, userEditedData, { new: true }).then(newpersonVal => {
                 if (newpersonVal !== null) {
-                    res.status(200).json({ message: "succssess", newpersonVal })
+                    res.status(201).json({ message: "succssess", newpersonVal })
                 }
             })
         }

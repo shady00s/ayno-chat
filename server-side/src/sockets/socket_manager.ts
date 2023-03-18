@@ -24,12 +24,7 @@ let socketManager = {
                 socket.leave(oldConversation)
                 socket.join(groupConversation)
             })
-            socket.on('online',(id)=>{
-                
-                users.push({socket:socket.id,id})  
-                
-                io.emit('online-users',users)
-            })
+        
     
             socket.on('disconnect',()=>{
                 Logining.error('client disconnected with id '+ socket.id)

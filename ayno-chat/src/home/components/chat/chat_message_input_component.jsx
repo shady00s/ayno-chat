@@ -34,7 +34,7 @@ export default function ChatMessageInputComponent(props) {
         sender_id: user.id,
       };
       socket.emit("send-messages", textVal, conversation_id);
-      socket.emit("new-notification",{ conversation_id, id:contact._id, user:user.id, type:"message"})
+      socket.emit("new-notification", { conversation_id, id: contact._id, user: user.id, type: "message" })
       setTextVal("");
     } else {
       ApiCall.postGroupMessage({
@@ -43,13 +43,19 @@ export default function ChatMessageInputComponent(props) {
         sender_image_path: user.profileImagePath,
         sender_name: user.name,
       });
+      socket.emit("new-notification", {
+        conversation_id, id: contact._id,
+        user: user.id,
+        sender_id: user.id, type: "group-message"
+      })
+
       socket.emit("send-group-message", {
         message: finalText.current,
         conversation_id,
         sender_image_path: user.profileImagePath,
         sender_name: user.name,
         sender_id: user.id,
-      },contact.conversation_id);
+      }, contact.conversation_id);
       setTextVal("");
     }
   }
@@ -89,9 +95,8 @@ export default function ChatMessageInputComponent(props) {
       {/* emoji picker container */}
       {activated === true ? (
         <div
-          className={`${
-            activated ? "opacity-1" : "opacity-0"
-          } transition-opacity absolute bottom-10   right-2`}
+          className={`${activated ? "opacity-1" : "opacity-0"
+            } transition-opacity absolute bottom-10   right-2`}
         >
           <EmojiPicker
             width={"21rem"}
@@ -116,7 +121,7 @@ export default function ChatMessageInputComponent(props) {
 
       {/* submit button */}
       <IconButtonWithText
-      className={`${isEmptyString.test(textVal) == true?"w-0 p-0":"w-auto p-1"}`}
+        className={`${isEmptyString.test(textVal) == true ? "w-0 p-0" : "w-auto p-1"}`}
         onClick={() => {
           setUserTyping(false);
           sendMessage();
