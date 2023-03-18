@@ -14,7 +14,6 @@ export function FriendRequestComponent() {
     const [friendRequest, setFriendRequest] = useState([])
     const [loading, setLoading] = useState(false)
     const [numberofReq,setNumberOfReq]= useState(0)
-    const socket = useContext(SocketContext)
 
     const {notifications,setNotifications} = useContext(NotificationContext)
    
@@ -28,7 +27,7 @@ export function FriendRequestComponent() {
     useEffect(()=>{
         setFriendRequest(()=>[...friendRequest,...notifications.friendRequestNotification])
 
-    },[notifications])
+    },[notifications.friendRequestNotification])
 
     useEffect(() => {
             setLoading(true)
@@ -42,7 +41,6 @@ export function FriendRequestComponent() {
             })
 
     }, [])
-    console.log(friendRequest)
     return (
         <>
             <div className="pt-4 pd-4">

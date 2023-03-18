@@ -11,19 +11,22 @@ import session from "express-session";
 import { Response,Request } from "express";
 import "express-session";
 import { createServer } from "http";
-
+import {MongoClient} from "mongodb"
+import  * as fs from "fs"
 declare module "express-session"{
     interface SessionData{
         userData:UserData
     }
 }
+const client = new MongoClient(`mongodb+srv://${process.env.DATABASE_USER_NAME}:${process.env.DATABASE_PASSWORD}@chatdatabase.fnneyaw.mongodb.net/
+`)
 dotenv.config()
 const app = express()
 const MongoDBStore = connectMongoDBSession(session);
 export const store = new MongoDBStore({
     uri:`mongodb+srv://${process.env.DATABASE_USER_NAME}:${process.env.DATABASE_PASSWORD}@chatdatabase.fnneyaw.mongodb.net/`,
     collection:"sessions",
-    expires: 1000,
+    expires:  1000 * 60 * 60 * 24 * 30,
 })
 
 

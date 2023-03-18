@@ -3,6 +3,7 @@ import user_model from "../../model/user_model";
 import Logining from '../../utils/logger';
 import PasswordManager from "../../utils/managers/password_manager";
 import { validationResult } from 'express-validator';
+import { store } from './../../app';
  const userRegistrationController = (req:Request ,res:Response,next:NextFunction):void=>{
    
     const userName = req.body.username;
@@ -35,8 +36,18 @@ import { validationResult } from 'express-validator';
                                 userName:val.name,
                                 userProfilePath:val.profileImagePath
                               }
-        
-        
+                              req.session.save(function(err){
+                                if(err){
+                                  res.status(400).json({message:"session err",err:err})
+                                 
+                                }
+                                else{
+                                  res.redirect('/user/loginAuth')
+                
+                                }
+                               
+                              
+                              });
         
                             Logining.info('Added to user database')
                             res.status(201).json({

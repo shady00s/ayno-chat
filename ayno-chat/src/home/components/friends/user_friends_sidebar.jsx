@@ -25,7 +25,6 @@ import SocketContext from "../../../context/socketContext";
         const {notifications,setNotifications} = useContext(NotificationContext)
     useEffect(()=>{
         socket.on('notification',(data)=>{
-            console.log(data)
             let notificationData = {...notifications}
            
             switch (data.type) {
@@ -69,7 +68,6 @@ import SocketContext from "../../../context/socketContext";
         
         return (()=>{socket.off('notification')})
     },[socket])
-    console.log(notifications)
     useEffect(()=>{
         width > 770 ? setIsMobile(false):setIsMobile(true)
 
