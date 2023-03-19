@@ -42,18 +42,16 @@ import { store } from '../../server';
                                  
                                 }
                                 else{
-                                  res.redirect('/user/loginAuth')
+                                  res.status(201).json({
+                                      message:"register-complete",
+                                      body:{name:val.name,profileImagePath:val.profileImagePath}
+                              })
                 
                                 }
                                
                               
                               });
         
-                            Logining.info('Added to user database')
-                            res.status(201).json({
-                                message:"register-complete",
-                                body:{name:val.name,profileImagePath:val.profileImagePath}
-                        })
                     })
         
                     })
