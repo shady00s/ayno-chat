@@ -32,7 +32,7 @@ export default function GroupMessage(props){
                 <span className="text-slate-400 text-[0.75rem] p-1">{props.message.sender_name}</span>
 
                 <div  style={{ maxWidth: "23rem", minWidth: "2rem", overflowWrap: "break-word" ,backgroundColor:props.isUser? "#1E2329": guestColor}} className={`${props.isUser ? ownerMainContainerStyle : ` mr-2 `} relative rounded-md p-1`}>
-                    {imageMessageTester.test(props.message.message) === true ? <img className="w-30 h-30 object-cover rounded-md p-1 " src={props.message.message} /> : <p className=" text-slate-200 font-normal pl-2 ">{props.message.message}</p>}
+                    {imageMessageTester.test(props.message.message) === true ? <img className="w-30 h-30 object-cover rounded-md p-1 " src={props.message.message} /> : <p className=" text-slate-200 font-normal pl-2 pr-2">{props.message.message}</p>}
                     {/* seen container */}
                     <div className=" absolute right-0 flex justify-center items-center">
                         <span className="mr-2 text-slate-700 text-xs">seen</span>
