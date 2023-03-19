@@ -69,7 +69,7 @@ app.use((0, express_session_1.default)({
     cookie: {
         path: '/',
         maxAge: Date.now() + 1000,
-        httpOnly: true
+        secure: true
     }
 }));
 app.use('/user', user_routes_1.default);

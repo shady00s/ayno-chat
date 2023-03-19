@@ -53,13 +53,14 @@ app.use(session({
     name:"ayno.sid",
     store:store,
     resave: false,
+    
     saveUninitialized: false,
      secret: process.env.SESSION_SECRET
      ,cookie:{
         path:'/',
          maxAge:  Date.now() + 1000,
        
-        httpOnly:true
+        secure:true
  
      }
  }))
