@@ -27,16 +27,11 @@ function ContactInformation() {
     }).then((val) => val);
   }
   useEffect(() => {
-    socket.on("online-users", (users) => {
-      users.find((soketId) => soketId.id === data.id) !== undefined
-        ? setIsUserOnline(true)
-        : setIsUserOnline(false);
-    });
+   
     socket.on("images", (images) => {
       setMedia((prev) => [...prev, images.message]);
     });
     return () => {
-      socket.off("online-users");
       socket.off("images");
     };
   }, [data, socket]);
