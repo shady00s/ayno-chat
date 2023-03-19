@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState, useRef } from 'react';
+import { useContext, useEffect, useState, useRef, useCallback } from 'react';
 import ContactContext from '../../../context/contactContext';
 import ApiCall from '../../../api_call';
 import { Feather } from 'react-feather';
@@ -44,13 +44,13 @@ export default function GroupMessageComponent() {
     useEffect(() => {
         scrollToBottom()
     }, [messages])
+    const messagesCallBack = useCallback((message) => {
 
+        setMessages(prev => [...prev,{messages:{...message}}])
+     },[socket])
     useEffect(() => {
         if(socket.connected){
-            socket.on('recive-group-message', (message) => {
-
-              return setMessages(prev => [...prev,{messages:{...message}}])
-            })
+            socket.on('recive-group-message', messagesCallBack)
             socket.on("images",(images)=>{
                  setMessages(prev => [...prev,{messages:{...images}}])
             })
