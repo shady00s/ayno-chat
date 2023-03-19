@@ -6,7 +6,6 @@ import PrivateRoute from "./private_route";
 import { ErrorPage } from './home/screen/error_screen';
 import UserContext from "./context/userContext";
 import { useState,useMemo } from "react";
-import { UserAxiosInstanceComponent } from "./axios/inestance";
 
 const AppRouters = () => {
     const [user,setUser] = useState({})

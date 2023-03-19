@@ -1,28 +1,23 @@
-import { useState, useMemo, useRef,useEffect,useContext } from "react";
-import Sidebar from "../components/side_bar";
-import ContactList from "../components/friends/user_friends_sidebar";
-import MessageComponent from "../components/chat/message_component";
+import { useState, useMemo,lazy,Suspense } from "react";
+const Sidebar = lazy(()=> import( "../components/side_bar"));
+const ContactList = lazy(()=>import("../components/friends/user_friends_sidebar")) ;
+const SettingsComponent  = lazy(()=> import('../components/settings_component') );
+const ContactInformation = lazy(()=> import("../components/friends/contact_information")) 
+const AddNewContact = lazy(()=>import("../components/chat_group/add_new_contact")) ;
 import { Helmet } from "react-helmet-async";
 import useWindowDimensions from "../../utils/window_size";
-import ContactInformation from "../components/friends/contact_information"
-import SettingsComponent from '../components/settings_component';
 import ContactContext from '../../context/contactContext';
 import NavigationContext from "../../context/navigationContext";
 import { logo } from "../../constants";
-import CreateChatGroupPopup from "../components/chat_group/create_chat_group_popup";
+const CreateChatGroupPopup =lazy(()=>import("../components/chat_group/create_chat_group_popup")) ;
 import ChatBodyComponent from "../components/chat/chat_body";
-import LoadingContext from "../../context/loadingContext";
-import AddNewContact from "../components/chat_group/add_new_contact";
 import RemoveFriendAlert from "../components/remove_friend_alert";
 import NotificationContext from "../../context/notificationContext"
-import ViewImageComponent from "../components/viewImageComponent";
+const ViewImageComponent = lazy(()=>import( "../components/viewImageComponent"));
+import LoadingComponent from "../../reusable-components/loading/loading_component";
 
 export default function HomeScreen() {
 const { width } = useWindowDimensions()
-
-const {loading}=useContext(LoadingContext)
-
-    const [contactInfoMobile, setContactInfoMobile] = useState(false)
      //contact
     const [contact, setContact] = useState({})
     const contactValue = useMemo(() => ({ contact, setContact }), [contact])
@@ -67,8 +62,13 @@ const {loading}=useContext(LoadingContext)
                 <div className="w-full h-[91vh] relative flex bg-background overflow-hidden">
                    
                     <NavigationContext.Provider value={navigationValue}> 
-                         <Sidebar />
-                         <SettingsComponent />
+                         <Suspense fallback={<LoadingComponent/>}>
+                                <Sidebar />
+                        </Suspense>
+                        <Suspense fallback={<LoadingComponent/>}>
+                             <SettingsComponent />
+
+                        </Suspense>
                             <ContactContext.Provider value={contactValue}>
 
                            <NotificationContext.Provider value={notificationVal}>
@@ -77,14 +77,29 @@ const {loading}=useContext(LoadingContext)
                            </NotificationContext.Provider>
                         
                          <ChatBodyComponent/>
-                         <ContactInformation isMobile={contactInfoMobile}/>      
-                         <AddNewContact/>
+                         <Suspense fallback={<LoadingComponent/>}>
+                             <ContactInformation />      
+                         </Suspense>
+
+                        <Suspense fallback={<LoadingComponent/>}>
+                            <AddNewContact/>
+
+                        </Suspense>
+
+                        <Suspense fallback={<LoadingComponent/>}>
+
                             <RemoveFriendAlert/>
+                        </Suspense>
                          </ContactContext.Provider> 
 
+                        <Suspense fallback={<LoadingComponent/>}>
 
-                        <CreateChatGroupPopup/>  
-                        <ViewImageComponent/> 
+                            <CreateChatGroupPopup/>  
+                        </Suspense>
+                        <Suspense fallback={<LoadingComponent/>}>
+                         <ViewImageComponent/> 
+
+                        </Suspense>
                      </NavigationContext.Provider>
                 </div>
 
