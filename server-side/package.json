@@ -4,8 +4,8 @@
   "description": "server-side for chat-app",
   "main": "index.js",
   "scripts": {
-    "dev": "node ./dist/app.js",
-    "start": "node ./dist/app.js",
+    "dev": "node ./dist/server.js",
+    "start": "node ./dist/server.js",
     "build": "tsc -p .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

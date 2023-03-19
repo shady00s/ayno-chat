@@ -2,7 +2,7 @@ import { Response, Request } from "express";
 import user_model from "../../model/user_model";
 import PasswordManager from "../../utils/managers/password_manager";
 import { validationResult } from "express-validator";
-import { store } from './../../app';
+import { store } from '../../server';
 export default async function editProfileController(req: Request, res: Response) {
     const user_data = req.session.userData
 

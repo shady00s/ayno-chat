@@ -3,7 +3,7 @@ import user_model from "../../model/user_model";
 import Logining from '../../utils/logger';
 import PasswordManager from "../../utils/managers/password_manager";
 import { validationResult } from 'express-validator';
-import { store } from './../../app';
+import { store } from '../../server';
  const userRegistrationController = (req:Request ,res:Response,next:NextFunction):void=>{
    
     const userName = req.body.username;

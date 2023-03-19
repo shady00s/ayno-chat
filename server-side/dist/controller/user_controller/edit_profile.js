@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const user_model_1 = __importDefault(require("../../model/user_model"));
 const password_manager_1 = __importDefault(require("../../utils/managers/password_manager"));
 const express_validator_1 = require("express-validator");
-const app_1 = require("./../../app");
+const server_1 = require("../../server");
 async function editProfileController(req, res) {
     const user_data = req.session.userData;
     const newUserName = req.body.newUserName;
@@ -30,7 +30,7 @@ async function editProfileController(req, res) {
                 userEditedData.profileImagePath = newProfileImagePath;
             }
             //save the new data into store
-            app_1.store.get(req.sessionID, (err, session) => {
+            server_1.store.get(req.sessionID, (err, session) => {
                 if (err) {
                     res.status(501).json({ message: "there is an error while getting session", err });
                 }
@@ -42,7 +42,7 @@ async function editProfileController(req, res) {
                         session.userData.userProfilePath = newProfileImagePath;
                     }
                 }
-                app_1.store.set(req.sessionID, session, (err) => {
+                server_1.store.set(req.sessionID, session, (err) => {
                     if (err) {
                         res.status(501).json({ message: "there is an error while setting session", err });
                     }

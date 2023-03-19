@@ -1,5 +1,5 @@
 import { Request,Response } from 'express';
-import { store } from './../../app';
+import { store } from '../../server';
 
 export default function logOutController (req:Request,res:Response){
     const user_session_id = req.sessionID
