@@ -21,50 +21,63 @@ const userLogin = (req: Request, res: Response, next: NextFunction) => {
 
           if (isValidated) {
             // check if the user had a previous session if not then save it and if found then touch it to re-initilize the datetime of the session
-           
-           try {
-            client.db().collection('sessions').findOne({ "session.userData.userName": user_name }).then(returnedVal => {
-              if (returnedVal === null) {
-                req.session.userData = {
-                  userId: userVal.id,
-                  userName: userVal.name,
-                  userProfilePath: userVal.profileImagePath
-                }
-                req.session.save(function (err) {
-                  
-                  if (err) {
-                    res.status(400).json({ message: "session err", err: err })
 
+            try {
+             await client.db().collection('sessions').findOne({ "session.userData.userName": user_name }).then( returnedVal => {
+                if (returnedVal === null) {
+                  req.session.userData = {
+                    userId: userVal.id,
+                    userName: userVal.name,
+                    userProfilePath: userVal.profileImagePath
                   }
-                  else {
-                    res.redirect('/user/loginAuth')
+                  req.session.save(function (err) {
 
-                  }
-                });
-              } else {
-               
-                  store.get(returnedVal._id.toString(), function (err,sessionData) {
                     if (err) {
                       res.status(400).json({ message: "session err", err: err })
-                      
+
+                    }
+                    else {
+                      res.redirect('/user/loginAuth')
+
+                    }
+                  });
+                }else{
+
+                  store.destroy(returnedVal._id.toString(),(err)=>{
+                    if(err){
+                      res.status(400).json({ message: "session err", err: err })
+
                     }else{
                       req.session.userData = {
-                        userId:sessionData.userData.userId,
-                        userName:sessionData.userData.userName,
-                        userProfilePath:sessionData.userData.userProfilePath
+                        userId: userVal.id,
+                        userName: userVal.name,
+                        userProfilePath: userVal.profileImagePath
                       }
-                      console.log(req.session);
-                    } 
-                  })
-                
-                
-              }
-            })
-           } catch (error) {
-            res.status(500).json({ message: "error while getting session", err: error })
+                      req.session.save(function (err) {
 
-           }
-            
+                        if (err) {
+                          res.status(400).json({ message: "session err", err: err })
+    
+                        }
+                        else {
+                          res.redirect('/user/loginAuth')
+    
+                        }
+                      });
+                    }
+                  })
+                  
+                 
+                }
+
+
+              }
+              )
+            } catch (error) {
+              res.status(500).json({ message: "error while getting session", err: error })
+
+            }
+
 
           }
           else {

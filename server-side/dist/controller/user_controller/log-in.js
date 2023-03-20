@@ -19,7 +19,7 @@ const userLogin = (req, res, next) => {
                     if (isValidated) {
                         // check if the user had a previous session if not then save it and if found then touch it to re-initilize the datetime of the session
                         try {
-                            server_1.client.db().collection('sessions').findOne({ "session.userData.userName": user_name }).then(returnedVal => {
+                            await server_1.client.db().collection('sessions').findOne({ "session.userData.userName": user_name }).then(returnedVal => {
                                 if (returnedVal === null) {
                                     req.session.userData = {
                                         userId: userVal.id,
@@ -36,17 +36,24 @@ const userLogin = (req, res, next) => {
                                     });
                                 }
                                 else {
-                                    server_1.store.get(returnedVal._id.toString(), function (err, sessionData) {
+                                    server_1.store.destroy(returnedVal._id.toString(), (err) => {
                                         if (err) {
                                             res.status(400).json({ message: "session err", err: err });
                                         }
                                         else {
                                             req.session.userData = {
-                                                userId: sessionData.userData.userId,
-                                                userName: sessionData.userData.userName,
-                                                userProfilePath: sessionData.userData.userProfilePath
+                                                userId: userVal.id,
+                                                userName: userVal.name,
+                                                userProfilePath: userVal.profileImagePath
                                             };
-                                            console.log(req.session);
+                                            req.session.save(function (err) {
+                                                if (err) {
+                                                    res.status(400).json({ message: "session err", err: err });
+                                                }
+                                                else {
+                                                    res.redirect('/user/loginAuth');
+                                                }
+                                            });
                                         }
                                     });
                                 }
