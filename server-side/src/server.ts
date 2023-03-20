@@ -39,7 +39,7 @@ export const store = new MongoDBStore({
 
 
 app.use('/',(req:Request,res:Response,next:NextFunction)=>{
-    res.setHeader('Access-Control-Allow-Origin','https://ayno-chat.vercel.app')
+    res.setHeader('Access-Control-Allow-Origin','https://ayno-chat.vercel.app/')
     res.setHeader(
         'Access-Control-Allow-Methods',
         'OPTIONS, GET, POST, PUT, PATCH, DELETE'
