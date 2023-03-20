@@ -67,7 +67,7 @@ app.use((0, express_session_1.default)({
     secret: process.env.SESSION_SECRET,
     cookie: {
         path: '/',
-        maxAge: 1000 * 60 * 60 * 24 * 7,
+        maxAge: Date.now() * 100,
         secure: true
     }
 }));
