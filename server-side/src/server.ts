@@ -26,7 +26,7 @@ const MongoDBStore = connectMongoDBSession(session);
 export const store = new MongoDBStore({
     uri:`mongodb+srv://${process.env.DATABASE_USER_NAME}:${process.env.DATABASE_PASSWORD}@chatdatabase.fnneyaw.mongodb.net/`,
     collection:"sessions",
-    expires:  1000 * 60 * 60 * 24 * 30,
+    expires:  3600000*24*14,
 })
 
 
@@ -58,7 +58,7 @@ app.use(session({
      secret: process.env.SESSION_SECRET
      ,cookie:{
         path:'/',
-         maxAge:1000,
+         maxAge:3600000*24*14,
        
         secure:true
  

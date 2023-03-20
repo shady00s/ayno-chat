@@ -2,7 +2,6 @@ import SubmitButton from "./submit_button"
 import React,{useState,useContext} from "react"
 import InputTextComponent from './input_text_component';
 import ApiCall from '../../api_call';
-import StorageManager from "../../utils/storage_manager";
 import RegisterScreenContext from '../../context/registrationContext';
 import { useNavigate } from 'react-router-dom';
 
