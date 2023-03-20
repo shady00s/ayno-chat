@@ -12,6 +12,7 @@ import { Response,Request } from "express";
 import "express-session";
 import { createServer } from "http";
 import {MongoClient} from "mongodb"
+
 declare module "express-session"{
     interface SessionData{
         userData:UserData
@@ -28,14 +29,17 @@ const MongoDBStore = connectMongoDBSession(session);
 let expiredDate = 1000 * 60 * 60 * 24 * 7
 
 export const store = new MongoDBStore({
+    
     uri:`mongodb+srv://${process.env.DATABASE_USER_NAME}:${process.env.DATABASE_PASSWORD}@chatdatabase.fnneyaw.mongodb.net/`,
+    
     collection:"sessions",
-    expires: expiredDate
+    expires:expiredDate
+ 
 })
 
 
 app.use('/',(req:Request,res:Response,next:NextFunction)=>{
-    res.setHeader('Access-Control-Allow-Origin','https://ayno-chat.vercel.app')
+    res.setHeader('Access-Control-Allow-Origin','http://192.168.1.4:3000')
     res.setHeader(
         'Access-Control-Allow-Methods',
         'OPTIONS, GET, POST, PUT, PATCH, DELETE'

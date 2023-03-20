@@ -42,18 +42,23 @@ const userLogin = (req: Request, res: Response, next: NextFunction) => {
                   }
                 });
               } else {
-                store.get(returnedVal._id.toString(), function (err,sessionData) {
-                  if (err) {
-                    res.status(400).json({ message: "session err", err: err })
-
-                  }else{
-                    sessionData.cookie.expires = new Date(Date.now()+1000 * 60 * 60 * 24 * 7)
-                    store.touch(req.session.id,sessionData,function(){
+               
+                  store.get(returnedVal._id.toString(), function (err0r,sessionData) {
+                    if (err0r) {
+                      res.status(400).json({ message: "session err", err: err0r })
+                      
+                    }else{
+                      req.session.userData = {
+                        userId:sessionData.userData.userId,
+                        userName:sessionData.userData.userName,
+                        userProfilePath:sessionData.userData.userProfilePath
+                      }
+                      console.log(req.session);
                       res.redirect('/user/loginAuth')
-
-                    })
-                  }
-                })
+                    } 
+                  })
+                
+                
               }
             })
            } catch (error) {
