@@ -40,8 +40,6 @@ const userLogin = (req: Request, res: Response, next: NextFunction) => {
                     res.redirect('/user/loginAuth')
 
                   }
-
-
                 });
               } else {
                 store.get(returnedVal._id.toString(), function (err,sessionData) {
@@ -50,7 +48,10 @@ const userLogin = (req: Request, res: Response, next: NextFunction) => {
 
                   }else{
                     sessionData.cookie.expires = new Date(Date.now()+1000 * 60 * 60 * 24 * 7)
-                    store.touch(req.session.id,sessionData)
+                    store.touch(req.session.id,sessionData,function(){
+                      res.redirect('/user/loginAuth')
+
+                    })
                   }
                 })
               }
