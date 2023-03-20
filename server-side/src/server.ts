@@ -67,7 +67,7 @@ app.use(session({
         path:'/',
         maxAge: expiredDate,
         secure:true,
-
+        httpOnly:false
         
      }
  }))
