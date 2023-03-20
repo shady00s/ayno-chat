@@ -14,14 +14,13 @@ const SignInComponent = ()=>{
     const {setScreen} = useContext(RegisterScreenContext)
     const  sendLoginData = async ()=>{
        await ApiCall.getUserLoginData({user_name:userName,user_password:password}).then(loginData=>{
-               window.alert(loginData.data)
-               window.alert(loginData.status)
+               
             if(loginData.status===200){
                
                 navigate('/ayno-chat/home')
             }
             else{
-                alert("there is error")
+                window.alert("there is error")
             }
         })
     }
