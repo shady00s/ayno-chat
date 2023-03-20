@@ -45,7 +45,6 @@ dotenv.config();
 const app = (0, express_1.default)();
 const MongoDBStore = (0, connect_mongodb_session_1.default)(express_session_1.default);
 let expiredDate = 1000 * 60 * 60 * 24 * 7;
-console.log(expiredDate);
 exports.store = new MongoDBStore({
     uri: `mongodb+srv://${process.env.DATABASE_USER_NAME}:${process.env.DATABASE_PASSWORD}@chatdatabase.fnneyaw.mongodb.net/`,
     collection: "sessions",

@@ -25,7 +25,6 @@ const app = express()
 const MongoDBStore = connectMongoDBSession(session);
 let expiredDate = 1000 * 60 * 60 * 24 * 7
 
-console.log(expiredDate);
 export const store = new MongoDBStore({
     uri:`mongodb+srv://${process.env.DATABASE_USER_NAME}:${process.env.DATABASE_PASSWORD}@chatdatabase.fnneyaw.mongodb.net/`,
     collection:"sessions",
