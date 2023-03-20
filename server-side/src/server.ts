@@ -12,7 +12,6 @@ import { Response,Request } from "express";
 import "express-session";
 import { createServer } from "http";
 import {MongoClient} from "mongodb"
-import  * as fs from "fs"
 declare module "express-session"{
     interface SessionData{
         userData:UserData
@@ -26,7 +25,6 @@ const MongoDBStore = connectMongoDBSession(session);
 export const store = new MongoDBStore({
     uri:`mongodb+srv://${process.env.DATABASE_USER_NAME}:${process.env.DATABASE_PASSWORD}@chatdatabase.fnneyaw.mongodb.net/`,
     collection:"sessions",
-    expires:  3600000*24*14,
 })
 
 
@@ -58,8 +56,7 @@ app.use(session({
      secret: process.env.SESSION_SECRET
      ,cookie:{
         path:'/',
-         maxAge:3600000*24*14,
-       
+        maxAge: 1000 * 60 * 60 * 24 * 7,       
         secure:true
  
      }

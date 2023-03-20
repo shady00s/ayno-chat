@@ -47,7 +47,6 @@ const MongoDBStore = (0, connect_mongodb_session_1.default)(express_session_1.de
 exports.store = new MongoDBStore({
     uri: `mongodb+srv://${process.env.DATABASE_USER_NAME}:${process.env.DATABASE_PASSWORD}@chatdatabase.fnneyaw.mongodb.net/`,
     collection: "sessions",
-    expires: 3600000 * 24 * 14,
 });
 app.use('/', (req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', 'https://ayno-chat.vercel.app');
@@ -68,7 +67,7 @@ app.use((0, express_session_1.default)({
     secret: process.env.SESSION_SECRET,
     cookie: {
         path: '/',
-        maxAge: 3600000 * 24 * 14,
+        maxAge: 1000 * 60 * 60 * 24 * 7,
         secure: true
     }
 }));
