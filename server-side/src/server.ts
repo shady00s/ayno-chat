@@ -58,9 +58,9 @@ app.use(session({
      secret: process.env.SESSION_SECRET
      ,cookie:{
         path:'/',
-         maxAge:  Date.now() + 1000,
+         maxAge:1000,
        
-        secure:"auto"
+        secure:true
  
      }
  }))
