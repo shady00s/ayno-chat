@@ -43,9 +43,9 @@ const userLogin = (req: Request, res: Response, next: NextFunction) => {
                 });
               } else {
                
-                  store.get(returnedVal._id.toString(), function (err0r,sessionData) {
-                    if (err0r) {
-                      res.status(400).json({ message: "session err", err: err0r })
+                  store.get(returnedVal._id.toString(), function (err,sessionData) {
+                    if (err) {
+                      res.status(400).json({ message: "session err", err: err })
                       
                     }else{
                       req.session.userData = {
@@ -54,7 +54,6 @@ const userLogin = (req: Request, res: Response, next: NextFunction) => {
                         userProfilePath:sessionData.userData.userProfilePath
                       }
                       console.log(req.session);
-                      res.redirect('/user/loginAuth')
                     } 
                   })
                 
