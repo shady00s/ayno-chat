@@ -67,8 +67,8 @@ app.use((0, express_session_1.default)({
     secret: process.env.SESSION_SECRET,
     cookie: {
         path: '/',
-        maxAge: Date.now() * 100,
-        secure: true
+        maxAge: Date.now() * 1000 * 60 * 24,
+        secure: "auto"
     }
 }));
 app.use('/user', user_routes_1.default);

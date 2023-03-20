@@ -35,6 +35,7 @@ const login_validator_1 = __importDefault(require("../utils/middlewares/validato
 const register_validator_1 = __importDefault(require("../utils/middlewares/validators/register_validator"));
 const remove_friend_1 = __importDefault(require("../controller/user_controller/friends_controller/remove_friend"));
 const log_out_1 = __importDefault(require("../controller/user_controller/log-out"));
+const get_new_members_from_friends_1 = __importDefault(require("../controller/user_controller/group_controller/get_new_members_from_friends"));
 const userRouter = express_1.default.Router();
 userRouter.post('/register', register_validator_1.default, registration_1.default);
 userRouter.post('/login', login_validator_1.default, log_in_1.default);
@@ -56,5 +57,6 @@ userRouter.get('/get-group-contacts', session_1.sessionMiddleware, get_group_con
 userRouter.post('/add-contact-to-group', add_contact_group_validator_1.default, add_contact_group_1.default);
 userRouter.post('/remove-friend', session_1.sessionMiddleware, remove_friend_1.default);
 userRouter.post('/logout', search_validator_1.default, log_out_1.default);
+userRouter.get("/get-new-group-members", session_1.sessionMiddleware, get_new_members_from_friends_1.default);
 exports.default = userRouter;
 //# sourceMappingURL=user_routes.js.map
