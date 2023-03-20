@@ -21,6 +21,8 @@ const userLogin = (req: Request, res: Response, next: NextFunction) => {
 
           if (isValidated) {
             // check if the user had a previous session if not then save it and if found then touch it to re-initilize the datetime of the session
+           
+           try {
             client.db().collection('sessions').findOne({ "session.userData.userName": user_name }).then(returnedVal => {
               if (returnedVal === null) {
                 req.session.userData = {
@@ -55,6 +57,11 @@ const userLogin = (req: Request, res: Response, next: NextFunction) => {
                 })
               }
             })
+           } catch (error) {
+            res.status(500).json({ message: "error while getting session", err: error })
+
+           }
+            
 
 
 
