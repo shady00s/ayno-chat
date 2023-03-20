@@ -15,10 +15,10 @@ const SignInComponent = ()=>{
     const {setScreen} = useContext(RegisterScreenContext)
     const  sendLoginData = async ()=>{
        await ApiCall.getUserLoginData({user_name:userName,user_password:password}).then(loginData=>{
-               
+               window.alert(loginData.data)
+               window.alert(loginData.status)
             if(loginData.status===200){
-                  //  console.log(loginData.data.data)
-               //StorageManager.setCookies(JSON.stringify(loginData.data.data))
+               
                 navigate('/ayno-chat/home')
             }
             else{
@@ -46,7 +46,11 @@ const SignInComponent = ()=>{
                 <span className="text-slate-400 p-4">Don't have profile?  <span onClick={()=>{setScreen("register")}} className="text-orange-300 cursor-pointer ">Register</span></span>
                 <SubmitButton future={loading} className="w-6/12 bg-indigo-800" onClick={()=>{
                     setloading(true)
-                    sendLoginData().then(val=>setloading(false))}} title={"Sign-in"}/>
+                    sendLoginData().then(val=>{
+                        setloading(false)
+                    }
+                       
+                    )}} title={"Sign-in"}/>
 
             
        
