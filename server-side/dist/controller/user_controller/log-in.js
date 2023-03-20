@@ -42,9 +42,7 @@ const userLogin = (req, res, next) => {
                                         }
                                         else {
                                             sessionData.cookie.expires = new Date(Date.now() + 1000 * 60 * 60 * 24 * 7);
-                                            server_1.store.touch(req.session.id, sessionData, function () {
-                                                res.redirect('/user/loginAuth');
-                                            });
+                                            server_1.store.touch(req.session.id, sessionData);
                                         }
                                     });
                                 }
