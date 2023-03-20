@@ -18,7 +18,7 @@ const userLogin = (req, res, next) => {
                     let isValidated = await password_manager_1.default.decode(user_password, userVal.password.toString());
                     if (isValidated) {
                         // check if the user had a previous session if not then save it and if found then touch it to re-initilize the datetime of the session
-                        server_1.client.db().collection('sessions').findOne({ "session.name": user_name }).then(returnedVal => {
+                        server_1.client.db().collection('sessions').findOne({ "session.userData.userName": user_name }).then(returnedVal => {
                             if (returnedVal === null) {
                                 req.session.userData = {
                                     userId: userVal.id,
@@ -35,12 +35,15 @@ const userLogin = (req, res, next) => {
                                 });
                             }
                             else {
-                                server_1.store.get(returnedVal._id.toString(), function (err, session) {
+                                server_1.store.get(returnedVal._id.toString(), function (err, sessionData) {
                                     if (err) {
                                         res.status(400).json({ message: "session err", err: err });
                                     }
                                     else {
-                                        server_1.store.touch(returnedVal._id.toString(), session);
+                                        sessionData.cookie.expires = new Date(Date.now() + 1000 * 60 * 60 * 24 * 7);
+                                        server_1.store.touch(req.session.id, sessionData, function () {
+                                            res.redirect('/user/loginAuth');
+                                        });
                                     }
                                 });
                             }

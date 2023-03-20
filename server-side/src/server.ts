@@ -23,14 +23,18 @@ export const client = new MongoClient(`mongodb+srv://${process.env.DATABASE_USER
 dotenv.config()
 const app = express()
 const MongoDBStore = connectMongoDBSession(session);
+let expiredDate = 1000 * 60 * 60 * 24 * 7
+
+console.log(expiredDate);
 export const store = new MongoDBStore({
     uri:`mongodb+srv://${process.env.DATABASE_USER_NAME}:${process.env.DATABASE_PASSWORD}@chatdatabase.fnneyaw.mongodb.net/`,
     collection:"sessions",
+    expires: expiredDate
 })
 
 
 app.use('/',(req:Request,res:Response,next:NextFunction)=>{
-    res.setHeader('Access-Control-Allow-Origin','https://ayno-chat.vercel.app')
+    res.setHeader('Access-Control-Allow-Origin','http://192.168.1.4:3000')
     res.setHeader(
         'Access-Control-Allow-Methods',
         'OPTIONS, GET, POST, PUT, PATCH, DELETE'
@@ -52,14 +56,14 @@ app.use(session({
     name:"ayno.sid",
     store:store,
     resave: false,
-    
     saveUninitialized: false,
      secret: process.env.SESSION_SECRET
      ,cookie:{
         path:'/',
-        maxAge: Date.now() * 1000 * 60 * 24,       
-        secure:"auto"
- 
+        maxAge: expiredDate,
+        secure:"auto",
+
+        
      }
  }))
 

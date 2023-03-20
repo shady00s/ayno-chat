@@ -3,6 +3,7 @@ import user_model from "../../model/user_model"
 import PasswordManager from "../../utils/managers/password_manager"
 import { validationResult } from 'express-validator';
 import { client, store } from './../../server';
+import session from "express-session";
 
 
 const userLogin = (req: Request, res: Response, next: NextFunction) => {
@@ -20,17 +21,15 @@ const userLogin = (req: Request, res: Response, next: NextFunction) => {
 
           if (isValidated) {
             // check if the user had a previous session if not then save it and if found then touch it to re-initilize the datetime of the session
-            client.db().collection('sessions').findOne({ "session.name": user_name }).then(returnedVal => {
+            client.db().collection('sessions').findOne({ "session.userData.userName": user_name }).then(returnedVal => {
               if (returnedVal === null) {
                 req.session.userData = {
                   userId: userVal.id,
                   userName: userVal.name,
                   userProfilePath: userVal.profileImagePath
                 }
-
-
-
                 req.session.save(function (err) {
+                  
                   if (err) {
                     res.status(400).json({ message: "session err", err: err })
 
@@ -43,12 +42,15 @@ const userLogin = (req: Request, res: Response, next: NextFunction) => {
 
                 });
               } else {
-                store.get(returnedVal._id.toString(), function (err,session) {
+                store.get(returnedVal._id.toString(), function (err,sessionData) {
                   if (err) {
                     res.status(400).json({ message: "session err", err: err })
 
                   }else{
-                    store.touch(returnedVal._id.toString(),session)
+                    sessionData.cookie.expires = new Date(Date.now()+1000 * 60 * 60 * 24 * 7)
+                    store.touch(req.session.id,sessionData,function(){
+                      res.redirect('/user/loginAuth')
+                    })
                   }
                 })
               }
