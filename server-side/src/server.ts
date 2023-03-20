@@ -23,6 +23,8 @@ export const client = new MongoClient(`mongodb+srv://${process.env.DATABASE_USER
 dotenv.config()
 const app = express()
 const MongoDBStore = connectMongoDBSession(session);
+
+//expires after one week
 let expiredDate = 1000 * 60 * 60 * 24 * 7
 
 export const store = new MongoDBStore({
