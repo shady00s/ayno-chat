@@ -71,7 +71,7 @@ app.use((0, express_session_1.default)({
     cookie: {
         path: '/',
         maxAge: expiredDate,
-        secure: "auto",
+        secure: true,
     }
 }));
 app.use('/user', user_routes_1.default);

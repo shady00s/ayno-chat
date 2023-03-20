@@ -66,7 +66,7 @@ app.use(session({
      ,cookie:{
         path:'/',
         maxAge: expiredDate,
-        secure:"auto",
+        secure:true,
 
         
      }
