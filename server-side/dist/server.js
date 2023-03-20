@@ -26,7 +26,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.store = void 0;
+exports.store = exports.client = void 0;
 const express_1 = __importDefault(require("express"));
 const logger_1 = __importDefault(require("./utils/logger"));
 const user_routes_1 = __importDefault(require("./routes/user_routes"));
@@ -39,7 +39,7 @@ const express_session_1 = __importDefault(require("express-session"));
 require("express-session");
 const http_1 = require("http");
 const mongodb_1 = require("mongodb");
-const client = new mongodb_1.MongoClient(`mongodb+srv://${process.env.DATABASE_USER_NAME}:${process.env.DATABASE_PASSWORD}@chatdatabase.fnneyaw.mongodb.net/
+exports.client = new mongodb_1.MongoClient(`mongodb+srv://${process.env.DATABASE_USER_NAME}:${process.env.DATABASE_PASSWORD}@chatdatabase.fnneyaw.mongodb.net/
 `);
 dotenv.config();
 const app = (0, express_1.default)();

@@ -17,8 +17,9 @@ declare module "express-session"{
         userData:UserData
     }
 }
-const client = new MongoClient(`mongodb+srv://${process.env.DATABASE_USER_NAME}:${process.env.DATABASE_PASSWORD}@chatdatabase.fnneyaw.mongodb.net/
+export const client = new MongoClient(`mongodb+srv://${process.env.DATABASE_USER_NAME}:${process.env.DATABASE_PASSWORD}@chatdatabase.fnneyaw.mongodb.net/
 `)
+
 dotenv.config()
 const app = express()
 const MongoDBStore = connectMongoDBSession(session);
