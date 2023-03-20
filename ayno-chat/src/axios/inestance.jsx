@@ -4,7 +4,7 @@ import LoadingContext from "../context/loadingContext";
 
 
 const axiosInestance = axios.create({
-    baseURL:"https://anyo-chat-api.onrender.com/",
+    baseURL:"https://ayno-chat-api.onrender.com/",
     withCredentials:true
 })
 
@@ -15,7 +15,7 @@ const axiosInestance = axios.create({
 // })
 
 const userInstance = axios.create({
-    baseURL:"https://anyo-chat-api.onrender.com/user",
+    baseURL:"https://ayno-chat-api.onrender.com/user",
     withCredentials:true
 })
 
