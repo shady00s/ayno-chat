@@ -66,7 +66,7 @@ const RegistrationComponent = () => {
                 }else{
                     setLoading(false)
                     
-                     alert('there is an problem '+apiResponse.data.message)   
+                     window.alert('there is an problem '+apiResponse.data.message)   
                 }
             })
         }

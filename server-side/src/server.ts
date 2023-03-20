@@ -60,7 +60,7 @@ app.use(session({
         path:'/',
          maxAge:  Date.now() + 1000,
        
-        secure:true
+        secure:"auto"
  
      }
  }))

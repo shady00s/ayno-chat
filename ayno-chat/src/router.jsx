@@ -6,7 +6,6 @@ import PrivateRoute from "./private_route";
 import { ErrorPage } from './home/screen/error_screen';
 import UserContext from "./context/userContext";
 import { useState,useMemo } from "react";
-import { UserAxiosInstanceComponent } from "./axios/inestance";
 
 const AppRouters = () => {
     const [user,setUser] = useState({})
@@ -21,7 +20,8 @@ const AppRouters = () => {
                 <Routes>
 
                     <Route element={<LoadingScreen/>} path="/"/>
-                    <Route exact  element={<IntroScreen/>} path="/ayno-chat/register"/>
+                    <Route path="/ayno-chat/"  element={<LoadingScreen/>}/>
+                    <Route element={<IntroScreen/>} path="/ayno-chat/register"/>
                     <Route element={<PrivateRoute/>}>
                     <Route element={<HomeScreen/> } path="/ayno-chat/home"/>
                     </Route>

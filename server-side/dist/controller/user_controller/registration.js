@@ -4,7 +4,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const user_model_1 = __importDefault(require("../../model/user_model"));
-const logger_1 = __importDefault(require("../../utils/logger"));
 const password_manager_1 = __importDefault(require("../../utils/managers/password_manager"));
 const express_validator_1 = require("express-validator");
 const userRegistrationController = (req, res, next) => {
@@ -40,13 +39,11 @@ const userRegistrationController = (req, res, next) => {
                                     res.status(400).json({ message: "session err", err: err });
                                 }
                                 else {
-                                    res.redirect('/user/loginAuth');
+                                    res.status(201).json({
+                                        message: "register-complete",
+                                        body: { name: val.name, profileImagePath: val.profileImagePath }
+                                    });
                                 }
-                            });
-                            logger_1.default.info('Added to user database');
-                            res.status(201).json({
-                                message: "register-complete",
-                                body: { name: val.name, profileImagePath: val.profileImagePath }
                             });
                         });
                     });

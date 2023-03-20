@@ -27,16 +27,11 @@ function ContactInformation() {
     }).then((val) => val);
   }
   useEffect(() => {
-    socket.on("online-users", (users) => {
-      users.find((soketId) => soketId.id === data.id) !== undefined
-        ? setIsUserOnline(true)
-        : setIsUserOnline(false);
-    });
+   
     socket.on("images", (images) => {
       setMedia((prev) => [...prev, images.message]);
     });
     return () => {
-      socket.off("online-users");
       socket.off("images");
     };
   }, [data, socket]);
@@ -107,7 +102,7 @@ function ContactInformation() {
           }}
           className={`${
             navigation ==="contact-information" ? "opacity-1  visible" : "opacity-0   translate-x-[999px]"
-          } overflow-x-hidden     transition-opacity absolute flex justify-end  right-0 bg-theme w-full h-full ease-in-out duration-100`}
+          } overflow-x-hidden z-50 transition-opacity absolute flex justify-end  right-0 bg-theme w-full h-full ease-in-out duration-100`}
         >
           {/* main container */}
           <div
@@ -233,9 +228,9 @@ function ContactInformation() {
                 ) : (
                   media.map((data) => (
                     <img
-                      onClick={(()=>{
-                        setNavigation({navigate:"showImage",link:data})
-                      })}
+                    onClick={(()=>{
+                      setNavigation({navigate:"showImage",link:data})
+                    })}
                       key={data}
                       className="w-14 h-14 -scroll-mt-40 object-contain hover:scale-150 transition-transform cursor-pointer"
                       src={data}
