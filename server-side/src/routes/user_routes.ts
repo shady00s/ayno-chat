@@ -32,6 +32,7 @@ import loginValidator from "../utils/middlewares/validators/login_validator";
 import registerValidator from '../utils/middlewares/validators/register_validator';
 import removeFriend from "../controller/user_controller/friends_controller/remove_friend";
 import logOutController from "../controller/user_controller/log-out";
+import getNewMembersFromFriends from "../controller/user_controller/group_controller/get_new_members_from_friends";
 
 const userRouter = express.Router()
 
@@ -74,5 +75,7 @@ userRouter.post('/add-contact-to-group',add_contact_group_validator,addContactTo
 userRouter.post('/remove-friend',sessionMiddleware,removeFriend)
 
 userRouter.post ('/logout',searchValidator,logOutController)
+
+userRouter.get("/get-new-group-members",sessionMiddleware,getNewMembersFromFriends)
 
 export default userRouter
