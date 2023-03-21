@@ -27,7 +27,7 @@ function logInFromSession(req, res, next) {
 }
 exports.logInFromSession = logInFromSession;
 function checkSessionAuthenticationController(req, res) {
-    if (req.session.userData !== undefined) {
+    if (req.session.userData) {
         res.status(200).json({ message: "authenticated", body: { profileImagePath: req.session.userData.userProfilePath, name: req.session.userData.userName, id: req.session.userData.userId } });
     }
     else {

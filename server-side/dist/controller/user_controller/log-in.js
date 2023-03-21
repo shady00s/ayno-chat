@@ -26,7 +26,6 @@ const userLogin = (req, res, next) => {
                                         userName: userVal.name,
                                         userProfilePath: userVal.profileImagePath
                                     };
-                                    console.log(req.session);
                                     req.session.save(function (err) {
                                         if (err) {
                                             res.status(400).json({ message: "session err", err: err });
@@ -44,6 +43,9 @@ const userLogin = (req, res, next) => {
                                     await server_1.client.db().collection('sessions').findOneAndDelete({ _id: returnedVal._id }).then(val => {
                                         if (val !== null) {
                                             res.redirect('/user/loginAuth');
+                                        }
+                                        else {
+                                            res.status(400).json({ message: "error occured" });
                                         }
                                     });
                                 }

@@ -31,7 +31,6 @@ const userLogin = (req: Request, res: Response, next: NextFunction) => {
                     userName: userVal.name,
                     userProfilePath: userVal.profileImagePath
                   }
-                  console.log(req.session);
 
                   req.session.save( function(err) {
                     if (err) {
@@ -53,6 +52,9 @@ const userLogin = (req: Request, res: Response, next: NextFunction) => {
                     if(val !==null){
 
                       res.redirect('/user/loginAuth')
+                    }else{
+                      res.status(400).json({ message: "error occured"})
+
                     }
                   })
 
