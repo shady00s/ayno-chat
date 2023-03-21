@@ -3,8 +3,6 @@ import user_model from "../../model/user_model"
 import PasswordManager from "../../utils/managers/password_manager"
 import { validationResult } from 'express-validator';
 import { client, store } from './../../server';
-import {Session ,SessionData} from "express-session";
-import UserData from "../../types/session_type";
 
 
 const userLogin = (req: Request, res: Response, next: NextFunction) => {

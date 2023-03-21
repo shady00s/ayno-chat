@@ -65,7 +65,7 @@ require('dotenv').config();
 app.use((0, express_session_1.default)({
     name: "ayno.sid",
     store: exports.store,
-    resave: true,
+    resave: false,
     saveUninitialized: false,
     secret: process.env.SESSION_SECRET,
     cookie: {
