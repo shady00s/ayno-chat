@@ -36,24 +36,13 @@ const userLogin = (req, res, next) => {
                                     });
                                 }
                                 else {
-                                    server_1.store.destroy(returnedVal._id.toString(), (err) => {
+                                    server_1.store.get(returnedVal._id.toString(), (err, sessionData) => {
                                         if (err) {
                                             res.status(400).json({ message: "session err", err: err });
                                         }
                                         else {
-                                            req.session.userData = {
-                                                userId: userVal.id,
-                                                userName: userVal.name,
-                                                userProfilePath: userVal.profileImagePath
-                                            };
-                                            req.session.save(function (err) {
-                                                if (err) {
-                                                    res.status(400).json({ message: "session err", err: err });
-                                                }
-                                                else {
-                                                    res.redirect('/user/loginAuth');
-                                                }
-                                            });
+                                            req.session = sessionData;
+                                            res.redirect('/user/loginAuth');
                                         }
                                     });
                                 }

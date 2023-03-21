@@ -14,7 +14,7 @@ import { createServer } from "http";
 import {MongoClient} from "mongodb"
 
 declare module "express-session"{
-    interface SessionData{
+    export  interface SessionData{
         userData:UserData
     }
 }

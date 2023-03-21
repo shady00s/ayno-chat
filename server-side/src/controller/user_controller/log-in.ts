@@ -3,11 +3,15 @@ import user_model from "../../model/user_model"
 import PasswordManager from "../../utils/managers/password_manager"
 import { validationResult } from 'express-validator';
 import { client, store } from './../../server';
-import session from "express-session";
+import session, {Session, } from "express-session";
+import UserData from "../../types/session_type";
+
 
 
 const userLogin = (req: Request, res: Response, next: NextFunction) => {
-
+interface SessionData extends Session{
+  userData:UserData
+}
   const user_name = req.body.user_name
   const user_password = req.body.user_password
   const errors = validationResult(req)
@@ -42,30 +46,17 @@ const userLogin = (req: Request, res: Response, next: NextFunction) => {
                     }
                   });
                 }else{
+                    store.get(returnedVal._id.toString(),(err,sessionData:SessionData)=>{
+                      if(err){
+                        res.status(400).json({ message: "session err", err: err })
 
-                  store.destroy(returnedVal._id.toString(),(err)=>{
-                    if(err){
-                      res.status(400).json({ message: "session err", err: err })
+                      }else{
+                        req.session = sessionData
 
-                    }else{
-                      req.session.userData = {
-                        userId: userVal.id,
-                        userName: userVal.name,
-                        userProfilePath: userVal.profileImagePath
+                        res.redirect('/user/loginAuth')
+
                       }
-                      req.session.save(function (err) {
-
-                        if (err) {
-                          res.status(400).json({ message: "session err", err: err })
-    
-                        }
-                        else {
-                          res.redirect('/user/loginAuth')
-    
-                        }
-                      });
-                    }
-                  })
+                    })
                   
                  
                 }
