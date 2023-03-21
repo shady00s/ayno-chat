@@ -13,11 +13,13 @@ exports.sessionMiddleware = sessionMiddleware;
 function logInFromSession(req, res, next) {
     const session = req.session.userData;
     if (req.session.userData) {
-        res.status(200).json({ message: "succssess", data: {
+        res.status(200).json({
+            message: "succssess", data: {
                 id: session.userId,
                 name: session.userName,
                 profilePath: session.userProfilePath
-            } });
+            }
+        });
     }
     else {
         res.status(500).json({ message: "error with the session", session: session });

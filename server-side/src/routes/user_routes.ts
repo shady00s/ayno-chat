@@ -38,7 +38,7 @@ const userRouter = express.Router()
 
 userRouter.post('/register',registerValidator,userRegistrationController)
 
-userRouter.post('/login',loginValidator,userLogin)
+userRouter.get('/login',loginValidator,userLogin)
 
 userRouter.get('/checkAuthentication',checkSessionAuthenticationController)
 

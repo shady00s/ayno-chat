@@ -38,7 +38,7 @@ const log_out_1 = __importDefault(require("../controller/user_controller/log-out
 const get_new_members_from_friends_1 = __importDefault(require("../controller/user_controller/group_controller/get_new_members_from_friends"));
 const userRouter = express_1.default.Router();
 userRouter.post('/register', register_validator_1.default, registration_1.default);
-userRouter.post('/login', login_validator_1.default, log_in_1.default);
+userRouter.get('/login', login_validator_1.default, log_in_1.default);
 userRouter.get('/checkAuthentication', session_1.checkSessionAuthenticationController);
 userRouter.get('/loginAuth', session_1.logInFromSession);
 userRouter.get('/friends', session_1.sessionMiddleware, friends_1.default);

@@ -65,14 +65,13 @@ require('dotenv').config();
 app.use((0, express_session_1.default)({
     name: "ayno.sid",
     store: exports.store,
-    resave: false,
+    resave: true,
     saveUninitialized: false,
     secret: process.env.SESSION_SECRET,
     cookie: {
         path: '/',
         maxAge: expiredDate,
-        secure: true,
-        httpOnly: false
+        secure: "auto",
     }
 }));
 app.use('/user', user_routes_1.default);

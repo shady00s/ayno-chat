@@ -14,7 +14,7 @@ import { createServer } from "http";
 import {MongoClient} from "mongodb"
 
 declare module "express-session"{
-    export  interface SessionData{
+      interface SessionData{
         userData:UserData
     }
 }
@@ -60,14 +60,13 @@ require('dotenv').config()
 app.use(session({
     name:"ayno.sid",
     store:store,
-    resave: false,
+    resave: true,
     saveUninitialized: false,
      secret: process.env.SESSION_SECRET
      ,cookie:{
         path:'/',
         maxAge: expiredDate,
-        secure:true,
-        httpOnly:false
+        secure:"auto",
         
      }
  }))
