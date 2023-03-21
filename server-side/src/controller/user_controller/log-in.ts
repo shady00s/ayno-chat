@@ -52,8 +52,13 @@ interface SessionData extends Session{
 
                       }else{
                         req.session = sessionData
+                        if(req.session.userData){
+                          res.redirect('/user/loginAuth')
 
-                        res.redirect('/user/loginAuth')
+                        }else{
+                          res.status(400).json({ message: "There is an error with re-new session", err: err })
+
+                        }
 
                       }
                     })

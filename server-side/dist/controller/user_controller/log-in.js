@@ -42,7 +42,12 @@ const userLogin = (req, res, next) => {
                                         }
                                         else {
                                             req.session = sessionData;
-                                            res.redirect('/user/loginAuth');
+                                            if (req.session.userData) {
+                                                res.redirect('/user/loginAuth');
+                                            }
+                                            else {
+                                                res.status(400).json({ message: "There is an error with re-new session", err: err });
+                                            }
                                         }
                                     });
                                 }
