@@ -10,9 +10,10 @@ import {default as connectMongoDBSession}from "connect-mongodb-session"
 import session from "express-session";
 import { Response,Request } from "express";
 import "express-session";
-import { createServer } from "https";
+import { createServer } from "http";
 import {MongoClient} from "mongodb"
 import * as fs  from "fs"
+import path from "path";
 declare module "express-session"{
       interface SessionData{
         userData:UserData
@@ -45,7 +46,7 @@ app.use('/',(req:Request,res:Response,next:NextFunction)=>{
         'Access-Control-Allow-Methods',
         'OPTIONS, GET, POST, PUT, PATCH, DELETE'
       );
-      res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+      res.setHeader('Access-Control-Allow-Headers', 'Content-Type , Authorization , Origin , X-Requested-With,Accept');
       res.setHeader('Access-Control-Allow-Credentials', 'true')
     next()
 })
@@ -80,22 +81,22 @@ app.use('*',(req:Request,res:Response)=>{
     res.json({message:"bad route"})
 })
 
-const options = {
-    key:fs.readFileSync("key.pem"),
-    cert:fs.readFileSync("cert.pem")
-}
 
 try {
-    const server = createServer(options,app)
+    const server = createServer(app)
     socketManager.connectSocket(server)
     socketManager.messageSocket()
     socketManager.groupMessageSocket()
     socketManager.notificationSocket()
     mongoose.set('strictQuery',true)
-    
+    console.log(path.join(__dirname, "cert.pem"));
+
 
     mongoose.connect(`mongodb+srv://${process.env.DATABASE_USER_NAME}:${process.env.DATABASE_PASSWORD}@chatdatabase.fnneyaw.mongodb.net/
-    `,{retryWrites:true,w:'majority'}).then((val)=>{
+    `,{retryWrites:true,w:'majority',   
+
+    
+}).then((val)=>{
         Logining.info('connected to mongo database ')
 
         server.listen(8080,()=>{
@@ -106,7 +107,6 @@ try {
         })
     })    
            
-    
 } catch (error) {
  Logining.error('faild to connect to mongo database'+error)   
 }

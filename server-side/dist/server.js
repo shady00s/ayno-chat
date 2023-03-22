@@ -37,9 +37,9 @@ const socket_manager_1 = require("./sockets/socket_manager");
 const connect_mongodb_session_1 = __importDefault(require("connect-mongodb-session"));
 const express_session_1 = __importDefault(require("express-session"));
 require("express-session");
-const https_1 = require("https");
+const http_1 = require("http");
 const mongodb_1 = require("mongodb");
-const fs = __importStar(require("fs"));
+const path_1 = __importDefault(require("path"));
 exports.client = new mongodb_1.MongoClient(`mongodb+srv://${process.env.DATABASE_USER_NAME}:${process.env.DATABASE_PASSWORD}@chatdatabase.fnneyaw.mongodb.net/
 `);
 dotenv.config();
@@ -55,7 +55,7 @@ exports.store = new MongoDBStore({
 app.use('/', (req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', 'https://ayno-chat.vercel.app');
     res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET, POST, PUT, PATCH, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type , Authorization , Origin , X-Requested-With,Accept');
     res.setHeader('Access-Control-Allow-Credentials', 'true');
     next();
 });
@@ -83,19 +83,17 @@ app.use('/chat', chat_routes_1.default);
 app.use('*', (req, res) => {
     res.json({ message: "bad route" });
 });
-const options = {
-    key: fs.readFileSync("key.pem"),
-    cert: fs.readFileSync("cert.pem")
-};
 try {
-    const server = (0, https_1.createServer)(options, app);
+    const server = (0, http_1.createServer)(app);
     socket_manager_1.socketManager.connectSocket(server);
     socket_manager_1.socketManager.messageSocket();
     socket_manager_1.socketManager.groupMessageSocket();
     socket_manager_1.socketManager.notificationSocket();
     mongoose_1.default.set('strictQuery', true);
+    console.log(path_1.default.join(__dirname, "cert.pem"));
     mongoose_1.default.connect(`mongodb+srv://${process.env.DATABASE_USER_NAME}:${process.env.DATABASE_PASSWORD}@chatdatabase.fnneyaw.mongodb.net/
-    `, { retryWrites: true, w: 'majority' }).then((val) => {
+    `, { retryWrites: true, w: 'majority',
+    }).then((val) => {
         logger_1.default.info('connected to mongo database ');
         server.listen(8080, () => {
             logger_1.default.info("connected to port 8080");
