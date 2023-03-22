@@ -25,7 +25,7 @@ export function logInFromSession(req: Request, res: Response, next: NextFunction
             })
         }
         else {
-            res.status(500).json({ message: "error with the session", cookie: req.cookies['ayno.sid']})
+            res.status(500).json({ message: "error with the session"})
 
         }
 

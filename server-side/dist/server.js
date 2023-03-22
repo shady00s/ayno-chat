@@ -52,6 +52,7 @@ exports.store = new MongoDBStore({
     collection: "sessions",
     expires: expiredDate,
 });
+app.set("trust proxy", 1);
 app.use('/', (req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', 'https://ayno-chat.vercel.app');
     res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET, POST, PUT, PATCH, DELETE');
@@ -61,7 +62,6 @@ app.use('/', (req, res, next) => {
 });
 app.use(express_1.default.json({ limit: '50mb' }));
 app.use(express_1.default.urlencoded({ extended: true, limit: "50mb" }));
-app.set('trust proxy', true);
 require('dotenv').config();
 // api rules
 app.use((0, express_session_1.default)({

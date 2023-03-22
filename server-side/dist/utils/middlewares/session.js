@@ -23,7 +23,7 @@ function logInFromSession(req, res, next) {
         });
     }
     else {
-        res.status(500).json({ message: "error with the session", cookie: req.cookies['ayno.sid'] });
+        res.status(500).json({ message: "error with the session" });
     }
 }
 exports.logInFromSession = logInFromSession;

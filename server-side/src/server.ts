@@ -39,6 +39,7 @@ export const store = new MongoDBStore({
  
 })
 
+app.set("trust proxy", 1);
 
 app.use('/',(req:Request,res:Response,next:NextFunction)=>{
     res.setHeader('Access-Control-Allow-Origin','https://ayno-chat.vercel.app')
@@ -52,7 +53,6 @@ app.use('/',(req:Request,res:Response,next:NextFunction)=>{
 })
 app.use(express.json({limit:'50mb'}))
 app.use(express.urlencoded({extended:true,limit:"50mb"}))
-app.set('trust proxy',true)
 
 
 
