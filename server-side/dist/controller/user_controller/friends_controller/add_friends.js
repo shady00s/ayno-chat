@@ -13,6 +13,7 @@ const postAcceptFriendController = async (req, res, next) => {
     // create transaction between user and contact to add each other and create conversation 
     const connecton = mongoose_1.default.connection;
     let session = await connecton.startSession();
+    session.startTransaction();
     const generatedConversationId = new mongoose_1.default.Types.ObjectId;
     try {
         // check if the contact is not inside friends array
