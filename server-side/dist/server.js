@@ -71,8 +71,9 @@ app.use((0, express_session_1.default)({
     cookie: {
         path: '/',
         maxAge: expiredDate,
-        secure: "auto",
-        httpOnly: false
+        secure: true,
+        httpOnly: false,
+        domain: "https://ayno-chat.vercel.app/"
     }
 }));
 app.use('/user', user_routes_1.default);

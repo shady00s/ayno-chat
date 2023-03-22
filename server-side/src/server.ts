@@ -51,7 +51,7 @@ app.use('/',(req:Request,res:Response,next:NextFunction)=>{
 })
 app.use(express.json({limit:'50mb'}))
 app.use(express.urlencoded({extended:true,limit:"50mb"}))
-
+app.set('trust proxy',true)
 
 
 
@@ -67,8 +67,9 @@ app.use(session({
      ,cookie:{
         path:'/',
         maxAge: expiredDate,
-        secure:"auto",
-        httpOnly:false
+        secure:true,
+        httpOnly:false,
+        domain:"https://ayno-chat.vercel.app/"
      }
  }))
 
