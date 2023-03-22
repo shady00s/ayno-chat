@@ -21,7 +21,7 @@ const userLogin = (req: Request, res: Response, next: NextFunction) => {
             // check if the user had a previous session if not then save it and if found then touch it to re-initilize the datetime of the session
 
             try {
-              client.db().collection('sessions').findOne({ "session.userData.userName": user_name }).then(async returnedVal => {
+            await  client.db().collection('sessions').findOne({ "session.userData.userName": user_name }).then(async returnedVal => {
                 if (returnedVal === null) {
                   req.session.userData = {
                     userId: userVal.id,
@@ -45,7 +45,7 @@ const userLogin = (req: Request, res: Response, next: NextFunction) => {
 
                     }
                   });
-                  client.db().collection('sessions').findOneAndDelete({ _id: returnedVal._id }).then(val => {
+                  await  client.db().collection('sessions').findOneAndDelete({ _id: returnedVal._id }).then(val => {
                     if (val !== null) {
                       res.redirect('/user/loginAuth')
 

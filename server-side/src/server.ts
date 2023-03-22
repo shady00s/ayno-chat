@@ -33,7 +33,8 @@ export const store = new MongoDBStore({
     uri:`mongodb+srv://${process.env.DATABASE_USER_NAME}:${process.env.DATABASE_PASSWORD}@chatdatabase.fnneyaw.mongodb.net/`,
     
     collection:"sessions",
-    expires:expiredDate
+    expires:expiredDate,
+
  
 })
 
@@ -66,6 +67,7 @@ app.use(session({
      ,cookie:{
         path:'/',
         maxAge: expiredDate,
+        secure:"auto"
         
      }
  }))

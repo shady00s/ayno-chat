@@ -49,7 +49,7 @@ let expiredDate = 1000 * 60 * 60 * 24 * 7;
 exports.store = new MongoDBStore({
     uri: `mongodb+srv://${process.env.DATABASE_USER_NAME}:${process.env.DATABASE_PASSWORD}@chatdatabase.fnneyaw.mongodb.net/`,
     collection: "sessions",
-    expires: expiredDate
+    expires: expiredDate,
 });
 app.use('/', (req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', 'https://ayno-chat.vercel.app');
@@ -71,6 +71,7 @@ app.use((0, express_session_1.default)({
     cookie: {
         path: '/',
         maxAge: expiredDate,
+        secure: "auto"
     }
 }));
 app.use('/user', user_routes_1.default);
