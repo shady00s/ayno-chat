@@ -37,8 +37,9 @@ const socket_manager_1 = require("./sockets/socket_manager");
 const connect_mongodb_session_1 = __importDefault(require("connect-mongodb-session"));
 const express_session_1 = __importDefault(require("express-session"));
 require("express-session");
-const http_1 = require("http");
+const https_1 = require("https");
 const mongodb_1 = require("mongodb");
+const fs = __importStar(require("fs"));
 exports.client = new mongodb_1.MongoClient(`mongodb+srv://${process.env.DATABASE_USER_NAME}:${process.env.DATABASE_PASSWORD}@chatdatabase.fnneyaw.mongodb.net/
 `);
 dotenv.config();
@@ -60,6 +61,7 @@ app.use('/', (req, res, next) => {
 });
 app.use(express_1.default.json({ limit: '50mb' }));
 app.use(express_1.default.urlencoded({ extended: true, limit: "50mb" }));
+app.set('trust proxy', true);
 require('dotenv').config();
 // api rules
 app.use((0, express_session_1.default)({
@@ -81,8 +83,12 @@ app.use('/chat', chat_routes_1.default);
 app.use('*', (req, res) => {
     res.json({ message: "bad route" });
 });
+const options = {
+    key: fs.readFileSync("key.pem"),
+    cert: fs.readFileSync("cert.pem")
+};
 try {
-    const server = (0, http_1.createServer)(app);
+    const server = (0, https_1.createServer)(options, app);
     socket_manager_1.socketManager.connectSocket(server);
     socket_manager_1.socketManager.messageSocket();
     socket_manager_1.socketManager.groupMessageSocket();

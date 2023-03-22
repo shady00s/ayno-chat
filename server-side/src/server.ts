@@ -10,9 +10,9 @@ import {default as connectMongoDBSession}from "connect-mongodb-session"
 import session from "express-session";
 import { Response,Request } from "express";
 import "express-session";
-import { createServer } from "http";
+import { createServer } from "https";
 import {MongoClient} from "mongodb"
-
+import * as fs  from "fs"
 declare module "express-session"{
       interface SessionData{
         userData:UserData
@@ -80,10 +80,13 @@ app.use('*',(req:Request,res:Response)=>{
     res.json({message:"bad route"})
 })
 
-
+const options = {
+    key:fs.readFileSync("key.pem"),
+    cert:fs.readFileSync("cert.pem")
+}
 
 try {
-    const server = createServer(app)
+    const server = createServer(options,app)
     socketManager.connectSocket(server)
     socketManager.messageSocket()
     socketManager.groupMessageSocket()
