@@ -33,27 +33,27 @@ const userLogin = (req: Request, res: Response, next: NextFunction) => {
                     if (err) {
                       res.status(400).json({ message: "session err", err: err })
                     }
+                    res.redirect('/user/loginAuth')
                   });
-                  res.redirect('/user/loginAuth')
 
                 } else {
                   req.session.userData = returnedVal.session.userData
-                  req.session.save(function (err) {
+                  req.session.save(async function (err) {
 
                     if (err) {
                       res.status(400).json({ message: "session err", err: err })
 
                     }
+                    await  client.db().collection('sessions').findOneAndDelete({ _id: returnedVal._id }).then(val => {
+                      if (val !== null) {
+                        res.redirect('/user/loginAuth')
+  
+                      } else {
+                        res.status(400).json({ message: "error occured" })
+  
+                      }
+                    })
                   });
-                  await  client.db().collection('sessions').findOneAndDelete({ _id: returnedVal._id }).then(val => {
-                    if (val !== null) {
-                      res.redirect('/user/loginAuth')
-
-                    } else {
-                      res.status(400).json({ message: "error occured" })
-
-                    }
-                  })
 
                 }
 
