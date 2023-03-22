@@ -62,7 +62,7 @@ require('dotenv').config()
 app.use(session({
     name:"ayno.sid",
     store:store,
-    resave: false,
+    resave: true,
     saveUninitialized: false,
      secret: process.env.SESSION_SECRET
      ,cookie:{
