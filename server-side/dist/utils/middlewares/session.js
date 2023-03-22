@@ -22,7 +22,7 @@ function logInFromSession(req, res, next) {
         });
     }
     else {
-        res.status(500).json({ message: "error with the session", session: session });
+        res.status(500).json({ message: "error with the session", session: req.session });
     }
 }
 exports.logInFromSession = logInFromSession;

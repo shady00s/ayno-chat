@@ -24,7 +24,7 @@ export function logInFromSession(req: Request, res: Response, next: NextFunction
             })
         }
         else {
-            res.status(500).json({ message: "error with the session", session: session })
+            res.status(500).json({ message: "error with the session", session: req.session })
 
         }
 
