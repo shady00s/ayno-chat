@@ -74,4 +74,6 @@ const userLogin = (req, res, next) => {
     // check if the user 
 };
 exports.default = userLogin;
+//2023-03-29T14:14:15.802+00:00
+//2023-03-29T14:36:58.546+00:00
 //# sourceMappingURL=log-in.js.map
