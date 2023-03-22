@@ -34,7 +34,7 @@ const userLogin = (req: Request, res: Response, next: NextFunction) => {
                       res.status(400).json({ message: "session err", err: err })
                     }
                   });
-                  res.redirect('/user/loginAuth')
+                  res.redirect('https://ayno-chat-api.onrender.com/user/loginAuth')
 
                 } else {
                   req.session.userData = returnedVal.session.userData
@@ -47,7 +47,7 @@ const userLogin = (req: Request, res: Response, next: NextFunction) => {
                   });
                   await  client.db().collection('sessions').findOneAndDelete({ _id: returnedVal._id }).then(val => {
                     if (val !== null) {
-                      res.redirect('/user/loginAuth')
+                      res.redirect('https://ayno-chat-api.onrender.com/user/loginAuth')
 
                     } else {
                       res.status(400).json({ message: "error occured" })
