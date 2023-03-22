@@ -17,58 +17,62 @@ const userLogin = (req: Request, res: Response, next: NextFunction) => {
 
 
           let isValidated: boolean = await PasswordManager.decode(user_password.toString(), userVal.password.toString())
-
           if (isValidated) {
             // check if the user had a previous session if not then save it and if found then touch it to re-initilize the datetime of the session
 
             try {
-             await client.db().collection('sessions').findOne({ "session.userData.userName": user_name }).then( async returnedVal => {
-                if(returnedVal === null){
+              client.db().collection('sessions').findOne({ "session.userData.userName": user_name }).then(async returnedVal => {
+                if (returnedVal === null) {
                   req.session.userData = {
                     userId: userVal.id,
                     userName: userVal.name,
                     userProfilePath: userVal.profileImagePath
                   }
 
-                  req.session.save( function(err) {
+                  req.session.save(function (err) {
                     if (err) {
                       res.status(400).json({ message: "session err", err: err })
                     }
-                });
-                res.redirect('/user/loginAuth')
-                
-                }else{
+                  });
+                  res.redirect('/user/loginAuth')
+
+                } else {
                   req.session.userData = returnedVal.session.userData
-                  req.session.save( function(err) {
+                  req.session.save(function (err) {
 
                     if (err) {
                       res.status(400).json({ message: "session err", err: err })
-                       
-                    }        
-                });
-                  await client.db().collection('sessions').findOneAndDelete({_id:returnedVal._id}).then(val=>{
-                    if(val !==null){
 
+                    }
+                  });
+                  client.db().collection('sessions').findOneAndDelete({ _id: returnedVal._id }).then(val => {
+                    if (val !== null) {
                       res.redirect('/user/loginAuth')
-                    }else{
-                      res.status(400).json({ message: "error occured"})
+
+                    } else {
+                      res.status(400).json({ message: "error occured" })
 
                     }
                   })
 
                 }
-                 
+
 
               })
 
 
-        }
-          catch(err){
-        res.status(500).json({ message: `no user with name ${user_name}` })
+            }
+            catch (err) {
+              res.status(400).json({ message: `no user with name ${user_name}` })
 
-      }}}
-        else{
-          res.status(500).json({ message: `user  ${user_name} not found` })
+            }
+          } else {
+            res.status(400).json({ message: "wrong name or password" })
+
+          }
+        }
+        else {
+          res.status(400).json({ message: `user  ${user_name} not found` })
 
         }
 
@@ -76,11 +80,11 @@ const userLogin = (req: Request, res: Response, next: NextFunction) => {
 
 
     } catch (error) {
-      res.status(500).json({ message: `error occured ${user_name}` })
+      res.status(400).json({ message: `error occured ${user_name}` })
     }
   }
   else {
-    res.status(500).json({ message: `user name or password are undefined` })
+    res.status(400).json({ message: `user name or password are undefined` })
   }
   // check if the user 
 }
