@@ -14,7 +14,6 @@ export function sessionMiddleware(req: Request, res: Response, next: NextFunctio
 export function logInFromSession(req: Request, res: Response, next: NextFunction) {
   
         const session = req.session.userData
-        console.log(req.cookies['ayno.sid']);
         if (req.session.userData) {
             res.status(200).json({
                 message: "succssess", data: {

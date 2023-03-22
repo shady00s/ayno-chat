@@ -71,11 +71,9 @@ app.use((0, express_session_1.default)({
     saveUninitialized: false,
     secret: process.env.SESSION_SECRET,
     cookie: {
-        path: '/',
         maxAge: expiredDate,
         secure: true,
         httpOnly: true,
-        domain: "ayno-chat-api.onrender.com",
     }
 }));
 app.use('/user', user_routes_1.default);

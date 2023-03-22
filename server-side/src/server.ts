@@ -66,11 +66,9 @@ app.use(session({
     saveUninitialized: false,
      secret: process.env.SESSION_SECRET
      ,cookie:{
-        path:'/',
         maxAge: expiredDate,
         secure:true,
         httpOnly:true,
-        domain:"ayno-chat-api.onrender.com",
      }
  }))
 
@@ -89,7 +87,6 @@ try {
     socketManager.groupMessageSocket()
     socketManager.notificationSocket()
     mongoose.set('strictQuery',true)
-    console.log(path.join(__dirname, "cert.pem"));
 
 
     mongoose.connect(`mongodb+srv://${process.env.DATABASE_USER_NAME}:${process.env.DATABASE_PASSWORD}@chatdatabase.fnneyaw.mongodb.net/
