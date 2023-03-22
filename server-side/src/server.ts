@@ -69,8 +69,8 @@ app.use(session({
         path:'/',
         maxAge: expiredDate,
         secure:true,
-        httpOnly:false,
-        domain:"https://ayno-chat.vercel.app/"
+        httpOnly:true,
+        domain:"ayno-chat-api.onrender.com",
      }
  }))
 

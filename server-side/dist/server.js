@@ -74,8 +74,8 @@ app.use((0, express_session_1.default)({
         path: '/',
         maxAge: expiredDate,
         secure: true,
-        httpOnly: false,
-        domain: "https://ayno-chat.vercel.app/"
+        httpOnly: true,
+        domain: "ayno-chat-api.onrender.com",
     }
 }));
 app.use('/user', user_routes_1.default);
