@@ -73,7 +73,8 @@ app.use((0, express_session_1.default)({
         maxAge: expiredDate,
         secure: true,
         httpOnly: true,
-    }
+        sameSite: "lax"
+    },
 }));
 app.use('/user', user_routes_1.default);
 app.use('/chat', chat_routes_1.default);
