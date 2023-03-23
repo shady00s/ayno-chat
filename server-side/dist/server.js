@@ -39,7 +39,6 @@ const express_session_1 = __importDefault(require("express-session"));
 require("express-session");
 const http_1 = require("http");
 const mongodb_1 = require("mongodb");
-const path_1 = __importDefault(require("path"));
 exports.client = new mongodb_1.MongoClient(`mongodb+srv://${process.env.DATABASE_USER_NAME}:${process.env.DATABASE_PASSWORD}@chatdatabase.fnneyaw.mongodb.net/
 `);
 dotenv.config();
@@ -68,7 +67,7 @@ app.use((0, express_session_1.default)({
     name: "ayno.sid",
     store: exports.store,
     resave: true,
-    saveUninitialized: false,
+    saveUninitialized: true,
     secret: process.env.SESSION_SECRET,
     cookie: {
         maxAge: expiredDate,
@@ -88,7 +87,6 @@ try {
     socket_manager_1.socketManager.groupMessageSocket();
     socket_manager_1.socketManager.notificationSocket();
     mongoose_1.default.set('strictQuery', true);
-    console.log(path_1.default.join(__dirname, "cert.pem"));
     mongoose_1.default.connect(`mongodb+srv://${process.env.DATABASE_USER_NAME}:${process.env.DATABASE_PASSWORD}@chatdatabase.fnneyaw.mongodb.net/
     `, { retryWrites: true, w: 'majority',
     }).then((val) => {

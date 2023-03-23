@@ -63,7 +63,7 @@ app.use(session({
     name:"ayno.sid",
     store:store,
     resave: true,
-    saveUninitialized: false,
+    saveUninitialized: true,
      secret: process.env.SESSION_SECRET
      ,cookie:{
         maxAge: expiredDate,

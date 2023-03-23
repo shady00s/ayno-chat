@@ -39,14 +39,16 @@ const userLogin = (req, res, next) => {
                                         if (err) {
                                             res.status(400).json({ message: "session err", err: err });
                                         }
-                                        await server_1.client.db().collection('sessions').findOneAndDelete({ _id: returnedVal._id }).then(val => {
-                                            if (val !== null) {
-                                                res.redirect('/user/loginAuth');
-                                            }
-                                            else {
-                                                res.status(400).json({ message: "error occured" });
-                                            }
-                                        });
+                                        else {
+                                            await server_1.client.db().collection('sessions').findOneAndDelete({ _id: returnedVal._id }).then(val => {
+                                                if (val !== null) {
+                                                    res.redirect('/user/loginAuth');
+                                                }
+                                                else {
+                                                    res.status(400).json({ message: "error occured" });
+                                                }
+                                            });
+                                        }
                                     });
                                 }
                             });
