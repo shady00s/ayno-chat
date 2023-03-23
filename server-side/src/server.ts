@@ -69,7 +69,7 @@ app.use(session({
         maxAge: expiredDate,
         secure:true,
         httpOnly:true,
-        sameSite:"lax"
+        sameSite:"none"
         
      },
      
