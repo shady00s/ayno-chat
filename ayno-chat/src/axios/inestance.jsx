@@ -4,10 +4,11 @@ import LoadingContext from "../context/loadingContext";
 
 
 const axiosInestance = axios.create({
-    baseURL:"https://anyo-chat-api.onrender.com/",
+    baseURL:"https://ayno-chat-api.onrender.com/",
     withCredentials:true
 })
-
+//"https://ayno-chat-api.onrender.com
+//https://ayno-chat-api.onrender.com
 
 // const axiosUserInestance = axios.create({
 //     baseURL:"http://192.168.1.4:8080/user",
@@ -15,7 +16,7 @@ const axiosInestance = axios.create({
 // })
 
 const userInstance = axios.create({
-    baseURL:"https://anyo-chat-api.onrender.com/user",
+    baseURL:"https://ayno-chat-api.onrender.com/user",
     withCredentials:true
 })
 

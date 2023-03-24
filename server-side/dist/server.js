@@ -26,7 +26,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.store = void 0;
+exports.store = exports.client = void 0;
 const express_1 = __importDefault(require("express"));
 const logger_1 = __importDefault(require("./utils/logger"));
 const user_routes_1 = __importDefault(require("./routes/user_routes"));
@@ -39,20 +39,23 @@ const express_session_1 = __importDefault(require("express-session"));
 require("express-session");
 const http_1 = require("http");
 const mongodb_1 = require("mongodb");
-const client = new mongodb_1.MongoClient(`mongodb+srv://${process.env.DATABASE_USER_NAME}:${process.env.DATABASE_PASSWORD}@chatdatabase.fnneyaw.mongodb.net/
+exports.client = new mongodb_1.MongoClient(`mongodb+srv://${process.env.DATABASE_USER_NAME}:${process.env.DATABASE_PASSWORD}@chatdatabase.fnneyaw.mongodb.net/
 `);
 dotenv.config();
 const app = (0, express_1.default)();
 const MongoDBStore = (0, connect_mongodb_session_1.default)(express_session_1.default);
+//expires after one week
+let expiredDate = 1000 * 60 * 60 * 24 * 7;
 exports.store = new MongoDBStore({
     uri: `mongodb+srv://${process.env.DATABASE_USER_NAME}:${process.env.DATABASE_PASSWORD}@chatdatabase.fnneyaw.mongodb.net/`,
     collection: "sessions",
-    expires: 1000 * 60 * 60 * 24 * 30,
+    expires: expiredDate,
 });
+app.set("trust proxy", 1);
 app.use('/', (req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', 'https://ayno-chat.vercel.app');
     res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET, POST, PUT, PATCH, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type , Authorization , Origin , X-Requested-With,Accept');
     res.setHeader('Access-Control-Allow-Credentials', 'true');
     next();
 });
@@ -63,14 +66,15 @@ require('dotenv').config();
 app.use((0, express_session_1.default)({
     name: "ayno.sid",
     store: exports.store,
-    resave: false,
-    saveUninitialized: false,
+    resave: true,
+    saveUninitialized: true,
     secret: process.env.SESSION_SECRET,
     cookie: {
-        path: '/',
-        maxAge: Date.now() + 1000,
-        secure: "auto"
-    }
+        maxAge: expiredDate,
+        secure: true,
+        httpOnly: true,
+        sameSite: "none"
+    },
 }));
 app.use('/user', user_routes_1.default);
 app.use('/chat', chat_routes_1.default);
@@ -85,7 +89,8 @@ try {
     socket_manager_1.socketManager.notificationSocket();
     mongoose_1.default.set('strictQuery', true);
     mongoose_1.default.connect(`mongodb+srv://${process.env.DATABASE_USER_NAME}:${process.env.DATABASE_PASSWORD}@chatdatabase.fnneyaw.mongodb.net/
-    `, { retryWrites: true, w: 'majority' }).then((val) => {
+    `, { retryWrites: true, w: 'majority',
+    }).then((val) => {
         logger_1.default.info('connected to mongo database ');
         server.listen(8080, () => {
             logger_1.default.info("connected to port 8080");

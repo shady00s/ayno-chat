@@ -13,7 +13,7 @@ const postAcceptFriendController = async(req:Request,res:Response,next:NextFunct
     // create transaction between user and contact to add each other and create conversation 
     const connecton = mongoose.connection
     let session = await connecton.startSession()
-
+    session.startTransaction()
     const generatedConversationId = new mongoose.Types.ObjectId
 
 

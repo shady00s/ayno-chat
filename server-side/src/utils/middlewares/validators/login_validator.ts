@@ -1,7 +1,7 @@
-import { body } from 'express-validator';
+import { query } from 'express-validator';
 const loginValidator = [
-    body('user_name').notEmpty().isString(),
-    body('user_password').notEmpty().isString()
+    query('user_name').notEmpty().isString(),
+    query('user_password').notEmpty().isString()
 ]
 
 export default loginValidator

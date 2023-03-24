@@ -24,7 +24,7 @@ class ApiCall {
 
     }
     static getUserChatMessages = (conversation_id,page) => {
-        try {
+
             let result = axiosInestance.get(`/chat/messages`, {
 
 
@@ -36,9 +36,7 @@ class ApiCall {
                 return data
             })
             return result
-        } catch (error) {
-            console.log(error)
-        }
+       
     }
     static getSearchData = (contactName) => {
         try {
@@ -59,12 +57,10 @@ class ApiCall {
     }
 
     static getUserLoginData = (userLoginData) => {
-        try {
-            let userData = axiosInestance.post('/user/login', userLoginData, {}).then(value => value)
+        
+            let userData = axiosInestance.get('/user/login', {params:userLoginData}).then(value => value)
             return userData
-        } catch (error) {
-            console.log(error)
-        }
+       
     }
     static getMediaData = (conversation_id) => {
         try {
