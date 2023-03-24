@@ -93,10 +93,10 @@ const RegistrationComponent = () => {
                 <form className="p-3 flex flex-col items-start ">
                     <InputTextComponent onChange={(value) => { setUsername(value.target.value) }} placeHolder={"Name"}/>
                     {/* check if the username is not less than 4 characters*/}
-                     <InputErrorComponent show={!userNameLengthRegExp.test(username)?true:false} title={"username is too short it must be at least 4 characters"} />
+                     <InputErrorComponent show={userNameLengthRegExp.test(username)?true:false} title={"username is too short it must be at least 4 characters"} />
                     
                     {/* check if the username have whitespace*/}
-                     <InputErrorComponent show={!usernameWhiteSpaceRegExp.test(username)?true:false} title={"username cannot contain whitespace"} />
+                     <InputErrorComponent show={usernameWhiteSpaceRegExp.test(username)?true:false} title={"username cannot contain whitespace"} />
 
                     {/* if username is already taken */}
                     <InputErrorComponent show={isAlreadyExisted} title={`username ${username} is already existed`} />
