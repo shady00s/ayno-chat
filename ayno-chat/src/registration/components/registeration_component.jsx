@@ -7,6 +7,7 @@ import RegisterValidation from './RegisterValidation';
 import { useNavigate } from "react-router-dom";
 import SelectAvatarComponent from "../../reusable-components/select_avatar_component";
 import RegisterScreenContext from '../../context/registrationContext';
+import { userNameLengthRegExp, usernameWhiteSpaceRegExp } from "../../constants";
 
 const RegistrationComponent = () => {
     //router 
@@ -23,12 +24,12 @@ const RegistrationComponent = () => {
     const [username, setUsername] = useState('')
     const [pass, setPass] = useState('')
     const [confirmPass, setConfirmPass] = useState('')
+    const [isAlreadyExisted,setIsAlreadyExisted]= useState(false)
 
     // avatar data
     const [avatar, setAvatar] = useState('')
     const [choosenAvatar,setChoosenAvatar]=useState(false)
  
-    const usernameWhiteSpaceRegExp = /\s/
     
     useEffect(()=>{
        
@@ -63,11 +64,13 @@ const RegistrationComponent = () => {
                     setLoading(false)
 
                  navigate('/ayno-chat/home')
-                }else{
+                }else if(apiResponse.status===200){
+                    setIsAlreadyExisted(true)
                     setLoading(false)
                     
-                     window.alert('there is an problem '+apiResponse.data.message)   
-                }
+           }
+            }).catch((err)=>{
+                setLoading(false)
             })
         }
 
@@ -90,10 +93,13 @@ const RegistrationComponent = () => {
                 <form className="p-3 flex flex-col items-start ">
                     <InputTextComponent onChange={(value) => { setUsername(value.target.value) }} placeHolder={"Name"}/>
                     {/* check if the username is not less than 4 characters*/}
-                     <InputErrorComponent show={username.length <=4 && username !==''?true:false} title={"username is too short it must be at least 4 characters"} />
+                     <InputErrorComponent show={!userNameLengthRegExp.test(username)?true:false} title={"username is too short it must be at least 4 characters"} />
                     
                     {/* check if the username have whitespace*/}
-                    <InputErrorComponent show={usernameWhiteSpaceRegExp.test(username)?true:false} title={"username cannot contain whitespace"} />
+                     <InputErrorComponent show={!usernameWhiteSpaceRegExp.test(username)?true:false} title={"username cannot contain whitespace"} />
+
+                    {/* if username is already taken */}
+                    <InputErrorComponent show={isAlreadyExisted} title={`username ${username} is already existed`} />
 
                      <InputTextComponent onChange={(value) => { setPass(value.target.value) }} placeHolder={"Password"}/>
 
@@ -121,7 +127,7 @@ const RegistrationComponent = () => {
                  <div className={`${screen ==='register'? "opacity-100":"opacity-0"} duration-300 ease-in  w-[20rem] transition-opacity `}>
 
                     <SelectAvatarComponent changeGender onClick={target=> {
-                        setAvatar( target.target.getAttribute('src'))
+                        setAvatar(target.target.getAttribute('src'))
                         setChoosenAvatar(false)
                         }}/>
                 <div><InputErrorComponent show={choosenAvatar}  title={"Please select avatar image"} /></div>  
