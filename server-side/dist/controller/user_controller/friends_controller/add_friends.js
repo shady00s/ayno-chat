@@ -20,28 +20,22 @@ const postAcceptFriendController = async (req, res, next) => {
         user_model_1.default.findById({ _id: user_id }).then(async (result) => {
             if (result.friends.find((data) => data.id == contact_id) === undefined) {
                 try {
-                    let sessionResult = await session.withTransaction(async () => {
-                        let userInformation = await user_model_1.default.findByIdAndUpdate(user_id, { $addToSet: { conversations: { conversation_Id: generatedConversationId, contact_Id: contact_id }, friends: contact_id } }, { session, new: true }).then(userValue => {
-                            return userValue;
-                        });
-                        //remove id from friend request array
-                        await user_model_1.default.findByIdAndUpdate(user_id, { $pull: { friendRequests: contact_id } });
-                        let contactInformation = await user_model_1.default.findByIdAndUpdate(contact_id, { $addToSet: { conversations: { conversation_Id: generatedConversationId, contact_Id: user_id }, friends: user_id } }, { session, new: true }).then(contactValue => {
-                            return contactValue;
-                        });
-                        await new conversation_model_1.default({ conversation_id: generatedConversationId, members_ids: [userInformation.id, contactInformation.id] }).save().then(result => { return result; });
-                        res.status(200).json({
-                            message: "succssess",
-                        });
+                    let userInformation = await user_model_1.default.findByIdAndUpdate(user_id, { $addToSet: { conversations: { conversation_Id: generatedConversationId, contact_Id: contact_id }, friends: contact_id } }, { session, new: true }).then(userValue => {
+                        return userValue;
                     });
-                    if (sessionResult.ok !== 1) {
-                        res.status(400).json({ message: "session has an error" });
-                    }
+                    //remove id from friend request array
+                    await user_model_1.default.findByIdAndUpdate(user_id, { $pull: { friendRequests: contact_id } });
+                    let contactInformation = await user_model_1.default.findByIdAndUpdate(contact_id, { $addToSet: { conversations: { conversation_Id: generatedConversationId, contact_Id: user_id }, friends: user_id } }, { session, new: true }).then(contactValue => {
+                        return contactValue;
+                    });
+                    await new conversation_model_1.default({ conversation_id: generatedConversationId, members_ids: [userInformation.id, contactInformation.id] }).save().then(result => { return result; });
+                    res.status(200).json({
+                        message: "succssess",
+                    });
                 }
                 catch (error) {
                     logger_1.default.error(error);
                     res.status(400).json({ message: "session catchs an error", body: error });
-                    next();
                 }
                 finally {
                     session.endSession();

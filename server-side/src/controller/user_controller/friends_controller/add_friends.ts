@@ -26,7 +26,6 @@ const postAcceptFriendController = async(req:Request,res:Response,next:NextFunct
             if(result.friends.find((data)=> data.id == contact_id) === undefined){
 
                 try {
-                    let sessionResult = await session.withTransaction(async()=>{
                        
                         let userInformation =  await user_model.findByIdAndUpdate(user_id,
                             {$addToSet:{conversations:{conversation_Id:generatedConversationId,contact_Id:contact_id},friends:contact_id}},
@@ -41,19 +40,18 @@ const postAcceptFriendController = async(req:Request,res:Response,next:NextFunct
                         })
             
                          await new conversation_model({conversation_id:generatedConversationId,members_ids:[userInformation.id,contactInformation.id]}).save().then(result=>{return result })
-                        res.status(200).json({
+                        
+                         
+                       
+                         res.status(200).json({
                             message:"succssess",
                            
                     })
-                    })
-                    if(sessionResult.ok !== 1){
-                       res.status(400).json({message:"session has an error"})
-                    }
+                  
                     
                 } catch (error) {
                     Logining.error(error)
                     res.status(400).json({message:"session catchs an error",body:error})
-                    next()
                 }finally{
                     session.endSession()
                     next()
