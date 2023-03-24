@@ -19,18 +19,20 @@ const postAcceptFriendController = async (req, res, next) => {
         await user_model_1.default.findById({ _id: user_id }).then(async (result) => {
             if (result.friends.find((data) => data.id == contact_id) === undefined) {
                 try {
-                    let userInformation = await user_model_1.default.findByIdAndUpdate(user_id, { $addToSet: { conversations: { conversation_Id: generatedConversationId, contact_Id: contact_id }, friends: contact_id } }, { session, new: true }).then(userValue => {
+                    let userInformation = await user_model_1.default.findByIdAndUpdate(user_id, { $addToSet: { conversations: { conversation_Id: generatedConversationId, contact_Id: contact_id }, friends: contact_id } }, { new: true }).session(session).then(userValue => {
                         return userValue;
                     });
                     //remove id from friend request array
-                    await user_model_1.default.findByIdAndUpdate(user_id, { $pull: { friendRequests: contact_id } }, { session, new: true });
-                    let contactInformation = await user_model_1.default.findByIdAndUpdate(contact_id, { $addToSet: { conversations: { conversation_Id: generatedConversationId, contact_Id: user_id }, friends: user_id } }, { session, new: true }).then(contactValue => {
+                    await user_model_1.default.findByIdAndUpdate(user_id, { $pull: { friendRequests: contact_id } }, { new: true }).session(session);
+                    let contactInformation = await user_model_1.default.findByIdAndUpdate(contact_id, { $addToSet: { conversations: { conversation_Id: generatedConversationId, contact_Id: user_id }, friends: user_id } }, { new: true }).session(session).then(contactValue => {
                         return contactValue;
                     });
                     // create conversation 
                     await new conversation_model_1.default({ conversation_id: generatedConversationId, members_ids: [userInformation.id, contactInformation.id] }, { session }).save().then(result => { return result; });
-                    res.status(200).json({
-                        message: "succssess",
+                    await session.commitTransaction().then(() => {
+                        res.status(200).json({
+                            message: "succssess",
+                        });
                     });
                 }
                 catch (error) {
