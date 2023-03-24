@@ -97,6 +97,8 @@ const RegistrationComponent = () => {
                         if(oldName.current !== value.target.value){
 
                             setIsAlreadyExisted(false)
+                        }else{
+                            setIsAlreadyExisted(true)
                         }
                         setUsername(value.target.value) }} placeHolder={"Name"}/>
                     {/* check if the username is not less than 4 characters*/}
