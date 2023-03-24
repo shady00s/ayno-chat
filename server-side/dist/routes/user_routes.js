@@ -36,6 +36,7 @@ const remove_friend_1 = __importDefault(require("../controller/user_controller/f
 const log_out_1 = __importDefault(require("../controller/user_controller/log-out"));
 const get_new_members_from_friends_1 = __importDefault(require("../controller/user_controller/group_controller/get_new_members_from_friends"));
 const ignore_friend_request_validator_1 = __importDefault(require("../utils/middlewares/validators/friends_routes_validators/ignore_friend_request_validator"));
+const accept_friend_validator_1 = __importDefault(require("../utils/middlewares/validators/friends_routes_validators/accept_friend_validator"));
 const userRouter = express_1.default.Router();
 userRouter.post('/register', register_validator_1.default, registration_1.default);
 userRouter.get('/login', login_validator_1.default, log_in_1.default);
@@ -43,7 +44,7 @@ userRouter.get('/checkAuthentication', session_1.checkSessionAuthenticationContr
 userRouter.get('/loginAuth', session_1.logInFromSession);
 userRouter.get('/friends', session_1.sessionMiddleware, friends_1.default);
 userRouter.post('/add-friend', friend_req_validator_1.default, session_1.sessionMiddleware, friend_req_1.default);
-userRouter.post('/accept-friend', session_1.sessionMiddleware, add_friends_1.default);
+userRouter.post('/accept-friend', accept_friend_validator_1.default, session_1.sessionMiddleware, add_friends_1.default);
 userRouter.post('/send-image', session_1.sessionMiddleware, send_image_validation_1.default, send_image_1.default);
 userRouter.get('/get-media', session_1.sessionMiddleware, get_media_validator_1.default, get_media_1.default);
 userRouter.get('/get-friend-requests', session_1.sessionMiddleware, friend_requests_list_1.friendRequestController);
@@ -56,7 +57,7 @@ userRouter.post('/create-group', session_1.sessionMiddleware, create_group_valid
 userRouter.get('/get-group-contacts', session_1.sessionMiddleware, get_group_contacts_validator_1.default, get_group_contacts_1.default);
 userRouter.post('/add-contact-to-group', add_contact_group_validator_1.default, add_contact_group_1.default);
 userRouter.post('/remove-friend', session_1.sessionMiddleware, remove_friend_1.default);
-userRouter.post('/logout', search_validator_1.default, log_out_1.default);
+userRouter.get('/logout', log_out_1.default);
 userRouter.get("/get-new-group-members", session_1.sessionMiddleware, get_new_members_from_friends_1.default);
 exports.default = userRouter;
 //# sourceMappingURL=user_routes.js.map

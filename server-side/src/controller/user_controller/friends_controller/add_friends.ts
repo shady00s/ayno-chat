@@ -37,7 +37,7 @@ const postAcceptFriendController = async (req: Request, res: Response, next: Nex
                     let contactInformation = await user_model.findByIdAndUpdate(contact_id, { $addToSet: { conversations: { conversation_Id: generatedConversationId, contact_Id: user_id }, friends: user_id } }, { session, new: true }).then(contactValue => {
                         return contactValue
                     })
-
+                    // create conversation 
                     await new conversation_model({ conversation_id: generatedConversationId, members_ids: [userInformation.id, contactInformation.id] },{session}).save().then(result => { return result })
 
 
@@ -53,7 +53,6 @@ const postAcceptFriendController = async (req: Request, res: Response, next: Nex
                     res.status(400).json({ message: "session catchs an error", body: error })
                 } finally {
                     session.endSession()
-                    next()
                     Logining.info("Session ended")
                 }
 

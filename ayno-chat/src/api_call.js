@@ -199,12 +199,12 @@ class ApiCall {
         return contact
     }
     static deleteFriend(contact_id){
-        const friend = axiosInestance.post('/user/remove-friend',{friend_id:contact_id})
+        const friend = axiosInestance.post('/user/remove-friend',{friend_id:contact_id}).then(res=>res)
         return friend
     }
 
     static logOut(){
-        const logOut = axiosInestance.post('/user/logout')
+        const logOut = axiosInestance.get('/user/logout').then(res=>res)
         return logOut
     }
 }

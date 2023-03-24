@@ -31,6 +31,7 @@ import removeFriend from "../controller/user_controller/friends_controller/remov
 import logOutController from "../controller/user_controller/log-out";
 import getNewMembersFromFriends from "../controller/user_controller/group_controller/get_new_members_from_friends";
 import ignoreFriendValidator from "../utils/middlewares/validators/friends_routes_validators/ignore_friend_request_validator";
+import acceptFriendValidator from "../utils/middlewares/validators/friends_routes_validators/accept_friend_validator";
 
 const userRouter = express.Router()
 
@@ -46,7 +47,7 @@ userRouter.get('/friends',sessionMiddleware,getUserFriendsController)
 
 userRouter.post('/add-friend',friendReqValidator,sessionMiddleware,addFriendRequestController)
 
-userRouter.post('/accept-friend',sessionMiddleware,postAcceptFriendController)
+userRouter.post('/accept-friend',acceptFriendValidator,sessionMiddleware,postAcceptFriendController)
 
 userRouter.post('/send-image' ,sessionMiddleware,sendImageValidation,sendImage)
 
@@ -72,7 +73,7 @@ userRouter.post('/add-contact-to-group',add_contact_group_validator,addContactTo
 
 userRouter.post('/remove-friend',sessionMiddleware,removeFriend)
 
-userRouter.post ('/logout',searchValidator,logOutController)
+userRouter.get ('/logout',logOutController)
 
 userRouter.get("/get-new-group-members",sessionMiddleware,getNewMembersFromFriends)
 

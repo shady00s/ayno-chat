@@ -53,7 +53,7 @@ exports.store = new MongoDBStore({
 });
 app.set("trust proxy", 1);
 app.use('/', (req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', 'https://ayno-chat.vercel.app');
+    res.setHeader('Access-Control-Allow-Origin', 'https://ayno-chat.vercel.app/');
     res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET, POST, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type , Authorization , Origin , X-Requested-With,Accept');
     res.setHeader('Access-Control-Allow-Credentials', 'true');
@@ -67,7 +67,7 @@ app.use((0, express_session_1.default)({
     name: "ayno.sid",
     store: exports.store,
     resave: true,
-    saveUninitialized: true,
+    saveUninitialized: false,
     secret: process.env.SESSION_SECRET,
     cookie: {
         maxAge: expiredDate,

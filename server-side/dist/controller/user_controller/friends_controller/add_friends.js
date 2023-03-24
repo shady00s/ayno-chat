@@ -27,6 +27,7 @@ const postAcceptFriendController = async (req, res, next) => {
                     let contactInformation = await user_model_1.default.findByIdAndUpdate(contact_id, { $addToSet: { conversations: { conversation_Id: generatedConversationId, contact_Id: user_id }, friends: user_id } }, { session, new: true }).then(contactValue => {
                         return contactValue;
                     });
+                    // create conversation 
                     await new conversation_model_1.default({ conversation_id: generatedConversationId, members_ids: [userInformation.id, contactInformation.id] }, { session }).save().then(result => { return result; });
                     res.status(200).json({
                         message: "succssess",
@@ -38,7 +39,6 @@ const postAcceptFriendController = async (req, res, next) => {
                 }
                 finally {
                     session.endSession();
-                    next();
                     logger_1.default.info("Session ended");
                 }
             }
