@@ -15,7 +15,6 @@ import { groupValidator } from "../utils/middlewares/validators/group_route_vali
 import createGroup from "../controller/user_controller/group_controller/create_group";
 import getGroups from '../controller/user_controller/group_controller/get_groups';
 import getGroupContacts from '../controller/user_controller/group_controller/get_group_contacts';
-import getGroupMessages from './../controller/chat_controller/group_messages';
 import sendImageValidation from "../utils/middlewares/validators/send_image_validation";
 import getMediaContoller from "../controller/user_controller/get_media";
 import addContactToGroup from "../controller/user_controller/group_controller/add_contact_group";
@@ -23,16 +22,15 @@ import add_contact_group_validator from '../utils/middlewares/validators/group_r
 import getUserFriendsController from "../controller/user_controller/friends_controller/friends";
 import friendReqValidator from '../utils/middlewares/validators/friends_routes_validators/friend_req_validator';
 import getMediaValidator from "../utils/middlewares/validators/get_media_validator";
-import ignoreFriendRequestValidator from "../utils/middlewares/validators/chat_routes_validators/ignore_friend_request";
 import searchValidator from "../utils/middlewares/validators/search_validator";
 import groupInformationValidation from "../utils/middlewares/validators/group_route_validators/group_information";
 import getGroupContactValidator from "../utils/middlewares/validators/group_route_validators/get_group_contacts_validator";
-import groupMessageValidation from "../utils/middlewares/validators/group_route_validators/send_group_message_validation";
 import loginValidator from "../utils/middlewares/validators/login_validator";
 import registerValidator from '../utils/middlewares/validators/register_validator';
 import removeFriend from "../controller/user_controller/friends_controller/remove_friend";
 import logOutController from "../controller/user_controller/log-out";
 import getNewMembersFromFriends from "../controller/user_controller/group_controller/get_new_members_from_friends";
+import ignoreFriendValidator from "../utils/middlewares/validators/friends_routes_validators/ignore_friend_request_validator";
 
 const userRouter = express.Router()
 
@@ -56,7 +54,7 @@ userRouter.get('/get-media',sessionMiddleware,getMediaValidator,getMediaContolle
 
 userRouter.get('/get-friend-requests',sessionMiddleware,friendRequestController)
 
-userRouter.get('/ignore-friend-requests',sessionMiddleware,ignoreFriendRequestValidator,ignoreFriendRequest)
+userRouter.get('/ignore-friend-requests',sessionMiddleware,ignoreFriendValidator,ignoreFriendRequest)
 
 userRouter.get('/search',sessionMiddleware,searchValidator,search_user)
 

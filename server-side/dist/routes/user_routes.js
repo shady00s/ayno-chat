@@ -27,7 +27,6 @@ const add_contact_group_validator_1 = __importDefault(require("../utils/middlewa
 const friends_1 = __importDefault(require("../controller/user_controller/friends_controller/friends"));
 const friend_req_validator_1 = __importDefault(require("../utils/middlewares/validators/friends_routes_validators/friend_req_validator"));
 const get_media_validator_1 = __importDefault(require("../utils/middlewares/validators/get_media_validator"));
-const ignore_friend_request_2 = __importDefault(require("../utils/middlewares/validators/chat_routes_validators/ignore_friend_request"));
 const search_validator_1 = __importDefault(require("../utils/middlewares/validators/search_validator"));
 const group_information_2 = __importDefault(require("../utils/middlewares/validators/group_route_validators/group_information"));
 const get_group_contacts_validator_1 = __importDefault(require("../utils/middlewares/validators/group_route_validators/get_group_contacts_validator"));
@@ -36,6 +35,7 @@ const register_validator_1 = __importDefault(require("../utils/middlewares/valid
 const remove_friend_1 = __importDefault(require("../controller/user_controller/friends_controller/remove_friend"));
 const log_out_1 = __importDefault(require("../controller/user_controller/log-out"));
 const get_new_members_from_friends_1 = __importDefault(require("../controller/user_controller/group_controller/get_new_members_from_friends"));
+const ignore_friend_request_validator_1 = __importDefault(require("../utils/middlewares/validators/friends_routes_validators/ignore_friend_request_validator"));
 const userRouter = express_1.default.Router();
 userRouter.post('/register', register_validator_1.default, registration_1.default);
 userRouter.get('/login', login_validator_1.default, log_in_1.default);
@@ -47,7 +47,7 @@ userRouter.post('/accept-friend', session_1.sessionMiddleware, add_friends_1.def
 userRouter.post('/send-image', session_1.sessionMiddleware, send_image_validation_1.default, send_image_1.default);
 userRouter.get('/get-media', session_1.sessionMiddleware, get_media_validator_1.default, get_media_1.default);
 userRouter.get('/get-friend-requests', session_1.sessionMiddleware, friend_requests_list_1.friendRequestController);
-userRouter.get('/ignore-friend-requests', session_1.sessionMiddleware, ignore_friend_request_2.default, ignore_friend_request_1.default);
+userRouter.get('/ignore-friend-requests', session_1.sessionMiddleware, ignore_friend_request_validator_1.default, ignore_friend_request_1.default);
 userRouter.get('/search', session_1.sessionMiddleware, search_validator_1.default, search_user_1.default);
 userRouter.get('/group-information', session_1.sessionMiddleware, group_information_2.default, group_information_1.default);
 userRouter.get('/get-groups', session_1.sessionMiddleware, get_groups_1.default);

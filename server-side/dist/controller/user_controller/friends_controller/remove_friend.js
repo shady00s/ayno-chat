@@ -8,7 +8,6 @@ const user_model_1 = __importDefault(require("../../../model/user_model"));
 async function removeFriend(req, res) {
     const user_id = req.session.userData.userId;
     const friend_id = req.body.friend_id;
-    console.log(friend_id);
     const errors = (0, express_validator_1.validationResult)(req);
     if (errors.isEmpty()) {
         try {

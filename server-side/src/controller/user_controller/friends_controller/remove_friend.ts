@@ -5,7 +5,6 @@ import mongoose from "mongoose";
 export default async function removeFriend(req:Request,res:Response){
     const user_id = req.session.userData.userId
     const friend_id = req.body.friend_id
-    console.log(friend_id);
     const errors = validationResult(req)
     if (errors.isEmpty()) {
         
