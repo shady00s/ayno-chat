@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useContext } from "react"
+import React, {useRef, useState, useEffect,useContext } from "react"
 import SubmitButton from "./submit_button"
 import InputErrorComponent from "./input_error_component"
 import InputTextComponent from './input_text_component';
@@ -21,6 +21,7 @@ const RegistrationComponent = () => {
         profilePath:''
     })
     // registration data
+    const oldName = useRef("")
     const [username, setUsername] = useState('')
     const [pass, setPass] = useState('')
     const [confirmPass, setConfirmPass] = useState('')
@@ -65,6 +66,7 @@ const RegistrationComponent = () => {
 
                  navigate('/ayno-chat/home')
                 }else if(apiResponse.status===200){
+                    oldName.current = username
                     setIsAlreadyExisted(true)
                     setLoading(false)
                     
@@ -91,7 +93,12 @@ const RegistrationComponent = () => {
                 
                 <div className=" md:w-6/12 w-full  ">
                 <form className="p-3 flex flex-col items-start ">
-                    <InputTextComponent onChange={(value) => { setUsername(value.target.value) }} placeHolder={"Name"}/>
+                    <InputTextComponent onChange={(value) => {
+                        if(oldName.current !== value.target.value){
+
+                            setIsAlreadyExisted(false)
+                        }
+                        setUsername(value.target.value) }} placeHolder={"Name"}/>
                     {/* check if the username is not less than 4 characters*/}
                      <InputErrorComponent show={userNameLengthRegExp.test(username)?true:false} title={"username is too short it must be at least 4 characters"} />
                     
