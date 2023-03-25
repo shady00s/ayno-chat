@@ -22,9 +22,15 @@ export function FriendRequestComponent() {
  
 
     useEffect(()=>{
-        setFriendRequest(()=>[...friendRequest,...notifications.friendRequestNotification])
+        if(friendRequest.length !==0){
+            setFriendRequest(()=>[...friendRequest,...notifications.friendRequestNotification])
 
-    },[notifications.friendRequestNotification])
+        }else{
+            setFriendRequest(()=>[...notifications.friendRequestNotification])
+ 
+        }
+
+    },[notifications])
 
     useEffect(() => {
             setLoading(true)
