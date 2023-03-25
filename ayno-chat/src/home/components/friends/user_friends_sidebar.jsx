@@ -27,6 +27,7 @@ import SocketContext from "../../../context/socketContext";
         const {notifications,setNotifications} = useContext(NotificationContext)
     useEffect(()=>{
         socket.on('notification',(data)=>{
+            console.log(data)
             let notificationData = {...notifications}
            
             switch (data.type) {

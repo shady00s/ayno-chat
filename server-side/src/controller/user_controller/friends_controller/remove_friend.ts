@@ -6,13 +6,16 @@ export default async function removeFriend(req:Request,res:Response){
     const user_id = req.session.userData.userId
     const friend_id = req.body.friend_id
     const errors = validationResult(req)
-    if (errors.isEmpty()) {
-        
-        try {
-            user_model.findByIdAndUpdate({_id:user_id},{$pull:{friends:friend_id}},{new:true}).select(["-password","-groups","-conversations"]).then(newData=>{
-                res.status(201).json({message:"succssess",body:newData})
-            })
 
+    if (errors.isEmpty()) {
+    const session = await mongoose.startSession()    
+        session.startTransaction()
+        try {
+           await user_model.findByIdAndUpdate({_id:user_id},{$pull:{friends:friend_id}},{new:true}).session(session).select(["-password","-groups","-conversations"])
+        
+        await user_model.findByIdAndUpdate({_id:friend_id},{$pull:{friends:user_id}},{new:true}).session(session).select(["-password","-groups","-conversations"])
+        
+        res.status(201).json({message:"succssess",})
 
         } catch (error) {
             res.status(501).json({message:"error",error})

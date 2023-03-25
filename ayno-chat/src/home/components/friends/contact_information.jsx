@@ -5,7 +5,7 @@ import { ContactSkeleton } from "../../../reusable-components/skeleton/contact_i
 import ContactContext from "./../../../context/contactContext";
 import SocketContext from "./../../../context/socketContext";
 import NavigationContext from "../../../context/navigationContext";
-import { UserMinus,Image,MessageSquare,UserPlus } from "react-feather";
+import { UserMinus, Image, MessageSquare, UserPlus } from "react-feather";
 function ContactInformation() {
   const socket = useContext(SocketContext);
   const { width } = useWindowDimensions();
@@ -18,16 +18,16 @@ function ContactInformation() {
   const [viewdGroupMembers, setViewdGroupMembers] = useState([]);
   const [selectedGroupMember, setSelectedGroupMember] = useState(-1);
   const [selectedGroupMemberData, setSelectedGroupMemberData] = useState({});
-  const [friends,setFriends] = useState([])
-  const {navigation,setNavigation} = useContext(NavigationContext)
-  
+  const [friends, setFriends] = useState([])
+  const { navigation, setNavigation } = useContext(NavigationContext)
+
   async function sendRequest(data) {
     return await ApiCall.postFriendRequest({
       friend_id: data,
     }).then((val) => val);
   }
   useEffect(() => {
-   
+
     socket.on("images", (images) => {
       setMedia((prev) => [...prev, images.message]);
     });
@@ -56,59 +56,57 @@ function ContactInformation() {
           });
           setMedia(groupVal.data.body.media);
         });
-        ApiCall.getFriendsList().then(val=>{
-          setFriends(()=>val.data.body.friends)
+        ApiCall.getFriendsList().then(val => {
+          setFriends(() => val.data.body.friends)
         })
         ApiCall.getGroupContacts(contact.conversation_id).then((val) => {
-        
-        
-          setGroupMembers(()=>val.data.body)
+
+
+          setGroupMembers(() => val.data.body)
           setLoading(false);
 
         });
 
-        
-      
+
+
       }
     }
   }, [contact]); //contact
 
-  useEffect(()=>{
+  useEffect(() => {
     let editedList = []
     for (let index = 0; index < groupMembers.length; index++) {
       for (let index1 = 0; index1 < friends.length; index1++) {
-        if(groupMembers[index]._id !== friends[index1]._id){
+        if (groupMembers[index]._id !== friends[index1]._id) {
           groupMembers[index].isFriend = false
           editedList.push(groupMembers[index])
-        }else{
-          
+        } else {
+
           groupMembers[index].isFriend = true
           editedList.push(groupMembers[index])
         }
-        
+
       }
 
-  }
-  editedList = editedList.filter((friend,index,self)=> index === self.findIndex(res=>(res._id=== friend._id)))
-  setViewdGroupMembers(()=>editedList)
-  },[loading])
+    }
+    editedList = editedList.filter((friend, index, self) => index === self.findIndex(res => (res._id === friend._id)))
+    setViewdGroupMembers(() => editedList)
+  }, [loading])
   return (
     <>
       {width <= 770 ? (
         // mobile version
         <div id="bg-contact"
-          onClick={()=>{
+          onClick={() => {
             setNavigation("")
           }}
-          className={`${
-            navigation ==="contact-information" ? "opacity-1  visible" : "opacity-0   translate-x-[999px]"
-          } overflow-x-hidden z-50 transition-opacity absolute flex justify-end  right-0 bg-theme w-full h-full ease-in-out duration-100`}
+          className={`${navigation === "contact-information" ? "opacity-1  visible" : "opacity-0   translate-x-[999px]"
+            } overflow-x-hidden z-50 transition-opacity absolute flex justify-end  right-0 bg-theme w-full h-full ease-in-out duration-100`}
         >
           {/* main container */}
           <div
-            className={`${
-              navigation ==="contact-information" ? "translate-x-0" : "translate-x-[999px] "
-            } sm:w-5/12 bg-background  w-5/6  flex flex-col justify-start transition-transform ease-in-out duration-500`}
+            className={`${navigation === "contact-information" ? "translate-x-0" : "translate-x-[999px] "
+              } sm:w-5/12 bg-background  w-5/6  flex flex-col justify-start transition-transform ease-in-out duration-500`}
           >
             <div className="  flex flex-col justify-center items-center w-full">
               <div className="relative w-20">
@@ -118,9 +116,8 @@ function ContactInformation() {
                 />
 
                 <div
-                  className={`${
-                    isUserOnline ? "scale-100" : "scale-0"
-                  } transition-transform duration-100 ease-out w-4 h-4 bg-emerald-500 absolute bottom-0 rounded-full right-2 border-gray-800 border-2`}
+                  className={`${isUserOnline ? "scale-100" : "scale-0"
+                    } transition-transform duration-100 ease-out w-4 h-4 bg-emerald-500 absolute bottom-0 rounded-full right-2 border-gray-800 border-2`}
                 >
                   {isUserOnline}
                 </div>
@@ -168,9 +165,8 @@ function ContactInformation() {
                     ))}
                   </div>
                   <div
-                    className={`${
-                      selectedGroupMember === -1 ? "h-0 opacity-0" : "h-[99%]"
-                    } transition-all duration-300 ease-out overflow-hidden`}
+                    className={`${selectedGroupMember === -1 ? "h-0 opacity-0" : "h-[99%]"
+                      } transition-all duration-300 ease-out overflow-hidden`}
                   >
                     <h2 className={`text-slate-200 text-sm ml-12 mt-6 mb-4 `}>
                       Contact informations
@@ -190,7 +186,7 @@ function ContactInformation() {
                       </div>
                     </div>
                     <div className=" w-10/12">
-                      {selectedGroupMemberData.isFriend? <div
+                      {selectedGroupMemberData.isFriend ? <div
                         onClick={() => {
                           setContact({
                             ...selectedGroupMemberData,
@@ -201,9 +197,9 @@ function ContactInformation() {
                       >
                         <MessageSquare className="mr-1" />{" "}
                         <span>Message {selectedGroupMemberData.name}</span>
-                      </div>: <div
+                      </div> : <div
                         onClick={() => {
-                          sendRequest(selectedGroupMemberData._id).then(vl=>{window.alert("Friend Request send succssessfully")})
+                          sendRequest(selectedGroupMemberData._id).then(vl => { window.alert("Friend Request send succssessfully") })
                         }}
                         className="ml-4 pl-2 items-center justify-center flex pr-2 p-1 rounded-md cursor-pointer mt-2 text-slate-100 bg-blue-700"
                       >
@@ -228,9 +224,9 @@ function ContactInformation() {
                 ) : (
                   media.map((data) => (
                     <img
-                    onClick={(()=>{
-                      setNavigation({navigate:"showImage",link:data})
-                    })}
+                      onClick={(() => {
+                        setNavigation({ navigate: "showImage", link: data })
+                      })}
                       key={data}
                       className="w-14 h-14 -scroll-mt-40 object-contain hover:scale-150 transition-transform cursor-pointer"
                       src={data}
@@ -240,10 +236,10 @@ function ContactInformation() {
                 )}
               </div>
 
-              <button onClick={()=>{
-                    setNavigation("remove-friend_alert")
-                  }} className="p-1 m-2 border-2 border-gray-800 rounded-lg flex items-center text-sm text-slate-400 cursor-pointer"><UserMinus className="mr-2 stroke-red-600"/> Remove friend</button>
-
+              {contact.type === "contact" ? <button onClick={() => {
+                setNavigation("remove-friend_alert")
+              }} className="p-1 m-2 border-2 border-gray-800 rounded-lg flex items-center text-sm text-slate-400 cursor-pointer"><UserMinus className="mr-2 stroke-red-600" /> Remove friend</button>
+                : null}
             </div>
           </div>
         </div>
@@ -265,9 +261,8 @@ function ContactInformation() {
                     />
 
                     <div
-                      className={`${
-                        isUserOnline ? "scale-100" : "scale-0"
-                      } transition-transform duration-100 ease-out w-4 h-4 bg-emerald-500 absolute bottom-0 rounded-full right-2 border-gray-800 border-2`}
+                      className={`${isUserOnline ? "scale-100" : "scale-0"
+                        } transition-transform duration-100 ease-out w-4 h-4 bg-emerald-500 absolute bottom-0 rounded-full right-2 border-gray-800 border-2`}
                     >
                       {isUserOnline}
                     </div>
@@ -314,11 +309,10 @@ function ContactInformation() {
                         ))}
                       </div>
                       <div
-                        className={`${
-                          selectedGroupMember === -1
-                            ? "h-0 opacity-0"
-                            : "h-[99%]"
-                        } transition-all duration-300 ease-out overflow-hidden`}
+                        className={`${selectedGroupMember === -1
+                          ? "h-0 opacity-0"
+                          : "h-[99%]"
+                          } transition-all duration-300 ease-out overflow-hidden`}
                       >
                         <h2
                           className={`text-slate-200 text-sm ml-12 mt-6 mb-4 `}
@@ -340,7 +334,7 @@ function ContactInformation() {
                           </div>
                         </div>
                         <div className=" w-6/12">
-                          {selectedGroupMemberData.isFriend?<div
+                          {selectedGroupMemberData.isFriend ? <div
                             onClick={() => {
                               setContact({
                                 ...selectedGroupMemberData,
@@ -351,9 +345,9 @@ function ContactInformation() {
                           >
                             <MessageSquare className="mr-1" />{" "}
                             <span>Message {selectedGroupMemberData.name}</span>
-                          </div>:<div
+                          </div> : <div
                             onClick={() => {
-                              sendRequest(selectedGroupMemberData._id).then(vl=>{window.alert("Friend Request send succssessfully")})
+                              sendRequest(selectedGroupMemberData._id).then(vl => { window.alert("Friend Request send succssessfully") })
 
                             }}
                             className="ml-4 pl-2 items-center justify-center flex pr-2 p-1 rounded-md cursor-pointer mt-2 text-slate-100 bg-blue-700"
@@ -384,9 +378,9 @@ function ContactInformation() {
                     ) : (
                       media.map((data) => (
                         <img
-                        onClick={(()=>{
-                          setNavigation({navigate:"showImage",link:data})
-                        })}
+                          onClick={(() => {
+                            setNavigation({ navigate: "showImage", link: data })
+                          })}
                           key={data}
                           className="w-14 h-14 -scroll-mt-40 object-contain hover:scale-150 transition-transform cursor-pointer"
                           src={data}
@@ -395,10 +389,10 @@ function ContactInformation() {
                       ))
                     )}
                   </div>
-
-                  <button onClick={()=>{
+                  {contact.type === 'contact' ? <button onClick={() => {
                     setNavigation("remove-friend_alert")
-                  }} className="p-1 m-2 border-2 border-gray-800 rounded-lg flex items-center text-sm text-slate-400 cursor-pointer"><UserMinus className="mr-2 stroke-red-600"/> Remove friend</button>
+                  }} className="p-1 m-2 border-2 border-gray-800 rounded-lg flex items-center text-sm text-slate-400 cursor-pointer"><UserMinus className="mr-2 stroke-red-600" /> Remove friend</button>
+                    : null}
                 </div>
               </div>
             )

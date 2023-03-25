@@ -151,10 +151,17 @@ function MessageComponent() {
 
 
                     : <div className="flex flex-col justify-center items-center h-full w-full">
+                        <div className="flex flex-col justify-center items-center h-[90%]">
                         <Feather className=" stroke-slate-600 m-2" />
                         <h1 className="text-slate-400">Say hi to your friends</h1>
                         <h4 className="text-slate-600 text-sm p-2">Select friend from your contact list and say hi or start to make new connections</h4>
+                       
+                       
 
+                        </div>
+                        <div className=' w-full  '>
+                            <ChatMessageInputComponent conversation_id={Object.keys(contact).length !== 0 ? contact.conversations[0].conversation_Id : ""} friend_id={contact._id} />
+                        </div>
                     </div>}
             </div>
 
