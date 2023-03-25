@@ -8,28 +8,57 @@ export default function getGroupContacts(req:Request,res:Response){
     const group_id = req.query.groupId
     const errors = validationResult(req)
 
-        groups_model.findOne({conversation_id:group_id}).then(async group=>{
-
-            if(errors.isEmpty()){
-                if(group !==null){
-                         const contacts:string[] = []
-                    for (let index = 0; index < group.members_ids.length; index++) {
+    
+    if(errors.isEmpty()){
+               // groups_model.findOne({conversation_id:group_id}).then(async group=>{
+                // if(group !==null){
+                //          const contacts:string[] = []
+                //     for (let index = 0; index < group.members_ids.length; index++) {
             
-                        let ids = group.members_ids[index]._id.toString();
                         
-                        if(ids === user_id.toString()) continue
-                        contacts.push(ids)
+                //         if(group.members_ids[index]._id.equals(user_id)) continue
+                //         contacts.push(group.members_ids[index]._id.toString())
                         
-                    }
-                   await user_model.find({_id:{$in:[...contacts]}},).select(['-conversations','-password','-friends','-friendRequests','-groups' ]).then(users=>{
-                        if(users!==null){
-                            res.status(200).json({message:"succssess",body:users})
-                        }
-                    })
-                }
+                //     }
+                //     const userFriends = await user_model.findById(user_id).then(data=>data.friends)
+                //    await user_model.find({_id:{$in:[...contacts]}},).select(['-conversations','-password','-friends','-friendRequests','-groups' ]).then(users=>{
+                //         if(users!==null){
+                //             for (let index = 0; index < userFriends.length; index++) {
+                //                for (let index2 = 0; index2 < users.length; index2++) {
+                                
+                //                }
+                                
+                //             }
+                //             res.status(200).json({message:"succssess",body:users})
+                //         }
+                //     })
+                // }
 
+                
+
+            //})
+
+
+            groups_model.aggregate([
+                {$lookup:{
+                    from:'usermodels',
+                    localField:"friends",
+                    foreignField:"members_ids"
+                    ,as:"groupContacts"
+                }},
+                {$project:{
+                    "_id":1,
+                    "groupContacts":{$filter:{
+                        input:"$groupContacts",
+                        as:"groupContact",
+                        cond:{$not:{$in:[user_id,"$$groupContact"]}} 
+                    }}
+
+                }}
+            ]).then(val=>{
+                res.status(200).json({message:"succssess",body:val})
+            })
             }else{
                 res.status(500).json({message:"there is an error",errors})
             }
-        })
 }

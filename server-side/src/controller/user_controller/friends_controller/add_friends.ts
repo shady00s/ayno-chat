@@ -3,6 +3,7 @@ import user_model from "../../../model/user_model"
 import mongoose from "mongoose"
 import Logining from "../../../utils/logger"
 import conversation_model from "../../../model/conversation_model"
+import { validationResult } from 'express-validator';
 
 const postAcceptFriendController = async (req: Request, res: Response, next: NextFunction) => {
     const user_id = req.session.userData.userId
@@ -15,10 +16,11 @@ const postAcceptFriendController = async (req: Request, res: Response, next: Nex
     session.startTransaction()
     const generatedConversationId = new mongoose.Types.ObjectId
 
-
+    const errors = validationResult(req)
 
     try {
-        // check if the contact is not inside friends array
+        if(errors.isEmpty()){
+             // check if the contact is not inside friends array
 
         await user_model.findById({ _id: user_id }).then(async result => {
 
@@ -67,6 +69,11 @@ const postAcceptFriendController = async (req: Request, res: Response, next: Nex
 
 
         })
+        }else{
+            res.status(500).json({ message: "error occured",errors })
+
+        }
+       
 
 
 
