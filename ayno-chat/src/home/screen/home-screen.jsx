@@ -15,6 +15,7 @@ import RemoveFriendAlert from "../components/remove_friend_alert";
 import NotificationContext from "../../context/notificationContext"
 const ViewImageComponent = lazy(()=>import( "../components/viewImageComponent"));
 import LoadingComponent from "../../reusable-components/loading/loading_component";
+import FriendContext from "../../context/friendContext";
 
 export default function HomeScreen() {
 const { width } = useWindowDimensions()
@@ -29,7 +30,9 @@ const { width } = useWindowDimensions()
     const [notifications,setNotifications] = useState({messageNotification:[],groupNotification:[],friendRequestNotification:[]})
     const notificationVal = useMemo(()=>({notifications,setNotifications}),[notifications])
  
-
+//  friend manager 
+    const [friend,setFriend]=useState({})
+    const friendVal = useMemo(()=>({friend,setFriend}),[friend])
     return (
         <>
  
@@ -72,7 +75,10 @@ const { width } = useWindowDimensions()
                             <ContactContext.Provider value={contactValue}>
 
                            <NotificationContext.Provider value={notificationVal}>
+                            <FriendContext.Provider value={friendVal}>
                                  <ContactList  />
+
+                            </FriendContext.Provider>
 
                            </NotificationContext.Provider>
                         

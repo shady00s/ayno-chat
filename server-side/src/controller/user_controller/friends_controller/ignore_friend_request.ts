@@ -1,5 +1,5 @@
 import { Request,Response } from "express"
-import user_model from "../../model/user_model"
+import user_model from "../../../model/user_model"
 
 export default function ignoreFriendRequest(req:Request,res:Response){
 

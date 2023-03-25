@@ -34,7 +34,11 @@ const postAcceptFriendController = async (req, res, next) => {
                         await new conversation_model_1.default({ conversation_id: generatedConversationId, members_ids: [userInformation.id, contactInformation.id] }, { session }).save().then(result => { return result; });
                         await session.commitTransaction().then(() => {
                             res.status(200).json({
-                                message: "succssess",
+                                message: "succssess", body: {
+                                    name: contactInformation.name,
+                                    conversation_id: generatedConversationId,
+                                    profileImagePath: contactInformation.profileImagePath
+                                }
                             });
                         });
                     }

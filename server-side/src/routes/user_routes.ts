@@ -8,7 +8,7 @@ import addFriendRequestController from "../controller/user_controller/friends_co
 import { checkSessionAuthenticationController, logInFromSession, sessionMiddleware } from '../utils/middlewares/session';
 import { friendRequestController } from "../controller/user_controller/friends_controller/friend_requests_list";
 import getGroupInformation from '../controller/user_controller/group_controller/group_information';
-import ignoreFriendRequest from './../controller/user_controller/ignore_friend_request';
+import ignoreFriendRequest from '../controller/user_controller/friends_controller/ignore_friend_request';
 import editProfileController from "../controller/user_controller/edit_profile";
 import { editProfileValidator } from "../utils/middlewares/validators/editProfileValidators";
 import { groupValidator } from "../utils/middlewares/validators/group_route_validators/create_group_validation";

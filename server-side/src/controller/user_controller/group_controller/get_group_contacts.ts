@@ -46,6 +46,7 @@ export default function getGroupContacts(req:Request,res:Response){
                     foreignField:"members_ids"
                     ,as:"groupContacts"
                 }},
+                
                 {$project:{
                     "_id":1,
                     "groupContacts":{$filter:{
