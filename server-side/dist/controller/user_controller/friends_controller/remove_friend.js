@@ -16,11 +16,16 @@ async function removeFriend(req, res) {
         try {
             await user_model_1.default.findByIdAndUpdate({ _id: user_id }, { $pull: { friends: friend_id } }, { new: true }).session(session).select(["-password", "-groups", "-conversations"]);
             await user_model_1.default.findByIdAndUpdate({ _id: friend_id }, { $pull: { friends: user_id } }, { new: true }).session(session).select(["-password", "-groups", "-conversations"]);
-            res.status(201).json({ message: "succssess", });
+            session.commitTransaction().then(() => {
+                res.status(201).json({ message: "succssess" });
+            });
         }
         catch (error) {
             res.status(501).json({ message: "error", error });
         }
+    }
+    else {
+        res.status(501).json({ message: "error", errors });
     }
 }
 exports.default = removeFriend;

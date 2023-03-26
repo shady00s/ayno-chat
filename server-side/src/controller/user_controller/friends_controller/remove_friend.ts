@@ -15,12 +15,17 @@ export default async function removeFriend(req:Request,res:Response){
         
         await user_model.findByIdAndUpdate({_id:friend_id},{$pull:{friends:user_id}},{new:true}).session(session).select(["-password","-groups","-conversations"])
         
-        res.status(201).json({message:"succssess",})
+        session.commitTransaction().then(()=>{
+            res.status(201).json({message:"succssess"})
+        })
 
         } catch (error) {
             res.status(501).json({message:"error",error})
 
         }
+    }else{
+        res.status(501).json({message:"error",errors})
+
     }
 
 }
