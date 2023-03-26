@@ -6,6 +6,7 @@ import InputTextComponent from "../../registration/components/input_text_compone
 import InputErrorComponent from "../../registration/components/input_error_component";
 import ApiCall from "../../api_call";
 import FriendContext from './../../context/friendContext';
+import LoadingComponent from "../../reusable-components/loading/loading_component";
 
 export default function RemoveFriendAlert() {
   const { navigation, setNavigation } = useContext(NavigationContext);
@@ -13,6 +14,7 @@ export default function RemoveFriendAlert() {
   const [text,setText] = useState("")
   const [disabled,setDisables] = useState(false)
   const {setFriend} = useContext(FriendContext)
+  const [loading,setLoading]=useState(false)
   return (
     <div
       id="bg-friendAlert"
@@ -60,16 +62,19 @@ export default function RemoveFriendAlert() {
                         setDisables(true)
 
                     }else{
+                      setLoading(true)
                         ApiCall.deleteFriend(contact._id).then((val)=>{
                           setFriend({data:contact,type:"remove"})
+                          setLoading(false)
 
                         }).catch(err=>{
+                          setLoading(false)
                           console.log(err)
                           alert("There is an error, please try again")
                         })
                     }
-                }} className="border-[1px] p-1 border-gray-700 rounded-lg m-1 flex items-center text-sm text-slate-400" ><UserMinus size={18} className="stroke-blue-600 mr-1 "/> confirm</button>
-                <button className="border-[1px] p-1 border-gray-700 rounded-lg m-1 flex items-center text-sm text-slate-400"><X size={18}  className="stroke-pink-600 mr-1"/> cancel</button>
+                }} className="border-[1px] p-1 border-gray-700 rounded-lg m-1 flex items-center text-sm text-slate-400" >{loading?<div className="mr-1"><LoadingComponent/></div>:<UserMinus size={18} className="stroke-blue-600 mr-1 "/>} confirm</button>
+                <button className="border-[1px] p-1 border-gray-700 rounded-lg m-1 flex items-center text-sm text-slate-400"> <X size={18}  className="stroke-pink-600 mr-1"/> cancel</button>
             </div>
             
             <InputErrorComponent show={disabled} title="please type friend name correctly"/>

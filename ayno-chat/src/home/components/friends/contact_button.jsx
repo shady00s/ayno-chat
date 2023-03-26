@@ -15,7 +15,12 @@ export default function ContactButton(props){
         //
         socket.emit("join-conversation",props.data.conversations[0].conversation_Id)
         setNavigation("")
-        setContact({...props.data,type:"contact"})
+        setContact({   
+            name:props.data.name,
+            _id:props.data._id,
+            profileImagePath:props.data.profileImagePath
+            ,conversations:[{conversation_Id:props.data.conversation_id}]
+            ,type:"contact"})
     }
     useEffect(()=>{
         

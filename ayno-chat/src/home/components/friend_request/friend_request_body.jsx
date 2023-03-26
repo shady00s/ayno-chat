@@ -16,6 +16,8 @@ export default function FriendRequestBody(props) {
         ApiCall.acceptFriendRequest(props.data._id).then(val => {
             alert('user added succssessfully')
             setLoading(false)
+            props.removeFriendRequest(props.data)
+
             setFriend({data:val.data.body,type:"add"})
         }).catch(err => {
             console.log(err)
