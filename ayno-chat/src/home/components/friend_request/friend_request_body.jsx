@@ -14,6 +14,7 @@ export default function FriendRequestBody(props) {
     const {socket}= useContext(SocketContext)
     function acceptFriendRequest() {
         setLoading(true)
+        console.log(props.data);
         ApiCall.acceptFriendRequest(props.data._id).then(val => {
             alert('user added succssessfully')
             setLoading(false)
