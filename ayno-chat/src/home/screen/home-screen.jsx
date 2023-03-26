@@ -27,7 +27,7 @@ const { width } = useWindowDimensions()
     const navigationValue = useMemo(() => ({ navigation, setNavigation }), [navigation])
 
     // notification 
-    const [notifications,setNotifications] = useState({messageNotification:[],groupNotification:[],friendRequestNotification:[]})
+    const [notifications,setNotifications] = useState({messageNotification:[],groupNotification:[],friendRequestNotification:[],newFriendNotification:[]})
     const notificationVal = useMemo(()=>({notifications,setNotifications}),[notifications])
  
 //  friend manager 

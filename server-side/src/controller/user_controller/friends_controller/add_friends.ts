@@ -29,24 +29,25 @@ const postAcceptFriendController = async (req: Request, res: Response, next: Nex
                     try {
 
                         let userInformation = await user_model.findByIdAndUpdate(user_id,
-                            { $addToSet: { conversations: { conversation_Id: generatedConversationId, contact_Id: contact_id }, friends: contact_id } },
+                            { $addToSet: { conversations: { conversation_Id: generatedConversationId, contact_Id: contact_id }, friends: contact_id },$pull:{friendRequests: contact_id} },
 
                             { new: true }).session(session).then(userValue => {
                                 return userValue
                             })
                         //remove id from friend request array
-                        await user_model.findByIdAndUpdate(user_id, { $pull: { friendRequests: contact_id } }, { new: true }).session(session)
+                       // await user_model.findByIdAndUpdate(user_id, { $pull: { friendRequests: contact_id } }, { new: true }).session(session)
                         let contactInformation = await user_model.findByIdAndUpdate(contact_id, { $addToSet: { conversations: { conversation_Id: generatedConversationId, contact_Id: user_id }, friends: user_id } }, { new: true }).session(session).then(contactValue => {
                             return contactValue
                         })
                         // create conversation 
-                        await new conversation_model({ conversation_id: generatedConversationId, members_ids: [userInformation.id, contactInformation.id] }, { session }).save().then(result => { return result })
+                       let conversation =  await new conversation_model({ conversation_id: generatedConversationId, members_ids: [userInformation.id, contactInformation.id] }, { session }).save().then(result => { return result })
 
                         await session.commitTransaction().then(() => {
                             res.status(200).json({
                                 message: "succssess",body:{
+                                    _id:contactInformation._id,
                                     name:contactInformation.name,
-                                    conversation_id:generatedConversationId,
+                                    conversations:[{conversation_Id:conversation.conversation_id}],
                                     profileImagePath:contactInformation.profileImagePath
                                 }
 

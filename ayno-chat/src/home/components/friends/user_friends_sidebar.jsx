@@ -80,7 +80,10 @@ function ContactList() {
                     setNotifications(() => ({ ...notificationData }))
 
                     break
-
+                case"new-friend":
+                
+                    notificationData.newFriendNotification.push({ id: data.id, userId: data.userId, newMessage: data.newMessage })
+                
                 default:
                     return;
             }

@@ -9,6 +9,7 @@ import CreateChatGroup from "../chat_group/create_chat_group";
 import SocketContext from './../../../context/socketContext';
 import UserContext from './../../../context/userContext';
 import FriendContext from './../../../context/friendContext';
+import NotificationContext from "../../../context/notificationContext";
 export default function FriendsList() {
     const [open, setOpen] = useState(false)
     const [friends, setFriends] = useState([])
@@ -19,6 +20,7 @@ export default function FriendsList() {
     const {user} = useContext(UserContext)
     const [online,setOnline] = useState([])
     const {friend}=useContext(FriendContext)
+    const {notification} = useContext(NotificationContext)
     useEffect(()=>{
 
         const list = friends
@@ -27,8 +29,9 @@ export default function FriendsList() {
         }else{
             list.filter(oldFriends=>oldFriends._id !== friend.data._id)
         }
-        setFriends(()=>list)
-    },[friend])
+
+        setFriends(()=>[...list,...notification.newFriendNotification])
+    },[friend,notification])
 
     
     useEffect(()=>{
