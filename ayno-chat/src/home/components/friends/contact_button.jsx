@@ -19,7 +19,7 @@ export default function ContactButton(props){
             name:props.data.name,
             _id:props.data._id,
             profileImagePath:props.data.profileImagePath
-            ,conversations:[{conversation_Id:props.data.conversation_id}]
+            ,conversations:[{conversation_Id:props.data.conversations[0].conversation_Id}]
             ,type:"contact"})
     }
     useEffect(()=>{
