@@ -62,7 +62,7 @@ export default function RemoveFriendAlert() {
 
                     }else{
                         ApiCall.deleteFriend(contact._id).then(val=>{
-                          setFriend({value:contact,type:"remove"})
+                          setFriend({data:contact,type:"remove"})
 
                         }).catch(err=>{
                           console.log(err)

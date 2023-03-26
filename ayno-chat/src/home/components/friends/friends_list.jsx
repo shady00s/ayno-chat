@@ -29,6 +29,8 @@ export default function FriendsList() {
         }
         setFriends(()=>list)
     },[friend])
+
+    
     useEffect(()=>{
             setNumberofFriends(friends.length)
  },[friends])
