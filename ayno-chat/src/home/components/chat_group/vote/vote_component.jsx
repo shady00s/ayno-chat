@@ -1,16 +1,16 @@
 import React, { useContext, useState, useEffect, useCallback } from "react";
 import ApiCall from "../../../../api_call";
 import SubmitButton from "../../../../registration/components/submit_button";
-import UserContext from "../../../../context/userContext";
 import ContactContext from "../../../../context/contactContext";
 import SocketContext from "./../../../../context/socketContext";
+import { useDispatch, useSelector } from "react-redux";
 const VoteComponent = (props) => {
   const socket = useContext(SocketContext);
   const { contact } = useContext(ContactContext);
   const [selected, setSelected] = useState(-1);
   const [particeped, setParticeped] = useState(false);
   const [voteRatio, setVoteRatio] = useState([]);
-  const { user } = useContext(UserContext);
+  const user = useSelector((state)=>state.data.user);
   const [voteParticipations, setVoteParticipations] = useState(
     props.message.votingData.voteParticepents
   );

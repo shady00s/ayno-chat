@@ -5,18 +5,18 @@ import { Feather } from 'react-feather';
 import ChatMessageInputComponent from './../chat/chat_message_input_component';
 import SocketContext from './../../../context/socketContext';
 import { ChatSkeleton } from './../../../reusable-components/skeleton/chat';
-import UserContext from './../../../context/userContext';
 import GroupMessage from './group_message';
 import { Plus } from 'react-feather';
 import NavigationContext from './../../../context/navigationContext';
 import AddNewVote from './vote/add_new_vote_component';
 import VoteComponent from './vote/vote_component';
+import { useDispatch, useSelector } from 'react-redux';
 export default function GroupMessageComponent() {
     const socket = useContext(SocketContext)
     const { contact } = useContext(ContactContext)
     const [messages, setMessages] = useState([])
     const [loading, setLoading] = useState(false)
-    const { user } = useContext(UserContext)
+    const  user  = useSelector((state)=>state.data.user)
     const user_id = user.id
     const scrollRef = useRef(null)
     const {setNavigation} = useContext(NavigationContext)

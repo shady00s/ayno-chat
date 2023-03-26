@@ -5,8 +5,8 @@ import ContactContext from "../../../context/contactContext";
 import NavigationContext from "../../../context/navigationContext";
 import ApiCall from "../../../api_call";
 import LoadingComponent from "../../../reusable-components/loading/loading_component";
-import UserContext from "../../../context/userContext";
 import SocketContext from './../../../context/socketContext';
+import { useSelector } from "react-redux";
 async function sendRequest(data) {
   return await ApiCall.postFriendRequest({
     friend_id: data,
@@ -14,7 +14,7 @@ async function sendRequest(data) {
 }
 
 const SearchResultComponent = (props) => {
-  const { user } = useContext(UserContext);
+  const  user  = useSelector((state)=>state.data.user);
   const { setNavigation } = useContext(NavigationContext);
   const { setContact } = useContext(ContactContext);
   const socket = useContext(SocketContext)

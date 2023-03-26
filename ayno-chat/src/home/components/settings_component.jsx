@@ -2,14 +2,14 @@ import SelectAvatarComponent from "../../reusable-components/select_avatar_compo
 import InputTextComponent from "../../registration/components/input_text_component"
 import { useContext,useState,useRef } from "react"
 import NavigationContext from "../../context/navigationContext"
-import UserContext from './../../context/userContext';
+import {useSelector} from 'react-redux'
 import SubmitButton from './../../registration/components/submit_button';
 import ApiCall from './../../api_call';
 import { useNavigate } from 'react-router-dom';
 
 const SettingsComponent = () => {
     const {navigation} = useContext(NavigationContext)
-    const {user} = useContext(UserContext)
+    const user = useSelector((state)=>state.data.user)
     const [avatar,setAvatar]= useState(user.profileImagePath)
     const [loading,setLoading]=useState(false)
     const userName = useRef("")

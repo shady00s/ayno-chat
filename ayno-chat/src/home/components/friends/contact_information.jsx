@@ -97,8 +97,12 @@ function ContactInformation() {
       {width <= 770 ? (
         // mobile version
         <div id="bg-contact"
-          onClick={() => {
-            setNavigation("")
+          onClick={(e) => {
+
+            if(e.target.id==="bg-contact"){
+              setNavigation("")
+
+            }
           }}
           className={`${navigation === "contact-information" ? "opacity-1  visible" : "opacity-0   translate-x-[999px]"
             } overflow-x-hidden z-50 transition-opacity absolute flex justify-end  right-0 bg-theme w-full h-full ease-in-out duration-100`}

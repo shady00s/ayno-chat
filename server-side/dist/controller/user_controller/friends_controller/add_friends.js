@@ -12,12 +12,12 @@ const postAcceptFriendController = async (req, res, next) => {
     const user_id = req.session.userData.userId;
     const contact_id = req.body.contact_id;
     // create transaction between user and contact to add each other and create conversation 
-    let session = await mongoose_1.default.startSession();
-    session.startTransaction();
     const generatedConversationId = new mongoose_1.default.Types.ObjectId;
     const errors = (0, express_validator_1.validationResult)(req);
     try {
         if (errors.isEmpty()) {
+            let session = await mongoose_1.default.startSession();
+            session.startTransaction();
             // check if the contact is not inside friends array
             await user_model_1.default.findById({ _id: user_id }).then(async (result) => {
                 if (result.friends.find((data) => data.id == contact_id) === undefined) {
@@ -25,8 +25,6 @@ const postAcceptFriendController = async (req, res, next) => {
                         let userInformation = await user_model_1.default.findByIdAndUpdate(user_id, { $addToSet: { conversations: { conversation_Id: generatedConversationId, contact_Id: contact_id }, friends: contact_id }, $pull: { friendRequests: contact_id } }, { new: true }).session(session).then(userValue => {
                             return userValue;
                         });
-                        //remove id from friend request array
-                        // await user_model.findByIdAndUpdate(user_id, { $pull: { friendRequests: contact_id } }, { new: true }).session(session)
                         let contactInformation = await user_model_1.default.findByIdAndUpdate(contact_id, { $addToSet: { conversations: { conversation_Id: generatedConversationId, contact_Id: user_id }, friends: user_id } }, { new: true }).session(session).then(contactValue => {
                             return contactValue;
                         });
@@ -49,7 +47,6 @@ const postAcceptFriendController = async (req, res, next) => {
                     }
                     finally {
                         session.endSession();
-                        logger_1.default.info("Session ended");
                     }
                 }
                 else {

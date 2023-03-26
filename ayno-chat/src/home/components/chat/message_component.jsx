@@ -7,7 +7,6 @@ import { ChatSkeleton } from './../../../reusable-components/skeleton/chat';
 import LoadingComponent from '../../../reusable-components/loading/loading_component' 
 import { Feather } from "react-feather";
 import SocketContext from './../../../context/socketContext';
-import UserContext from './../../../context/userContext';
 
 function MessageComponent() {
 

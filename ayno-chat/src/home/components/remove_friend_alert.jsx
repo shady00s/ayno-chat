@@ -27,9 +27,9 @@ export default function RemoveFriendAlert() {
         navigation === "remove-friend_alert"
           ? "opacity-100 translate-x-0"
           : " opacity-0 translate-x-[9999px]"
-      }  transition-opacity duration-100 ease-in-out absolute w-full h-full flex justify-center items-center bg-theme`}
+      }  transition-opacity duration-100 z-50 ease-in-out absolute w-full h-full flex justify-center items-center bg-theme`}
     >
-      <div className="bg-background md:w-[40%] w-4/5  p-1 rounded-lg">
+      <div className="bg-background md:w-[40%] w-4/5 z-50 p-1 rounded-lg">
         {/* title and close button */}
         <div className="flex justify-between items-center">
           <h1 className="text-slate-200 p-2">
@@ -66,7 +66,7 @@ export default function RemoveFriendAlert() {
                         ApiCall.deleteFriend(contact._id).then((val)=>{
                           setFriend({data:contact,type:"remove"})
                           setLoading(false)
-
+                          setNavigation("")
                         }).catch(err=>{
                           setLoading(false)
                           console.log(err)
@@ -76,8 +76,10 @@ export default function RemoveFriendAlert() {
                 }} className="border-[1px] p-1 border-gray-700 rounded-lg m-1 flex items-center text-sm text-slate-400" >{loading?<div className="mr-1"><LoadingComponent/></div>:<UserMinus size={18} className="stroke-blue-600 mr-1 "/>} confirm</button>
                 <button className="border-[1px] p-1 border-gray-700 rounded-lg m-1 flex items-center text-sm text-slate-400"> <X size={18}  className="stroke-pink-600 mr-1"/> cancel</button>
             </div>
-            
-            <InputErrorComponent show={disabled} title="please type friend name correctly"/>
+                <div className="h-7">
+
+                 <InputErrorComponent show={disabled} title="please type friend name correctly"/>
+                </div>
 
             
       </div>

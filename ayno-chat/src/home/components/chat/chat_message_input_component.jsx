@@ -4,15 +4,15 @@ import { Smile, Send } from "react-feather";
 import IconButtonWithText from "../icon_button_with_text";
 import ApiCall from "../../../api_call";
 import AddImageComponent from "./add_image_component";
-import UserContext from "./../../../context/userContext";
 import SocketContext from "./../../../context/socketContext";
 import ContactContext from "./../../../context/contactContext";
+import { useSelector } from "react-redux";
 export default function ChatMessageInputComponent(props) {
   const [activated, setActivated] = useState(false);
   const [textVal, setTextVal] = useState("");
   const socket = useContext(SocketContext);
   const conversation_id = props.conversation_id;
-  const { user } = useContext(UserContext);
+  const  user  = useSelector((state)=>state.data.user);
   const { contact } = useContext(ContactContext);
   const [userTyping, setUserTyping] = useState(false);
   const finalText = useRef("");

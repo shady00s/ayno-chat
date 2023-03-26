@@ -6,8 +6,8 @@ import { Plus,Trash2 } from "react-feather";
 import SubmitButton from './../../../../registration/components/submit_button';
 import ApiCall from "../../../../api_call";
 import ContactContext from "../../../../context/contactContext";
-import UserContext from './../../../../context/userContext';
 import SocketContext from './../../../../context/socketContext';
+import { useSelector } from "react-redux";
 
 export default function AddNewVote(){
     const {navigation,setNavigation}= useContext(NavigationContext)
@@ -16,7 +16,7 @@ export default function AddNewVote(){
     const [voteQuestion,setVoteQuestion]= useState('')
     const {contact} = useContext(ContactContext)
     const [error,setError] = useState({question:null,choice:null,isEmpty:null})
-    const {user}=useContext(UserContext)
+    const user=useSelector((state)=>data.state.user)
     const socket = useContext(SocketContext)
     const [loading,setLoading]= useState(false)
     return(

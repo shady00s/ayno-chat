@@ -1,12 +1,12 @@
 import { CheckCircle } from "react-feather";
 import ContactContext from './../../../context/contactContext';
 import { useContext, useEffect } from "react";
-import UserContext from './../../../context/userContext';
 import ImageContainer from "../friends/image_container";
+import { useSelector } from "react-redux";
 
 export default function ChatMessageComponent(props) {
     const { contact } = useContext(ContactContext)
-    const { user } = useContext(UserContext)
+    const  user  = useSelector((state)=>state.data.user)
     useEffect(() => { }, [props.message.sender_image_path])
     const guestMainContainerStyle = ' bg-[#1E2329]  mr-2';
     const ownerMainContainerStyle = 'bg-[#008FC6] float-right ml-2 ';

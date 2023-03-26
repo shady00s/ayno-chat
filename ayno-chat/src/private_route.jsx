@@ -3,27 +3,27 @@ import { Outlet, Navigate } from "react-router-dom";
 import SocketContext from "./context/socketContext";
 import ApiCall from "./api_call";
 import LoadingComponent from './reusable-components/loading/loading_component';
-import UserContext from './context/userContext';
 import {ReactComponent as Loading } from './reusable-components/loading/loading.svg'
 import loadingScreenAnimation from "./reusable-components/loading/loading_screen_animation";
-
+import { useDispatch, useSelector } from "react-redux";
+import { setUser } from "./redux/slice";
 const PrivateRoute = () => {
 
     const [user_data, setUserData] = useState()
-    const {user,setUser} = useContext(UserContext)
+    // const {user,setUser} = useContext(UserContext)
     const socket = useContext(SocketContext)
-
+    const userDispatch = useDispatch()
+    const userData = useSelector((state)=>state.data.user)
     useEffect(() => {
-
         loadingScreenAnimation()
-        if(Object.keys(user).length !== 0) return setUserData(true)
+        if(userData.id !== null) return setUserData(true)
         ApiCall.getAuthentication().then(data => {
             if (data.data.message === "authenticated") {
-                setUser({
+                userDispatch(setUser({
                     name: data.data.body.name,
                     profileImagePath: data.data.body.profileImagePath,
                     id:data.data.body.id
-                  })
+                  }))
                   socket.emit('global-id',data.data.body.id)
 
                 setUserData(() => true)

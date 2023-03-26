@@ -1,15 +1,14 @@
 import { ChevronDown } from "react-feather"
-import { useEffect, useState, useMemo,useContext } from 'react';
+import { useEffect, useState,useContext } from 'react';
 import EmptyContactComponent from "./empty_contacts_component";
 import ApiCall from "../../../api_call";
 import ContactButton from "./contact_button";
 import { FriendListSkeleton } from "../../../reusable-components/skeleton/friend_list";
-import { CounterComponent } from "../../../reusable-components/counter_component";
 import CreateChatGroup from "../chat_group/create_chat_group";
 import SocketContext from './../../../context/socketContext';
-import UserContext from './../../../context/userContext';
 import FriendContext from './../../../context/friendContext';
 import NotificationContext from "../../../context/notificationContext";
+import { useDispatch, useSelector } from "react-redux";
 export default function FriendsList() {
     const [open, setOpen] = useState(false)
     const [friends, setFriends] = useState([])
@@ -17,21 +16,21 @@ export default function FriendsList() {
     const [numberofFriends,setNumberofFriends]= useState(0)
     const [selectedIndex,setSelectedIndex] = useState()
     const socket = useContext(SocketContext)
-    const {user} = useContext(UserContext)
+    const user = useDispatch((state)=>state.data.user)
     const [online,setOnline] = useState([])
-    const {friend}=useContext(FriendContext)
-    const {notification} = useContext(NotificationContext)
+    const friend = useSelector((state)=>state.data.friend)
+    const notifications = useSelector((state)=>state.data.notifications)
     useEffect(()=>{
 
-        const list = friends
+        let list = friends
         if(friend.type==="add"){
             list.push(friend.data)
-        }else{
-            list.filter(oldFriends=>oldFriends._id !== friend.data._id)
+        }else if (friend.type==="remove"){
+            list = list.filter(oldFriends=>oldFriends._id !== friend.data._id)
         }
 
-        setFriends(()=>[...list,...notification.newFriendNotification])
-    },[friend,notification])
+        setFriends(()=>[...list,...notifications.newFriendsNotifications])
+    },[friend,notifications])
 
     
     useEffect(()=>{

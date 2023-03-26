@@ -4,17 +4,12 @@ import LoadingScreen from "./reusable-components/loading/loading_screen";
 import IntroScreen from './registration/screens/intro_screen';
 import PrivateRoute from "./private_route";
 import { ErrorPage } from './home/screen/error_screen';
-import UserContext from "./context/userContext";
 import { useState,useMemo } from "react";
 
-const AppRouters = () => {
-    const [user,setUser] = useState({})
-    const userValue = useMemo(()=>({user,setUser}),[user])
-    
+const AppRouters = () => {   
     
     return (
        
-        <UserContext.Provider value={userValue}>
                    
            <Router>
                 <Routes>
@@ -28,7 +23,6 @@ const AppRouters = () => {
                     <Route element={<ErrorPage/>} path="*"/>
                 </Routes>
            </Router>
-           </UserContext.Provider>     
      
     )
 }

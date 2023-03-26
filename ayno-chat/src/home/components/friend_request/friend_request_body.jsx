@@ -2,20 +2,19 @@ import React, { useState,useContext } from 'react'
 import { UserPlus, Slash } from 'react-feather'
 import ApiCall from '../../../api_call'
 import LoadingComponent from '../../../reusable-components/loading/loading_component'
-import { useContext } from 'react';
 import FriendContext from './../../../context/friendContext';
 import SocketContext from "../../../context/socketContext"
 export default function FriendRequestBody(props) {
 
     
     const [loading, setLoading] = useState(false)
-    const { friend, setFriend } = useContext(FriendContext)
+    const {setFriend } = useContext(FriendContext)
 
-    const {socket}= useContext(SocketContext)
+    const socket= useContext(SocketContext)
     function acceptFriendRequest() {
         setLoading(true)
-        console.log(props.data);
         ApiCall.acceptFriendRequest(props.data._id).then(val => {
+            console.log(val.data.body)
             alert('user added succssessfully')
             setLoading(false)
             props.removeFriendRequest(props.data)

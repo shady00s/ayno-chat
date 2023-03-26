@@ -4,10 +4,9 @@ import IconButtonWithText from '../icon_button_with_text';
 import IconButton from '../icons_button';
 import { Paperclip, Image, File, Folder } from 'react-feather';
 import ApiCall from '../../../api_call';
-import StorageManager from '../../../utils/storage_manager';
 import ContactContext from '../../../context/contactContext';
-import UserContext from '../../../context/userContext';
 import SocketContext from '../../../context/socketContext';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 //convert selected images to base64 and return them into array and send them to the server
@@ -15,7 +14,7 @@ import SocketContext from '../../../context/socketContext';
 
 const AddImageComponent = () => {
     const {contact} = useContext(ContactContext)
-    const {user} = useContext(UserContext)
+    const user = useSelector((state)=>state.data.user)
     const socket = useContext(SocketContext)
     async function imageConverter(imagesList) {
         

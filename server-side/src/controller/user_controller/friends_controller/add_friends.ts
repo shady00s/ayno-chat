@@ -12,14 +12,14 @@ const postAcceptFriendController = async (req: Request, res: Response, next: Nex
 
 
     // create transaction between user and contact to add each other and create conversation 
-    let session = await mongoose.startSession()
-    session.startTransaction()
     const generatedConversationId = new mongoose.Types.ObjectId
-
+    
     const errors = validationResult(req)
-
+    
     try {
         if (errors.isEmpty()) {
+            let session = await mongoose.startSession()
+            session.startTransaction()
             // check if the contact is not inside friends array
 
             await user_model.findById({ _id: user_id }).then(async result => {
@@ -34,8 +34,6 @@ const postAcceptFriendController = async (req: Request, res: Response, next: Nex
                             { new: true }).session(session).then(userValue => {
                                 return userValue
                             })
-                        //remove id from friend request array
-                       // await user_model.findByIdAndUpdate(user_id, { $pull: { friendRequests: contact_id } }, { new: true }).session(session)
                         let contactInformation = await user_model.findByIdAndUpdate(contact_id, { $addToSet: { conversations: { conversation_Id: generatedConversationId, contact_Id: user_id }, friends: user_id } }, { new: true }).session(session).then(contactValue => {
                             return contactValue
                         })
@@ -63,7 +61,6 @@ const postAcceptFriendController = async (req: Request, res: Response, next: Nex
                         res.status(400).json({ message: "session catchs an error", body: error })
                     } finally {
                         session.endSession()
-                        Logining.info("Session ended")
                     }
 
 
