@@ -18,7 +18,6 @@ export default function RemoveFriendAlert() {
       id="bg-friendAlert"
       onClick={(e) => {
         if (e.target.id === "bg-friendAlert") {
-          console.log("sfd");
           setNavigation("");
         }
       }}
@@ -61,8 +60,8 @@ export default function RemoveFriendAlert() {
                         setDisables(true)
 
                     }else{
-                        ApiCall.deleteFriend(contact._id).then(val=>{
-                          setFriend(()=>({data:contact,type:"remove"}))
+                        ApiCall.deleteFriend(contact._id).then((val)=>{
+                          setFriend({data:contact,type:"remove"})
 
                         }).catch(err=>{
                           console.log(err)

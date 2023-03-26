@@ -5,6 +5,8 @@ import LoadingComponent from '../../../reusable-components/loading/loading_compo
 import { useContext } from 'react';
 import FriendContext from './../../../context/friendContext';
 export default function FriendRequestBody(props) {
+
+    
     const [loading, setLoading] = useState(false)
     const { friend, setFriend } = useContext(FriendContext)
 
