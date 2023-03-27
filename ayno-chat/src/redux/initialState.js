@@ -8,10 +8,7 @@ export const initialState = {
         conversations:[],
         type:''
     },
-    navigation:{
-        name:'',
-        value:''
-    },
+
     notifications:{
         groupNotifications:[],
         messageNotifications:[],

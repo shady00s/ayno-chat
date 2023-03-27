@@ -16,6 +16,7 @@ const LoadingScreen = () => {
   useEffect(() => { 
    
     if(user.id !== null) return setAuthenticated(true)
+    else{
       ApiCall.getAuthentication().then(val => {
         if (val.data.message === "authenticated") {
           userDispatch(setUser({
@@ -30,9 +31,11 @@ const LoadingScreen = () => {
           setAuthenticated(false)
         }
       })
+    }
+      
 
     
-  }, [])
+  }, [socket])
   useEffect(()=>{
     loadingScreenAnimation()
 

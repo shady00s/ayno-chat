@@ -1,25 +1,25 @@
-import React, { useState,useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import { UserPlus, Slash } from 'react-feather'
 import ApiCall from '../../../api_call'
 import LoadingComponent from '../../../reusable-components/loading/loading_component'
-import FriendContext from './../../../context/friendContext';
 import SocketContext from "../../../context/socketContext"
+import { useDispatch } from 'react-redux';
+import { setNewFriend } from '../../../redux/slice'
 export default function FriendRequestBody(props) {
 
-    
-    const [loading, setLoading] = useState(false)
-    const {setFriend } = useContext(FriendContext)
 
-    const socket= useContext(SocketContext)
+    const [loading, setLoading] = useState(false)
+    const setFriend = useDispatch()
+
+    const socket = useContext(SocketContext)
     function acceptFriendRequest() {
         setLoading(true)
         ApiCall.acceptFriendRequest(props.data._id).then(val => {
-            console.log(val.data.body)
             alert('user added succssessfully')
             setLoading(false)
             props.removeFriendRequest(props.data)
-            socket.emit('new-notification',{id:props.data._id ,...val.data.body,type:"new-friend"})
-            setFriend({data:val.data.body,type:"add"})
+            socket.emit('new-notification', { id: props.data._id, ...val.data.body, type: "new-friend" })
+            setFriend(setNewFriend({ data: val.data.body, type: "add" }))
         }).catch(err => {
             console.log(err)
             alert("There is an error, please try again")

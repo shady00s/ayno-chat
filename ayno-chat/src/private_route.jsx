@@ -1,8 +1,7 @@
-import { useCallback, useState, useContext,useEffect } from "react";
+import { useState, useContext,useEffect } from "react";
 import { Outlet, Navigate } from "react-router-dom";
 import SocketContext from "./context/socketContext";
 import ApiCall from "./api_call";
-import LoadingComponent from './reusable-components/loading/loading_component';
 import {ReactComponent as Loading } from './reusable-components/loading/loading.svg'
 import loadingScreenAnimation from "./reusable-components/loading/loading_screen_animation";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,24 +16,27 @@ const PrivateRoute = () => {
     useEffect(() => {
         loadingScreenAnimation()
         if(userData.id !== null) return setUserData(true)
-        ApiCall.getAuthentication().then(data => {
-            if (data.data.message === "authenticated") {
-                userDispatch(setUser({
-                    name: data.data.body.name,
-                    profileImagePath: data.data.body.profileImagePath,
-                    id:data.data.body.id
-                  }))
-                  socket.emit('global-id',data.data.body.id)
+        else{
+            ApiCall.getAuthentication().then(data => {
+                if (data.data.message === "authenticated") {
+                    userDispatch(setUser({
+                        name: data.data.body.name,
+                        profileImagePath: data.data.body.profileImagePath,
+                        id:data.data.body.id
+                      }))
+                      socket.emit('global-id',data.data.body.id)
+    
+                    setUserData(() => true)
+    
+                } else {
+                    setUserData(() => false)
+                }
+            })
 
-                setUserData(() => true)
-
-            } else {
-                setUserData(() => false)
-            }
-        })
+        }
 
 
-    }, [])
+    }, [socket])
 
     if (user_data != undefined) {
         return (

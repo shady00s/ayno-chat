@@ -5,7 +5,6 @@ import InputErrorComponent from './../../../../registration/components/input_err
 import { Plus,Trash2 } from "react-feather";
 import SubmitButton from './../../../../registration/components/submit_button';
 import ApiCall from "../../../../api_call";
-import ContactContext from "../../../../context/contactContext";
 import SocketContext from './../../../../context/socketContext';
 import { useSelector } from "react-redux";
 
@@ -14,9 +13,9 @@ export default function AddNewVote(){
     const [pollChoices,setPollChoices] = useState([])
     const [pollText,setPollText]= useState('')
     const [voteQuestion,setVoteQuestion]= useState('')
-    const {contact} = useContext(ContactContext)
+    const  contact  = useSelector((state)=>state.data.contact)
     const [error,setError] = useState({question:null,choice:null,isEmpty:null})
-    const user=useSelector((state)=>data.state.user)
+    const user=useSelector((state)=>state.data.user)
     const socket = useContext(SocketContext)
     const [loading,setLoading]= useState(false)
     return(

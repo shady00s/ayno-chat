@@ -15,7 +15,7 @@ export default async function removeFriend(req:Request,res:Response){
         
         await user_model.findByIdAndUpdate({_id:friend_id},{$pull:{friends:user_id}},{new:true}).session(session).select(["-password","-groups","-conversations"])
         
-        session.commitTransaction().then(()=>{
+       await session.commitTransaction().then(()=>{
             res.status(201).json({message:"succssess"})
         })
 

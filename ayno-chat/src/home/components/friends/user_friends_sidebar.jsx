@@ -9,10 +9,10 @@ import { FriendRequestComponent } from '../friend_request/friend_request_compone
 import FriendsList from "./friends_list";
 import ChatGroupComponent from './../chat_group/chat_group_screen';
 
-import NotificationContext from "../../../context/notificationContext";
 import useWindowDimensions from './../../../utils/window_size';
 import SocketContext from "../../../context/socketContext";
-
+import { useSelector,useDispatch } from 'react-redux';
+import { setNotifications } from "../../../redux/slice";
 
 function ContactList() {
 
@@ -23,17 +23,18 @@ function ContactList() {
     const [searchList, setSearchList] = useState([])
     const socket = useContext(SocketContext)
     const { navigation, setNavigation } = useContext(NavigationContext)
-
-    const { notifications, setNotifications } = useContext(NotificationContext)
+    
+    const notifications = useSelector((state)=>state.data.notifications)
+    const  setNotification  = useDispatch()
     useEffect(() => {
         socket.on('notification', (data) => {
-            let notificationData = { ...notifications }
+            let notificationData = {...notifications} 
 
             switch (data.type) {
                 case "message":
 
                     let contactExist = notificationData.messageNotification.some(oldData => oldData.id === data.id)
-                    if (contactExist || Object.keys(notificationData.messageNotification).length !== 0) {
+                    if (contactExist) {
                         for (let index = 0; index < notificationData.messageNotification.length; index++) {
                             if (notificationData.messageNotification[index].userId === data.userId) {
                                 notificationData.messageNotification[index].newMessage = notificationData.messageNotification[index].newMessage + 1
@@ -42,31 +43,32 @@ function ContactList() {
                         }
 
                     } else {
-                        notificationData.messageNotification.push({ id: data.id, userId: data.userId, newMessage: data.newMessage })
+                        notificationData.messageNotification = [...notificationData.messageNotification,{ id: data.id, userId: data.userId, newMessage: data.newMessage }]
                     }
-                    setNotifications(() => ({ ...notificationData }))
+                    setNotification(setNotifications({ ...notificationData }))
                     break
                 case "friend-request":
-                    let friendRequestExist = notificationData.friendRequestNotification.some(oldData => oldData.id === data.id)
-                    if (friendRequestExist || Object.keys(notificationData.friendRequestNotification).length !== 0) {
-                        for (let index = 0; index < notificationData.friendRequestNotification.length; index++) {
-                            if (notificationData.friendRequestNotification[index].id === data.id) {
+                    let friendRequestExist = notificationData.friendRequestsNotifications.some(oldData => oldData.id === data.id)
+                    if (friendRequestExist) {
+                        for (let index = 0; index < notificationData.friendRequestsNotifications.length; index++) {
+                            if (notificationData.friendRequestsNotifications[index].id === data.id) {
 
-                                notificationData.friendRequestNotification[index] = friendRequestNotification[index]
+                                notificationData.friendRequestsNotifications[index] = friendRequestsNotifications[index]
                             }
 
                         }
 
                     } else {
-                        notificationData.friendRequestNotification.push(data)
+                       
+                        notificationData.friendRequestsNotifications = [...notificationData.friendRequestsNotifications,data]
                     }
-                    setNotifications(() => ({ ...notificationData }))
+                    setNotification(setNotifications(notificationData))
 
                     break
 
                 case "group-message":
                     let groupMessageExist = notificationData.groupNotification.some(oldData => oldData.id === data.id)
-                    if (groupMessageExist || Object.keys(notificationData.groupNotification).length !== 0) {
+                    if (groupMessageExist ) {
                         for (let index = 0; index < notificationData.groupNotification.length; index++) {
                             if (notificationData.groupNotification[index].userId === data.userId) {
                                 notificationData.groupNotification[index].newMessage = notificationData.groupNotification[index].newMessage + 1
@@ -75,15 +77,16 @@ function ContactList() {
                         }
 
                     } else {
-                        notificationData.groupNotification.push({ id: data.id, userId: data.userId, newMessage: data.newMessage })
+                        notificationData.groupNotification =[...notificationData.groupNotification,{ id: data.id, userId: data.userId, newMessage: data.newMessage }]
                     }
-                    setNotifications(() => ({ ...notificationData }))
+                    setNotification(setNotifications({ ...notificationData }))
 
                     break
                 case"new-friend":
                 
                     notificationData.newFriendNotification.push({ id: data.id, userId: data.userId, newMessage: data.newMessage })
-                
+                    setNotification(setNotifications({ ...notificationData }))
+
                 default:
                     return;
             }

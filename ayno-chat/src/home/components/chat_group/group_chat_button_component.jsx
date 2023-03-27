@@ -1,20 +1,23 @@
 import { useEffect, useState, useContext } from 'react';
 import ApiCall from '../../../api_call';
-import ContactContext from '../../../context/contactContext';
 import SocketContext from '../../../context/socketContext';
 import {Plus } from 'react-feather'
 import NavigationContext from './../../../context/navigationContext';
+import { useSelector, useDispatch } from 'react-redux';
+import { setNewContact } from '../../../redux/slice';
 export default function GroupChatButtonComponent(props){
 
     const socket = useContext(SocketContext)
     const [contacts,setContacts]=useState([])
     const [indexSelected,setIndexSelected]=useState(-1)
-    const {contact,setContact} = useContext(ContactContext)
+
+    const contact = useSelector((state)=>state.data.contact)
+    const setContact = useDispatch()
     const {setNavigation}=useContext(NavigationContext)
     useEffect(()=>{
         if(props.data.conversation_id !== undefined){
             ApiCall.getGroupContacts(props.data.conversation_id).then(val =>{
-                setContacts(val.data.body)
+                setContact(setNewContact(val.data.body))
             })
         }
     },[props.data])

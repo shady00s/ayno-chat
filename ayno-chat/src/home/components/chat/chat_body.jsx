@@ -1,25 +1,20 @@
 
 import { useEffect,useState,useContext } from 'react';
-import ContactContext from './../../../context/contactContext';
 import MessageComponent from './message_component';
 import GroupMessageComponent from '../chat_group/group_message_component';
+import { useSelector } from 'react-redux';
 export default function ChatBodyComponent(){
 
-    const {contact} = useContext(ContactContext)
+    const contact = useSelector((state)=>state.data.contact)
 
-    if(contact.type ==='contact'){
+    
         return(
         <>
-            <MessageComponent/>
+            {contact.type==="contact"?<MessageComponent/>: <GroupMessageComponent/>}
         </>
         )
-    }else{
-        return(
-        <>
-            <GroupMessageComponent/>
-        </>
-        )
+   
        
-    }
+    
     
 }

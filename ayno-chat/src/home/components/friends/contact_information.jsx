@@ -2,15 +2,17 @@ import React, { useState, useEffect, useContext } from "react";
 import useWindowDimensions from "../../../utils/window_size";
 import ApiCall from "../../../api_call";
 import { ContactSkeleton } from "../../../reusable-components/skeleton/contact_info";
-import ContactContext from "./../../../context/contactContext";
 import SocketContext from "./../../../context/socketContext";
 import NavigationContext from "../../../context/navigationContext";
 import { UserMinus, Image, MessageSquare, UserPlus } from "react-feather";
+import { useSelector, useDispatch } from 'react-redux';
+import { setNewContact } from "../../../redux/slice";
 function ContactInformation() {
   const socket = useContext(SocketContext);
   const { width } = useWindowDimensions();
   const [media, setMedia] = useState([]);
-  const { contact, setContact } = useContext(ContactContext);
+  const contact = useSelector((state)=>state.data.contact)
+  const setContact  = useDispatch();
   const [loading, setLoading] = useState(false);
   const [isUserOnline, setIsUserOnline] = useState();
   const [data, setData] = useState({ name: "", id: "" });
@@ -36,7 +38,7 @@ function ContactInformation() {
     };
   }, [data, socket]);
   useEffect(() => {
-    if (Object.keys(contact).length !== 0) {
+    if (contact._id ===null) return
       if (contact.type === "contact") {
         setLoading(true);
 
@@ -70,7 +72,7 @@ function ContactInformation() {
 
 
       }
-    }
+    
   }, [contact]); //contact
 
   useEffect(() => {
@@ -192,10 +194,10 @@ function ContactInformation() {
                     <div className=" w-10/12">
                       {selectedGroupMemberData.isFriend ? <div
                         onClick={() => {
-                          setContact({
+                          setContact(setNewContact({
                             ...selectedGroupMemberData,
                             type: "contact",
-                          });
+                          }));
                         }}
                         className="ml-4 pl-2 items-center justify-center flex pr-2 p-1 rounded-md cursor-pointer mt-2 text-slate-100 bg-teal-700"
                       >
@@ -340,10 +342,10 @@ function ContactInformation() {
                         <div className=" w-6/12">
                           {selectedGroupMemberData.isFriend ? <div
                             onClick={() => {
-                              setContact({
+                              setContact(setNewContact({
                                 ...selectedGroupMemberData,
                                 type: "contact",
-                              });
+                              }));
                             }}
                             className="ml-4 pl-2 items-center justify-center flex pr-2 p-1 rounded-md cursor-pointer mt-2 text-slate-100 bg-teal-700"
                           >

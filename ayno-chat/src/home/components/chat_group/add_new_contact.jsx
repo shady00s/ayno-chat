@@ -1,13 +1,13 @@
 import { useContext, useCallback, useState, useEffect } from "react";
-import ContactContext from "../../../context/contactContext";
 import ApiCall from "../../../api_call";
 import NavigationContext from "../../../context/navigationContext";
 import { X } from "react-feather";
 import SubmitButton from '../../../registration/components/submit_button'
 import InputErrorComponent from '../../../registration/components/input_error_component'
 import { FriendListSkeleton } from '../../../reusable-components/skeleton/friend_list'
+import { useSelector } from 'react-redux';
 export default function AddNewContact() {
-    const { contact, setContact } = useContext(ContactContext)
+    const  contact = useSelector((state)=>state.data.contact)
     const { navigation, setNavigation } = useContext(NavigationContext)
     const [friends, setFriends] = useState([])
     const [groupContacts, setGroupContacts] = useState([])

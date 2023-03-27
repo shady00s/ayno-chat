@@ -1,34 +1,35 @@
 import { useEffect,useContext,useState } from 'react';
 import NavigationContext from '../../../context/navigationContext';
-import ContactContext from '../../../context/contactContext';
 import { CounterComponent } from '../../../reusable-components/counter_component';
 import SocketContext from './../../../context/socketContext';
-import NotificationContext from '../../../context/notificationContext';
-
+import { useSelector,useDispatch } from 'react-redux';
+import {setNotifications} from "../../../redux/slice"
+import { setNewContact } from '../../../redux/slice';
 export default function ContactButton(props){
     const {setNavigation}= useContext(NavigationContext)
-    const {setContact} = useContext(ContactContext)
+    const setContact = useDispatch()
     const socket = useContext(SocketContext)
     const [number,setNumber] = useState(0)
-    const {notifications,setNotifications} = useContext(NotificationContext)
+    const notifications = useSelector((state)=>state.data.notifications)
+    const setNotification = useDispatch()
     const getUserData =()=>{
         //
         socket.emit("join-conversation",props.data.conversations[0].conversation_Id)
         setNavigation("")
-        setContact({   
+        setContact(setNewContact({   
             name:props.data.name,
             _id:props.data._id,
             profileImagePath:props.data.profileImagePath
             ,conversations:[{conversation_Id:props.data.conversations[0].conversation_Id}]
-            ,type:"contact"})
+            ,type:"contact"}))
     }
     useEffect(()=>{
         
 
-        for (let index = 0; index < notifications.messageNotification.length; index++) {
+        for (let index = 0; index < notifications.messageNotifications.length; index++) {
 
-            if(props.data._id === notifications.messageNotification[index].userId){
-                setNumber(notifications.messageNotification[index].newMessage)
+            if(props.data._id === notifications.messageNotifications[index].userId){
+                setNumber(notifications.messageNotifications[index].newMessage)
             }
             
         }
@@ -38,13 +39,13 @@ export default function ContactButton(props){
         <div onClick={()=>{ 
             let resetObject = {...notifications}
 
-            for (let index = 0; index < notifications.messageNotification.length; index++) {
-                if(props.data._id === notifications.messageNotification[index].userId){
-                    resetObject.messageNotification[index].newMessage = 0
+            for (let index = 0; index < notifications.messageNotifications.length; index++) {
+                if(props.data._id === notifications.messageNotifications[index].userId){
+                    resetObject.messageNotifications[index].newMessage = 0
                 }
                 
             }
-            setNotifications(()=>({...resetObject}))
+            setNotification(setNotifications({...resetObject}))
             getUserData()
             props.onClick()
         }}  className={`${props.selected?"bg-[rgba(124,154,230,0.2)]":"bg-subBackGround"} p-2 flex group items-center justify-evenly  w-full transition-colors  mb-2 cursor-pointer border-l-2  border-l-slate-800

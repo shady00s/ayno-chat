@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState, useRef, useCallback } from 'react';
-import ContactContext from '../../../context/contactContext';
 import ApiCall from '../../../api_call';
 import { Feather } from 'react-feather';
 import ChatMessageInputComponent from './../chat/chat_message_input_component';
@@ -13,7 +12,7 @@ import VoteComponent from './vote/vote_component';
 import { useDispatch, useSelector } from 'react-redux';
 export default function GroupMessageComponent() {
     const socket = useContext(SocketContext)
-    const { contact } = useContext(ContactContext)
+    const contact  = useSelector((state)=>state.data.contact)
     const [messages, setMessages] = useState([])
     const [loading, setLoading] = useState(false)
     const  user  = useSelector((state)=>state.data.user)
@@ -24,19 +23,21 @@ export default function GroupMessageComponent() {
         scrollRef.current?.scrollIntoView({ behavior: "smooth" })
     }
     useEffect(() => {
-        if (Object.keys(contact).length === 0 ) return
-        
-            setLoading(true)
-            ApiCall.getGroupMessges(contact.conversation_id,0).then(val => {
-                if (val.status === 200) {
-                    setMessages(() => val.data.conversations)
-                    setLoading(false)
-                } else {
-                    setMessages(() => [])
-                    setLoading(false)
-                }
-            })
-
+        if (contact._id === null ) return
+            else{
+                setLoading(true)
+                ApiCall.getGroupMessges(contact.conversation_id,0).then(val => {
+                    if (val.status === 200) {
+                        setMessages(() => val.data.conversations)
+                        setLoading(false)
+                    } else {
+                        setMessages(() => [])
+                        setLoading(false)
+                    }
+                })
+    
+            }
+           
         
 
     }, [contact])
@@ -69,7 +70,7 @@ export default function GroupMessageComponent() {
 
 
 
-                {Object.keys(contact).length === 0 ? <div className="flex flex-col justify-center items-center h-full w-full">
+                {contact._id === null ? <div className="flex flex-col justify-center items-center h-full w-full">
                     <Feather className=" stroke-slate-600 m-2" />
                     <h1 className="text-slate-400">Say hi to your friends</h1>
                     <h4 className="text-slate-600 text-sm p-2">Select friend from your contact list and say hi or start to make new connections</h4>
@@ -91,10 +92,7 @@ export default function GroupMessageComponent() {
         </div></div>)}
 
 </div>
-<div className=' w-full '>
-    <ChatMessageInputComponent conversation_id={Object.keys(contact).length !== 0 ? contact.conversation_id : ""} friend_id={contact._id} />
 
-</div>
 </div>
 
 
@@ -108,7 +106,7 @@ export default function GroupMessageComponent() {
 
                     </div>
                     <div className=' w-full '>
-    <ChatMessageInputComponent conversation_id={Object.keys(contact).length !== 0 ? contact.conversation_id : ""} friend_id={contact._id} />
+    <ChatMessageInputComponent conversation_id={contact._id !== null ? contact.conversation_id : ""} friend_id={contact._id} />
 
 </div>
 

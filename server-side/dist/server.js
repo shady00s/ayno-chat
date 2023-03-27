@@ -73,7 +73,7 @@ app.use((0, express_session_1.default)({
         maxAge: expiredDate,
         secure: false,
         httpOnly: true,
-        sameSite: "none"
+        sameSite: "lax"
     },
 }));
 app.use('/user', user_routes_1.default);

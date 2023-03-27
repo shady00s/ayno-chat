@@ -1,10 +1,9 @@
 import { useEffect,useContext,useState } from "react"; 
-import ContactContext from "../../../context/contactContext";
 import { CheckCircle } from "react-feather";
 import { useSelector } from "react-redux";
 export default function GroupMessage(props){
     const  user  = useSelector((state)=>state.data.user)
-    const {contact}=useContext(ContactContext)
+    const  contact  = useSelector((state)=>state.data.contact)
     const [guestColor,setGuestColor] = useState("")
     useEffect(() => { 
 

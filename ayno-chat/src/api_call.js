@@ -3,7 +3,7 @@ import { axiosInestance, userInstance } from "./axios/inestance"
 class ApiCall {
     static getAuthentication = () => {
         try {
-            const data = axiosInestance.get('/user/checkAuthentication').then((value) => value)
+            const data = userInstance.get('/checkAuthentication').then((value) => value)
 
             return data
         } catch (error) {
@@ -40,7 +40,7 @@ class ApiCall {
     }
     static getSearchData = (contactName) => {
         try {
-            let searchList = axiosInestance.get('/user/search', {
+            let searchList = userInstance.get('/search', {
                 params: {
                     contactName: contactName
                 }
@@ -58,13 +58,13 @@ class ApiCall {
 
     static getUserLoginData = (userLoginData) => {
         
-            let userData = axiosInestance.get('/user/login', {params:userLoginData}).then(value => value)
+            let userData = userInstance.get('/login', {params:userLoginData}).then(value => value)
             return userData
        
     }
     static getMediaData = (conversation_id) => {
         try {
-            let media = axiosInestance.get('/user/get-media', { params: { conversation_id: conversation_id } }).then(val => val)
+            let media = userInstance.get('/get-media', { params: { conversation_id: conversation_id } }).then(val => val)
             return media
         } catch (e) {
             console.log(e)
@@ -74,7 +74,7 @@ class ApiCall {
 
 
         try {
-            let postData = axiosInestance.post('/user/register', data).then(value => value)
+            let postData = userInstance.post('/register', data).then(value => value)
             return postData
 
         } catch (error) {
@@ -84,7 +84,7 @@ class ApiCall {
     }
     static postMediaToServer(media) {
         try {
-            return axiosInestance.post('/user/send-image', media, {}).then(val => val)
+            return userInstance.post('/send-image', media, {}).then(val => val)
         } catch (error) {
             console.log(error)
         }
@@ -100,7 +100,7 @@ class ApiCall {
 
     static postFriendRequest = (data) => {
         try {
-            const sendFriendRequest = axiosInestance.post('/user/add-friend', data).then(value => value)
+            const sendFriendRequest = userInstance.post('/add-friend', data).then(value => value)
             return sendFriendRequest
         } catch (error) {
             console.log(error)
@@ -109,7 +109,7 @@ class ApiCall {
 
     static getFriendsRequestList = () => {
         try {
-            const getFriendRequestsList = axiosInestance.get('/user/get-friend-requests').then(val => val)
+            const getFriendRequestsList = userInstance.get('/get-friend-requests').then(val => val)
             return getFriendRequestsList
         } catch (error) {
             console.log(error)
@@ -119,7 +119,7 @@ class ApiCall {
 
     static acceptFriendRequest = (contact_id) => {
         try {
-            const postFriendRequest = axiosInestance.post('/user/accept-friend', { contact_id: contact_id }).then(val => val)
+            const postFriendRequest = userInstance.post('/accept-friend', { contact_id: contact_id }).then(val => val)
             return postFriendRequest;
         } catch (error) {
             console.log(error)
@@ -127,7 +127,7 @@ class ApiCall {
     }
     static ignoreFriendRequest(friend_id) {
         try {
-            const ignore = axiosInestance.get('/user/ignore-friend-requests', {
+            const ignore = userInstance.get('/ignore-friend-requests', {
                 params: {
                     friend_id: friend_id
                 }
@@ -143,7 +143,7 @@ class ApiCall {
     }
     static editProfileData(profileData) {
         try {
-            const profile = axiosInestance.post('/user/edit-profile', profileData).then(value => value)
+            const profile = userInstance.post('/edit-profile', profileData).then(value => value)
 
             return profile
         } catch (error) {
@@ -154,7 +154,7 @@ class ApiCall {
 
     static createGroup(groupData) {
         try {
-            const group = axiosInestance.post('/user/create-group',groupData).then(value => value)
+            const group = userInstance.post('/create-group',groupData).then(value => value)
             return group
         } catch (error) {
             console.log(error)
@@ -162,17 +162,17 @@ class ApiCall {
 
     }
     static getGroups(){
-        const groups = axiosInestance.get('/user/get-groups').then(value => value)
+        const groups = userInstance.get('/get-groups').then(value => value)
         return groups
     }
 
     static getGroupContacts(id){
-        const contacts = axiosInestance.get('/user/get-group-contacts',{params:{groupId:id}}).then(value => value)
+        const contacts = userInstance.get('/get-group-contacts',{params:{groupId:id}}).then(value => value)
         return contacts
     }
 
     static getGroupsInfo(id){
-        const groups = axiosInestance.get('/user/group-information',{params:{conversation_id:id}}).then(value => value)
+        const groups = userInstance.get('/group-information',{params:{conversation_id:id}}).then(value => value)
         return groups
     }
     static getGroupMessges(id,page){
@@ -194,17 +194,17 @@ class ApiCall {
             return vote
     }
     static addContactToGroup(contactData){
-        const contact = axiosInestance.post('/user/add-contact-to-group',contactData).then(res=>res)
+        const contact = userInstance.post('/add-contact-to-group',contactData).then(res=>res)
         
         return contact
     }
     static deleteFriend(contact_id){
-        const friend = axiosInestance.post('/user/remove-friend',{friend_id:contact_id}).then(res=>res)
+        const friend = userInstance.post('/remove-friend',{friend_id:contact_id}).then(res=>res)
         return friend
     }
 
     static logOut(){
-        const logOut = axiosInestance.get('/user/logout').then(res=>res)
+        const logOut = userInstance.get('/logout').then(res=>res)
         return logOut
     }
 }

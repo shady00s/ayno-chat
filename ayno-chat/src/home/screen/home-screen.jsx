@@ -14,7 +14,6 @@ const AddNewContact = lazy(() =>
 );
 import { Helmet } from "react-helmet-async";
 import useWindowDimensions from "../../utils/window_size";
-import ContactContext from "../../context/contactContext";
 import NavigationContext from "../../context/navigationContext";
 import { logo } from "../../constants";
 const CreateChatGroupPopup = lazy(() =>
@@ -22,18 +21,15 @@ const CreateChatGroupPopup = lazy(() =>
 );
 import ChatBodyComponent from "../components/chat/chat_body";
 import RemoveFriendAlert from "../components/remove_friend_alert";
-import NotificationContext from "../../context/notificationContext";
 const ViewImageComponent = lazy(() =>
   import("../components/viewImageComponent")
 );
 import LoadingComponent from "../../reusable-components/loading/loading_component";
-import FriendContext from "../../context/friendContext";
+import { useSelector } from 'react-redux';
 
 export default function HomeScreen() {
   const { width } = useWindowDimensions();
-  //contact
-  const [contact, setContact] = useState({});
-  const contactValue = useMemo(() => ({ contact, setContact }), [contact]);
+
   // nav
   const [navigation, setNavigation] = useState("Contacts");
   const navigationValue = useMemo(
@@ -41,21 +37,10 @@ export default function HomeScreen() {
     [navigation]
   );
 
-  // notification
-  const [notifications, setNotifications] = useState({
-    messageNotification: [],
-    groupNotification: [],
-    friendRequestNotification: [],
-    newFriendNotification: [],
-  });
-  const notificationVal = useMemo(
-    () => ({ notifications, setNotifications }),
-    [notifications]
-  );
 
+    const contact = useSelector((state)=>state.data.contact)
   //  friend manager
-  const [friend, setFriend] = useState({});
-  const friendVal = useMemo(() => ({ friend, setFriend }), [friend]);
+
   return (
     <>
       <main className="w-full bg-background overflow-hidden relative h-[95%]  justify-start">
@@ -81,7 +66,7 @@ export default function HomeScreen() {
             }  p-2 items-center cursor-pointer`}
           >
             <h1 className="text-slate-300 mr-2 select-none">
-              {Object.keys(contact).length !== 0 && contact.type == "contact"
+              {contact._id !==null && contact.type == "contact"
                 ? contact.name + "'s info"
                 : contact.type == "group"
                 ? contact.groupName + " 's info"
@@ -104,15 +89,15 @@ export default function HomeScreen() {
             <Suspense fallback={<LoadingComponent />}>
               <SettingsComponent />
             </Suspense>
-            <ContactContext.Provider value={contactValue}>
-              <NotificationContext.Provider value={notificationVal}>
-                <FriendContext.Provider value={friendVal}>
+          
+              
+               
                   <ContactList />
                   <Suspense fallback={<LoadingComponent />}>
                     <RemoveFriendAlert />
                   </Suspense>
-                </FriendContext.Provider>
-              </NotificationContext.Provider>
+
+              
 
               <ChatBodyComponent />
               <Suspense fallback={<LoadingComponent />}>
@@ -122,7 +107,7 @@ export default function HomeScreen() {
               <Suspense fallback={<LoadingComponent />}>
                 <AddNewContact />
               </Suspense>
-            </ContactContext.Provider>
+  
 
             <Suspense fallback={<LoadingComponent />}>
               <CreateChatGroupPopup />

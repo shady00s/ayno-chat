@@ -1,6 +1,6 @@
 
 export let reducer = {
-    setContact:(state,action)=>{
+    setNewContact:(state,action)=>{
                 
             state.contact = action.payload   
     },
@@ -10,7 +10,7 @@ export let reducer = {
     setUser:(state,action)=>{
         state.user = action.payload
     },
-    setFriend:(state,action)=>{
+    setNewFriend:(state,action)=>{
         state.friend = action.payload
     }
 }

@@ -4,7 +4,6 @@ import IconButtonWithText from '../icon_button_with_text';
 import IconButton from '../icons_button';
 import { Paperclip, Image, File, Folder } from 'react-feather';
 import ApiCall from '../../../api_call';
-import ContactContext from '../../../context/contactContext';
 import SocketContext from '../../../context/socketContext';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -13,7 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 
 const AddImageComponent = () => {
-    const {contact} = useContext(ContactContext)
+    const  contact  = useSelector((state)=>state.data.contact)
     const user = useSelector((state)=>state.data.user)
     const socket = useContext(SocketContext)
     async function imageConverter(imagesList) {
@@ -42,7 +41,7 @@ const AddImageComponent = () => {
 
                     setOpen(!open) }} />
                 {/* selection container */}
-                <div className={`${open ? "translate-x-0" : "translate-x-[999px]"} transition-transform duration-300 absolute p-2 bg-[#1d2429] z-50 -top-[5.1rem] rounded-md -left-28 w-64 h-30 `}>
+                <div className={`${open ? " -translate-x-24" : "translate-x-[999px]"} transition-transform duration-300 absolute p-2 bg-[#1d2429] z-50 -top-[5.1rem] rounded-md -left-28 w-64 h-30 `}>
                     <div className='flex'>
                         <Folder className=' mr-2 stroke-slate-400' />
                         <h1 className='text-slate-200 select-none'>Send Media</h1>

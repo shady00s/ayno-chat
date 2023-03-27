@@ -1,19 +1,19 @@
 import { useContext,useState } from "react";
 import { UserMinus, X } from "react-feather";
 import NavigationContext from "../../context/navigationContext";
-import ContactContext from "../../context/contactContext";
 import InputTextComponent from "../../registration/components/input_text_component";
 import InputErrorComponent from "../../registration/components/input_error_component";
 import ApiCall from "../../api_call";
-import FriendContext from './../../context/friendContext';
 import LoadingComponent from "../../reusable-components/loading/loading_component";
+import { useDispatch, useSelector } from 'react-redux';
+import { setNewFriend } from "../../redux/slice";
 
 export default function RemoveFriendAlert() {
   const { navigation, setNavigation } = useContext(NavigationContext);
-  const { contact } = useContext(ContactContext);
+  const contact = useSelector((state)=>state.data.contact);
   const [text,setText] = useState("")
   const [disabled,setDisables] = useState(false)
-  const {setFriend} = useContext(FriendContext)
+  const setFriend = useDispatch()
   const [loading,setLoading]=useState(false)
   return (
     <div
@@ -64,7 +64,7 @@ export default function RemoveFriendAlert() {
                     }else{
                       setLoading(true)
                         ApiCall.deleteFriend(contact._id).then((val)=>{
-                          setFriend({data:contact,type:"remove"})
+                          setFriend(setNewFriend({data:contact,type:"remove"}))
                           setLoading(false)
                           setNavigation("")
                         }).catch(err=>{

@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { UserPlus, MessageSquare, Settings } from "react-feather";
 import { useContext } from "react";
-import ContactContext from "../../../context/contactContext";
 import NavigationContext from "../../../context/navigationContext";
 import ApiCall from "../../../api_call";
 import LoadingComponent from "../../../reusable-components/loading/loading_component";
 import SocketContext from './../../../context/socketContext';
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
+import { setNewContact } from "../../../redux/slice";
 async function sendRequest(data) {
   return await ApiCall.postFriendRequest({
     friend_id: data,
@@ -16,7 +16,7 @@ async function sendRequest(data) {
 const SearchResultComponent = (props) => {
   const  user  = useSelector((state)=>state.data.user);
   const { setNavigation } = useContext(NavigationContext);
-  const { setContact } = useContext(ContactContext);
+  const  setContact = useDispatch();
   const socket = useContext(SocketContext)
   const [loading, setLoading] = useState(false);
   return (
@@ -45,7 +45,7 @@ const SearchResultComponent = (props) => {
               {props.data.isFriend && user.id !== props.data.id ? (
                 <button
                   onClick={() => {
-                    setContact({
+                    setContact(setNewContact({
                       _id: props.data.id,
                       conversations: [
                         { conversation_Id: props.data.conversation_id },
@@ -53,7 +53,7 @@ const SearchResultComponent = (props) => {
                       profileImagePath: props.data.profileImagePath,
                       name: props.data.name,
                       type: "contact",
-                    });
+                    }));
                   }}
                   className=" p-1 rounded-md text-slate-300 border-2 border-slate-800 flex justify-center items-center text-sm"
                 >
@@ -74,7 +74,7 @@ const SearchResultComponent = (props) => {
                 <button
                   onClick={() => {
                     setLoading(true);
-                    socket.emit("new-notification",{ name:props.data.name, id:props.data.id, profileImagePath:props.data.profileImagePath, type:"friend-request"})
+                    socket.emit("new-notification",{ name:user.name, id:user.id, profileImagePath:user.profileImagePath, type:"friend-request"})
 
                    sendRequest(props.data.id).then((val) => {
                       if (val.status !== 200) {

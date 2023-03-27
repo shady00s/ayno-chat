@@ -6,8 +6,6 @@ import ContactButton from "./contact_button";
 import { FriendListSkeleton } from "../../../reusable-components/skeleton/friend_list";
 import CreateChatGroup from "../chat_group/create_chat_group";
 import SocketContext from './../../../context/socketContext';
-import FriendContext from './../../../context/friendContext';
-import NotificationContext from "../../../context/notificationContext";
 import { useDispatch, useSelector } from "react-redux";
 export default function FriendsList() {
     const [open, setOpen] = useState(false)

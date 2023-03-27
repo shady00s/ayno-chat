@@ -3,7 +3,8 @@ import { useEffect, useState, useRef, useContext } from 'react';
 import ApiCall from './../../../api_call';
 import FriendRequestBody from "./friend_request_body";
 import { FriendListSkeleton } from "../../../reusable-components/skeleton/friend_list";
-import NotificationContext from './../../../context/notificationContext';
+import { useSelector, useDispatch } from 'react-redux';
+import { setNotifications } from "../../../redux/slice";
 
 
 export function FriendRequestComponent() {
@@ -14,22 +15,19 @@ export function FriendRequestComponent() {
     const [loading, setLoading] = useState(false)
     const [numberofReq,setNumberOfReq]= useState(0)
 
-    const {notifications,setNotifications} = useContext(NotificationContext)
+    const setNotification = useDispatch()
    
-  
+    const notifications = useSelector((state)=>state.data.notifications)
 
  
 
     useEffect(()=>{
-        if(friendRequest.length !==0){
-            setFriendRequest(()=>[...friendRequest,...notifications.friendRequestNotification])
-
-        }else{
-            setFriendRequest(()=>[...notifications.friendRequestNotification])
+       
+            setFriendRequest(()=>([...notifications.friendRequestsNotifications]))
  
-        }
+        
 
-    },[notifications])
+    },[notifications.friendRequestsNotifications])
 
     useEffect(() => {
             setLoading(true)
@@ -43,6 +41,7 @@ export function FriendRequestComponent() {
             })
 
     }, [])
+    console.log(notifications.friendRequestsNotifications)
     useEffect(()=>{
         setNumberOfReq(friendRequest.length)
 
@@ -61,13 +60,18 @@ export function FriendRequestComponent() {
 
                 <div className={`${open?"h-[30rem]":"h-[0rem] overflow-hidden"} overflow-y-auto  transition-all duration-300 ease-in-out`}>
                     {loading?<FriendListSkeleton/>:friendRequest.length !==0?friendRequest.map(data=><FriendRequestBody key={data.name} data={data} removeFriendRequest={(removedId)=>{
-                        const requests = friendRequest.filter(id=> id._id !== removedId._id )
-                      setFriendRequest(()=>requests)
-                      let editedNotifications = notifications
+                       
+                       
+                       const requests = friendRequest.filter(id=> id._id !== removedId._id )
+                       
+                       let editedNotifications = {...notifications}
+                       
+                       editedNotifications.friendRequestsNotifications = requests
+                       
+                       setNotification(setNotifications(editedNotifications))
 
-                      editedNotifications.friendRequestNotification = requests
-
-                      setNotifications(()=>editedNotifications)
+                       console.log(notifications.friendRequestsNotifications)
+                       setFriendRequest(()=>requests)
                     }}/> ):<div className="flex flex-col w-full h-full justify-center items-center">
                                 <CloudRain size={44} className="p-1 stroke-slate-600 "/>
                             <h1 className="text-slate-400">There is no friend requests found</h1>

@@ -1,16 +1,15 @@
 import ChatMessageComponent from "./chat_message_component"
 import ChatMessageInputComponent from './chat_message_input_component';
-import React, { useState, useEffect, useRef, useContext, useMemo ,useCallback} from 'react';
+import React, { useState, useEffect, useRef, useContext, useCallback} from 'react';
 import ApiCall from '../../../api_call';
-import ContactContext from '../../../context/contactContext';
 import { ChatSkeleton } from './../../../reusable-components/skeleton/chat';
 import LoadingComponent from '../../../reusable-components/loading/loading_component' 
 import { Feather } from "react-feather";
 import SocketContext from './../../../context/socketContext';
-
+import { useSelector } from "react-redux";
 function MessageComponent() {
 
-    const { contact } = useContext(ContactContext)
+    const  contact  = useSelector((state)=>state.data.contact)
     const [chat, setChat] = useState([])
     const [loading, setLoading] = useState(false)
     const [loadingPagination,setLoadingPagination] = useState(false)
@@ -52,11 +51,13 @@ function MessageComponent() {
 
     useEffect(() => {
         setIsUserScrollBack(false)
-        if (Object.keys(contact).length !== 0) {
+        if (contact._id == null) return
+        else{
             setPage(0)
             setLoading(true)
             setNewMessage(false)
             ApiCall.getUserChatMessages(contact.conversations[0].conversation_Id,0).then(messages => {
+
                 if (messages.status === 200) {
                     setChat(() => messages.data.conversations)
                     setLoading(false)
@@ -66,10 +67,13 @@ function MessageComponent() {
                     alert('There is an error please try again')
                     setLoading(false)
                 }
+            }).catch(err=>{
+                console.log(err)
             })
+        
         }
+           
     }, [contact])
-
     useEffect(() => {
        if(socket.connected){
            socket.on("recive-message",newMessage )
@@ -99,7 +103,7 @@ function MessageComponent() {
 
 
 
-                {Object.keys(contact).length === 0 ? <div className="flex flex-col justify-center items-center h-full w-full">
+                {contact._id ===null ? <div className="flex flex-col justify-center items-center h-full w-full">
                     <Feather className=" stroke-slate-600 m-2" />
                     <h1 className="text-slate-400">Say hi to your friends</h1>
                     <h4 className="text-slate-600 text-sm p-2">Select friend from your contact list and say hi or start to make new connections</h4>
@@ -142,14 +146,14 @@ function MessageComponent() {
                         </div> 
                        
                         <div className=' w-full '>
-                            <ChatMessageInputComponent conversation_id={Object.keys(contact).length !== 0 ? contact.conversations[0].conversation_Id : ""} friend_id={contact._id} />
+                            <ChatMessageInputComponent conversation_id={contact._id !== null ? contact.conversations[0].conversation_Id : ""} friend_id={contact._id} />
 
                         </div>
                     </div>
 
 
 
-                    : <div className="flex flex-col justify-center items-center h-full w-full">
+                    : <div className="flex flex-col justify-center items-center h-full w-full overflow-x-hidden">
                         <div className="flex flex-col justify-center items-center h-[90%]">
                         <Feather className=" stroke-slate-600 m-2" />
                         <h1 className="text-slate-400">Say hi to your friends</h1>
@@ -159,7 +163,7 @@ function MessageComponent() {
 
                         </div>
                         <div className=' w-full  '>
-                            <ChatMessageInputComponent conversation_id={Object.keys(contact).length !== 0 ? contact.conversations[0].conversation_Id : ""} friend_id={contact._id} />
+                            <ChatMessageInputComponent conversation_id={contact._id !== null ? contact.conversations[0].conversation_Id : ""} friend_id={contact._id} />
                         </div>
                     </div>}
             </div>
