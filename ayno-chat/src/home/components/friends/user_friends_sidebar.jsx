@@ -105,11 +105,12 @@ function ContactList() {
 
         ApiCall.getSearchData(search.toLowerCase()).then(value => {
             if (value.status === 200) {
-                let isExisted = searchList.some(oldData => oldData.id === value.data.body.id)
-                if (!isExisted) {
-                    setSearchList((oldData) => [...oldData, value.data.body])
+                console.log(value)
+                // let isExisted = searchList.some(oldData => oldData.id === value.data.body.id)
+                // if (!isExisted) {
+                //     setSearchList((oldData) => [...oldData, value.data.body])
 
-                }
+                // }
             }
             else if (value.status === 204) {
                 alert('There is no user with name ' + search)
