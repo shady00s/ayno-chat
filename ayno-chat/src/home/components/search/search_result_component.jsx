@@ -18,6 +18,7 @@ const SearchResultComponent = (props) => {
   const { setNavigation } = useContext(NavigationContext);
   const  setContact = useDispatch();
   const socket = useContext(SocketContext)
+
   const [loading, setLoading] = useState(false);
   return (
     <>
@@ -76,7 +77,7 @@ const SearchResultComponent = (props) => {
                     setLoading(true);
                     socket.emit("new-notification",{ name:user.name, id:user.id, profileImagePath:user.profileImagePath, type:"friend-request"})
 
-                   sendRequest(props.data.id).then((val) => {
+                   sendRequest(props.data._id).then((val) => {
                       if (val.status !== 200) {
                         alert("There is an error");
                         setLoading(false);

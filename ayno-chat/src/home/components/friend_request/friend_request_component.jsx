@@ -41,7 +41,6 @@ export function FriendRequestComponent() {
             })
 
     }, [])
-    console.log(notifications.friendRequestsNotifications)
     useEffect(()=>{
         setNumberOfReq(friendRequest.length)
 
