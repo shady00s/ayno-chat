@@ -105,10 +105,9 @@ function ContactList() {
 
         ApiCall.getSearchData(search.toLowerCase()).then(value => {
             if (value.status === 200) {
-                console.log(value.data.body[0])
-                let isExisted = searchList.some(oldData => oldData.id === value.data.body._id)
+                let isExisted = searchList.some(oldData => oldData.id === value.data.body.id)
                 if (!isExisted) {
-                    setSearchList((oldData) => [...oldData, value.data.body[0]])
+                    setSearchList((oldData) => [...oldData, value.data.body])
 
                 }
             }

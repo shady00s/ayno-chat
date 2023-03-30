@@ -35,30 +35,20 @@ const search_user = (req, res) => {
             {
                 $addFields: {
                     isFriend: {
-                        $in: ['$_id', "$userData.friends"]
-                    }
-                }
-            },
-            {
-                $addFields: {
-                    conversation: {
-                        $filter: {
-                            input: "$userData.conversations",
-                            as: "convs",
-                            cond: { $in: ["$$convs.contact_Id", user_id] }
-                        }
-                    }
-                }
-            },
-            { $addFields: {
+                        $in: ['$userData.userId', "$friends"]
+                    },
+                    // conversation: {
+                    //     $elemMatch: { contact_Id: "$userData.userId" }
+                    // },
                     friendRequest: {
                         $filter: {
-                            input: "$userData.friendRequests",
+                            input: "$friendRequests",
                             as: "reqs",
-                            cond: { $in: ["$$reqs", user_id] }
+                            cond: { "$$reqs": { $in: ["$userData.userId"] } }
                         }
                     }
-                } },
+                },
+            },
             {
                 $project: {
                     _id: 1,

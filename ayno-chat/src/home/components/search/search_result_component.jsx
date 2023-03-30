@@ -49,7 +49,7 @@ const SearchResultComponent = (props) => {
                     setContact(setNewContact({
                       _id: props.data.id,
                       conversations: [
-                        { conversation_Id: props.data.conversation_id },
+                        { conversation_Id: props.data.conversation_id[0].conversation_Id },
                       ],
                       profileImagePath: props.data.profileImagePath,
                       name: props.data.name,
