@@ -28,7 +28,7 @@ export default async function  getGroupContacts(req:Request,res:Response){
                         result['profileImagePath']=val[index].profileImagePath,
                         result['isFriend']=userFriends.has(val[index]._id.toString())
                         result['isInFriendRequest']=userRequests.has(val[index]._id.toString())
-                        result['conversation_id']=[...userConvs].filter(contact=>contact.contact_Id.equals(val[index]._id))
+                        result['conversation_id']=[...userConvs].filter(contact=>contact.contact_Id.equals(val[index]._id))[0].contact_Id
 
                                 //push to array
                             resLast.push(result)

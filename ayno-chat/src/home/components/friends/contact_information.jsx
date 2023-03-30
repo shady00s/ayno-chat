@@ -17,7 +17,6 @@ function ContactInformation() {
   const [isUserOnline, setIsUserOnline] = useState();
   const [data, setData] = useState({ name: "", id: "" });
   const [groupMembers, setGroupMembers] = useState([]);
-  const [viewdGroupMembers, setViewdGroupMembers] = useState([]);
   const [selectedGroupMember, setSelectedGroupMember] = useState(-1);
   const [selectedGroupMemberData, setSelectedGroupMemberData] = useState({});
   const [friends, setFriends] = useState([])
@@ -41,9 +40,9 @@ function ContactInformation() {
     if (contact._id ===null) return
       if (contact.type === "contact") {
         setLoading(true);
-
         ApiCall.getMediaData(contact.conversations[0].conversation_Id).then(
           (val) => {
+            console.log(val.data);
             setMedia(() => val.data.body);
             setData(contact);
             setLoading(false);
@@ -75,25 +74,7 @@ function ContactInformation() {
     
   }, [contact]); //contact
 
-  useEffect(() => {
-    let editedList = []
-    for (let index = 0; index < groupMembers.length; index++) {
-      for (let index1 = 0; index1 < friends.length; index1++) {
-        if (groupMembers[index]._id !== friends[index1]._id) {
-          groupMembers[index].isFriend = false
-          editedList.push(groupMembers[index])
-        } else {
-
-          groupMembers[index].isFriend = true
-          editedList.push(groupMembers[index])
-        }
-
-      }
-
-    }
-    editedList = editedList.filter((friend, index, self) => index === self.findIndex(res => (res._id === friend._id)))
-    setViewdGroupMembers(() => editedList)
-  }, [loading])
+  
   return (
     <>
       {width <= 770 ? (
@@ -145,7 +126,7 @@ function ContactInformation() {
 
             {/* group contacts container */}
             <div className="overflow-y-auto h-[67rem]">
-              {viewdGroupMembers.length !== 0 && contact.type === "group" ? (
+              {groupMembers.length !== 0 && contact.type === "group" ? (
                 <div
                   onMouseLeave={() => {
                     setSelectedGroupMember(-1);
@@ -157,7 +138,7 @@ function ContactInformation() {
                     Conversation members
                   </h2>
                   <div className="flex justify-start items-start w-[70%] overflow-x-auto overflow-y-hidden">
-                    {viewdGroupMembers.map((data, index) => (
+                    {groupMembers.map((data, index) => (
                       <div key={data.name} className="p-1 w-14 m-1">
                         <img
                           onMouseEnter={() => {
@@ -195,7 +176,11 @@ function ContactInformation() {
                       {selectedGroupMemberData.isFriend ? <div
                         onClick={() => {
                           setContact(setNewContact({
-                            ...selectedGroupMemberData,
+                            _id:selectedGroupMemberData.id,
+                            name:selectedGroupMemberData.name,
+                            profileImagePath:selectedGroupMemberData.profileImagePath,
+                            conversations:[{conversation_Id:selectedGroupMemberData.conversation_id}],
+
                             type: "contact",
                           }));
                         }}
@@ -289,7 +274,7 @@ function ContactInformation() {
                 <div className="bg-slate-900 mt-10 mr-auto ml-auto w-10/12 h-[0.1rem]"></div>
                 {/* group contacts container */}
                 <div className="overflow-y-auto h-[67rem] ">
-                  {viewdGroupMembers.length !== 0 && contact.type === "group" ? (
+                  {groupMembers.length !== 0 && contact.type === "group" ? (
                     <div
                       onMouseLeave={() => {
                         setSelectedGroupMember(-1);
@@ -301,7 +286,7 @@ function ContactInformation() {
                         Conversation members
                       </h2>
                       <div className="flex justify-evenly w-[70%] overflow-x-auto overflow-y-hidden">
-                        {viewdGroupMembers.map((data, index) => (
+                        {groupMembers.map((data, index) => (
                           <div key={data.name} className="p-1 w-14 m-1">
                             <img
                               onMouseEnter={() => {
@@ -343,7 +328,10 @@ function ContactInformation() {
                           {selectedGroupMemberData.isFriend ? <div
                             onClick={() => {
                               setContact(setNewContact({
-                                ...selectedGroupMemberData,
+                                _id:selectedGroupMemberData.id,
+                                name:selectedGroupMemberData.name,
+                                profileImagePath:selectedGroupMemberData.profileImagePath,
+                                conversations:[{conversation_Id:selectedGroupMemberData.conversation_id}],
                                 type: "contact",
                               }));
                             }}

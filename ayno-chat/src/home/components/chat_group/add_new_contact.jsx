@@ -9,67 +9,31 @@ import { useSelector } from 'react-redux';
 export default function AddNewContact() {
     const  contact = useSelector((state)=>state.data.contact)
     const { navigation, setNavigation } = useContext(NavigationContext)
-    const [friends, setFriends] = useState([])
-    const [groupContacts, setGroupContacts] = useState([])
+    
     const [newFriends, setNewFriends] = useState([])
     const [selectedFriends, setSelectedFriends] = useState([])
     const [error, setError] = useState(false)
     const [loading, setLoading] = useState(false)
-    const getFriendsList = useCallback(async () => {
+    
 
-        await ApiCall.getFriendsList().then(val => {
-            setFriends(() => val.data.body.friends)
-        })
+   
 
-    }, [navigation.conversation_id])
+    useEffect(() => {
+       // newContacts()
+       if(navigation.conversation_id !== undefined){
+        setLoading(true)
 
-    const getGroupContact = useCallback(async () => {
-
-        await ApiCall.getGroupContacts(navigation.conversation_id).then(val => {
-            setGroupContacts(() => val.data.body);
-        });
-    }, [navigation.conversation_id])
-
-    const newContacts = useCallback(() => {
-        if (friends.length !== 0 && groupContacts.length !== 0) {
-            const newList = []
-
-
-            for (let index = 0; index < friends.length; index++) {
-                let founded = false
-                for (let index2 = 0; index2 < groupContacts.length; index2++) {
-                    if (groupContacts[index2]._id == friends[index]._id) {
-                        founded = true
-                    }
-                    if (!founded) {
-                        newList.push(friends[index])
-                    }
-                }
-            }
-
-
-            setNewFriends(() => newList)
-
+           ApiCall.getNewFriendsToGroup(navigation.conversation_id).then(val=>{
+            setNewFriends(()=>val.data.filteredFriends)
             setLoading(false)
+           }).catch(err=>{
+                alert("error occurred")
+                setLoading(false)
+           })
 
-        }
-    }, [friends, groupContacts])
-
-    useEffect(() => {
-        newContacts()
-    }, [friends, groupContacts])
-    useEffect(() => {
-        if (navigation.conversation_id !== undefined) {
-            setLoading(true)
-
-            getFriendsList()
-            getGroupContact()
-
-
-
-        }
-
-    }, [navigation.conversation_id])
+       }
+    }, [navigation])
+ 
     return (<div className={`${navigation.name === "add-contact-group" ? "translate-x-0 flex justify-center items-center opacity-100" : "translate-x-[9999px] opacity-0"} transition-opacity duration-100 ease-out absolute z-30 w-full h-full bg-theme`}>
         <div className="md:w-[30%] w-4/5 bg-slate-800  rounded-md  overflow-hidden">
             {/* title and close container */}

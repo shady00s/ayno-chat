@@ -202,6 +202,10 @@ class ApiCall {
         const friend = userInstance.post('/remove-friend',{friend_id:contact_id}).then(res=>res)
         return friend
     }
+    static getNewFriendsToGroup(id){
+        const data = userInstance.get('/get-new-group-members',{params:{group_id:id}}).then(res=>res)
+        return data
+    }
 
     static logOut(){
         const logOut = userInstance.get('/logout').then(res=>res)

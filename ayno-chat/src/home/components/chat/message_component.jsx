@@ -28,7 +28,6 @@ function MessageComponent() {
     },[socket])
 
     const newImage = useCallback((textVal) => {
-        console.log(textVal)
         setNewMessage(true)
 
          setChat((prev) => [...prev,{messages: {...textVal}}])
@@ -48,6 +47,7 @@ function MessageComponent() {
     }, [chat,newMessages])
 
     // when contact changes api call will triggered to insert new data
+    console.log(contact)
 
     useEffect(() => {
         setIsUserScrollBack(false)

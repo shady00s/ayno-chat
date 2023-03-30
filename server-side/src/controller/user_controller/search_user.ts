@@ -14,13 +14,13 @@ const search_user = async(req: Request, res: Response) => {
         const contactData = await user_model.findOne({name: new RegExp('^'+ contactName +'$','i')}).select(['-password','-groups']).then(val=>val)
         const userFriendList = new Set(userData.friends.map(val=>val.toString()))
         const userConversationsList = new Set(userData.conversations)
-        const userFriendReqList = new Set(userData.friendRequests.map(val=>val.toString()))
+        const contactFriendRequests = new Set(contactData.friendRequests.map(val=>val.toString()))
         res.status(200).json({message:'user found',body:{
             id:contactData._id,
             name:contactData.name,
             profileImagePath:contactData.profileImagePath,
             isFriend:userFriendList.has(contactData._id.toString()),
-            isInFriendRequests:userFriendReqList.has(contactData._id.toString()),
+            isInFriendRequests:contactFriendRequests.has(user_id.toString()),
             conversation_id:userFriendList.has(contactData._id.toString()) ? [...userConversationsList].filter(a=>a.contact_Id.equals(contactData._id))
             :undefined
         }})
