@@ -12,7 +12,7 @@ export const initialState = {
     notifications:{
         groupNotifications:[],
         messageNotifications:[],
-        newFriendsNotifications:[],
+        friendsNotifications:[],
         friendRequestsNotifications:[]
     },
     user:{

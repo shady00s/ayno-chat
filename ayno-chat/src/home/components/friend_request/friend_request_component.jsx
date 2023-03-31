@@ -14,31 +14,48 @@ export function FriendRequestComponent() {
     const [friendRequest, setFriendRequest] = useState([])
     const [loading, setLoading] = useState(false)
     const [numberofReq,setNumberOfReq]= useState(0)
-
+    const [firstload,setFirstLoad]=useState(true)
     const setNotification = useDispatch()
    
     const notifications = useSelector((state)=>state.data.notifications)
 
- 
+    function removeFriend(removedId){
+                       
+                       
+        const requests = friendRequest.filter(id=> id._id !== removedId._id )
+        
+        let editedNotifications = {...notifications}
+        
+        editedNotifications.friendRequestsNotifications = requests
+        
+        setNotification(setNotifications(editedNotifications))
+
+        console.log(notifications.friendRequestsNotifications)
+        setFriendRequest(()=>requests)
+     }
 
     useEffect(()=>{
-       
+                console.log(notifications);
             setFriendRequest(()=>([...notifications.friendRequestsNotifications]))
  
         
 
-    },[notifications.friendRequestsNotifications])
+    },[notifications])
 
     useEffect(() => {
             setLoading(true)
-            ApiCall.getFriendsRequestList().then(data => {
-               if(data.status === 200 && data.data.friendRequests.length !==0){
-                setFriendRequest(()=>[...friendRequest,...data.data.friendRequests])
+            if (firstload){
+                ApiCall.getFriendsRequestList().then(data => {
+                   if(data.status === 200 ){
+                    setFriendRequest(()=>data.data.friendRequests)
+    
+                   }
+                   setLoading(false)
+                   setFirstLoad(false)
+                    
+                })
 
-               }
-               setLoading(false)
-                
-            })
+            }
 
     }, [])
     useEffect(()=>{
@@ -58,20 +75,7 @@ export function FriendRequestComponent() {
                 </div>
 
                 <div className={`${open?"h-[30rem]":"h-[0rem] overflow-hidden"} overflow-y-auto  transition-all duration-300 ease-in-out`}>
-                    {loading?<FriendListSkeleton/>:friendRequest.length !==0?friendRequest.map(data=><FriendRequestBody key={data.name} data={data} removeFriendRequest={(removedId)=>{
-                       
-                       
-                       const requests = friendRequest.filter(id=> id._id !== removedId._id )
-                       
-                       let editedNotifications = {...notifications}
-                       
-                       editedNotifications.friendRequestsNotifications = requests
-                       
-                       setNotification(setNotifications(editedNotifications))
-
-                       console.log(notifications.friendRequestsNotifications)
-                       setFriendRequest(()=>requests)
-                    }}/> ):<div className="flex flex-col w-full h-full justify-center items-center">
+                    {loading?<FriendListSkeleton/>:friendRequest.length !==0?friendRequest.map(data=><FriendRequestBody key={data.name} data={data} removeFriendRequest={(removedId)=>{removeFriend(removedId)}}/> ):<div className="flex flex-col w-full h-full justify-center items-center">
                                 <CloudRain size={44} className="p-1 stroke-slate-600 "/>
                             <h1 className="text-slate-400">There is no friend requests found</h1>
                         </div>}  

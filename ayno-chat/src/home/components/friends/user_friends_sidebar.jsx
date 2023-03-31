@@ -28,6 +28,7 @@ function ContactList() {
     const  setNotification  = useDispatch()
     useEffect(() => {
         socket.on('notification', (data) => {
+            console.log(data);
             let notificationData = {...notifications} 
 
             switch (data.type) {
@@ -84,7 +85,7 @@ function ContactList() {
                     break
                 case"new-friend":
                 
-                    notificationData.newFriendNotification.push({ id: data.id, userId: data.userId, newMessage: data.newMessage })
+                    notificationData.friendsNotifications = [...notificationData.friendsNotifications,data]
                     setNotification(setNotifications({ ...notificationData }))
 
                 default:
