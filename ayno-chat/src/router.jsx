@@ -14,7 +14,7 @@ const AppRouters = () => {
                 <Routes>
 
                     <Route element={<LoadingScreen/>} path="/"/>
-                    <Route path="/ayno-chat/"  element={<LoadingScreen/>}/>
+                    <Route element={<LoadingScreen/>} path="/ayno-chat/"/>
                     <Route element={<IntroScreen/>} path="/ayno-chat/register"/>
                     <Route element={<PrivateRoute/>}>
                     <Route element={<HomeScreen/> } path="/ayno-chat/home"/>

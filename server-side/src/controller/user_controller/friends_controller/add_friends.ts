@@ -24,7 +24,7 @@ const postAcceptFriendController = async (req: Request, res: Response, next: Nex
 
             await user_model.findById({ _id: user_id }).then(async result => {
 
-                if (result.friends.find((data) => data.id == contact_id) === undefined) {
+                if (result.friends.find((data) => data.equals(contact_id)) === undefined && result.conversations.find((results)=>results.contact_Id.equals(result._id) )) {
 
                     try {
 
@@ -64,6 +64,41 @@ const postAcceptFriendController = async (req: Request, res: Response, next: Nex
                     }
 
 
+                } 
+                else if(result.conversations.find((results)=>results.contact_Id.equals(result._id)!==undefined)){
+                    
+                    try {
+                        await user_model.findByIdAndUpdate(user_id,
+                            { $addToSet: { conversations: { conversation_Id: generatedConversationId, contact_Id: contact_id }, friends: contact_id },$pull:{friendRequests: contact_id} },
+    
+                            { new: true }).session(session).then(userValue => {
+                                return userValue
+                            })
+                        let contactInformation = await user_model.findByIdAndUpdate(contact_id, { $addToSet: { conversations: { conversation_Id: generatedConversationId, contact_Id: user_id }, friends: user_id } }, { new: true }).session(session).then(contactValue => {
+                            return contactValue
+    
+                        })
+                        await session.commitTransaction().then(() => {
+                            res.status(200).json({
+                                message: "succssess",body:{
+                                    _id:contactInformation._id,
+                                    name:contactInformation.name,
+                                    conversations:[{conversation_Id:result.conversations.find((results)=>results.contact_Id.equals(result._id))}],
+                                    profileImagePath:contactInformation.profileImagePath
+                                }
+
+                            })
+
+                        })
+                        
+                    } catch (error) {
+                        Logining.error(error)
+                        res.status(400).json({ message: "session catchs an error", body: error })
+                    } finally {
+                        session.endSession()
+                    }
+
+                 
                 }
                 else {
                     res.status(500).json({ message: "this contact is already your friend" })

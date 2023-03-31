@@ -19,7 +19,6 @@ export default async function sendImage(req: Request, res: Response, next: NextF
             if (media[index].match(/^data:([A-Za-z-+/]+);base64,(.+)$/)) {
                 await ImageManager.uploadImage(media[index], conversation_id).then((data) => {
                     mediaLinks.push(data.url)
-                    //    new SocketManager().imageUrl ={message:data.url,sender_id:sender_id,sender_image_path:sender_image_path} 
                 
                 })
             }

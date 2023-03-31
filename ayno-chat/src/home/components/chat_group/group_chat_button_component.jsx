@@ -17,7 +17,9 @@ export default function GroupChatButtonComponent(props){
     useEffect(()=>{
         if(props.data.conversation_id !== undefined){
             ApiCall.getGroupContacts(props.data.conversation_id).then(val =>{
-                setContact(setNewContact(val.data.body))
+                console.log(val.data)
+                setContacts(val.data.body[0].groupContacts)
+                //setContact(setNewContact(val.data.groupContacts))
             })
         }
     },[props.data])
