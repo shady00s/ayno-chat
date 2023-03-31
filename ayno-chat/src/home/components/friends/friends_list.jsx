@@ -6,7 +6,7 @@ import ContactButton from "./contact_button";
 import { FriendListSkeleton } from "../../../reusable-components/skeleton/friend_list";
 import CreateChatGroup from "../chat_group/create_chat_group";
 import { useDispatch, useSelector } from "react-redux";
-import { setNotifications } from "../../../redux/slice";
+import { setNewFriend, setNotifications } from "../../../redux/slice";
 export default function FriendsList() {
     const [open, setOpen] = useState(false)
     const [friends, setFriends] = useState([])
@@ -19,7 +19,7 @@ export default function FriendsList() {
     const notifications = useSelector((state)=>state.data.notifications)
 
     const notificaitonDispatch = useDispatch()
-
+    const friendDispatch = useDispatch()
     // const notificationCleaner = useCallback(()=>{
     //     let newNotfications = {...notifications,friendsNotifications:[]}
     //     notificaitonDispatch(setNotifications(newNotfications))
@@ -30,23 +30,31 @@ export default function FriendsList() {
         let prevNotifications = [...notifications.friendsNotifications]
         
         // to remove / add frinds from notifications
+        console.log(prevNotifications);
+            for (let index = 0; index < prevNotifications.length; index++) {
+                if(prevNotifications[index].friendType==="add"){
+                    list.push(prevNotifications[index])
+                }else if(prevNotifications[index].friend.friendType==="remove"){
+                    list = list.filter(oldFriends=>oldFriends._id !== prevNotifications[index]._id)
+    
+                }
+                
+            console.log({...notifications,friendsNotifications:[]});
 
-        for (let index = 0; index < prevNotifications.length; index++) {
-            if(prevNotifications[index].friendType==="add"){
-                list.push(prevNotifications[index])
-            }else if(prevNotifications[index].friend.friendType==="remove"){
-                list = list.filter(oldFriends=>oldFriends._id !== prevNotifications[index]._id)
-
+           notificaitonDispatch(setNotifications({...notifications,friendsNotifications:[]}))
+        }
+        console.log(notifications);
+        console.log(friend);
+        if(friend.data._id !== null){
+            if(friend.friendType==="add"){
+                list.push(friend.data)
+            }else if (friend.friendType==="remove"){
+                list = list.filter(oldFriends=>oldFriends._id !== friend.data._id)
             }
-            
+          
+
         }
-        if(friend.friendType==="add"){
-            list.push(friend.data)
-        }else if (friend.friendType==="remove"){
-            list = list.filter(oldFriends=>oldFriends._id !== friend.data._id)
-        }
-        
-        
+        set
         setFriends(()=>[...list])
     },[friend,notifications])
     
@@ -91,7 +99,7 @@ export default function FriendsList() {
                     isActive={false}
                     onClick={()=>{ 
                         setSelectedIndex(()=>index)
-                    }}  key={data.name} data={data}  selected={selectedIndex === index?true:false}/>) :
+                    }}  key={data._id} data={data}  selected={selectedIndex === index?true:false}/>) :
                     
                     <div className="flex justify-center items-center w-full h-full
                     ">

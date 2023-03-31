@@ -15,12 +15,11 @@ const SearchResultComponent = (props) => {
   const { setNavigation } = useContext(NavigationContext);
   const setContact = useDispatch();
   const socket = useContext(SocketContext);
-  console.log(props);
   const [loading, setLoading] = useState(false);
   const [text, setText] = useState("");
 
 
-  async function sendRequest(data) {
+  async function sendRequest() {
     setLoading(true);
     socket.emit("new-notification", {
       name: user.name,
@@ -30,7 +29,7 @@ const SearchResultComponent = (props) => {
       type: "friend-request",
     });
     await ApiCall.postFriendRequest({
-      friend_id: data,
+      friend_id: props.data.id,
     })
       .then((val) => {
         if (val.status !== 200) {
@@ -112,7 +111,7 @@ const SearchResultComponent = (props) => {
                 <button
                   onClick={() => {
                    
-                    sendRequest(props.data.id);
+                    sendRequest();
                   }}
                   className={`${
                     text === "Friend Request has been sent" ? "hidden" : "flex"

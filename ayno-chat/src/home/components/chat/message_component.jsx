@@ -47,7 +47,6 @@ function MessageComponent() {
     }, [chat,newMessages])
 
     // when contact changes api call will triggered to insert new data
-    console.log(contact)
 
     useEffect(() => {
         setIsUserScrollBack(false)

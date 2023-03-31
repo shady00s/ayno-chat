@@ -32,6 +32,7 @@ function ContactList() {
             let notificationData = {...notifications} 
 
             switch (data.type) {
+
                 case "message":
 
                     let contactExist = notificationData.messageNotification.some(oldData => oldData.id === data.id)
@@ -85,7 +86,7 @@ function ContactList() {
                     break
                 case"new-friend":
                 
-                    notificationData.friendsNotifications = [...notificationData.friendsNotifications,data]
+                    notificationData.friendsNotifications = [...notificationData.friendsNotifications,data.data]
                     setNotification(setNotifications({ ...notificationData }))
 
                 default:

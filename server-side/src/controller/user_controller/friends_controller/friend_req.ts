@@ -14,12 +14,16 @@ try {
     user_model.findById(user_id).then(async user=>{
         if(user !== null){
             
-           let friend_data = await user_model.findByIdAndUpdate(friend_id,{$addToSet:{friendRequests:user_id}}).then(val=>val)
-           if( friend_data !==null){
-          //  SocketManager.friendRequestSocket({name:friend_data.name,profileImage:friend_data.profileImagePath})
-           // socketManager.friendRequest({name:user.name,profileImage:user.profileImagePath})
-            res.status(200).json({message: "succsses , request was sent."})
-           }
+           user_model.findByIdAndUpdate({_id:friend_id},{$addToSet:{friendRequests:user_id}},{new:true}).then(friend_data=>{
+               if( friend_data !==null){
+             
+                res.status(200).json({message: "succsses , request was sent."})
+               }else{
+                res.status(500).json({message: "friend is already existed"})
+
+               }
+
+           })
         }
         else{
             res.status(500).json({message: "the user id is not found",})

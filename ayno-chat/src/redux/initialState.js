@@ -27,7 +27,8 @@ export const initialState = {
         profileImagePath:"",
         conversations:[]
         },
-        type:""
+        type:"",
+        friendType:''
         
     }
 }

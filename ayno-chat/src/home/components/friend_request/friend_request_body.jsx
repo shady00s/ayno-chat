@@ -17,7 +17,7 @@ export default function FriendRequestBody(props) {
             alert('user added succssessfully')
             setLoading(false)
             props.removeFriendRequest(props.data)
-            socket.emit('new-notification', { id: props.data._id, ...val.data.body,friendType: "add", type: "new-friend" })
+            socket.emit('new-notification', { id: props.data._id, data:{...val.data.body,friendType: "add",type:"contact"}, type: "new-friend" })
             setFriend(setNewFriend({ data: val.data.body, friendType: "add" }))
         }).catch(err => {
             console.log(err)

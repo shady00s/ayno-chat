@@ -30,7 +30,12 @@ function removeFriend(){
     setLoading(false)
       socket.emit('notification',{contact,friendType:"remove",type:"new-friend"})
       setNavigation("")
-      setContact(setNewContact({}))
+      setContact(setNewContact({
+        _id:null,
+        name:"",
+        profileImagePath:"",
+        conversations:[],
+        type:''}))
     }).catch(err=>{
       setLoading(false)
       console.log(err)
