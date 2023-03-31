@@ -28,9 +28,11 @@ function ContactList() {
     const  setNotification  = useDispatch()
     useEffect(() => {
         socket.on('notification', (data) => {
+            console.log(data);
             let notificationData = {...notifications} 
 
             switch (data.type) {
+
                 case "message":
 
                     let contactExist = notificationData.messageNotification.some(oldData => oldData.id === data.id)
@@ -84,7 +86,7 @@ function ContactList() {
                     break
                 case"new-friend":
                 
-                    notificationData.newFriendNotification.push({ id: data.id, userId: data.userId, newMessage: data.newMessage })
+                    notificationData.friendsNotifications = [...notificationData.friendsNotifications,data.data]
                     setNotification(setNotifications({ ...notificationData }))
 
                 default:
@@ -105,10 +107,9 @@ function ContactList() {
 
         ApiCall.getSearchData(search.toLowerCase()).then(value => {
             if (value.status === 200) {
-                console.log(value.data.body)
-                let isExisted = searchList.some(oldData => oldData._id === value.data.body._id)
+                let isExisted = searchList.some(oldData => oldData.id === value.data.body.id)
                 if (!isExisted) {
-                    setSearchList((oldData) => [...oldData, value.data.body])
+                    setSearchList((oldData) => [...oldData, value.data.body[0]])
 
                 }
             }

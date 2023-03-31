@@ -6,15 +6,45 @@ import InputErrorComponent from "../../registration/components/input_error_compo
 import ApiCall from "../../api_call";
 import LoadingComponent from "../../reusable-components/loading/loading_component";
 import { useDispatch, useSelector } from 'react-redux';
-import { setNewFriend } from "../../redux/slice";
+import { setNewContact, setNewFriend } from "../../redux/slice";
+import SocketContext from "../../context/socketContext";
 
 export default function RemoveFriendAlert() {
   const { navigation, setNavigation } = useContext(NavigationContext);
+  const socket = useContext(SocketContext)
   const contact = useSelector((state)=>state.data.contact);
+  const setContact = useDispatch()
   const [text,setText] = useState("")
   const [disabled,setDisables] = useState(false)
   const setFriend = useDispatch()
   const [loading,setLoading]=useState(false)
+
+function removeFriend(){
+  if ( text!==contact.name) {
+    setDisables(true)
+
+}else{
+  setLoading(true)
+  ApiCall.deleteFriend(contact._id).then((val)=>{
+    setFriend(setNewFriend({data:contact,friendType:"remove"}))
+    setLoading(false)
+      socket.emit('notification',{contact,friendType:"remove",type:"new-friend"})
+      setNavigation("")
+      setContact(setNewContact({
+        _id:null,
+        name:"",
+        profileImagePath:"",
+        conversations:[],
+        type:''}))
+    }).catch(err=>{
+      setLoading(false)
+      console.log(err)
+      alert("There is an error, please try again")
+    })
+
+}
+}
+
   return (
     <div
       id="bg-friendAlert"
@@ -58,21 +88,7 @@ export default function RemoveFriendAlert() {
             }} placeHolder="Write the name here."/>
             <div className="flex">
                 <button onClick={()=>{
-                    if ( text!==contact.name) {
-                        setDisables(true)
-
-                    }else{
-                      setLoading(true)
-                        ApiCall.deleteFriend(contact._id).then((val)=>{
-                          setFriend(setNewFriend({data:contact,type:"remove"}))
-                          setLoading(false)
-                          setNavigation("")
-                        }).catch(err=>{
-                          setLoading(false)
-                          console.log(err)
-                          alert("There is an error, please try again")
-                        })
-                    }
+                   removeFriend()
                 }} className="border-[1px] p-1 border-gray-700 rounded-lg m-1 flex items-center text-sm text-slate-400" >{loading?<div className="mr-1"><LoadingComponent/></div>:<UserMinus size={18} className="stroke-blue-600 mr-1 "/>} confirm</button>
                 <button className="border-[1px] p-1 border-gray-700 rounded-lg m-1 flex items-center text-sm text-slate-400"> <X size={18}  className="stroke-pink-600 mr-1"/> cancel</button>
             </div>

@@ -28,7 +28,6 @@ function MessageComponent() {
     },[socket])
 
     const newImage = useCallback((textVal) => {
-        console.log(textVal)
         setNewMessage(true)
 
          setChat((prev) => [...prev,{messages: {...textVal}}])

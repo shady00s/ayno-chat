@@ -5,77 +5,25 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const user_model_1 = __importDefault(require("../../model/user_model"));
 const express_validator_1 = require("express-validator");
-const search_user = (req, res) => {
+const search_user = async (req, res) => {
     const contactName = req.query.contactName;
     const user_id = req.session.userData.userId;
     const errors = (0, express_validator_1.validationResult)(req);
     if (errors.isEmpty()) {
-        user_model_1.default.aggregate([
-            //find searched user with username 
-            { $match: { name: new RegExp('^' + contactName + '$', "i") } },
-            // find user data if searched user is friend with user then set key to isFriend true else set is Friend false
-            {
-                $lookup: {
-                    from: "userModel",
-                    let: { userId: '$_id', friends: "$friends", friendRequests: "$friendRequests", conversations: "$conversations" },
-                    pipeline: [
-                        { $match: { "_id": user_id } },
-                        {
-                            $project: {
-                                _id: 1,
-                                friends: 1,
-                                friendRequests: 1,
-                                conversations: 1
-                            }
-                        }
-                    ],
-                    as: "userData"
-                }
-            },
-            {
-                $addFields: {
-                    isFriend: {
-                        $in: ['$_id', "$userData.friends"]
-                    }
-                }
-            },
-            {
-                $addFields: {
-                    conversation: {
-                        $filter: {
-                            input: "$userData.conversations",
-                            as: "convs",
-                            cond: { $in: ["$$convs.contact_Id", user_id] }
-                        }
-                    }
-                }
-            },
-            { $addFields: {
-                    friendRequest: {
-                        $filter: {
-                            input: "$userData.friendRequests",
-                            as: "reqs",
-                            cond: { $in: ["$$reqs", user_id] }
-                        }
-                    }
-                } },
-            {
-                $project: {
-                    _id: 1,
-                    name: 1,
-                    profileImagePath: 1,
-                    isFriend: 1,
-                    conversation: 1,
-                    friendRequest: 1
-                }
-            },
-        ]).exec((err, val) => {
-            console.log(err);
-            res.status(200).json({
-                message: "user found",
-                body: val
-            });
-        });
+        const userData = await user_model_1.default.findById(user_id).select(['-password', '-name', '-_id', '-groups', '-profileImagePath']).then(val => val);
+        const contactData = await user_model_1.default.findOne({ name: new RegExp('^' + contactName + '$', 'i') }).select(['-password', '-groups']).then(val => val);
+        const userFriendList = new Set(userData.friends.map(val => val.toString()));
+        const userConversationsList = new Set(userData.conversations);
+        const contactFriendRequests = new Set(contactData.friendRequests.map(val => val.toString()));
+        res.status(200).json({ message: 'user found', body: {
+                id: contactData._id,
+                name: contactData.name,
+                profileImagePath: contactData.profileImagePath,
+                isFriend: userFriendList.has(contactData._id.toString()),
+                isInFriendRequests: contactFriendRequests.has(user_id.toString()),
+                conversation_id: userFriendList.has(contactData._id.toString()) ? [...userConversationsList].filter(a => a.contact_Id.equals(contactData._id))
+                    : undefined
+            } });
     }
     else {
         res.status(500).json({ message: "there is an error", errors });

@@ -13,13 +13,12 @@ export default function GroupChatButtonComponent(props){
 
     const contact = useSelector((state)=>state.data.contact)
     const setContact = useDispatch()
+
     const {setNavigation}=useContext(NavigationContext)
     useEffect(()=>{
         if(props.data.conversation_id !== undefined){
             ApiCall.getGroupContacts(props.data.conversation_id).then(val =>{
-                console.log(val.data)
-                setContacts(val.data.body[0].groupContacts)
-                //setContact(setNewContact(val.data.groupContacts))
+                setContact(setNewContact(val.data.body))
             })
         }
     },[props.data])
@@ -30,11 +29,11 @@ export default function GroupChatButtonComponent(props){
         setNavigation('')
         ApiCall.getGroupsInfo(props.data.conversation_id).then(data=>{
 
-            setContact({conversation_id:data.data.body.conversation_id,type:'group',groupName:data.data.body.conversation_name,
+            setContact(setNewContact({conversation_id:data.data.body.conversation_id,type:'group',groupName:data.data.body.conversation_name,
             members_number:data.data.body.members_count,
             members_colors:data.data.body.members_color
         
-        })
+        }))
             socket.emit('join-group-conversation',data.data.body.conversation_id)
         })
 }} className="cursor-pointer hover:bg-[rgba(153,190,253,0.2)] w-[95%] m-1  bg-[rgba(123,167,243,0.06)] rounded-lg flex-col  flex  justify-center">

@@ -12,7 +12,7 @@ export const initialState = {
     notifications:{
         groupNotifications:[],
         messageNotifications:[],
-        newFriendsNotifications:[],
+        friendsNotifications:[],
         friendRequestsNotifications:[]
     },
     user:{
@@ -27,7 +27,8 @@ export const initialState = {
         profileImagePath:"",
         conversations:[]
         },
-        type:""
+        type:"",
+        friendType:''
         
     }
 }

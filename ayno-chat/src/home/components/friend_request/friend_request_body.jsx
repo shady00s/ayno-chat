@@ -10,7 +10,6 @@ export default function FriendRequestBody(props) {
 
     const [loading, setLoading] = useState(false)
     const setFriend = useDispatch()
-
     const socket = useContext(SocketContext)
     function acceptFriendRequest() {
         setLoading(true)
@@ -18,8 +17,8 @@ export default function FriendRequestBody(props) {
             alert('user added succssessfully')
             setLoading(false)
             props.removeFriendRequest(props.data)
-            socket.emit('new-notification', { id: props.data._id, ...val.data.body, type: "new-friend" })
-            setFriend(setNewFriend({ data: val.data.body, type: "add" }))
+            socket.emit('new-notification', { id: props.data._id, data:{...val.data.body,friendType: "add",type:"contact"}, type: "new-friend" })
+            setFriend(setNewFriend({ data: val.data.body, friendType: "add" }))
         }).catch(err => {
             console.log(err)
             alert("There is an error, please try again")
