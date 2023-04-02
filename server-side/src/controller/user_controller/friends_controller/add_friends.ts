@@ -13,9 +13,9 @@ const postAcceptFriendController = async (req: Request, res: Response, next: Nex
 
     // create transaction between user and contact to add each other and create conversation 
     const generatedConversationId = new mongoose.Types.ObjectId
-    
+
     const errors = validationResult(req)
-    
+
     try {
         if (errors.isEmpty()) {
             let session = await mongoose.startSession()
@@ -23,33 +23,46 @@ const postAcceptFriendController = async (req: Request, res: Response, next: Nex
             // check if the contact is not inside friends array
 
             await user_model.findById({ _id: user_id }).then(async result => {
-
-                if (result.friends.find((data) => data.equals(contact_id)) === undefined && result.conversations.find((results)=>results.contact_Id.equals(result._id) )) {
+                const conversationData = result.conversations.find((results) => results.contact_Id.equals(result._id))
+                if (result.friends.find((data) => data.equals(contact_id)) === undefined && conversationData === undefined) {
 
                     try {
 
-                        let userInformation = await user_model.findByIdAndUpdate(user_id,
-                            { $addToSet: { conversations: { conversation_Id: generatedConversationId, contact_Id: contact_id }, friends: contact_id },$pull:{friendRequests: contact_id} },
+                        let userInformation = await user_model.findByIdAndUpdate({ _id: user_id },
+                            {
+                                $push: { conversations: { conversation_Id: generatedConversationId, contact_Id: contact_id } },
+                                $pull: { friendRequests: contact_id },
+                                $addToSet: { friends: contact_id },
 
-                            { new: true }).session(session).then(userValue => {
-                                return userValue
-                            })
-                        let contactInformation = await user_model.findByIdAndUpdate(contact_id, { $addToSet: { conversations: { conversation_Id: generatedConversationId, contact_Id: user_id }, friends: user_id } }, { new: true }).session(session).then(contactValue => {
-                            return contactValue
-                        })
+                            },
+                            { new: true }).session(session)
+                        let contactInformation = await user_model.findByIdAndUpdate({ _id: contact_id },
+                            {
+                                $push: { conversations: { conversation_Id: generatedConversationId, contact_Id: user_id } },
+                                $addToSet: { friends: user_id }
+                            }, { new: true }).session(session)
                         // create conversation 
-                       let conversation =  await new conversation_model({ conversation_id: generatedConversationId, members_ids: [userInformation.id, contactInformation.id] }, { session }).save().then(result => { return result })
+                        let conversation = await new conversation_model({ conversation_id: generatedConversationId, members_ids: [userInformation.id, contactInformation.id] }, { session: session }).save()
 
-                        await session.commitTransaction().then(() => {
-                            res.status(200).json({
-                                message: "succssess",body:{
-                                    _id:contactInformation._id,
-                                    name:contactInformation.name,
-                                    conversations:[{conversation_Id:conversation.conversation_id}],
-                                    profileImagePath:contactInformation.profileImagePath
-                                }
+                        await session.commitTransaction().then((val) => {
 
-                            })
+                            if (val.ok === 1) {
+                                res.status(200).json({
+                                    message: "succssess",
+                                    body: {
+                                        _id: contactInformation._id,
+                                        name: contactInformation.name,
+                                        conversations: [{ conversation_Id: conversation.conversation_id,contact_Id:user_id }],
+                                        profileImagePath: contactInformation.profileImagePath
+                                    }, userData: { 
+                                        _id: userInformation._id,
+                                        name: userInformation.name,
+                                        profileImagePath: userInformation.profileImagePath,
+                                        conversations: [{ conversation_Id: conversation.conversation_id, contact_id: contact_id }] }
+
+                                })
+                            }
+
 
                         })
 
@@ -64,33 +77,45 @@ const postAcceptFriendController = async (req: Request, res: Response, next: Nex
                     }
 
 
-                } 
-                else if(result.conversations.find((results)=>results.contact_Id.equals(result._id)!==undefined)){
-                    
+                }
+                else if (conversationData !== undefined) {
+
                     try {
-                        await user_model.findByIdAndUpdate(user_id,
-                            { $addToSet: { conversations: { conversation_Id: generatedConversationId, contact_Id: contact_id }, friends: contact_id },$pull:{friendRequests: contact_id} },
-    
-                            { new: true }).session(session).then(userValue => {
-                                return userValue
-                            })
-                        let contactInformation = await user_model.findByIdAndUpdate(contact_id, { $addToSet: { conversations: { conversation_Id: generatedConversationId, contact_Id: user_id }, friends: user_id } }, { new: true }).session(session).then(contactValue => {
-                            return contactValue
-    
-                        })
-                        await session.commitTransaction().then(() => {
-                            res.status(200).json({
-                                message: "succssess",body:{
-                                    _id:contactInformation._id,
-                                    name:contactInformation.name,
-                                    conversations:[{conversation_Id:result.conversations.find((results)=>results.contact_Id.equals(result._id))}],
-                                    profileImagePath:contactInformation.profileImagePath
-                                }
 
-                            })
+
+                       let userData = await user_model.findByIdAndUpdate(user_id, {
+                            $addToSet: { friends: contact_id },
+                            $pull: { friendRequests: contact_id },
+
+
+                        }, { new: true }).session(session);
+
+                        let contactData = await user_model.findByIdAndUpdate(contact_id, {
+                            $addToSet: { friends: user_id },
+
+                        }, { new: true}).session(session);
+
+                         session.commitTransaction().then((val) => {
+                            if (val.ok===1) {
+                                res.status(200).json({
+                                    message: "succssess", body: {
+                                        _id: contactData._id,
+                                        name: contactData.name,
+                                        conversations: [{ conversation_Id: conversationData.conversation_Id, contact_Id: user_id }],
+                                        profileImagePath: contactData.profileImagePath
+                                    },userData:{
+                                        _id: userData._id,
+                                        name: userData.name,
+                                        conversations: [{ conversation_Id: conversationData.conversation_Id, contact_Id: contact_id }],
+                                        profileImagePath: userData.profileImagePath
+                                    }
+
+                                })
+
+                            }
 
                         })
-                        
+
                     } catch (error) {
                         Logining.error(error)
                         res.status(400).json({ message: "session catchs an error", body: error })
@@ -98,7 +123,7 @@ const postAcceptFriendController = async (req: Request, res: Response, next: Nex
                         session.endSession()
                     }
 
-                 
+
                 }
                 else {
                     res.status(500).json({ message: "this contact is already your friend" })
@@ -116,7 +141,7 @@ const postAcceptFriendController = async (req: Request, res: Response, next: Nex
 
 
     } catch (error) {
-
+        console.log(error);
         Logining.error("There is an error")
     }
 

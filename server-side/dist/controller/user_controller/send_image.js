@@ -21,7 +21,6 @@ async function sendImage(req, res, next) {
             if (media[index].match(/^data:([A-Za-z-+/]+);base64,(.+)$/)) {
                 await image_manager_1.default.uploadImage(media[index], conversation_id).then((data) => {
                     mediaLinks.push(data.url);
-                    //    new SocketManager().imageUrl ={message:data.url,sender_id:sender_id,sender_image_path:sender_image_path} 
                 });
             }
         }

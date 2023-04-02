@@ -30,12 +30,10 @@ export function FriendRequestComponent() {
         
         setNotification(setNotifications(editedNotifications))
 
-        console.log(notifications.friendRequestsNotifications)
         setFriendRequest(()=>requests)
      }
 
     useEffect(()=>{
-                console.log(notifications);
             setFriendRequest(()=>([...notifications.friendRequestsNotifications]))
  
         

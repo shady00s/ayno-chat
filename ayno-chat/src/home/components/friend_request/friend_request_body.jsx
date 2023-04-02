@@ -13,13 +13,16 @@ export default function FriendRequestBody(props) {
     const socket = useContext(SocketContext)
     function acceptFriendRequest() {
         setLoading(true)
+
+       
         ApiCall.acceptFriendRequest(props.data._id).then(val => {
+
             alert('user added succssessfully')
             setLoading(false)
             props.removeFriendRequest(props.data)
-            socket.emit('new-notification', { id: props.data._id, data:{...val.data.body,friendType: "add",type:"contact"}, type: "new-friend" })
-            setFriend(setNewFriend({ data: val.data.body, friendType: "add" }))
-        }).catch(err => {
+            socket.emit('new-notification', { id: props.data._id, data:{...val.data.userData,friendType: "add",type:"contact"}, type: "new-friend" })
+            setFriend(setNewFriend({data:{...props.data},friendType: "add",type:"contact"}))
+        }).catch(err => {   
             console.log(err)
             alert("There is an error, please try again")
             setLoading(false)

@@ -63,7 +63,7 @@ let socketManager = {
                             socket.to(id.id).emit('notification', { ...id });
                             break;
                         case "friend-request":
-                            socket.to(id.id).emit('notification', { ...id });
+                            socket.to(id._id).emit('notification', { ...id });
                             break;
                         case "group-message":
                             socket.to(id.id).emit('notification', { ...id });

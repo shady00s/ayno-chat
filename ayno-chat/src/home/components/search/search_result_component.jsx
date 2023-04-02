@@ -21,13 +21,7 @@ const SearchResultComponent = (props) => {
 
   async function sendRequest() {
     setLoading(true);
-    socket.emit("new-notification", {
-      name: user.name,
-      _id: props.data.id,
-      id:user.id,
-      profileImagePath: user.profileImagePath,
-      type: "friend-request",
-    });
+    
     await ApiCall.postFriendRequest({
       friend_id: props.data.id,
     })
@@ -36,7 +30,13 @@ const SearchResultComponent = (props) => {
           alert("There is an error");
           setLoading(false);
         } else {
-          alert("Request has been sent");
+          socket.emit("new-notification", {
+            name: user.name,
+              reciverId: props.data.id,
+            _id:user.id,
+            profileImagePath: user.profileImagePath,
+            type: "friend-request",
+          });
           setLoading(false);
           setText("Friend Request has been sent");
         }
@@ -45,7 +45,8 @@ const SearchResultComponent = (props) => {
         alert("error occured");
         setLoading(false);
       });
-  }
+  
+}
 
   useEffect(() => {
     props.data.isInFriendRequests

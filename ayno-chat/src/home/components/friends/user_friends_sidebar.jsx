@@ -109,7 +109,7 @@ function ContactList() {
             if (value.status === 200) {
                 let isExisted = searchList.some(oldData => oldData.id === value.data.body.id)
                 if (!isExisted) {
-                    setSearchList((oldData) => [...oldData, value.data.body[0]])
+                    setSearchList((oldData) => [...oldData, value.data.body])
 
                 }
             }

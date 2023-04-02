@@ -45,7 +45,7 @@ export default function ContactButton(props){
                 }
                 
             }
-            setNotification(setNotifications({...resetObject}))
+            //setNotification(setNotifications({...resetObject}))
             getUserData()
             props.onClick()
         }}  className={`${props.selected?"bg-[rgba(124,154,230,0.2)]":"bg-subBackGround"} p-2 flex group items-center justify-evenly  w-full transition-colors  mb-2 cursor-pointer border-l-2  border-l-slate-800

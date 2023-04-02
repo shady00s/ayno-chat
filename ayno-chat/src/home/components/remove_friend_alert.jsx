@@ -26,9 +26,9 @@ function removeFriend(){
 }else{
   setLoading(true)
   ApiCall.deleteFriend(contact._id).then((val)=>{
-    setFriend(setNewFriend({data:contact,friendType:"remove"}))
+    setFriend(setNewFriend({data:{...contact},friendType:"remove",type:"contact"}))
     setLoading(false)
-      socket.emit('notification',{contact,friendType:"remove",type:"new-friend"})
+      socket.emit('new-notification',{id:contact._id,data:{contact,friendType:"remove",type:"contact"},type:"new-friend"})
       setNavigation("")
       setContact(setNewContact({
         _id:null,
@@ -90,7 +90,7 @@ function removeFriend(){
                 <button onClick={()=>{
                    removeFriend()
                 }} className="border-[1px] p-1 border-gray-700 rounded-lg m-1 flex items-center text-sm text-slate-400" >{loading?<div className="mr-1"><LoadingComponent/></div>:<UserMinus size={18} className="stroke-blue-600 mr-1 "/>} confirm</button>
-                <button className="border-[1px] p-1 border-gray-700 rounded-lg m-1 flex items-center text-sm text-slate-400"> <X size={18}  className="stroke-pink-600 mr-1"/> cancel</button>
+                <button onClick={()=>{setNavigation("")}} className="border-[1px] p-1 border-gray-700 rounded-lg m-1 flex items-center text-sm text-slate-400"> <X size={18}  className="stroke-pink-600 mr-1"/> cancel</button>
             </div>
                 <div className="h-7">
 
