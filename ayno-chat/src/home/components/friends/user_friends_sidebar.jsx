@@ -33,7 +33,8 @@ function ContactList() {
 
             switch (data.type) {
 
-                case "message":
+                
+                    case "message":
 
                     let contactExist = notificationData.messageNotification.some(oldData => oldData.id === data.id)
                     if (contactExist) {
@@ -49,7 +50,8 @@ function ContactList() {
                     }
                     setNotification(setNotifications({ ...notificationData }))
                     break
-                case "friend-request":
+                
+                    case "friend-request":
                     let friendRequestExist = notificationData.friendRequestsNotifications.some(oldData => oldData.id === data.id)
                     if (friendRequestExist) {
                         for (let index = 0; index < notificationData.friendRequestsNotifications.length; index++) {
@@ -67,8 +69,8 @@ function ContactList() {
                     setNotification(setNotifications(notificationData))
 
                     break
-
-                case "group-message":
+                
+                    case "group-message":
                     let groupMessageExist = notificationData.groupNotification.some(oldData => oldData.id === data.id)
                     if (groupMessageExist ) {
                         for (let index = 0; index < notificationData.groupNotification.length; index++) {
@@ -84,12 +86,17 @@ function ContactList() {
                     setNotification(setNotifications({ ...notificationData }))
 
                     break
-                case"new-friend":
+                
+                    case"new-friend":
                 
                     notificationData.friendsNotifications = [...notificationData.friendsNotifications,data.data]
                     setNotification(setNotifications({ ...notificationData }))
+                    break
+                case "new-group":
+
 
                 default:
+
                     return;
             }
         })

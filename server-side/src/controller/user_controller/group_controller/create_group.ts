@@ -32,7 +32,7 @@ export default async function createGroup(req:Request,res:Response){
 
         res.status(200).json({message:"done"})
         }else{
-            session.abortTransaction()
+           await session.abortTransaction()
             res.status(401).json({message:"session error",errors})
         }
      

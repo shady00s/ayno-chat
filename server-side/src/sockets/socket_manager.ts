@@ -85,6 +85,9 @@ let socketManager = {
                         case "new-friend":
                             socket.to(id.id).emit('notification',{...id})
                             break
+                        case "new-group":
+                            socket.to(id.id).emit('notification',{...id})
+                            break
                         default:
                             break;
                     }

@@ -31,6 +31,7 @@ export default function FriendsList() {
           setFriends(() => data.data.body.friends);
           setLoading(false);
           setFirstTime(false);
+          setNumberofFriends(data.data.body.friends.length)
         } else {
           setFriends(() => []);
           setLoading(false);
@@ -40,24 +41,25 @@ export default function FriendsList() {
     }
   }, []);
   
-  useEffect(() => {
-    setNumberofFriends(friends.length);
-  }, [friends]);
+  
   useEffect(() => {
     let list = friends;
     let prevNotifications = [...notifications.friendsNotifications];
-    let removedFriends =[]
     //  add frinds from notifications
    
     
     if (friend.friendType === "add") {
         list.push(friend.data);
+        setNumberofFriends(list.length);
+
     } else if (friend.friendType === "remove") {
       let newList = list.filter(
         (oldFriends) =>  {
            return oldFriends._id !== friend.data._id}
         );
         setFriends(()=>newList)
+        setNumberofFriends(newList.length);
+
     }
     if (friend.data._id !== null) {
         friendDispatch(
@@ -84,6 +86,8 @@ if (prevNotifications.length !== 0) {
        
       }
       setFriends(()=>newList)
+      setNumberofFriends(newList.length);
+
   notificaitonDispatch(
     setNotifications({ ...notifications, friendsNotifications: [] })
   );

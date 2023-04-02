@@ -24,15 +24,22 @@ export default function CreateChatGroupPopup(){
         ApiCall.getFriendsList().then(friends=>{
             
             if (friends.status === 200) {
+                console.log(friends.data.body);
                 setFriendsList(() => friends.data.body.friends)
                 setLoading(false)
             } else {
                 setFriendsList(() => [])
                 setLoading(false)
             }
+        }).catch(err=>{
+            alert(err)
         })
     },[])
-    return( <>{navigation =='create-Group'?  <div  className=" absolute flex justify-center items-center w-screen h-screen bg-theme">
+    return( <>{navigation =='create-Group'?  <div id="create-group-bg" onClick={(e)=>{
+        if(e.target.id === "create-group-bg"){
+            setNavigation("")
+        }
+    }} className=" absolute flex z-50 justify-center items-center w-screen h-screen bg-theme">
 
     <div className=" bg-slate-800  w-4/6 lg:w-5/12  rounded-xl p-2 transition-all duration-100 ease-in">
         <div className="flex justify-between items-center">
@@ -49,7 +56,10 @@ export default function CreateChatGroupPopup(){
                 groupName.current = val.target.value
                 setError(()=>({...error,name:false}))
                 }} placeHolder={"Conversation name"}/>
-            <InputErrorComponent title={"please type Group's name"} show={error.name}/>
+                <div className="h-7 w-full">
+
+                    <InputErrorComponent title={"please type Group's name"} show={error.name}/>
+                </div>
         </div>
         <div className="md:w-6/12 w-full flex flex-col justify-center overflow-y-auto">
             <div className="flex justify-between items-center p-2">
@@ -57,10 +67,13 @@ export default function CreateChatGroupPopup(){
             <h1 className="text-sm p-2 text-slate-200">Choose your friends</h1>
             <span className="text-sm text-slate-500">{selected.length} Selected</span>
             </div>
+            <div className="w-full h-7">
             <InputErrorComponent title={"please select at least one friend"} show={error.list}/>
 
+            </div>
+
             {
-                loading ?  <FriendListSkeleton />:friendsList.length !==0? friendsList.map(friends=><Selectmember onClick={(data)=>{
+                loading ?  <div className="w-full h-20"><FriendListSkeleton /></div>:friendsList.length !==0? friendsList.map(friends=><Selectmember onClick={(data)=>{
                   let isExisted =   selected.some(selectedData => selectedData === data._id)
                    setError(()=>({...error,list:false}))                           
                   if(isExisted){
@@ -75,15 +88,15 @@ export default function CreateChatGroupPopup(){
         </div>
         <SubmitButton future={loadingReq} onClick={()=>{
             
-          
+            console.log(groupName.current==="");
              if(groupName.current===""){
                 setError(()=>({...error,name:true}))
             }
             if(selected.length=== 0){
                 setError(()=>({...error,list:true}))
             }
-            else{
-                
+            console.log(error);
+           if(error.name===false && error.list ===false){
                setLoadingReq(true)
                 ApiCall.createGroup({
                     groupName:groupName.current,
@@ -91,6 +104,8 @@ export default function CreateChatGroupPopup(){
                 }).then(val=>{
                     setLoadingReq(false)
                     setNavigation("Contacts")
+                }).catch(err=>{
+                    setLoading(false)
                 })
             }
            
