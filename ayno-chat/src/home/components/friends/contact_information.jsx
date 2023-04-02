@@ -42,7 +42,6 @@ function ContactInformation() {
         setLoading(true);
         ApiCall.getMediaData(contact.conversations[0].conversation_Id).then(
           (val) => {
-            console.log(val.data);
             setMedia(() => val.data.body);
             setData(contact);
             setLoading(false);

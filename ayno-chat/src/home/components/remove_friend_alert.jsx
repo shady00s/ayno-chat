@@ -13,6 +13,7 @@ export default function RemoveFriendAlert() {
   const { navigation, setNavigation } = useContext(NavigationContext);
   const socket = useContext(SocketContext)
   const contact = useSelector((state)=>state.data.contact);
+  const user = useSelector((state)=>state.data.user)
   const setContact = useDispatch()
   const [text,setText] = useState("")
   const [disabled,setDisables] = useState(false)
@@ -26,9 +27,9 @@ function removeFriend(){
 }else{
   setLoading(true)
   ApiCall.deleteFriend(contact._id).then((val)=>{
-    setFriend(setNewFriend({data:{...contact},friendType:"remove",type:"contact"}))
     setLoading(false)
-      socket.emit('new-notification',{id:contact._id,data:{contact,friendType:"remove",type:"contact"},type:"new-friend"})
+    setFriend(setNewFriend({data:{...contact},friendType:"remove"}))
+      socket.emit('new-notification',{id:contact._id,data:{...user , _id:user.id,friendType:"remove",type:"contact"},type:"new-friend"})
       setNavigation("")
       setContact(setNewContact({
         _id:null,
