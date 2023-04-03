@@ -16,7 +16,7 @@ export default function getGroups(req:Request,res:Response){
             
         }
         if(userData !== null){
-            groups_model.find({conversation_id:{$in:[...groups]}}).then(groups=>{
+            groups_model.find({conversation_id:{$in:[...groups]}}).select(['-messages','-media']).then(groups=>{
                 if(groups !== null){
                     res.status(200).json({message:"succssess",body:groups})
                 }

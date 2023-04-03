@@ -1,7 +1,7 @@
 import { query } from "express-validator";
 
 const getGroupContactValidator = [
-    query('groupId').notEmpty().isString()
+    query('groupId').isString().notEmpty()
 ]
 
 export default getGroupContactValidator

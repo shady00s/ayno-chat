@@ -93,8 +93,10 @@ function ContactList() {
                     setNotification(setNotifications({ ...notificationData }))
                     break
                 case "new-group":
+                    notificationData.newGroupNotifications = [...notificationData.newGroupNotifications,data.data]
+                    setNotification(setNotifications({ ...notificationData }))
 
-
+                    break
                 default:
 
                     return;

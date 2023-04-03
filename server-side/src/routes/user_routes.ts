@@ -67,7 +67,7 @@ userRouter.post('/edit-profile',sessionMiddleware,editProfileValidator,editProfi
 
 userRouter.post('/create-group',sessionMiddleware,groupValidator,createGroup)
 
-userRouter.get('/get-group-contacts',sessionMiddleware,getGroupContactValidator,getGroupContacts)
+userRouter.get('/get-group-contacts',getGroupContactValidator,sessionMiddleware,getGroupContacts)
 
 userRouter.post('/add-contact-to-group',add_contact_group_validator,addContactToGroup)
 

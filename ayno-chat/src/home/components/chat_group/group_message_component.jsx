@@ -24,7 +24,7 @@ export default function GroupMessageComponent() {
     }
     useEffect(() => {
         if (contact._id === null ) return
-            else{
+           
                 setLoading(true)
                 ApiCall.getGroupMessges(contact.conversation_id,0).then(val => {
                     if (val.status === 200) {
@@ -36,7 +36,7 @@ export default function GroupMessageComponent() {
                     }
                 })
     
-            }
+            
            
         
 

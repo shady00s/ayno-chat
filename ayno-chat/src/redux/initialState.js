@@ -13,7 +13,14 @@ export const initialState = {
         groupNotifications:[],
         messageNotifications:[],
         friendsNotifications:[],
-        friendRequestsNotifications:[]
+        friendRequestsNotifications:[],
+        newGroupNotifications:[]
+    },
+    newGroup:{
+        _id:null,
+        conversation_id:null,
+        members_ids:[],
+        conversation_name:""
     },
     user:{
         id:null,

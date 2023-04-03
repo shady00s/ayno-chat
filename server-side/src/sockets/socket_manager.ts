@@ -2,11 +2,15 @@ import { Server, Socket } from "socket.io"
 import Logining from '../utils/logger';
 import http from "http"
 
-
+import * as dotenv from 'dotenv' ;
+import { client } from "../server";
 // export default SocketManager
+
+dotenv.config()
 let io:Server;
 let users = [];
 let oldConversation:string;
+
 let socketManager = {
     connectSocket: (server: http.Server): Server => {
          io = new Server(server, { cors: { origin: "*", methods: ["GET", "POST"] } })
@@ -86,7 +90,11 @@ let socketManager = {
                             socket.to(id.id).emit('notification',{...id})
                             break
                         case "new-group":
-                            socket.to(id.id).emit('notification',{...id})
+                            for (let index = 0; index < id.data.members_ids.length; index++) {
+                                
+                                socket.to(id.data.members_ids[index]).emit('notification',{...id})
+                               
+                            }
                             break
                         default:
                             break;
@@ -95,6 +103,7 @@ let socketManager = {
             })
         }
     },
+   
     groupMessageSocket:()=>{
         if (!io) {
             Logining.error('error at socket')

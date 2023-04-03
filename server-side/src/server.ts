@@ -12,8 +12,7 @@ import { Response,Request } from "express";
 import "express-session";
 import { createServer } from "http";
 import {MongoClient} from "mongodb"
-import * as fs  from "fs"
-import path from "path";
+
 declare module "express-session"{
       interface SessionData{
         userData:UserData

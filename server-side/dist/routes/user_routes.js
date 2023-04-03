@@ -54,7 +54,7 @@ userRouter.get('/group-information', session_1.sessionMiddleware, group_informat
 userRouter.get('/get-groups', session_1.sessionMiddleware, get_groups_1.default);
 userRouter.post('/edit-profile', session_1.sessionMiddleware, editProfileValidators_1.editProfileValidator, edit_profile_1.default);
 userRouter.post('/create-group', session_1.sessionMiddleware, create_group_validation_1.groupValidator, create_group_1.default);
-userRouter.get('/get-group-contacts', session_1.sessionMiddleware, get_group_contacts_validator_1.default, get_group_contacts_1.default);
+userRouter.get('/get-group-contacts', get_group_contacts_validator_1.default, session_1.sessionMiddleware, get_group_contacts_1.default);
 userRouter.post('/add-contact-to-group', add_contact_group_validator_1.default, add_contact_group_1.default);
 userRouter.post('/remove-friend', session_1.sessionMiddleware, remove_friend_1.default);
 userRouter.get('/logout', log_out_1.default);

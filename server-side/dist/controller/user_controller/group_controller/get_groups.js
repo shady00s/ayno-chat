@@ -16,7 +16,7 @@ function getGroups(req, res) {
                 groups.push(ids);
             }
             if (userData !== null) {
-                groups_model_1.default.find({ conversation_id: { $in: [...groups] } }).then(groups => {
+                groups_model_1.default.find({ conversation_id: { $in: [...groups] } }).select(['-messages', '-media']).then(groups => {
                     if (groups !== null) {
                         res.status(200).json({ message: "succssess", body: groups });
                     }

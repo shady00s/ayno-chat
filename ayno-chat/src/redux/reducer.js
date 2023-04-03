@@ -12,5 +12,8 @@ export let reducer = {
     },
     setNewFriend:(state,action)=>{
         state.friend = action.payload
+    },
+    setNewGroup:(state,action)=>{
+        state.newGroup = action.payload
     }
 }

@@ -9,22 +9,50 @@ import SubmitButton from "../../../registration/components/submit_button";
 import {X} from 'react-feather'
 import InputErrorComponent from "../../../registration/components/input_error_component";
 import { list } from "postcss";
+import SocketContext from "../../../context/socketContext";
+import { useDispatch, useSelector } from "react-redux";
+import { setNewGroup } from "../../../redux/slice";
+
+
 export default function CreateChatGroupPopup(){
+    const socket = useContext(SocketContext)
     const {navigation,setNavigation}=useContext(NavigationContext)
     const [loading,setLoading]= useState(false)
     const [loadingReq,setLoadingReq]= useState(false)
     const [friendsList,setFriendsList]= useState([])
     const [selected,setSelected] = useState([])
     const [error,setError]=useState({name:false,list:false})
-   
+   const dispatch = useDispatch()
     const groupName = useRef("")
+
+    function createGroup(){
+        if(groupName.current===""){
+            setError(()=>({...error,name:true}))
+        }
+        if(selected.length=== 0){
+            setError(()=>({...error,list:true}))
+        }
+       if(error.name===false && error.list ===false){
+           setLoadingReq(true)
+           ApiCall.createGroup({
+               groupName:groupName.current,
+               groupMembers:selected
+            }).then(val=>{
+                socket.emit('new-notification',{data:{...val.data.groupData},type:"new-group"})
+                dispatch(setNewGroup(val.data.groupData))
+                setLoadingReq(false)
+                setNavigation("Contacts")
+            }).catch(err=>{
+                setLoading(false)
+            })
+        }
+    }
     useEffect(()=>{
 
         setLoading(true)
         ApiCall.getFriendsList().then(friends=>{
             
             if (friends.status === 200) {
-                console.log(friends.data.body);
                 setFriendsList(() => friends.data.body.friends)
                 setLoading(false)
             } else {
@@ -33,6 +61,7 @@ export default function CreateChatGroupPopup(){
             }
         }).catch(err=>{
             alert(err)
+            setLoading(false)
         })
     },[])
     return( <>{navigation =='create-Group'?  <div id="create-group-bg" onClick={(e)=>{
@@ -88,26 +117,7 @@ export default function CreateChatGroupPopup(){
         </div>
         <SubmitButton future={loadingReq} onClick={()=>{
             
-            console.log(groupName.current==="");
-             if(groupName.current===""){
-                setError(()=>({...error,name:true}))
-            }
-            if(selected.length=== 0){
-                setError(()=>({...error,list:true}))
-            }
-            console.log(error);
-           if(error.name===false && error.list ===false){
-               setLoadingReq(true)
-                ApiCall.createGroup({
-                    groupName:groupName.current,
-                    groupMembers:selected,
-                }).then(val=>{
-                    setLoadingReq(false)
-                    setNavigation("Contacts")
-                }).catch(err=>{
-                    setLoading(false)
-                })
-            }
+            createGroup()
            
         }}  className='bg-emerald-600 p-2' title={'Create group'}/>
 

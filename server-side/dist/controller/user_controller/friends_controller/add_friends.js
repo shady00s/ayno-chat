@@ -28,12 +28,10 @@ const postAcceptFriendController = async (req, res, next) => {
                             $pull: { friendRequests: contact_id },
                             $addToSet: { friends: contact_id },
                         }, { new: true }).session(session);
-                        console.log(userInformation);
                         let contactInformation = await user_model_1.default.findByIdAndUpdate({ _id: contact_id }, {
                             $push: { conversations: { conversation_Id: generatedConversationId, contact_Id: user_id } },
                             $addToSet: { friends: user_id }
                         }, { new: true }).session(session);
-                        console.log(contactInformation);
                         // create conversation 
                         let conversation = await new conversation_model_1.default({ conversation_id: generatedConversationId, members_ids: [userInformation.id, contactInformation.id] }, { session: session }).save();
                         await session.commitTransaction().then((val) => {
@@ -43,15 +41,19 @@ const postAcceptFriendController = async (req, res, next) => {
                                     body: {
                                         _id: contactInformation._id,
                                         name: contactInformation.name,
-                                        conversations: [{ conversation_Id: conversation.conversation_id }],
+                                        conversations: [{ conversation_Id: conversation.conversation_id, contact_Id: user_id }],
                                         profileImagePath: contactInformation.profileImagePath
-                                    }, userData: userInformation
+                                    }, userData: {
+                                        _id: userInformation._id,
+                                        name: userInformation.name,
+                                        profileImagePath: userInformation.profileImagePath,
+                                        conversations: [{ conversation_Id: conversation.conversation_id, contact_id: contact_id }]
+                                    }
                                 });
                             }
                         });
                     }
                     catch (error) {
-                        await session.abortTransaction();
                         logger_1.default.error(error);
                         res.status(400).json({ message: "session catchs an error", body: error });
                     }
@@ -61,28 +63,32 @@ const postAcceptFriendController = async (req, res, next) => {
                 }
                 else if (conversationData !== undefined) {
                     try {
-                        await user_model_1.default.findByIdAndUpdate(user_id, {
+                        let userData = await user_model_1.default.findByIdAndUpdate(user_id, {
                             $addToSet: { friends: contact_id },
                             $pull: { friendRequests: contact_id },
                         }, { new: true }).session(session);
                         let contactData = await user_model_1.default.findByIdAndUpdate(contact_id, {
                             $addToSet: { friends: user_id },
-                        }, { new: true, upsert: true }).session(session);
-                        await session.commitTransaction().then((val) => {
-                            if (val.ok) {
+                        }, { new: true }).session(session);
+                        session.commitTransaction().then((val) => {
+                            if (val.ok === 1) {
                                 res.status(200).json({
                                     message: "succssess", body: {
                                         _id: contactData._id,
                                         name: contactData.name,
                                         conversations: [{ conversation_Id: conversationData.conversation_Id, contact_Id: user_id }],
                                         profileImagePath: contactData.profileImagePath
+                                    }, userData: {
+                                        _id: userData._id,
+                                        name: userData.name,
+                                        conversations: [{ conversation_Id: conversationData.conversation_Id, contact_Id: contact_id }],
+                                        profileImagePath: userData.profileImagePath
                                     }
                                 });
                             }
                         });
                     }
                     catch (error) {
-                        await session.abortTransaction();
                         logger_1.default.error(error);
                         res.status(400).json({ message: "session catchs an error", body: error });
                     }
@@ -100,6 +106,7 @@ const postAcceptFriendController = async (req, res, next) => {
         }
     }
     catch (error) {
+        console.log(error);
         logger_1.default.error("There is an error");
     }
 };

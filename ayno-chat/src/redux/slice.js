@@ -8,5 +8,5 @@ export const masterSlice = createSlice({
     reducers: reducer
 }) 
 
-export const {setNewContact,setNewFriend,setNotifications,setUser} = masterSlice.actions
+export const {setNewContact,setNewFriend,setNotifications,setUser,setNewGroup} = masterSlice.actions
 export default masterSlice.reducer
