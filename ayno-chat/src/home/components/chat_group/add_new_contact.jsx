@@ -14,6 +14,7 @@ export default function AddNewContact() {
     const [selectedFriends, setSelectedFriends] = useState([])
     const [error, setError] = useState(false)
     const [loading, setLoading] = useState(false)
+    const [reqLoading,setReqLoading]=useState(false)
     
 
    
@@ -81,13 +82,20 @@ export default function AddNewContact() {
             </div>
             <div className="w-full flex-col flex p-1">
 
-                <SubmitButton onClick={() => {
+                <SubmitButton future={reqLoading} onClick={() => {
                     if (selectedFriends.length === 0) {
 
                         setError(true)
                     } else {
-                        ApiCall.addContactToGroup({ conversation_id: contact.conversation_id, new_contact_list: selectedFriends }).then(apiVal => {
+                        setReqLoading(true)
+                        
+                        const selectedFriendsIds = selectedFriends.map(val=>val.id)
+                        ApiCall.addContactToGroup({ conversation_id: contact.conversation_id, new_contact_list: selectedFriendsIds }).then(apiVal => {
                             console.log(apiVal.data.val);
+                            setReqLoading(false)
+                        }).catch(err=>{
+                            alert(err)
+                            setReqLoading(false)
                         })
                     }
                 }} title="Add contacts" className={"m-auto bg-cyan-700"} />

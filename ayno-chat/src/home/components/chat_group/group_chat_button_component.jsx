@@ -16,6 +16,7 @@ export default function GroupChatButtonComponent(props){
 
     const {setNavigation}=useContext(NavigationContext)
     useEffect(()=>{
+        console.log(props.data.conversation_id)
         if(props.data.conversation_id !== undefined){
             ApiCall.getGroupContacts(props.data.conversation_id).then(val =>{
                 setContacts(val.data.body)

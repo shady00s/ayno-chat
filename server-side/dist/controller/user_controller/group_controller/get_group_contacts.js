@@ -18,17 +18,18 @@ async function getGroupContacts(req, res) {
         const userConvs = new Set(userData.conversations);
         const resLast = [];
         //get all group members except user
-        user_model_1.default.find({ "_id": { $in: [...groupData.members_ids]
+        await user_model_1.default.find({ "_id": { $in: [...groupData.members_ids]
                     .filter(data => !data.equals(user_id)) } }).select(['-password', '-groups']).then(val => {
             //create editied object for each user to check if it is in friends or in friend request
             for (let index = 0; index < val.length; index++) {
+                let isFriend = userFriends.has(val[index]._id.toString());
                 let result = {};
                 result['name'] = val[index].name,
                     result['id'] = val[index]._id,
                     result['profileImagePath'] = val[index].profileImagePath,
-                    result['isFriend'] = userFriends.has(val[index]._id.toString());
+                    result['isFriend'] = isFriend;
                 result['isInFriendRequest'] = userRequests.has(val[index]._id.toString());
-                result['conversation_id'] = [...userConvs].filter(contact => contact.contact_Id.equals(val[index]._id))[0].contact_Id;
+                result['conversation_id'] = isFriend ? [...userConvs].filter(contact => contact.contact_Id.equals(val[index]._id))[0].contact_Id : undefined;
                 //push to array
                 resLast.push(result);
             }
