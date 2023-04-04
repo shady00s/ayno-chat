@@ -38,7 +38,7 @@ export default function CreateChatGroupPopup(){
                groupName:groupName.current,
                groupMembers:selected
             }).then(val=>{
-                socket.emit('new-notification',{data:{...val.data.groupData},type:"new-group"})
+                socket.emit('new-notification',{data:{...val.data.groupData ,groupType:"new"},type:"new-group"})
                 dispatch(setNewGroup(val.data.groupData))
                 setLoadingReq(false)
                 setNavigation("Contacts")

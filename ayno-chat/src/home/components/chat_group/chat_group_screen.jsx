@@ -46,8 +46,35 @@ export default function ChatGroupComponent() {
     }, [])
     useEffect(() => {
         if (notifications.newGroupNotifications.length !== 0) {
+            
+            const groupNotifications = notifications.newGroupNotifications
+            const groupInfo ={}
+            const newGroupData = []
+            const oldGroups = [...groups]
+            // to add new groups to groups array
+            for (let index = 0; index < groupNotifications.length; index++) {
+                if (groupNotifications[index].groupType === "new"){
+                    newGroupData.push(groupNotifications[index])
+                }else{
+                    groupInfo[groupNotifications[index]._id]=groupInfo[groupNotifications[index]]
 
-            setGroups(() => [...groups, ...notifications.newGroupNotifications])
+                }
+                
+            }
+
+            // to remove old group and replace it with updated one
+
+            for (let index = 0; index < oldGroups.length; index++) {
+               if (  oldGroups[index]._id in groupInfo[oldGroups[index]._id]){
+                newGroupData.push(groupInfo[oldGroups[index]._id])
+                delete groupInfo[oldGroups[index]._id]
+               }else{
+                newGroupData.push(oldGroups[index])
+               }
+                
+            }
+
+            setGroups(() => [...newGroupData])
             dispatch(setNotifications({ ...notifications, newGroupNotifications: [] }))
         }
         if (newGroup._id !== null) {
