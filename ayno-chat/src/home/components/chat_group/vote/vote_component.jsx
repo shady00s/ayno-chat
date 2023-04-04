@@ -3,6 +3,7 @@ import ApiCall from "../../../../api_call";
 import SubmitButton from "../../../../registration/components/submit_button";
 import SocketContext from "./../../../../context/socketContext";
 import { useDispatch, useSelector } from "react-redux";
+
 const VoteComponent = (props) => {
   const socket = useContext(SocketContext);
   const contact = useSelector((state)=>state.data.contact);

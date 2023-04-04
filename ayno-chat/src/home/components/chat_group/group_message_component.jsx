@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState, useRef, useCallback } from 'react';
+import React,{ useContext, useEffect, useState, useRef, useCallback } from 'react';
 import ApiCall from '../../../api_call';
 import { Feather } from 'react-feather';
 import ChatMessageInputComponent from './../chat/chat_message_input_component';
@@ -10,7 +10,7 @@ import NavigationContext from './../../../context/navigationContext';
 import AddNewVote from './vote/add_new_vote_component';
 import VoteComponent from './vote/vote_component';
 import { useDispatch, useSelector } from 'react-redux';
-export default function GroupMessageComponent() {
+const GroupMessageComponent=()=> {
     const socket = useContext(SocketContext)
     const contact = useSelector((state) => state.data.contact)
     const [messages, setMessages] = useState([])
@@ -19,6 +19,7 @@ export default function GroupMessageComponent() {
     const user_id = user.id
     const scrollRef = useRef(null)
     const { setNavigation } = useContext(NavigationContext)
+    const [typingData,setTypingData] = useState({typing:false,userName:''})
     const scrollToBottom = () => {
         scrollRef.current?.scrollIntoView({ behavior: "smooth" })
     }
@@ -52,12 +53,17 @@ export default function GroupMessageComponent() {
             socket.on("images", (images) => {
                 setMessages(prev => [...prev, { messages: { ...images } }])
             })
+            socket.on('typing-data',(name,isTyping)=>{
+                setTypingData({typing:isTyping,userName:name})
+            })
 
         }
+        console.log(typingData);
 
         return () => {
             socket.off('recive-group-message')
             socket.off('images')
+            socket.off('typing-data')
         }
     }, [socket])
 
@@ -74,7 +80,7 @@ export default function GroupMessageComponent() {
 
                 </div> : loading ? <ChatSkeleton /> : messages.length !== 0 ?
 
-                    <div className="h-[99%] p-1 w-full  overflow-x-hidden flex flex-col relative">
+                    <div className="h-[99%] p-1 w-full  overflow-x-hidden flex   justify-center items-start flex-col relative">
                         <div className='flex justify-end p-1'>
                             <div onClick={() => [
                                 setNavigation('vote-menu')
@@ -93,9 +99,9 @@ export default function GroupMessageComponent() {
 
                         </div>
                         {/* typing container */}
-                       <div className={`${typing?"opacity-100":"opacity-0"} transition-opacity duration-100 flex rounded-xl m-1 bg-[rgba(79,101,182,0.13)]`}>
+                       <div className={`${typingData.typing?"opacity-100":"opacity-0"} transition-opacity duration-100 flex rounded-xl m-1 bg-[rgba(79,101,182,0.13)]`}>
                         
-                        <span className={"text-slate-300 text-[0.8rem] pl-2 pr-2 p-[0.3rem] "}> Typing...</span>
+                        <span className={"text-slate-300 text-[0.8rem] pl-2 pr-2 p-[0.3rem] "}>{typingData.userName} Typing...</span>
                         </div> 
                         <div className=' w-full '>
                                 <ChatMessageInputComponent conversation_id={contact._id !== null ? contact.conversation_id : ""} friend_id={contact._id} />
@@ -106,7 +112,7 @@ export default function GroupMessageComponent() {
 
 
 
-                    : <div className='overflow-hidden h-[99%] w-full flex flex-col'>
+                    : <div className='overflow-hidden h-[99%] w-full flex justify-center items-start flex-col'>
                         <div className="flex flex-col justify-center items-center h-full w-full">
                             <Feather className=" stroke-slate-600 m-2" />
                             <h1 className="text-slate-400">Say hi to your friends   </h1>
@@ -114,9 +120,9 @@ export default function GroupMessageComponent() {
 
                         </div>
                         {/* typing container */}
-                       <div className={`${typing?"opacity-100":"opacity-0"} transition-opacity duration-100 flex rounded-xl m-1 bg-[rgba(79,101,182,0.13)]`}>
+                       <div className={`${typingData.typing?"opacity-100":"opacity-0"} transition-opacity duration-100 flex justify-start items-start rounded-xl m-1 bg-[rgba(79,101,182,0.13)]`}>
                         
-                        <span className={"text-slate-300 text-[0.8rem] pl-2 pr-2 p-[0.3rem] "}> Typing...</span>
+                        <span className={"text-slate-300 text-[0.8rem] pl-2 pr-2 p-[0.3rem] "}>{typingData.userName} Typing...</span>
                         </div> 
 
                         <div className=' w-full '>
@@ -132,3 +138,5 @@ export default function GroupMessageComponent() {
         </div>
     )
 }
+
+export default React.memo(GroupMessageComponent);
