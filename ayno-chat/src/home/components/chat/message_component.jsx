@@ -27,12 +27,7 @@ function MessageComponent() {
 
     },[socket])
 
-    const newImage = useCallback((textVal) => {
-        setNewMessage(true)
 
-         setChat((prev) => [...prev,{messages: {...textVal}}])
-
-    },[socket])
     const scrollToBottom = () => {
         scrollRef.current?.scrollIntoView({ behavior: "smooth" })
     }
@@ -46,12 +41,35 @@ function MessageComponent() {
         }
     }, [chat,newMessages])
 
+    function getPrevMessages(){
+        let pages = page
+        if(paginationRef.current.scrollTop === 0 &&chat.length ==50 ){
+           setPage(prev=>pages++)
+           console.log(page);
+           setLoadingPagination(true)
+           setNewMessage(false)
+
+           ApiCall.getUserChatMessages(contact.conversations[0].conversation_Id,page).then(messages => {
+
+            if (messages.status === 200) {
+                setChat((prev) => [...messages.data.conversations,...prev])
+                setLoadingPagination(false)
+                console.log(chat.length);
+            }
+
+            else {
+                alert('There is an error please try again')
+            }
+        })
+
+        }
+    }
     // when contact changes api call will triggered to insert new data
 
     useEffect(() => {
         setIsUserScrollBack(false)
         if (contact._id == null) return
-        else{
+       
             setPage(0)
             setLoading(true)
             setNewMessage(false)
@@ -70,14 +88,17 @@ function MessageComponent() {
                 console.log(err)
             })
         
-        }
            
     }, [contact])
     useEffect(() => {
        if(socket.connected){
            socket.on("recive-message",newMessage )
         
-           socket.on("images",newImage) 
+           socket.on("images",(textVal)=>{
+            setNewMessage(true)
+
+             setChat((prev) => [...prev,{messages: {...textVal}}])
+           }) 
 
            socket.on("typing-data",(name,isTyping)=>{
                setTyping(isTyping)
@@ -110,27 +131,7 @@ function MessageComponent() {
                 </div> : loading ? <ChatSkeleton /> : chat.length !== 0 ?
                     <div className="h-full p-1 w-full  overflow-x-hidden flex flex-col justify-center items-start">
                         <div ref={paginationRef} onScroll={()=>{
-                            let pages = page
-                            if(paginationRef.current.scrollTop === 0){
-                               setPage(prev=>pages++)
-                               console.log(page);
-                               setLoadingPagination(true)
-                               setNewMessage(false)
-
-                               ApiCall.getUserChatMessages(contact.conversations[0].conversation_Id,page).then(messages => {
-
-                                if (messages.status === 200) {
-                                    setChat((prev) => [...messages.data.conversations,...prev])
-                                    setLoadingPagination(false)
-                                    console.log(chat.length);
-                                }
-                
-                                else {
-                                    alert('There is an error please try again')
-                                }
-                            })
-
-                            }
+                           getPrevMessages()
                         }} className="h-full p-1 w-full  overflow-x-hidden flex flex-col">
                             {loadingPagination? <div><LoadingComponent/></div>:<></>}
                             {chat.map(messageComponent => <div key={Math.random().toString()} className="m-1 pb-4 border-b-2 p-2  border-b-[rgba(70,70,70,0.1)]" ref={scrollRef}>

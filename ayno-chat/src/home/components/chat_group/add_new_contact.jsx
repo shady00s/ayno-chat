@@ -6,6 +6,7 @@ import SubmitButton from '../../../registration/components/submit_button'
 import InputErrorComponent from '../../../registration/components/input_error_component'
 import { FriendListSkeleton } from '../../../reusable-components/skeleton/friend_list'
 import { useSelector } from 'react-redux';
+import SocketContext from './../../../context/socketContext';
 export default function AddNewContact() {
     const  contact = useSelector((state)=>state.data.contact)
     const { navigation, setNavigation } = useContext(NavigationContext)
@@ -16,7 +17,7 @@ export default function AddNewContact() {
     const [loading, setLoading] = useState(false)
     const [reqLoading,setReqLoading]=useState(false)
     
-
+    const socket = useContext(SocketContext)
    
 
     useEffect(() => {
@@ -90,8 +91,9 @@ export default function AddNewContact() {
                         setReqLoading(true)
                         
                         const selectedFriendsIds = selectedFriends.map(val=>val.id)
-                        ApiCall.addContactToGroup({ conversation_id: contact.conversation_id, new_contact_list: selectedFriendsIds }).then(apiVal => {
-                            console.log(apiVal.data.val);
+                        ApiCall.addContactToGroup({ conversation_id: navigation.conversation_id, new_contact_list: selectedFriendsIds }).then(apiVal => {
+                            socket.emit('new-notification',{data:{...apiVal.data.groupData},type:"new-group"})
+                            setNavigation("")
                             setReqLoading(false)
                         }).catch(err=>{
                             alert(err)

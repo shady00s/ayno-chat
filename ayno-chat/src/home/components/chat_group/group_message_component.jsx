@@ -37,9 +37,6 @@ export default function GroupMessageComponent() {
         })
 
 
-
-
-
     }, [contact])
 
     useEffect(() => {
@@ -95,6 +92,11 @@ export default function GroupMessageComponent() {
                            
 
                         </div>
+                        {/* typing container */}
+                       <div className={`${typing?"opacity-100":"opacity-0"} transition-opacity duration-100 flex rounded-xl m-1 bg-[rgba(79,101,182,0.13)]`}>
+                        
+                        <span className={"text-slate-300 text-[0.8rem] pl-2 pr-2 p-[0.3rem] "}> Typing...</span>
+                        </div> 
                         <div className=' w-full '>
                                 <ChatMessageInputComponent conversation_id={contact._id !== null ? contact.conversation_id : ""} friend_id={contact._id} />
 
@@ -111,6 +113,12 @@ export default function GroupMessageComponent() {
                             <h4 className="text-slate-600 text-sm p-2">Select friend from your contact list and say hi or start to make new connections</h4>
 
                         </div>
+                        {/* typing container */}
+                       <div className={`${typing?"opacity-100":"opacity-0"} transition-opacity duration-100 flex rounded-xl m-1 bg-[rgba(79,101,182,0.13)]`}>
+                        
+                        <span className={"text-slate-300 text-[0.8rem] pl-2 pr-2 p-[0.3rem] "}> Typing...</span>
+                        </div> 
+
                         <div className=' w-full '>
                             <ChatMessageInputComponent conversation_id={contact._id !== null ? contact.conversation_id : ""} friend_id={contact._id} />
 

@@ -236,7 +236,7 @@ function ContactInformation() {
       ) : (
         // desktop version
         <div className="w-2/6">
-          {data.name !== "" ? (
+          {contact._id !== null?data.name !== "" ? (
             loading ? (
               <ContactSkeleton />
             ) : (
@@ -389,9 +389,10 @@ function ContactInformation() {
                 </div>
               </div>
             )
-          ) : (
+          )  : (
             <div></div>
-          )}
+          ):<div></div>}
+          
         </div>
       )}
     </>
