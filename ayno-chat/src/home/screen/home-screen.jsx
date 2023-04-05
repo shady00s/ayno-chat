@@ -12,6 +12,8 @@ const ContactInformation = lazy(() =>
 const AddNewContact = lazy(() =>
   import("../components/chat_group/add_new_contact")
 );
+
+const NotificationComponent = lazy(()=> import('../../reusable-components/notification_component'))
 import { Helmet } from "react-helmet-async";
 import useWindowDimensions from "../../utils/window_size";
 import NavigationContext from "../../context/navigationContext";
@@ -114,6 +116,10 @@ export default function HomeScreen() {
             </Suspense>
             <Suspense fallback={<LoadingComponent />}>
               <ViewImageComponent />
+            </Suspense>
+
+            <Suspense fallback={< LoadingComponent/>}>
+            <NotificationComponent/>
             </Suspense>
           </NavigationContext.Provider>
         </div>

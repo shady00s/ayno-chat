@@ -27,7 +27,7 @@ export default function ChatMessageInputComponent(props) {
         message_content: finalText.current,
       }).then(()=>{
         
-        socket.emit('new-notification', { conversation_id, id: contact._id, user: user.id ,newMessage:1, type: "message" })
+        socket.emit('new-notification', { conversation_id, id: contact._id,name:user.name, user: user.id ,newMessage:1, type: "message" })
 
       });
       const textVal = {
@@ -85,6 +85,7 @@ export default function ChatMessageInputComponent(props) {
               setUserTyping(false);
             }, 2000);
           }
+          console.log(conversation_id)
         }}
         autoFocus
         value={textVal}

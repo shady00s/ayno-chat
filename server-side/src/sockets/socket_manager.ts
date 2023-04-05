@@ -19,7 +19,7 @@ let socketManager = {
 
            
             socket.on("join-conversation",(conversation)=>{
-                oldConversation = conversation
+                oldConversation = conversation  
                 socket.join(oldConversation)
             })
             // to join group conversation
@@ -31,8 +31,6 @@ let socketManager = {
     
             socket.on('disconnect',()=>{
                 Logining.error('client disconnected with id '+ socket.id)
-                users = users.filter(data=>data.socket !== socket.id)
-                io.emit('online-users',users)
 
                 
             })

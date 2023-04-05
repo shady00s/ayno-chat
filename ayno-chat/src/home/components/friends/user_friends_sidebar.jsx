@@ -33,16 +33,7 @@ function ContactList() {
             switch (data.type) {
 
                 
-                    case "message":
-
-                    let contactExist = notificationData.messageNotifications.some(oldData => oldData.user === data.user)
-                    if (contactExist) {
-                        
-                    } else {
-                        notificationData.messageNotifications = [...notificationData.messageNotifications,{ id: data.id, user: data.user,conversation_id:data.conversation_id, newMessage: data.newMessage ,type:"message"}]
-                    }
-                    setNotification(setNotifications(notificationData))
-                    break
+                   
                 
                     case "friend-request":
                     let friendRequestExist = notificationData.friendRequestsNotifications.some(oldData => oldData.id === data.id)
@@ -63,22 +54,7 @@ function ContactList() {
 
                     break
                 
-                    case "group-message":
-                    let groupMessageExist = notificationData.groupNotification.some(oldData => oldData.id === data.id)
-                    if (groupMessageExist ) {
-                        for (let index = 0; index < notificationData.groupNotification.length; index++) {
-                            if (notificationData.groupNotification[index].userId === data.userId) {
-                                notificationData.groupNotification[index].newMessage = notificationData.groupNotification[index].newMessage + 1
-                            }
-
-                        }
-
-                    } else {
-                        notificationData.groupNotification =[...notificationData.groupNotification,{ id: data.id, userId: data.userId, newMessage: data.newMessage }]
-                    }
-                    setNotification(setNotifications({ ...notificationData }))
-
-                    break
+                   
                 
                     case"new-friend":
                 
