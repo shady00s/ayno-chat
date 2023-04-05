@@ -41,7 +41,7 @@ export const store = new MongoDBStore({
 app.set("trust proxy", 1);
 
 app.use('/',(req:Request,res:Response,next:NextFunction)=>{
-    res.setHeader('Access-Control-Allow-Origin','http://192.168.1.4:3000')
+    res.setHeader('Access-Control-Allow-Origin',process.env.Client_URL)
     res.setHeader(
         'Access-Control-Allow-Methods',
         'OPTIONS, GET, POST, PUT, PATCH, DELETE'

@@ -51,8 +51,6 @@ let socketManager = {
             });
             socket.on('disconnect', () => {
                 logger_1.default.error('client disconnected with id ' + socket.id);
-                users = users.filter(data => data.socket !== socket.id);
-                io.emit('online-users', users);
             });
         });
         return io;

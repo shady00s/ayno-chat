@@ -20,9 +20,7 @@ const postAcceptFriendController = async (req, res, next) => {
             session.startTransaction();
             // check if the contact is not inside friends array
             await user_model_1.default.findById({ _id: user_id }).then(async (result) => {
-                console.log(result.friends.find((data) => data.equals(contact_id)));
                 const conversationData = result.conversations.find((results) => results.contact_Id.equals(contact_id));
-                console.log(conversationData);
                 if (result.friends.find((data) => data.equals(contact_id)) === undefined && conversationData === undefined) {
                     try {
                         let userInformation = await user_model_1.default.findByIdAndUpdate({ _id: user_id }, {
