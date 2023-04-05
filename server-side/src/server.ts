@@ -66,7 +66,7 @@ app.use(session({
      secret: process.env.SESSION_SECRET
      ,cookie:{
         maxAge: expiredDate,
-        secure:false,
+        secure:true,
         httpOnly:true,
         sameSite:"lax"
         

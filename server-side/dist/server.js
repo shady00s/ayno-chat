@@ -71,7 +71,7 @@ app.use((0, express_session_1.default)({
     secret: process.env.SESSION_SECRET,
     cookie: {
         maxAge: expiredDate,
-        secure: false,
+        secure: true,
         httpOnly: true,
         sameSite: "lax"
     },
