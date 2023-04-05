@@ -23,7 +23,9 @@ const postAcceptFriendController = async (req: Request, res: Response, next: Nex
             // check if the contact is not inside friends array
 
             await user_model.findById({ _id: user_id }).then(async result => {
-                const conversationData = result.conversations.find((results) => results.contact_Id.equals(result._id))
+                console.log(result.friends.find((data) => data.equals(contact_id)));
+                const conversationData = result.conversations.find((results) => results.contact_Id.equals(contact_id))
+                console.log(conversationData);
                 if (result.friends.find((data) => data.equals(contact_id)) === undefined && conversationData === undefined) {
 
                     try {
@@ -95,7 +97,7 @@ const postAcceptFriendController = async (req: Request, res: Response, next: Nex
 
                         }, { new: true}).session(session);
 
-                         session.commitTransaction().then((val) => {
+                        await session.commitTransaction().then((val) => {
                             if (val.ok===1) {
                                 res.status(200).json({
                                     message: "succssess", body: {

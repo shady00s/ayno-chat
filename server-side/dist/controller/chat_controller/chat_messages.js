@@ -19,7 +19,8 @@ const getChatMessages = async (req, res) => {
                 { $match: { conversation_id: new mongoose_1.default.Types.ObjectId(conversation_id.toString()) } },
                 { $project: { messages: { $slice: ["$messages", skip, perPage] } } },
                 { $unwind: "$messages" },
-                { $sort: { "messages.date": 1 } }
+                { $sort: { "messages.date": 1, "messages._id": 1 } },
+                { $match: { "messages._id": { $ne: null } } }
             ]).exec((error, result) => {
                 if (error) {
                     res.status(500).json({

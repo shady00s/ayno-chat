@@ -42,7 +42,7 @@ let socketManager = {
             logger_1.default.info('connection at socket ' + socket.id);
             socket.on("join-conversation", (conversation) => {
                 oldConversation = conversation;
-                socket.join(conversation);
+                socket.join(oldConversation);
             });
             // to join group conversation
             socket.on('join-group-conversation', (groupConversation) => {
@@ -124,7 +124,7 @@ let socketManager = {
                 io.in(conversation_id).emit('recive-group-message', message);
             });
             socket.on('send-vote-participent', (participent, conversation_id) => {
-                io.in(conversation_id).emit('recive-vote-participent', participent);
+                socket.to(conversation_id).emit('recive-vote-participent', participent);
             });
         });
     },

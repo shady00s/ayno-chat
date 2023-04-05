@@ -3,7 +3,6 @@ import Logining from '../utils/logger';
 import http from "http"
 
 import * as dotenv from 'dotenv' ;
-import { client } from "../server";
 // export default SocketManager
 
 dotenv.config()
@@ -21,7 +20,7 @@ let socketManager = {
            
             socket.on("join-conversation",(conversation)=>{
                 oldConversation = conversation
-                socket.join(conversation)
+                socket.join(oldConversation)
             })
             // to join group conversation
             socket.on('join-group-conversation',(groupConversation)=>{
@@ -121,7 +120,7 @@ let socketManager = {
                 io.in(conversation_id).emit('recive-group-message',message)
             })
             socket.on('send-vote-participent',(participent,conversation_id)=>{
-                io.in(conversation_id).emit('recive-vote-participent',participent)
+                socket.to(conversation_id).emit('recive-vote-participent',participent)
 
             })
         })
