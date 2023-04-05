@@ -25,7 +25,10 @@ export default function ChatMessageInputComponent(props) {
       ApiCall.postUserMessage({
         conversation_id: conversation_id,
         message_content: finalText.current,
-        user_id: user._id,
+      }).then(()=>{
+        
+        socket.emit('new-notification', { conversation_id, id: contact._id, user: user.id ,newMessage:1, type: "message" })
+
       });
       const textVal = {
         message: finalText.current,
@@ -33,7 +36,6 @@ export default function ChatMessageInputComponent(props) {
         sender_id: user.id,
       };
       socket.emit("send-messages", textVal, conversation_id);
-      socket.emit("new-notification", { conversation_id, id: contact._id, user: user.id, type: "message" })
       setTextVal("");
     } else {
       ApiCall.postGroupMessage({
@@ -41,12 +43,15 @@ export default function ChatMessageInputComponent(props) {
         message_content: finalText.current,
         sender_image_path: user.profileImagePath,
         sender_name: user.name,
+      }).then(()=>{
+        socket.emit('new-notification', {
+          conversation_id, 
+          id: contact._id,
+          user: user.id,
+          sender_id: user.id, type: "group-message"
+        })
       });
-      socket.emit("new-notification", {
-        conversation_id, id: contact._id,
-        user: user.id,
-        sender_id: user.id, type: "group-message"
-      })
+      
 
       socket.emit("send-group-message", {
         message: finalText.current,

@@ -28,7 +28,6 @@ function ContactList() {
     const  setNotification  = useDispatch()
     useEffect(() => {
         socket.on('notification', (data) => {
-            console.log(data);
             let notificationData = {...notifications} 
 
             switch (data.type) {
@@ -36,19 +35,13 @@ function ContactList() {
                 
                     case "message":
 
-                    let contactExist = notificationData.messageNotification.some(oldData => oldData.id === data.id)
+                    let contactExist = notificationData.messageNotifications.some(oldData => oldData.user === data.user)
                     if (contactExist) {
-                        for (let index = 0; index < notificationData.messageNotification.length; index++) {
-                            if (notificationData.messageNotification[index].userId === data.userId) {
-                                notificationData.messageNotification[index].newMessage = notificationData.messageNotification[index].newMessage + 1
-                            }
-
-                        }
-
+                        
                     } else {
-                        notificationData.messageNotification = [...notificationData.messageNotification,{ id: data.id, userId: data.userId, newMessage: data.newMessage }]
+                        notificationData.messageNotifications = [...notificationData.messageNotifications,{ id: data.id, user: data.user,conversation_id:data.conversation_id, newMessage: data.newMessage ,type:"message"}]
                     }
-                    setNotification(setNotifications({ ...notificationData }))
+                    setNotification(setNotifications(notificationData))
                     break
                 
                     case "friend-request":

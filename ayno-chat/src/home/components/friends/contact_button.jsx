@@ -11,6 +11,7 @@ export default function ContactButton(props){
     const socket = useContext(SocketContext)
     const [number,setNumber] = useState(0)
     const notifications = useSelector((state)=>state.data.notifications)
+    const contact = useSelector((state)=>state.data.contact)
     const setNotification = useDispatch()
     const getUserData =()=>{
         //
@@ -24,28 +25,27 @@ export default function ContactButton(props){
             ,type:"contact"}))
     }
     useEffect(()=>{
-        
 
         for (let index = 0; index < notifications.messageNotifications.length; index++) {
 
-            if(props.data._id === notifications.messageNotifications[index].userId){
+            if(props.data._id === notifications.messageNotifications[index].user){
                 setNumber(notifications.messageNotifications[index].newMessage)
             }
             
         }
         
-    })
+    },[notifications])
     return(
         <div onClick={()=>{ 
             let resetObject = {...notifications}
 
             for (let index = 0; index < notifications.messageNotifications.length; index++) {
-                if(props.data._id === notifications.messageNotifications[index].userId){
+                if(props.data._id === notifications.messageNotifications[index].user || contact._id){
                     resetObject.messageNotifications[index].newMessage = 0
                 }
                 
             }
-            //setNotification(setNotifications({...resetObject}))
+            setNotification(setNotifications(resetObject))
             getUserData()
             props.onClick()
         }}  className={`${props.selected?"bg-[rgba(124,154,230,0.2)]":"bg-subBackGround"} p-2 flex group items-center justify-evenly  w-full transition-colors  mb-2 cursor-pointer border-l-2  border-l-slate-800

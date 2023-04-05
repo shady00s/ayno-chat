@@ -11,10 +11,10 @@ const VoteComponent = (props) => {
   const [particeped, setParticeped] = useState(false);
   const [voteRatio, setVoteRatio] = useState([]);
   const user = useSelector((state)=>state.data.user);
-  const [voteParticipations, setVoteParticipations] = useState([]);
+  const [voteParticipations, setVoteParticipations] = useState(props.message.votingData.voteParticepents);
   const [loading, setLoading] = useState(false);
 
-  function voteOptionsRatio (){
+   const voteOptionsRatio = useCallback(()=>{
     let vote = {};
 
 
@@ -44,7 +44,7 @@ const VoteComponent = (props) => {
 
 
     
-};
+},[voteParticipations]);
 
 useEffect(()=>{
   voteOptionsRatio()

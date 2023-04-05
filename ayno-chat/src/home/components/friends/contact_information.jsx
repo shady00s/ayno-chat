@@ -20,13 +20,27 @@ function ContactInformation() {
   const [selectedGroupMember, setSelectedGroupMember] = useState(-1);
   const [selectedGroupMemberData, setSelectedGroupMemberData] = useState({});
   const [friends, setFriends] = useState([])
+
+  const [friendReqSent,setFriendReqSent]=useState(selectedGroupMemberData.isInFriendRequest)
   const { navigation, setNavigation } = useContext(NavigationContext)
+  const user = useSelector((state)=>state.data.user)
+
 
   async function sendRequest(data) {
-    return await ApiCall.postFriendRequest({
+     await ApiCall.postFriendRequest({
       friend_id: data,
-    }).then((val) => val);
+    }).then(() =>{
+      socket.emit("new-notification", {
+        name: user.name,
+          reciverId: data,
+        _id:user.id,
+        profileImagePath: user.profileImagePath,
+        type: "friend-request",
+      });
+      setFriendReqSent(true)
+    }).catch(err=>console.log(err));
   }
+
   useEffect(() => {
 
     socket.on("images", (images) => {
@@ -36,6 +50,7 @@ function ContactInformation() {
       socket.off("images");
     };
   }, [data, socket]);
+
   useEffect(() => {
     if (contact._id ===null) return
       if (contact.type === "contact") {
@@ -187,15 +202,16 @@ function ContactInformation() {
                       >
                         <MessageSquare className="mr-1" />{" "}
                         <span>Message {selectedGroupMemberData.name}</span>
-                      </div> : <div
+                      </div> : !friendReqSent?<div
                         onClick={() => {
-                          sendRequest(selectedGroupMemberData._id).then(vl => { window.alert("Friend Request send succssessfully") })
+                          sendRequest(selectedGroupMemberData.id) 
+                        
                         }}
                         className="ml-4 pl-2 items-center justify-center flex pr-2 p-1 rounded-md cursor-pointer mt-2 text-slate-100 bg-blue-700"
                       >
                         <UserPlus className="mr-1" />{" "}
                         <span>Add Friend {selectedGroupMemberData.name}</span>
-                      </div>}
+                      </div>: <span className="text-slate-400"></span>}
                     </div>
                   </div>
                 </div>
@@ -326,6 +342,7 @@ function ContactInformation() {
                         <div className=" w-6/12">
                           {selectedGroupMemberData.isFriend ? <div
                             onClick={() => {
+
                               setContact(setNewContact({
                                 _id:selectedGroupMemberData.id,
                                 name:selectedGroupMemberData.name,
@@ -338,16 +355,16 @@ function ContactInformation() {
                           >
                             <MessageSquare className="mr-1" />{" "}
                             <span>Message {selectedGroupMemberData.name}</span>
-                          </div> : <div
+                          </div> : !friendReqSent?<div
                             onClick={() => {
-                              sendRequest(selectedGroupMemberData._id).then(vl => { window.alert("Friend Request send succssessfully") })
+                              sendRequest(selectedGroupMemberData.id)
 
                             }}
                             className="ml-4 pl-2 items-center justify-center flex pr-2 p-1 rounded-md cursor-pointer mt-2 text-slate-100 bg-blue-700"
                           >
                             <UserPlus className="mr-1" />{" "}
                             <span>Add friend {selectedGroupMemberData.name}</span>
-                          </div>}
+                          </div>:<span className="text-slate-400">Friend request sent</span>}
                         </div>
                       </div>
                     </div>

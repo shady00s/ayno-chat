@@ -58,7 +58,6 @@ const GroupMessageComponent=()=> {
             })
 
         }
-        console.log(typingData);
 
         return () => {
             socket.off('recive-group-message')
