@@ -59,7 +59,7 @@ const VoteComponent = (props) => {
     return(()=>{
       socket.off('recive-vote-participent')
     })
-  }, [socket]);
+  }, [socket,voteParticipations]);
   
   function sendVoteParticipation(){
     setLoading(true);
