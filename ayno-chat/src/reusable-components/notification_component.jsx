@@ -38,7 +38,7 @@ export default function NotificationComponent(){
     return(
 
         
-        <div className={`${show?"translate-x-0":"translate-x-[-9999px]"} transition-transform duration-100 absolute z-50  md:top-10 md:left-[34%] top-12 left-[10%] h-10 p-4 flex  items-center  justify-center  bg-slate-700 rounded-md`}>
+        <div className={`${show?"translate-x-0":"translate-x-[-9999px]"} transition-transform duration-100 absolute z-50  md:top-10 md:left-[34%] top-12 left-[10%] h-10 md:p-4 p-8 flex  items-center  justify-center  bg-slate-700 rounded-md`}>
            <Bell className="text-slate-200 w-3 h-4 mr-2" />
             <span className="text-slate-200">You have new message from {name}</span>
             <X onClick={()=>{

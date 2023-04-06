@@ -85,7 +85,6 @@ export default function ChatMessageInputComponent(props) {
               setUserTyping(false);
             }, 2000);
           }
-          console.log(conversation_id)
         }}
         autoFocus
         value={textVal}
@@ -93,7 +92,7 @@ export default function ChatMessageInputComponent(props) {
           setTextVal(val.target.value);
         }}
         placeholder="Write your text here"
-        className="border-r-2 border-r-slate-700  p-1 w-9/12 bg-transparent text-gray-200"
+        className="border-r-2 resize-none min-h-full max-h-[12rem] overflow-y-auto border-r-slate-700  p-1 w-9/12 bg-transparent text-gray-200"
         type={"text"}
       />
 
