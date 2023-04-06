@@ -46,9 +46,7 @@ const VoteComponent = (props) => {
     
 },[voteParticipations]);
 
-useEffect(()=>{
-  voteOptionsRatio()
-},[voteParticipations])
+
 
   useEffect(() => {
     socket.on("recive-vote-participent", (participentData) => {
@@ -61,10 +59,12 @@ useEffect(()=>{
     return(()=>{
       socket.off('recive-vote-participent')
     })
-  }, [socket,voteParticipations]);
+  }, [socket]);
   
 
-
+  useEffect(()=>{
+    voteOptionsRatio()
+  },[voteParticipations])
   
   return (
     <div className="w-full m-1">
