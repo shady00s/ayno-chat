@@ -13,12 +13,14 @@ export default function NotificationComponent(){
         socket.on("notification",(data)=>{
             switch(data.type){
                 case "message":
-                if(data.user !== contact._id){
+                if(data.conversation_id !== contact.conversations[0].conversation_Id){
                     setShow(true)
                     setName(data.name)
                     setTimeout(()=>{
                         setShow(false)
                     },3000)
+                }else{
+                    setShow(false)  
                 }
                 
                 break 
