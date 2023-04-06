@@ -93,7 +93,7 @@ export default function ChatMessageInputComponent(props) {
           setTextVal(val.target.value);
         }}
         placeholder="Write your text here"
-        className="border-r-2 border-r-slate-700 resize-none  p-1 w-8/12 bg-transparent text-gray-200"
+        className="border-r-2 h-11 border-r-slate-700 resize-none  p-1 w-8/12 bg-transparent text-gray-200"
         type={"text"}
       />
 
