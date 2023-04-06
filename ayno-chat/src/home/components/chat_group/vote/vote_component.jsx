@@ -61,7 +61,21 @@ const VoteComponent = (props) => {
     })
   }, [socket]);
   
-
+  function sendVoteParticipation(){
+    setLoading(true);
+    setParticeped(true);
+    ApiCall.sendVoteParticipent({
+      conversation_id: contact.conversation_id,
+      voteId: props.message.votingData.voteId,
+      participent_choice: selected.voteId,
+    }).then(() => {
+      socket.emit("send-vote-participent",{ particepentChoice: selected.voteId, prticipentId: user.id},contact.conversation_id);
+      setVoteParticipations(()=>voteParticipations.concat({ particepentChoice: selected.voteId, prticipentId: user.id}))
+      voteOptionsRatio ()
+      
+      setLoading(false);
+    }).catch(err=>{console.log(err)});
+  }
   useEffect(()=>{
     voteOptionsRatio()
   },[voteParticipations])
@@ -117,21 +131,9 @@ const VoteComponent = (props) => {
           className={`${particeped ? " hidden" : "block"} bg-gray-700`}
           title="sumbit vote"
           onClick={() => {
-           
+            sendVoteParticipation()
             
-            setLoading(true);
-            setParticeped(true);
-            ApiCall.sendVoteParticipent({
-              conversation_id: contact.conversation_id,
-              voteId: props.message.votingData.voteId,
-              participent_choice: selected.voteId,
-            }).then(() => {
-              socket.emit("send-vote-participent",{ particepentChoice: selected.voteId, prticipentId: user.id},contact.conversation_id);
-              setVoteParticipations(()=>voteParticipations.concat({ particepentChoice: selected.voteId, prticipentId: user.id}))
-              voteOptionsRatio ()
-              
-              setLoading(false);
-            }).catch(err=>{console.log(err)});
+          
           }}
         />
       </div>

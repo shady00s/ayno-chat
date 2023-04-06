@@ -87,13 +87,13 @@ const GroupMessageComponent=()=> {
                         </div>
                         <AddNewVote />
                         <div className=" p-1 w-full h-full overflow-x-hidden  overflow-y-auto flex flex-col">
-                            {messages.map((messageComponent, index) => <div key={Math.random().toString()}>
+                            {messages.map((messageComponent, index) =>
 
-                                <div key={Math.random().toString()} className="m-1 pb-4 border-b-2 p-2  border-b-[rgba(70,70,70,0.1)]" ref={scrollRef}>
-                                    {messageComponent.messages.type === "vote" && messageComponent.messages.message === "voting" ? <VoteComponent key={Math.random().toString()} message={messageComponent.messages} /> : <GroupMessage key={Math.random().toString()} message={messageComponent.messages} isUser={messageComponent.messages.sender_id === user_id ? true : false} />}
+                                <div key={index} className="m-1 pb-4 border-b-2 p-2  border-b-[rgba(70,70,70,0.1)]" ref={scrollRef}>
+                                    {messageComponent.messages.type === "vote"? <VoteComponent key={index} message={messageComponent.messages} /> : <GroupMessage key={index} message={messageComponent.messages} isUser={messageComponent.messages.sender_id === user_id ? true : false} />}
                                 </div>
 
-                            </div>)}
+                           )}
                            
 
                         </div>
