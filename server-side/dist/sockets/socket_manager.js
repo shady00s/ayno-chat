@@ -115,9 +115,6 @@ let socketManager = {
             socket.on("isTyping", ({ name, conversation_id, isTyping }) => {
                 socket.to(conversation_id).emit("typing-data", name, isTyping);
             });
-            socket.on('join-group-conversation', (conversation) => {
-                socket.join(conversation);
-            });
             socket.on('send-group-message', (message, conversation_id) => {
                 io.in(conversation_id).emit('recive-group-message', message);
             });
