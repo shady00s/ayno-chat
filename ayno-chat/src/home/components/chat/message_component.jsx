@@ -107,6 +107,8 @@ function MessageComponent() {
 
            setTyping(false)
     
+       }else{
+        socket.connect()
        }
         return(()=>{
             socket.off("recive-message")

@@ -12,16 +12,17 @@ export default function ContactButton(props){
     const [number,setNumber] = useState(0)
     const notifications = useSelector((state)=>state.data.notifications)
     const contact = useSelector((state)=>state.data.contact)
+    const user = useSelector((state)=>state.data.user)
     const setNotification = useDispatch()
     const getUserData =()=>{
-        //
-        socket.emit("join-conversation",props.data.conversations[0].conversation_Id)
+        const conversation = props.data.conversations.find((data)=>data.contact_Id === user)
+        socket.emit("join-conversation",conversation.conversation_Id)
         setNavigation("")
         setContact(setNewContact({   
             name:props.data.name,
             _id:props.data._id,
             profileImagePath:props.data.profileImagePath
-            ,conversations:[{conversation_Id:props.data.conversations[0].conversation_Id}]
+            ,conversations:[{conversation_Id:conversation.conversation_Id}]
             ,type:"contact"}))
     }
     useEffect(()=>{
