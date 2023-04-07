@@ -15,7 +15,7 @@ export default function ContactButton(props){
     const user = useSelector((state)=>state.data.user)
     const setNotification = useDispatch()
     const getUserData =()=>{
-        const conversation = props.data.conversations.find((data)=>data.contact_Id === user)
+        const conversation = props.data.conversations.find((data)=>data.contact_Id === user.id)
         socket.emit("join-conversation",conversation.conversation_Id)
         setNavigation("")
         setContact(setNewContact({   
