@@ -81,7 +81,12 @@ if (prevNotifications.length !== 0) {
         if (prevNotifications[index].friendType === "add") {
             newList.push(prevNotifications[index]);
         } else if(prevNotifications[index].friendType === "remove"){
-            newList = list.filter(data=> data._id !== prevNotifications[index]._id)
+          const removeIndex = newList.findIndex((data)=>data._id ===prevNotifications[index]._id)
+           
+          if(removeIndex !== -1){
+            newList.splice(removeIndex,1)
+
+          }
         }
        
       }

@@ -26,7 +26,7 @@ function removeFriend(){
 
 }else{
   setLoading(true)
-  ApiCall.deleteFriend(contact._id).then((val)=>{
+  ApiCall.deleteFriend(contact._id).then(()=>{
     setLoading(false)
     setFriend(setNewFriend({data:{...contact},friendType:"remove"}))
       socket.emit('new-notification',{id:contact._id,data:{...user , _id:user.id,friendType:"remove",type:"contact"},type:"new-friend"})
