@@ -39,6 +39,7 @@ let socketManager = {
     connectSocket: (server) => {
         io = new socket_io_1.Server(server, { cors: { origin: "*", methods: ["GET", "POST"] } });
         io.on('connection', (socket) => {
+            socket.setMaxListeners(13);
             logger_1.default.info('connection at socket ' + socket.id);
             socket.on("join-conversation", (conversation) => {
                 oldConversation = conversation;

@@ -14,6 +14,7 @@ let socketManager = {
     connectSocket: (server: http.Server): Server => {
          io = new Server(server, { cors: { origin: "*", methods: ["GET", "POST"] } })
         io.on('connection', (socket) => {
+            socket.setMaxListeners(13)
             Logining.info('connection at socket ' + socket.id)
            
 
