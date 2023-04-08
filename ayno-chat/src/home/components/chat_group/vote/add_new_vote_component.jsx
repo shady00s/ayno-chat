@@ -90,21 +90,11 @@ export default function AddNewVote(){
                                 voteQuestion:voteQuestion,
                                 voteChoices:pollChoices,
                                 message:"voting",
-                                conversation_id:contact.conversation_id
-                            }).then(result => {
-                                socket.emit('send-group-message',{
-                                    message: "voting",
-                                    type:"vote",
-                                    votingData:{
-                                        voteQuestion:voteQuestion,
-                                        voteChoices:pollChoices,
-                                        voteParticepents:[]
-                                    },
-                                    conversation_id:contact.conversation_id,
-                                    sender_image_path: user.profileImagePath,
-                                    sender_name: user.name,
-                                    sender_id: user.id,
-                                  },contact.conversation_id)
+                                conversation_id:contact.conversation_id,
+                                voteQuestion:voteQuestion,
+                                voteChoices:pollChoices
+                            }).then(() => {
+
                                 setLoading(false)
                                 setNavigation("")}).catch(err=>{console.log(err)})
                         };
