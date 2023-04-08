@@ -12,7 +12,7 @@ import { Response,Request } from "express";
 import "express-session";
 import { createServer } from "http";
 import {MongoClient} from "mongodb"
-
+import EventEmitter from "events";
 declare module "express-session"{
       interface SessionData{
         userData:UserData
@@ -89,8 +89,8 @@ try {
     socketManager.groupMessageSocket()
     socketManager.notificationSocket()
     mongoose.set('strictQuery',true)
-
-
+    const emitter:EventEmitter = new EventEmitter()
+    emitter.setMaxListeners(13)
     mongoose.connect(`mongodb+srv://${process.env.DATABASE_USER_NAME}:${process.env.DATABASE_PASSWORD}@chatdatabase.fnneyaw.mongodb.net/
     `,{retryWrites:true,w:'majority',   
 

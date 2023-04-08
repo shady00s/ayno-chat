@@ -39,6 +39,7 @@ let socketManager = {
     connectSocket: (server) => {
         io = new socket_io_1.Server(server, { cors: { origin: "*", methods: ["GET", "POST"] } });
         io.on('connection', (socket) => {
+            socket.setMaxListeners(13);
             logger_1.default.info('connection at socket ' + socket.id);
             socket.on("join-conversation", (conversation) => {
                 oldConversation = conversation;
@@ -114,9 +115,6 @@ let socketManager = {
         io.on('connection', (socket) => {
             socket.on("isTyping", ({ name, conversation_id, isTyping }) => {
                 socket.to(conversation_id).emit("typing-data", name, isTyping);
-            });
-            socket.on('join-group-conversation', (conversation) => {
-                socket.join(conversation);
             });
             socket.on('send-group-message', (message, conversation_id) => {
                 io.in(conversation_id).emit('recive-group-message', message);

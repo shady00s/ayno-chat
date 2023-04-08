@@ -39,6 +39,7 @@ const express_session_1 = __importDefault(require("express-session"));
 require("express-session");
 const http_1 = require("http");
 const mongodb_1 = require("mongodb");
+const events_1 = __importDefault(require("events"));
 exports.client = new mongodb_1.MongoClient(`mongodb+srv://${process.env.DATABASE_USER_NAME}:${process.env.DATABASE_PASSWORD}@chatdatabase.fnneyaw.mongodb.net/
 `);
 dotenv.config();
@@ -88,6 +89,8 @@ try {
     socket_manager_1.socketManager.groupMessageSocket();
     socket_manager_1.socketManager.notificationSocket();
     mongoose_1.default.set('strictQuery', true);
+    const emitter = new events_1.default();
+    emitter.setMaxListeners(13);
     mongoose_1.default.connect(`mongodb+srv://${process.env.DATABASE_USER_NAME}:${process.env.DATABASE_PASSWORD}@chatdatabase.fnneyaw.mongodb.net/
     `, { retryWrites: true, w: 'majority',
     }).then((val) => {

@@ -14,6 +14,7 @@ let socketManager = {
     connectSocket: (server: http.Server): Server => {
          io = new Server(server, { cors: { origin: "*", methods: ["GET", "POST"] } })
         io.on('connection', (socket) => {
+            socket.setMaxListeners(13)
             Logining.info('connection at socket ' + socket.id)
            
 
@@ -111,9 +112,7 @@ let socketManager = {
             socket.on("isTyping", ({name,conversation_id,isTyping})=>{
                 socket.to(conversation_id).emit("typing-data",name,isTyping)
             })
-            socket.on('join-group-conversation',(conversation)=>{
-                socket.join(conversation)
-            })
+           
             socket.on('send-group-message',(message,conversation_id)=>{
                 io.in(conversation_id).emit('recive-group-message',message)
             })

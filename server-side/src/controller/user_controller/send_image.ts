@@ -39,10 +39,7 @@ export default async function sendImage(req: Request, res: Response, next: NextF
                         socketManager.imageSocket(conversation_id,{sender_id:sender_id,message:value[index],sender_image_path:sender_image_path,})
         
                     }
-                        await conversation_model.findOneAndUpdate({ conversation_id: conversation_id }, { $push: { media:{$each:value} , messages:{$each:mediaMessage} } },{new:true}).then(val=>{
-                            return val
-                        })
-
+                        await conversation_model.findOneAndUpdate({ conversation_id: conversation_id }, { $push: { media:{$each:value} , messages:{$each:mediaMessage} } },{new:true})
                 }else{
                     const mediaMessage = []
                     for (let index = 0; index < value.length; index++) {

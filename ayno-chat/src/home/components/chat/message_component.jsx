@@ -95,9 +95,9 @@ function MessageComponent() {
            socket.on("recive-message",newMessage )
         
            socket.on("images",(textVal)=>{
-            setNewMessage(true)
-
-             setChat((prev) => [...prev,{messages: {...textVal}}])
+               
+               setChat(() => [...chat,{messages: {...textVal}}])
+               setNewMessage(true)
            }) 
 
            socket.on("typing-data",(name,isTyping)=>{
@@ -107,6 +107,8 @@ function MessageComponent() {
 
            setTyping(false)
     
+       }else{
+        socket.connect()
        }
         return(()=>{
             socket.off("recive-message")

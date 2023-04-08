@@ -73,7 +73,7 @@ export default function ChatMessageInputComponent(props) {
 
   return (
     <div className="z-20 justify-between items-center border-2 border-gray-800 rounded-md sticky bottom-0 pl-4 pr-4 w-full  bg-background flex">
-      <input
+      <textarea
         onKeyDown={(key) => {
           if (key.key === "Enter") {
             setUserTyping(false);
@@ -85,15 +85,15 @@ export default function ChatMessageInputComponent(props) {
               setUserTyping(false);
             }, 2000);
           }
-          console.log(conversation_id)
         }}
+        
         autoFocus
         value={textVal}
         onChange={(val) => {
           setTextVal(val.target.value);
         }}
         placeholder="Write your text here"
-        className="border-r-2 border-r-slate-700  p-1 w-9/12 bg-transparent text-gray-200"
+        className="border-r-2 h-11 border-r-slate-700 resize-none  p-1 w-8/12 bg-transparent text-gray-200"
         type={"text"}
       />
 

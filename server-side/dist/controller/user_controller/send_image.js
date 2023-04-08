@@ -35,9 +35,7 @@ async function sendImage(req, res, next) {
                         mediaMessage.push({ sender_id: sender_id, message: value[index], sender_image_path: sender_image_path, });
                         socket_manager_1.socketManager.imageSocket(conversation_id, { sender_id: sender_id, message: value[index], sender_image_path: sender_image_path, });
                     }
-                    await conversation_model_1.default.findOneAndUpdate({ conversation_id: conversation_id }, { $push: { media: { $each: value }, messages: { $each: mediaMessage } } }, { new: true }).then(val => {
-                        return val;
-                    });
+                    await conversation_model_1.default.findOneAndUpdate({ conversation_id: conversation_id }, { $push: { media: { $each: value }, messages: { $each: mediaMessage } } }, { new: true });
                 }
                 else {
                     const mediaMessage = [];
