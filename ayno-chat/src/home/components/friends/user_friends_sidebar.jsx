@@ -137,7 +137,7 @@ function ContactList() {
                 if (e.target.id === "bg-contacts") {
                     setNavigation("")
                 }
-            }} className={`${navigation === "Contacts" ? "opacity-1 translate-x-0" : "opacity-0 translate-x-[-999px]"}  transition-opacity ease-in duration-500 left-10 absolute overflow-x-hidden w-[95%] h-[90%] bg-theme z-50`}>
+            }} className={`${navigation.name === "Contacts" || navigation === "Contacts"? "opacity-1 translate-x-0" : "opacity-0 translate-x-[-999px]"}  transition-opacity ease-in duration-500 left-10 absolute overflow-x-hidden w-[95%] h-[90%] bg-theme z-50`}>
                 <div style={{ borderRight: "3px solid rgba(60, 67, 60, 0.167)" }} className={`${navigation === "Contacts" ? "translate-x-0" : "translate-x-[-999px]"} transition-transform   ease-in-out duration-300 flex flex-col h-full overflow-y-auto bg-background z-50 xl:w-8/12 w-7/12`}>
                     <SearchComponent title={"Search for friends"} onInputClick={() => { setSearchContainer(true) }} searchSubmit={getSearchResult} searchResult={(value) => { setSearch(value.target.value) }} />
                     {/* search result */}

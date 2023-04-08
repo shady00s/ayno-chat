@@ -1,6 +1,5 @@
 import { Response,Request } from "express";
 import user_model from "../../../model/user_model";
-import {socketManager} from '../../../sockets/socket_manager';
 import { validationResult } from 'express-validator';
 
 const addFriendRequestController = (req:Request,res:Response)=>{

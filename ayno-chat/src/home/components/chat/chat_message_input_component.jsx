@@ -27,15 +27,16 @@ export default function ChatMessageInputComponent(props) {
         message_content: finalText.current,
       }).then(()=>{
         
-        socket.emit('new-notification', { conversation_id, id: contact._id,name:user.name, user: user.id ,newMessage:1, type: "message" })
+        socket.emit('new-notification', {
+           conversation_id, id: contact._id,
+           name:user.name,
+            user: user.id ,
+            newMessage:1,
+            profileImagePath:user.profileImagePath,
+             type: "message" })
 
       });
-      const textVal = {
-        message: finalText.current,
-        conversation_id,
-        sender_id: user.id,
-      };
-      socket.emit("send-messages", textVal, conversation_id);
+  
       setTextVal("");
     } else {
       ApiCall.postGroupMessage({
@@ -46,20 +47,14 @@ export default function ChatMessageInputComponent(props) {
       }).then(()=>{
         socket.emit('new-notification', {
           conversation_id, 
-          id: contact._id,
+          id: contact.conversation_id,
           user: user.id,
-          sender_id: user.id, type: "group-message"
+          sender_id: user.id, 
+          type: "group-message",
+          sender_name:user.name,
+          group_name:contact.name
         })
       });
-      
-
-      socket.emit("send-group-message", {
-        message: finalText.current,
-        conversation_id,
-        sender_image_path: user.profileImagePath,
-        sender_name: user.name,
-        sender_id: user.id,
-      }, contact.conversation_id);
       setTextVal("");
     }
   }

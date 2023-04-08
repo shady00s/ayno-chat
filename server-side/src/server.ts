@@ -82,30 +82,29 @@ app.use('*',(req:Request,res:Response)=>{
 })
 
 
-try {
-    const server = createServer(app)
-    socketManager.connectSocket(server)
-    socketManager.messageSocket()
-    socketManager.groupMessageSocket()
-    socketManager.notificationSocket()
-    mongoose.set('strictQuery',true)
-    const emitter:EventEmitter = new EventEmitter()
-    emitter.setMaxListeners(13)
-    mongoose.connect(`mongodb+srv://${process.env.DATABASE_USER_NAME}:${process.env.DATABASE_PASSWORD}@chatdatabase.fnneyaw.mongodb.net/
-    `,{retryWrites:true,w:'majority',   
 
-    
-}).then((val)=>{
-        Logining.info('connected to mongo database ')
+const server = createServer(app)
 
-        server.listen(8080,()=>{
-            Logining.info("connected to port 8080")
+server.listen(8080,()=>{
+    Logining.info("connected to port 8080")
+    try {
+        mongoose.set('strictQuery',true)
         
+        mongoose.connect(`mongodb+srv://${process.env.DATABASE_USER_NAME}:${process.env.DATABASE_PASSWORD}@chatdatabase.fnneyaw.mongodb.net/
+        `,{retryWrites:true,w:'majority',   
+        
+        
+    }).then((val)=>{
+        Logining.info('connected to mongo database ')
         
             
-        })
-    })    
-           
+    })
 } catch (error) {
- Logining.error('faild to connect to mongo database'+error)   
+    Logining.error('faild to connect to mongo database'+error)   
 }
+})    
+
+socketManager.connectSocket(server)
+socketManager.messageSocket()
+socketManager.groupSockets()
+socketManager.notificationSocket()

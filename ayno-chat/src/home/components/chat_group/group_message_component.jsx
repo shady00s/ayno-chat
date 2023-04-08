@@ -44,15 +44,18 @@ const GroupMessageComponent=()=> {
         scrollToBottom()
     }, [messages])
     const messagesCallBack = useCallback((message) => {
-
         setMessages(prev => [...prev, { messages: { ...message } }])
     }, [socket])
+    const imagesCallBack = useCallback((images)=>{
+        setMessages(prev => [...prev, { messages: { ...images } }])
+    },[socket])
+    useEffect(()=>{
+        socket.on("images",imagesCallBack)
+    },[socket,messages])
     useEffect(() => {
         if (socket.connected) {
             socket.on('recive-group-message', messagesCallBack)
-            socket.on("images", (images) => {
-                setMessages(prev => [...prev, { messages: { ...images } }])
-            })
+           
             socket.on('typing-data',(name,isTyping)=>{
                 setTypingData({typing:isTyping,userName:name})
             })

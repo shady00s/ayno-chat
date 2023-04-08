@@ -2,7 +2,7 @@ import React, { useState, useEffect ,useContext} from 'react';
 import convertBase64 from '../../../utils/base64';
 import IconButtonWithText from '../icon_button_with_text';
 import IconButton from '../icons_button';
-import { Paperclip, Image, File, Folder } from 'react-feather';
+import { Paperclip, Image, Loader, Folder } from 'react-feather';
 import ApiCall from '../../../api_call';
 import SocketContext from '../../../context/socketContext';
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,7 +14,8 @@ import { useDispatch, useSelector } from 'react-redux';
 const AddImageComponent = () => {
     const  contact  = useSelector((state)=>state.data.contact)
     const user = useSelector((state)=>state.data.user)
-    const socket = useContext(SocketContext)
+    const [loading,setLoading] = useState(false)
+
     async function imageConverter(imagesList) {
         
             const conversation = contact.type==="contact"? contact.conversations[0].conversation_Id:contact.conversation_id
@@ -26,10 +27,12 @@ const AddImageComponent = () => {
             convertedImageList.push(await convertBase64(imagesList[index]))
         }
 
-        return await ApiCall.postMediaToServer({ media: convertedImageList, sender_id: user.id, conversation_id: conversation, sender_image_path: user.profileImagePath,type:contact.type }).then(vals => {
-            socket.emit("join-conversation", conversation)
-
+        ApiCall.postMediaToServer({ media: convertedImageList, sender_id: user.id, conversation_id: conversation, sender_image_path: user.profileImagePath,type:contact.type }).then((val)=>{
+            setLoading(()=>false)
+           
         })
+          
+    
     }
 
     const [open, setOpen] = useState(false)
@@ -37,7 +40,7 @@ const AddImageComponent = () => {
     return (
         <>
             <div className="relative p-2">
-                <IconButton icon={Paperclip} onClick={() => {
+                <IconButton icon={loading?Loader:Paperclip} onClick={() => {
 
                     setOpen(!open) }} />
                 {/* selection container */}
@@ -48,7 +51,11 @@ const AddImageComponent = () => {
 
                     </div>
                     <IconButtonWithText isHidden={false} icon={Image} name={"Send image"} onClick={(event) => { document.querySelector('.imageFileInput').click() }} />
-                    <input multiple type={"file"} accept='image/*' className='hidden imageFileInput ' onChange={async (event) => await imageConverter(event.target.files)} />
+                    <input multiple type={"file"} accept='image/*' className='hidden imageFileInput ' onChange={async (event) => {
+                        setLoading(true)
+                        setOpen(false)
+                        imageConverter(event.target.files)
+                        }} />
                 </div>
             </div>
         </>

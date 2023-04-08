@@ -5,6 +5,7 @@ import FriendRequestBody from "./friend_request_body";
 import { FriendListSkeleton } from "../../../reusable-components/skeleton/friend_list";
 import { useSelector, useDispatch } from 'react-redux';
 import { setNotifications } from "../../../redux/slice";
+import NavigationContext from "../../../context/navigationContext";
 
 
 export function FriendRequestComponent() {
@@ -15,6 +16,7 @@ export function FriendRequestComponent() {
     const [loading, setLoading] = useState(false)
     const [numberofReq,setNumberOfReq]= useState(0)
     const [firstload,setFirstLoad]=useState(true)
+    const {navigation}= useContext(NavigationContext)
     const setNotification = useDispatch()
    
     const notifications = useSelector((state)=>state.data.notifications)
@@ -39,7 +41,11 @@ export function FriendRequestComponent() {
         
 
     },[notifications])
-
+    useEffect(()=>{
+        if(navigation.target==="friendRequest"){
+            setOpen(()=>true)
+        }
+    },[navigation])
     useEffect(() => {
             setLoading(true)
             if (firstload){

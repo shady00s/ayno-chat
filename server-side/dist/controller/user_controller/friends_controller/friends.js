@@ -10,7 +10,7 @@ const getUserFriendsController = (req, res) => {
         if (user_id !== undefined) {
             user_model_1.default.findById(user_id.userId).then(async (value) => {
                 if (value !== null) {
-                    let friendData = await user_model_1.default.find({ "_id": { $in: value.friends }, "conversations.contact_Id": user_id.userId }, { conversations: { $elemMatch: { "conversations.contact_Id": user_id.userId } } }).select(['name', 'profileImagePath']).then(val => val);
+                    let friendData = await user_model_1.default.find({ "_id": { $in: value.friends }, "conversations.contact_Id": user_id.userId }, { conversations: { $elemMatch: { "conversations.contact_Id": user_id.userId } } }).select(['name', 'profileImagePath']);
                     res.status(200).json({
                         message: "succssess",
                         body: {

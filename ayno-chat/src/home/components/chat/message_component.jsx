@@ -20,12 +20,12 @@ function MessageComponent() {
     const paginationRef = useRef()
     const [page,setPage] = useState(0)
     const [newMessages,setNewMessage]=useState(false)
-
-    const newMessage = useCallback((textVal) => {
+    const user = useSelector((state)=>state.data.user)
+    const newMessage =(textVal) => {
         setNewMessage(true)
         return setChat((prev) => [...prev, {messages:{...textVal}}])
-
-    },[socket])
+    }
+    
 
 
     const scrollToBottom = () => {
@@ -90,15 +90,17 @@ function MessageComponent() {
         
            
     }, [contact])
+    useEffect(()=>{
+        socket.on("images",(textVal)=>{
+            setChat(() => [...chat,{messages: {...textVal}}])
+            setNewMessage(true)
+        })
+    },[socket,newMessages])
     useEffect(() => {
        if(socket.connected){
            socket.on("recive-message",newMessage )
         
-           socket.on("images",(textVal)=>{
-               
-               setChat(() => [...chat,{messages: {...textVal}}])
-               setNewMessage(true)
-           }) 
+            
 
            socket.on("typing-data",(name,isTyping)=>{
                setTyping(isTyping)
@@ -107,8 +109,6 @@ function MessageComponent() {
 
            setTyping(false)
     
-       }else{
-        socket.connect()
        }
         return(()=>{
             socket.off("recive-message")
@@ -165,7 +165,7 @@ function MessageComponent() {
 
                         </div>
                         <div className=' w-full  '>
-                            <ChatMessageInputComponent conversation_id={contact._id !== null ? contact.conversations[0].conversation_Id : ""} friend_id={contact._id} />
+                            <ChatMessageInputComponent conversation_id={contact._id !== null ? contact.conversations.find((data)=>data.contact_Id === user.id) : ""} friend_id={contact._id} />
                         </div>
                     </div>}
             </div>

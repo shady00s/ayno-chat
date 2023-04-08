@@ -39,7 +39,6 @@ const express_session_1 = __importDefault(require("express-session"));
 require("express-session");
 const http_1 = require("http");
 const mongodb_1 = require("mongodb");
-const events_1 = __importDefault(require("events"));
 exports.client = new mongodb_1.MongoClient(`mongodb+srv://${process.env.DATABASE_USER_NAME}:${process.env.DATABASE_PASSWORD}@chatdatabase.fnneyaw.mongodb.net/
 `);
 dotenv.config();
@@ -54,7 +53,7 @@ exports.store = new MongoDBStore({
 });
 app.set("trust proxy", 1);
 app.use('/', (req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', process.env.Client_URL);
+    res.setHeader('Access-Control-Allow-Origin', 'http://192.168.1.4:3000');
     res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET, POST, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type , Authorization , Origin , X-Requested-With,Accept');
     res.setHeader('Access-Control-Allow-Credentials', 'true');
@@ -72,9 +71,9 @@ app.use((0, express_session_1.default)({
     secret: process.env.SESSION_SECRET,
     cookie: {
         maxAge: expiredDate,
-        secure: true,
+        secure: false,
         httpOnly: true,
-        sameSite: "none"
+        sameSite: "lax"
     },
 }));
 app.use('/user', user_routes_1.default);
@@ -82,25 +81,23 @@ app.use('/chat', chat_routes_1.default);
 app.use('*', (req, res) => {
     res.json({ message: "bad route" });
 });
-try {
-    const server = (0, http_1.createServer)(app);
-    socket_manager_1.socketManager.connectSocket(server);
-    socket_manager_1.socketManager.messageSocket();
-    socket_manager_1.socketManager.groupMessageSocket();
-    socket_manager_1.socketManager.notificationSocket();
-    mongoose_1.default.set('strictQuery', true);
-    const emitter = new events_1.default();
-    emitter.setMaxListeners(13);
-    mongoose_1.default.connect(`mongodb+srv://${process.env.DATABASE_USER_NAME}:${process.env.DATABASE_PASSWORD}@chatdatabase.fnneyaw.mongodb.net/
-    `, { retryWrites: true, w: 'majority',
-    }).then((val) => {
-        logger_1.default.info('connected to mongo database ');
-        server.listen(8080, () => {
-            logger_1.default.info("connected to port 8080");
+const server = (0, http_1.createServer)(app);
+server.listen(8080, () => {
+    logger_1.default.info("connected to port 8080");
+    try {
+        mongoose_1.default.set('strictQuery', true);
+        mongoose_1.default.connect(`mongodb+srv://${process.env.DATABASE_USER_NAME}:${process.env.DATABASE_PASSWORD}@chatdatabase.fnneyaw.mongodb.net/
+        `, { retryWrites: true, w: 'majority',
+        }).then((val) => {
+            logger_1.default.info('connected to mongo database ');
         });
-    });
-}
-catch (error) {
-    logger_1.default.error('faild to connect to mongo database' + error);
-}
+    }
+    catch (error) {
+        logger_1.default.error('faild to connect to mongo database' + error);
+    }
+});
+socket_manager_1.socketManager.connectSocket(server);
+socket_manager_1.socketManager.messageSocket();
+socket_manager_1.socketManager.groupSockets();
+socket_manager_1.socketManager.notificationSocket();
 //# sourceMappingURL=server.js.map

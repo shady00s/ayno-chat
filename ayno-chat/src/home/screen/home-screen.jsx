@@ -1,8 +1,18 @@
+import { Helmet } from "react-helmet-async";
+import useWindowDimensions from "../../utils/window_size";
+import NavigationContext from "../../context/navigationContext";
+import { logo } from "../../constants";
+import ChatBodyComponent from "../components/chat/chat_body";
+import RemoveFriendAlert from "../components/remove_friend_alert";
+import LoadingComponent from "../../reusable-components/loading/loading_component";
+import { useSelector } from 'react-redux';
 import { useState, useMemo, lazy, Suspense } from "react";
 const Sidebar = lazy(() => import("../components/side_bar"));
 const ContactList = lazy(() =>
   import("../components/friends/user_friends_sidebar")
 );
+
+const FriendRequestNotificationComponent = lazy(()=>import("../../reusable-components/notifications/friend_request_notification_component"))
 const SettingsComponent = lazy(() =>
   import("../components/settings_component")
 );
@@ -12,22 +22,19 @@ const ContactInformation = lazy(() =>
 const AddNewContact = lazy(() =>
   import("../components/chat_group/add_new_contact")
 );
-
-const NotificationComponent = lazy(()=> import('../../reusable-components/notification_component'))
-import { Helmet } from "react-helmet-async";
-import useWindowDimensions from "../../utils/window_size";
-import NavigationContext from "../../context/navigationContext";
-import { logo } from "../../constants";
-const CreateChatGroupPopup = lazy(() =>
-  import("../components/chat_group/create_chat_group_popup")
-);
-import ChatBodyComponent from "../components/chat/chat_body";
-import RemoveFriendAlert from "../components/remove_friend_alert";
 const ViewImageComponent = lazy(() =>
   import("../components/viewImageComponent")
 );
-import LoadingComponent from "../../reusable-components/loading/loading_component";
-import { useSelector } from 'react-redux';
+const CreateChatGroupPopup = lazy(() =>
+  import("../components/chat_group/create_chat_group_popup")
+);
+const GroupNotificationComponent = lazy(()=>
+import("../../reusable-components/notifications/group_message_notification_component"))
+;
+
+const UserNotificationComponent = lazy(()=> 
+import('../../reusable-components/notifications/user_message_notification_component')
+)
 
 export default function HomeScreen() {
   const { width } = useWindowDimensions();
@@ -85,7 +92,7 @@ export default function HomeScreen() {
 
         <div className="w-full h-[91vh] relative flex bg-background overflow-hidden">
           <NavigationContext.Provider value={navigationValue}>
-            <Suspense fallback={<LoadingComponent />}>
+            <Suspense fallback={<></>}>
               <Sidebar />
             </Suspense>
             <Suspense fallback={<LoadingComponent />}>
@@ -102,7 +109,7 @@ export default function HomeScreen() {
               
 
               <ChatBodyComponent />
-              <Suspense fallback={<LoadingComponent />}>
+              <Suspense fallback={<></>}>
                 <ContactInformation />
               </Suspense>
 
@@ -119,7 +126,15 @@ export default function HomeScreen() {
             </Suspense>
 
             <Suspense fallback={< LoadingComponent/>}>
-            <NotificationComponent/>
+            <UserNotificationComponent/>
+            </Suspense>
+
+            <Suspense fallback={<LoadingComponent/>}>
+              <GroupNotificationComponent/>
+            </Suspense>
+
+            <Suspense fallback={<LoadingComponent/>}>
+              <FriendRequestNotificationComponent/>
             </Suspense>
           </NavigationContext.Provider>
         </div>

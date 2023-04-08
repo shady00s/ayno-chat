@@ -16,24 +16,8 @@ let socketManager = {
         io.on('connection', (socket) => {
             socket.setMaxListeners(13)
             Logining.info('connection at socket ' + socket.id)
-           
-
-           
-            socket.on("join-conversation",(conversation)=>{
-                oldConversation = conversation  
-                socket.join(oldConversation)
-            })
-            // to join group conversation
-            socket.on('join-group-conversation',(groupConversation)=>{
-                socket.leave(oldConversation)
-                socket.join(groupConversation)
-            })
-        
-    
             socket.on('disconnect',()=>{
                 Logining.error('client disconnected with id '+ socket.id)
-
-                
             })
         })
         return io
@@ -44,18 +28,15 @@ let socketManager = {
             return
         }
 
-       
         io.on('connection',(socket)=>{
-
+            socket.on("join-conversation",(conversation)=>{
+                oldConversation = conversation  
+                socket.join(oldConversation)
+            })
             socket.on("isTyping", ({name,conversation_id,isTyping})=>{
                 socket.to(conversation_id).emit("typing-data",name,isTyping)
             })
         
-            socket.on("send-messages", (textVal,conversation_id) => {
-                io.in(conversation_id).emit("recive-message", textVal);
-                socket.to(conversation_id).emit("newMessage",{newMessage:1,conversation_id})
-            })
-
             
         })
        
@@ -102,26 +83,43 @@ let socketManager = {
         }
     },
    
-    groupMessageSocket:()=>{
+    groupSockets:()=>{
         if (!io) {
             Logining.error('error at socket')
             return
         }
         io.on('connection',(socket)=>{
-            
+            // to join group conversation
+            socket.on('join-group-conversation',(groupConversation)=>{
+                socket.join(groupConversation)
+            })
             socket.on("isTyping", ({name,conversation_id,isTyping})=>{
                 socket.to(conversation_id).emit("typing-data",name,isTyping)
             })
            
-            socket.on('send-group-message',(message,conversation_id)=>{
-                io.in(conversation_id).emit('recive-group-message',message)
-            })
+          
             socket.on('send-vote-participent',(participent,conversation_id)=>{
                 socket.to(conversation_id).emit('recive-vote-participent',participent)
 
             })
         })
        
+    },
+
+    groupSendMessageSocket:(conversation_id:string,message:object)=>{
+        if (!io) {
+            Logining.error('error at socket')
+            return
+        }
+        io.in(conversation_id).emit('recive-group-message',message)
+    },
+
+    userSendMessageSocket:(conversation_id:string,message:Object)=>{
+        if (!io) {
+            Logining.error('error at socket')
+            return
+        }
+        io.in(conversation_id).emit('recive-message',message)
     },
     imageSocket: (conversation_ids:string,images:object) => {
         if (!io) {

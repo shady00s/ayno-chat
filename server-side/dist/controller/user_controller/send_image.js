@@ -28,7 +28,7 @@ async function sendImage(req, res, next) {
     }
     try {
         sendDataToCloudinary().then(async (value) => {
-            if (value.length !== 0) {
+            if (value.length > 1) {
                 if (conversation_type === 'contact') {
                     const mediaMessage = [];
                     for (let index = 0; index < value.length; index++) {
@@ -43,9 +43,18 @@ async function sendImage(req, res, next) {
                         mediaMessage.push({ sender_id: sender_id, message: value[index], sender_image_path: sender_image_path, sender_name: req.session.userData.userName });
                         socket_manager_1.socketManager.imageSocket(conversation_id, { sender_id: sender_id, message: value[index], sender_image_path: sender_image_path, sender_name: req.session.userData.userName });
                     }
-                    await groups_model_1.default.findOneAndUpdate({ conversation_id: conversation_id }, { $push: { media: { $each: value }, messages: { $each: mediaMessage } } }, { new: true }).then(val => {
-                        return val;
-                    });
+                    await groups_model_1.default.findOneAndUpdate({ conversation_id: conversation_id }, { $push: { media: { $each: value }, messages: { $each: mediaMessage } } }, { new: true });
+                }
+                res.status(201).json({ message: "images added successfully", images: value });
+            }
+            else if (value.length === 1) {
+                if (conversation_type === 'contact') {
+                    socket_manager_1.socketManager.imageSocket(conversation_id, { sender_id: sender_id, message: value[0], sender_image_path: sender_image_path, });
+                    await conversation_model_1.default.findOneAndUpdate({ conversation_id: conversation_id }, { $push: { media: { $each: value }, messages: { sender_id: sender_id, message: value[0], sender_image_path: sender_image_path, } } }, { new: true });
+                }
+                else {
+                    socket_manager_1.socketManager.imageSocket(conversation_id, { sender_id: sender_id, message: value[0], sender_image_path: sender_image_path, sender_name: req.session.userData.userName });
+                    await groups_model_1.default.findOneAndUpdate({ conversation_id: conversation_id }, { $push: { media: { $each: value }, messages: { sender_id: sender_id, message: value[0], sender_image_path: sender_image_path, sender_name: req.session.userData.userName } } }, { new: true });
                 }
                 res.status(201).json({ message: "images added successfully", images: value });
             }

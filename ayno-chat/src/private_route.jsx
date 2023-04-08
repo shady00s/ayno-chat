@@ -37,22 +37,18 @@ const PrivateRoute = () => {
 
     }, [])
 
-    if (user_data != undefined) {
+
         return (
-
-            user_data ? <Outlet /> : <Navigate to={"/ayno-chat/register"} />
-        )
-
-    } else {
-        return <>
+            user_data=== undefined ? <>
             <div className="flex justify-center items-center w-screen h-screen">
             <div className="w-12 h-12">
             <Loading/>
 
           </div>
             </div>
-        </>
-    }
+        </>: user_data ?<Outlet /> : <Navigate to={"/ayno-chat/register"} />
+        )
+    
 
 }
 
