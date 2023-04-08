@@ -99,6 +99,7 @@ export default function ChatMessageInputComponent(props) {
             } transition-opacity absolute bottom-10   right-2`}
         ><div className="md:w-7/12 w-8/12">
            <EmojiPicker
+            width={"18rem"}
             lazyLoadEmojis={false}
             theme="dark"
             onEmojiClick={(emoji) => {
