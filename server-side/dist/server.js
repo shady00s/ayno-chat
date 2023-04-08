@@ -53,7 +53,7 @@ exports.store = new MongoDBStore({
 });
 app.set("trust proxy", 1);
 app.use('/', (req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', 'http://192.168.1.4:3000');
+    res.setHeader('Access-Control-Allow-Origin', process.env.Client_URL);
     res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET, POST, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type , Authorization , Origin , X-Requested-With,Accept');
     res.setHeader('Access-Control-Allow-Credentials', 'true');
@@ -71,9 +71,9 @@ app.use((0, express_session_1.default)({
     secret: process.env.SESSION_SECRET,
     cookie: {
         maxAge: expiredDate,
-        secure: false,
+        secure: true,
         httpOnly: true,
-        sameSite: "lax"
+        sameSite: "none"
     },
 }));
 app.use('/user', user_routes_1.default);
