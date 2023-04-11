@@ -41,7 +41,7 @@ export const store = new MongoDBStore({
 app.set("trust proxy", 1);
 
 app.use('/',(req:Request,res:Response,next:NextFunction)=>{
-    res.setHeader('Access-Control-Allow-Origin',process.env.Client_URL)
+    res.setHeader('Access-Control-Allow-Origin',"http://192.168.1.4:3000")
     res.setHeader(
         'Access-Control-Allow-Methods',
         'OPTIONS, GET, POST, PUT, PATCH, DELETE'
@@ -66,10 +66,8 @@ app.use(session({
      secret: process.env.SESSION_SECRET
      ,cookie:{
         maxAge: expiredDate,
-        secure:true,
-        httpOnly:true,
-        sameSite:"none"
-        
+        secure:false,
+        httpOnly:false,
      },
      
  }))
@@ -86,6 +84,8 @@ app.use('*',(req:Request,res:Response)=>{
 const server = createServer(app)
 
 server.listen(8080,()=>{
+    
+
     Logining.info("connected to port 8080")
     try {
         mongoose.set('strictQuery',true)
@@ -102,9 +102,10 @@ server.listen(8080,()=>{
 } catch (error) {
     Logining.error('faild to connect to mongo database'+error)   
 }
-})    
+}) 
 
 socketManager.connectSocket(server)
 socketManager.messageSocket()
 socketManager.groupSockets()
 socketManager.notificationSocket()
+

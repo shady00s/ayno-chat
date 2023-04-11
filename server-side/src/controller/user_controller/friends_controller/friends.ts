@@ -1,14 +1,27 @@
 import { Request, Response } from "express"
 import user_model from "../../../model/user_model"
+import mongoose from "mongoose"
 const getUserFriendsController = (req: Request, res: Response) => {
-    const user_id = req.session.userData
-
+    const user_id = new mongoose.Types.ObjectId (req.session.userData.userId)
     try {
         if (user_id !== undefined) {
-            user_model.findById(user_id.userId).then(async value => {
+            user_model.findById(user_id).then(async value => {
                 if (value !== null) {
-                    let friendData = await user_model.find({ "_id": { $in: value.friends },"conversations.contact_Id":user_id.userId}, { conversations: { $elemMatch: { "conversations.contact_Id": user_id.userId } } }).select(['name','profileImagePath'])
 
+                    let friendData = await user_model.aggregate([
+                        { $match: { "_id": { $in: value.friends } } },
+                        { $project: { 
+                            name: 1, 
+                            profileImagePath: 1, 
+                            conversations: {
+                                $filter: {
+                                    input: "$conversations",
+                                    as: "conversation",
+                                    cond: { $eq: [ "$$conversation.contact_Id", user_id ] }
+                                }
+                            }
+                        } }
+                    ]);
                     res.status(200).json({
                         message: "succssess",
                         body: {

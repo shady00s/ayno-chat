@@ -51,13 +51,13 @@ const GroupMessageComponent=()=> {
     },[socket])
     useEffect(()=>{
         socket.on("images",imagesCallBack)
-    },[socket,messages])
+    },[socket])
     useEffect(() => {
         if (socket.connected) {
             socket.on('recive-group-message', messagesCallBack)
            
-            socket.on('typing-data',(name,isTyping)=>{
-                setTypingData({typing:isTyping,userName:name})
+            socket.on('typing-data',(name,isTyping,type)=>{
+                setTypingData({typing:isTyping,userName:name,type})
             })
 
         }
@@ -101,7 +101,7 @@ const GroupMessageComponent=()=> {
 
                         </div>
                         {/* typing container */}
-                       <div className={`${typingData.typing?"opacity-100":"opacity-0"} transition-opacity duration-100 flex rounded-xl m-1 bg-[rgba(79,101,182,0.13)]`}>
+                       <div className={`${typingData.typing && typingData.type === "group"?"opacity-100":"opacity-0"} transition-opacity duration-100 flex rounded-xl m-1 bg-[rgba(79,101,182,0.13)]`}>
                         
                         <span className={"text-slate-300 text-[0.8rem] pl-2 pr-2 p-[0.3rem] "}>{typingData.userName} Typing...</span>
                         </div> 
@@ -122,7 +122,7 @@ const GroupMessageComponent=()=> {
 
                         </div>
                         {/* typing container */}
-                       <div className={`${typingData.typing?"opacity-100":"opacity-0"} transition-opacity duration-100 flex justify-start items-start rounded-xl m-1 bg-[rgba(79,101,182,0.13)]`}>
+                       <div className={`${typingData.typing && typingData.type === "group"?"opacity-100":"opacity-0"} transition-opacity duration-100 flex justify-start items-start rounded-xl m-1 bg-[rgba(79,101,182,0.13)]`}>
                         
                         <span className={"text-slate-300 text-[0.8rem] pl-2 pr-2 p-[0.3rem] "}>{typingData.userName} Typing...</span>
                         </div> 

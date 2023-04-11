@@ -1,4 +1,4 @@
-import { useState, useContext,useEffect } from "react";
+import React,{ useState, useContext,useEffect } from "react";
 import { Outlet, Navigate } from "react-router-dom";
 import SocketContext from "./context/socketContext";
 import ApiCall from "./api_call";
@@ -9,7 +9,6 @@ import { setUser } from "./redux/slice";
 const PrivateRoute = () => {
 
     const [user_data, setUserData] = useState()
-    // const {user,setUser} = useContext(UserContext)
     const socket = useContext(SocketContext)
     const userDispatch = useDispatch()
     useEffect(() => {
@@ -18,12 +17,12 @@ const PrivateRoute = () => {
    
             ApiCall.getAuthentication().then(data => {
                 if (data.data.message === "authenticated") {
+                    socket.emit('global-id',data.data.body.id)
                     userDispatch(setUser({
                         name: data.data.body.name,
                         profileImagePath: data.data.body.profileImagePath,
                         id:data.data.body.id
                       }))
-                      socket.emit('global-id',data.data.body.id)
     
                     setUserData(() => true)
     
@@ -52,4 +51,4 @@ const PrivateRoute = () => {
 
 }
 
-export default PrivateRoute
+export default React.memo(PrivateRoute)

@@ -40,7 +40,7 @@ export default function GroupNotificationComponent(){
             }} className="stroke-slate-500  w-9 h-9 p-2 cursor-pointer" />
             </div>
             <button className="text-slate-200 bg-slate-600 pl-2 pr-2 p-1 rounded-lg" onClick={()=>{
-                setNavigation({name:"Contacts",target:"friendRequest"})
+                setNavigation(()=>({name:"Contacts",target:"friendRequest"}))
                 setShow(false)
             }}>
                 Go to friend requests

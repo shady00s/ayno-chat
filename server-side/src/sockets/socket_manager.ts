@@ -93,8 +93,8 @@ let socketManager = {
             socket.on('join-group-conversation',(groupConversation)=>{
                 socket.join(groupConversation)
             })
-            socket.on("isTyping", ({name,conversation_id,isTyping})=>{
-                socket.to(conversation_id).emit("typing-data",name,isTyping)
+            socket.on("isTyping", ({name,conversation_id,isTyping,type})=>{
+                socket.to(conversation_id).emit("typing-data",name,isTyping,type)
             })
            
           

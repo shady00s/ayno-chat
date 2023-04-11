@@ -7,13 +7,12 @@ import { store } from "./redux/store";
 import { io } from "socket.io-client";
 function App() {
 
-  const socket = useRef(io("https://ayno-chat-api.onrender.com", { transports: ['websocket'] }))
+  const socket = useRef(io("http://192.168.1.4:8080", { transports: ['websocket'] }))
   useEffect(() => {
 
     if (!socket.current.connected) {
       socket.current.connect()
     }
-    return (() =>{ socket.current.disconnect()})
   }, [socket.current])
   return (
     <Provider store={store}>

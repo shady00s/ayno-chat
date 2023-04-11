@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosInestance = axios.create({
-    baseURL:"https://ayno-chat-api.onrender.com",
+    baseURL:"http://192.168.1.4:8080",
     withCredentials:true
 })
 //"https://ayno-chat-api.onrender.com
@@ -9,7 +9,7 @@ const axiosInestance = axios.create({
 
 
 const userInstance = axios.create({
-    baseURL:"https://ayno-chat-api.onrender.com/user",
+    baseURL:"http://192.168.1.4:8080/user",
     withCredentials:true
 })
 

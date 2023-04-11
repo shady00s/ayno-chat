@@ -91,8 +91,6 @@ export default function AddNewVote(){
                                 voteChoices:pollChoices,
                                 message:"voting",
                                 conversation_id:contact.conversation_id,
-                                voteQuestion:voteQuestion,
-                                voteChoices:pollChoices
                             }).then(() => {
 
                                 setLoading(false)

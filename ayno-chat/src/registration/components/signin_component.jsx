@@ -5,12 +5,13 @@ import ApiCall from '../../api_call';
 import RegisterScreenContext from '../../context/registrationContext';
 import { useNavigate } from 'react-router-dom';
 import InputErrorComponent from './input_error_component';
-
+import { Eye,EyeOff } from "react-feather";
 const SignInComponent = () => {
     const navigate = useNavigate()
     const [userName, setUserName] = useState('')
     const [password, setPassword] = useState('')
     const [loading, setloading] = useState(false)
+    const [showPassword,setShowPassword]=useState(false)
     const { setScreen } = useContext(RegisterScreenContext)
 
     const [errorMessage, setErrorMessage] = useState("")
@@ -41,7 +42,12 @@ const SignInComponent = () => {
                 <form className="p-3 flex flex-col justify-start items-start">
 
                     <InputTextComponent onChange={(event) => { setUserName(event.target.value) }} placeHolder={"Name:"} />
-                    <InputTextComponent onChange={(event) => { setPassword(event.target.value) }} placeHolder={"Password:"} />
+                    <div className="flex justify-center w-full items-center">
+                        <InputTextComponent type={showPassword?"text":"password"} onChange={(event) => { setPassword(event.target.value) }} placeHolder={"Password:"} />
+                        <div className="cursor-pointer" onClick={()=>{setShowPassword(()=>!showPassword)}}>
+                            {showPassword?<Eye className="stroke-slate-400 "/>:<EyeOff className="stroke-slate-600"/>}
+                        </div>
+                    </div>
 
 
 

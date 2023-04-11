@@ -87,6 +87,7 @@ function ContactInformation() {
       }
     
   }, [contact]); //contact
+  console.log(selectedGroupMemberData)
 
   
   return (
@@ -193,8 +194,7 @@ function ContactInformation() {
                             _id:selectedGroupMemberData.id,
                             name:selectedGroupMemberData.name,
                             profileImagePath:selectedGroupMemberData.profileImagePath,
-                            conversations:[{conversation_Id:selectedGroupMemberData.conversation_id}],
-
+                            conversations:[{conversation_Id:selectedGroupMemberData.conversation_id,contact_Id:selectedGroupMemberData.id}],
                             type: "contact",
                           }));
                         }}
@@ -342,12 +342,11 @@ function ContactInformation() {
                         <div className=" w-6/12">
                           {selectedGroupMemberData.isFriend ? <div
                             onClick={() => {
-
                               setContact(setNewContact({
                                 _id:selectedGroupMemberData.id,
                                 name:selectedGroupMemberData.name,
                                 profileImagePath:selectedGroupMemberData.profileImagePath,
-                                conversations:[{conversation_Id:selectedGroupMemberData.conversation_id}],
+                                conversations:[{conversation_Id:selectedGroupMemberData.conversation_id,contact_Id:selectedGroupMemberData.id}],
                                 type: "contact",
                               }));
                             }}

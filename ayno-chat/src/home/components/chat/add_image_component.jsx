@@ -14,12 +14,11 @@ import { useDispatch, useSelector } from 'react-redux';
 const AddImageComponent = () => {
     const  contact  = useSelector((state)=>state.data.contact)
     const user = useSelector((state)=>state.data.user)
+    const socket = useContext(SocketContext)
     const [loading,setLoading] = useState(false)
 
     async function imageConverter(imagesList) {
         
-            const conversation = contact.type==="contact"? contact.conversations[0].conversation_Id:contact.conversation_id
-
         
 
         const convertedImageList = [];
@@ -27,9 +26,19 @@ const AddImageComponent = () => {
             convertedImageList.push(await convertBase64(imagesList[index]))
         }
 
-        ApiCall.postMediaToServer({ media: convertedImageList, sender_id: user.id, conversation_id: conversation, sender_image_path: user.profileImagePath,type:contact.type }).then((val)=>{
+        const conversation_id = contact.type==="contact"?contact.conversations.find((data)=>data.contact_Id === user.id).conversation_Id:contact.conversation_id
+        ApiCall.postMediaToServer({ media: convertedImageList, sender_id: user.id, conversation_id: conversation_id, sender_image_path: user.profileImagePath,type:contact.type }).then((val)=>{
             setLoading(()=>false)
-           
+
+            socket.emit('new-notification', {
+                conversations:[{conversation_Id:conversation_id, contact_Id:contact._id}]
+                , id: contact._id,
+                 name:user.name,
+                  user: user.id ,
+                  profileImagePath:user.profileImagePath,
+                   type: "message" })
+      
+            
         })
           
     

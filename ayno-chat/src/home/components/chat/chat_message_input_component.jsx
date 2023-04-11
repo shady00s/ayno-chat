@@ -15,7 +15,6 @@ export default function ChatMessageInputComponent(props) {
   const contact = useSelector((state) => state.data.contact)
   const [userTyping, setUserTyping] = useState(false);
   const finalText = useRef("");
-
   const isEmptyString = /^\s*$/
   useEffect(() => {
     finalText.current = textVal;
@@ -28,10 +27,10 @@ export default function ChatMessageInputComponent(props) {
       }).then(()=>{
         
         socket.emit('new-notification', {
-           conversation_id, id: contact._id,
+          conversations:[{conversation_Id:conversation_id, contact_Id:contact._id}]
+          , id: contact._id,
            name:user.name,
             user: user.id ,
-            newMessage:1,
             profileImagePath:user.profileImagePath,
              type: "message" })
 
@@ -59,12 +58,23 @@ export default function ChatMessageInputComponent(props) {
     }
   }
   useEffect(() => {
-    socket.emit("isTyping", {
-      name: user.name,
-      conversation_id,
-      isTyping: userTyping,
-    });
-  }, [userTyping]);
+    if(contact.type === "contact"){
+      socket.emit("isTyping", {
+        name: user.name,
+        conversation_id:contact._id,
+        isTyping: userTyping,
+        type:"contact"
+      });
+
+    }else{
+      socket.emit("isTyping", {
+        name: user.name,
+        conversation_id,
+        isTyping: userTyping,
+        type:"group"
+      });
+    }
+  }, [userTyping,conversation_id]);
 
   return (
     <div className="z-20 justify-between items-center border-2 border-gray-800 rounded-md sticky bottom-0 pl-4 pr-4 w-full  bg-background flex">

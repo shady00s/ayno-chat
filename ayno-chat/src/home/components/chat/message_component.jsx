@@ -44,7 +44,7 @@ function MessageComponent() {
     function getPrevMessages(){
         let pages = page
         if(paginationRef.current.scrollTop === 0 &&chat.length ==50 ){
-           setPage(prev=>pages++)
+           setPage(()=>pages++)
            console.log(page);
            setLoadingPagination(true)
            setNewMessage(false)
@@ -116,7 +116,6 @@ function MessageComponent() {
             socket.off("images")
         })
     }, [socket])
-    
     return (
         <div className='relative flex flex-col  h-[88vh] md:w-[50%] w-[95%]'>
 
@@ -142,13 +141,13 @@ function MessageComponent() {
 
                         </div>
                         {/* typing container */}
-                       <div className={`${typing?"opacity-100":"opacity-0"} transition-opacity duration-100 flex rounded-xl m-1 bg-[rgba(79,101,182,0.13)]`}>
+                       <div className={`${typing ?"opacity-100":"opacity-0"} transition-opacity duration-100 flex rounded-xl m-1 bg-[rgba(79,101,182,0.13)]`}>
                         
                         <span className={"text-slate-300 text-[0.8rem] pl-2 pr-2 p-[0.3rem] "}> Typing...</span>
                         </div> 
                        
                         <div className=' w-full '>
-                            <ChatMessageInputComponent conversation_id={contact._id !== null ? contact.conversations[0].conversation_Id : ""} friend_id={contact._id} />
+                            <ChatMessageInputComponent conversation_id ={ contact._id !== null ? contact.conversations.find((data)=>data.contact_Id === user.id).conversation_Id : ""} friend_id={contact._id} />
 
                         </div>
                     </div>
@@ -165,7 +164,7 @@ function MessageComponent() {
 
                         </div>
                         <div className=' w-full  '>
-                            <ChatMessageInputComponent conversation_id={contact._id !== null ? contact.conversations.find((data)=>data.contact_Id === user.id) : ""} friend_id={contact._id} />
+                            <ChatMessageInputComponent conversation_id={contact._id !== null ? contact.conversations.find((data)=>data.contact_Id === user.id).conversation_Id : ""} friend_id={contact._id} />
                         </div>
                     </div>}
             </div>

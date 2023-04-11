@@ -8,13 +8,12 @@ export default function UserNotificationComponent(){
 
     const socket = useContext(SocketContext)
     const contact = useSelector((state)=>state.data.contact)
-    const [contactData,setContactData]=useState("")
+    const [contactData,setContactData]=useState({})
     const [show,setShow]=useState(false)
     const dispatch = useDispatch()
     useEffect(()=>{
         socket.on("notification",(data)=>{
             if(data.type==="message"){
-              
                 if(contact._id === null || contact._id!==data.user){
                     setShow(true)
                     setContactData(data)
@@ -30,6 +29,7 @@ export default function UserNotificationComponent(){
             
         })
     },[socket,contact])
+
     return(
 
         
@@ -44,7 +44,7 @@ export default function UserNotificationComponent(){
             <button className="text-slate-200 bg-slate-600 pl-2 pr-2 p-1 rounded-lg" onClick={()=>{
                 dispatch(setNewContact({
                     _id:contactData.user,
-                    conversations:[{conversation_Id:contactData.conversation_id,contact_Id:contactData.user}],
+                    conversations:[...contactData.conversations],
                     name:contactData.name,
                     profileImagePath:contactData.profileImagePath,
                     type:"contact"
