@@ -41,7 +41,10 @@ const SignInComponent = () => {
 
                 <form className="p-3 flex flex-col justify-start items-start">
 
-                    <InputTextComponent onChange={(event) => { setUserName(event.target.value) }} placeHolder={"Name:"} />
+                    <InputTextComponent onChange={(event) => { 
+                        let value = event.target.value
+                        let name = value.replace(/\s/g, '')
+                        setUserName(()=>name) }} placeHolder={"Name:"} />
                     <div className="flex justify-center w-full items-center">
                         <InputTextComponent type={showPassword?"text":"password"} onChange={(event) => { setPassword(event.target.value) }} placeHolder={"Password:"} />
                         <div className="cursor-pointer" onClick={()=>{setShowPassword(()=>!showPassword)}}>

@@ -100,7 +100,9 @@ const RegistrationComponent = () => {
                         }else{
                             setIsAlreadyExisted(true)
                         }
-                        setUsername(value.target.value) }} placeHolder={"Name"}/>
+                        let nameValue = value.target.value
+                        let name = nameValue.replace(/\s/g, '')
+                        setUsername(()=>name) }} placeHolder={"Name"}/>
                     {/* check if the username is not less than 4 characters*/}
                      <InputErrorComponent show={userNameLengthRegExp.test(username)?true:false} title={"username is too short it must be at least 4 characters"} />
                     
