@@ -45,7 +45,6 @@ function MessageComponent() {
         let pages = page
         if(paginationRef.current.scrollTop === 0 &&chat.length ==50 ){
            setPage(()=>pages++)
-           console.log(page);
            setLoadingPagination(true)
            setNewMessage(false)
 
@@ -54,7 +53,6 @@ function MessageComponent() {
             if (messages.status === 200) {
                 setChat((prev) => [...messages.data.conversations,...prev])
                 setLoadingPagination(false)
-                console.log(chat.length);
             }
 
             else {
@@ -103,7 +101,7 @@ function MessageComponent() {
             
 
            socket.on("typing-data",(name,isTyping,type)=>{
-               setTyping({typing:isTyping,type})
+               setTyping(()=>({typing:isTyping,type:type}))
             
            })
 
