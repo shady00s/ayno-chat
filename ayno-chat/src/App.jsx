@@ -5,24 +5,34 @@ import SocketContext from "./context/socketContext";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
 import { io } from "socket.io-client";
+import LoadingScreen from "./reusable-components/loading/loading_screen";
+import LoadingComponent from "./reusable-components/loading/loading_component";
 function App() {
+  const [socketVal,setSocketVal]=useState(null)
+  //const socket = useRef(null)
+  useEffect(()=>{
+    if(socketVal === null){
+      const socketInit = io("https://ayno-chat-api.onrender.com", { transports: ['websocket'] })
+      setSocketVal(()=>socketInit)
 
-  const socket = useRef(io("http://192.168.1.4:8080", { transports: ['websocket'] }))
-  useEffect(() => {
-
-    if (!socket.current.connected) {
-      socket.current.connect()
     }
-  }, [socket.current])
-  return (
-    <Provider store={store}>
-      <SocketContext.Provider value={socket.current}>
-        <HelmetProvider>
-          <AppRouters />
-        </HelmetProvider>
-      </SocketContext.Provider>
-    </Provider>
-  );
+  },[socketVal])
+  const socket = useMemo(()=> socketVal ,[socketVal])
+    console.log(socket);
+  if(!socket){
+    return(<LoadingComponent/>)
+  }
+    return (
+      <Provider store={store}>
+        <SocketContext.Provider value={socket}>
+          <HelmetProvider>
+            <AppRouters />
+          </HelmetProvider>
+        </SocketContext.Provider>
+      </Provider>
+    );
+
+  
 
 
 }

@@ -17,7 +17,10 @@ const PrivateRoute = () => {
    
             ApiCall.getAuthentication().then(data => {
                 if (data.data.message === "authenticated") {
-                    socket.emit('global-id',data.data.body.id)
+                    if(socket !== null){
+
+                        socket.emit('global-id',data.data.body.id)
+                    }
                     userDispatch(setUser({
                         name: data.data.body.name,
                         profileImagePath: data.data.body.profileImagePath,

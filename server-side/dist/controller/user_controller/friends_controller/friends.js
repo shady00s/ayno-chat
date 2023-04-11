@@ -4,13 +4,27 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const user_model_1 = __importDefault(require("../../../model/user_model"));
+const mongoose_1 = __importDefault(require("mongoose"));
 const getUserFriendsController = (req, res) => {
-    const user_id = req.session.userData;
+    const user_id = new mongoose_1.default.Types.ObjectId(req.session.userData.userId);
     try {
         if (user_id !== undefined) {
-            user_model_1.default.findById(user_id.userId).then(async (value) => {
+            user_model_1.default.findById(user_id).then(async (value) => {
                 if (value !== null) {
-                    let friendData = await user_model_1.default.find({ "_id": { $in: value.friends }, "conversations.contact_Id": user_id.userId }, { conversations: { $elemMatch: { "conversations.contact_Id": user_id.userId } } }).select(['name', 'profileImagePath']);
+                    let friendData = await user_model_1.default.aggregate([
+                        { $match: { "_id": { $in: value.friends } } },
+                        { $project: {
+                                name: 1,
+                                profileImagePath: 1,
+                                conversations: {
+                                    $filter: {
+                                        input: "$conversations",
+                                        as: "conversation",
+                                        cond: { $eq: ["$$conversation.contact_Id", user_id] }
+                                    }
+                                }
+                            } }
+                    ]);
                     res.status(200).json({
                         message: "succssess",
                         body: {

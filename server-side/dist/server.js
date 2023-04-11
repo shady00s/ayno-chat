@@ -72,7 +72,7 @@ app.use((0, express_session_1.default)({
     cookie: {
         maxAge: expiredDate,
         secure: true,
-        httpOnly: true,
+        httpOnly: false,
         sameSite: "none"
     },
 }));

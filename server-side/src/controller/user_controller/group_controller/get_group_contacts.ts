@@ -17,17 +17,17 @@ export default async function  getGroupContacts(req:Request,res:Response){
                 const resLast = []
                 //get all group members except user
                  await user_model.find({"_id":{$in:[...groupData.members_ids]
-                    .filter(data=>!data.equals(user_id))}}).select(['-password','-groups']).then(val=>{
+                    .filter(data=>!data.equals(user_id))}}).select(['-password','-groups']).then(groupMembers=>{
                         //create editied object for each user to check if it is in friends or in friend request
-                    for (let index = 0; index < val.length; index++) {
-                        let isFriend = userFriends.has(val[index]._id.toString())
+                    for (let index = 0; index < groupMembers.length; index++) {
+                        let isFriend = userFriends.has(groupMembers[index]._id.toString())
                         let result ={}
-                        result['name']=val[index].name,
-                        result['id']=val[index]._id,
-                        result['profileImagePath']=val[index].profileImagePath,
+                        result['name']=groupMembers[index].name,
+                        result['id']=groupMembers[index]._id,
+                        result['profileImagePath']=groupMembers[index].profileImagePath,
                         result['isFriend']=isFriend
-                        result['isInFriendRequest']=userRequests.has(val[index]._id.toString())
-                        result['conversation_id']=isFriend?[...userConvs].filter(contact=>contact.contact_Id.equals(val[index]._id))[0].conversation_Id:undefined
+                        result['isInFriendRequest']=userRequests.has(groupMembers[index]._id.toString())
+                        result['conversation_id']=isFriend?[...userConvs].filter(contact=>contact.contact_Id.equals(groupMembers[index]._id))[0].conversation_Id:undefined
 
                                 //push to array
                             resLast.push(result)

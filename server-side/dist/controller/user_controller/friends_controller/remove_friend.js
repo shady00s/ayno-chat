@@ -10,22 +10,26 @@ async function removeFriend(req, res) {
     const user_id = req.session.userData.userId;
     const friend_id = req.body.friend_id;
     const errors = (0, express_validator_1.validationResult)(req);
-    if (errors.isEmpty()) {
-        const session = await mongoose_1.default.startSession();
-        session.startTransaction();
-        try {
+    let session = await mongoose_1.default.startSession();
+    try {
+        if (errors.isEmpty()) {
+            session.startTransaction();
             await user_model_1.default.findByIdAndUpdate({ _id: user_id }, { $pull: { friends: friend_id } }, { new: true }).session(session).select(["-password", "-groups", "-conversations"]);
             await user_model_1.default.findByIdAndUpdate({ _id: friend_id }, { $pull: { friends: user_id } }, { new: true }).session(session).select(["-password", "-groups", "-conversations"]);
             await session.commitTransaction().then(() => {
                 res.status(201).json({ message: "succssess" });
             });
         }
-        catch (error) {
-            res.status(501).json({ message: "error", error });
+        else {
+            res.status(501).json({ message: "error", errors });
         }
     }
-    else {
-        res.status(501).json({ message: "error", errors });
+    catch (error) {
+        console.log(error);
+        res.status(501).json({ message: "error", error });
+    }
+    finally {
+        await session.endSession();
     }
 }
 exports.default = removeFriend;

@@ -12,7 +12,7 @@ function ContactInformation() {
   const { width } = useWindowDimensions();
   const [media, setMedia] = useState([]);
   const contact = useSelector((state)=>state.data.contact)
-  const setContact  = useDispatch();
+  const dispatch  = useDispatch();
   const [loading, setLoading] = useState(false);
   const [isUserOnline, setIsUserOnline] = useState();
   const [data, setData] = useState({ name: "", id: "" });
@@ -87,7 +87,7 @@ function ContactInformation() {
       }
     
   }, [contact]); //contact
-  console.log(selectedGroupMemberData)
+  console.log(selectedGroupMemberData.id)
 
   
   return (
@@ -173,7 +173,7 @@ function ContactInformation() {
                     <h2 className={`text-slate-200 text-sm ml-12 mt-6 mb-4 `}>
                       Contact informations
                     </h2>
-                    <div className="flex">
+                    <div className="flex items-center justify-start">
                       <div className="flex ml-1 flex-col justify-start items-start w-[15%] ">
                         <span className="text-slate-400 p-1">name:</span>
                         <span className="text-slate-400 p-1">Id:</span>
@@ -187,14 +187,14 @@ function ContactInformation() {
                         </h1>
                       </div>
                     </div>
-                    <div className=" w-10/12">
+                    <div className="">
                       {selectedGroupMemberData.isFriend ? <div
                         onClick={() => {
-                          setContact(setNewContact({
+                          dispatch(setNewContact({
                             _id:selectedGroupMemberData.id,
                             name:selectedGroupMemberData.name,
                             profileImagePath:selectedGroupMemberData.profileImagePath,
-                            conversations:[{conversation_Id:selectedGroupMemberData.conversation_id,contact_Id:selectedGroupMemberData.id}],
+                            conversations:[{conversation_Id:selectedGroupMemberData.conversation_id,contact_Id:user.id}],
                             type: "contact",
                           }));
                         }}
@@ -325,7 +325,7 @@ function ContactInformation() {
                         >
                           Contact informations
                         </h2>
-                        <div className="flex">
+                        <div className="flex items-start justify-start">
                           <div className="flex flex-col justify-center items-end w-[20%] mr-2">
                             <span className="text-slate-400">name:</span>
                             <span className="text-slate-400">Id:</span>
@@ -335,18 +335,19 @@ function ContactInformation() {
                               {selectedGroupMemberData.name}
                             </h1>
                             <h1 className="text-slate-200">
-                              {selectedGroupMemberData._id}
+                              {selectedGroupMemberData.id}
                             </h1>
                           </div>
                         </div>
-                        <div className=" w-6/12">
+                        <div>
                           {selectedGroupMemberData.isFriend ? <div
                             onClick={() => {
-                              setContact(setNewContact({
+                              console.log(selectedGroupMemberData.id);
+                              dispatch(setNewContact({
                                 _id:selectedGroupMemberData.id,
                                 name:selectedGroupMemberData.name,
                                 profileImagePath:selectedGroupMemberData.profileImagePath,
-                                conversations:[{conversation_Id:selectedGroupMemberData.conversation_id,contact_Id:selectedGroupMemberData.id}],
+                                conversations:[{conversation_Id:selectedGroupMemberData.conversation_id,contact_Id:user.id}],
                                 type: "contact",
                               }));
                             }}
