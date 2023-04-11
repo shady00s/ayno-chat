@@ -35,9 +35,9 @@ const RegistrationComponent = () => {
     useEffect(()=>{
        
         // get avatars from cartoon avatar api
-       
+       let userNameWithoutText = username.replace(/\s/g,'')
         setRegisterData({
-            username:username,
+            username:userNameWithoutText,
             password:pass,
             profilePath:avatar
 

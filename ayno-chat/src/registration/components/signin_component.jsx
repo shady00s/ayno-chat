@@ -6,6 +6,7 @@ import RegisterScreenContext from '../../context/registrationContext';
 import { useNavigate } from 'react-router-dom';
 import InputErrorComponent from './input_error_component';
 import { Eye,EyeOff } from "react-feather";
+import { usernameWhiteSpaceRegExp } from "../../constants";
 const SignInComponent = () => {
     const navigate = useNavigate()
     const [userName, setUserName] = useState('')
@@ -17,9 +18,8 @@ const SignInComponent = () => {
     const [errorMessage, setErrorMessage] = useState("")
     const sendLoginData = async () => {
         setloading(true)
-
-         await ApiCall.getUserLoginData({ user_name: userName, user_password: password }).then(loginData => {
-            console.log(loginData.data.message)
+            let nameWithoutSpace = userName.replace(/\s/g,'')
+         await ApiCall.getUserLoginData({ user_name: nameWithoutSpace, user_password: password }).then(loginData => {
             if (loginData.status === 200) {
 
                 navigate('/ayno-chat/home')
