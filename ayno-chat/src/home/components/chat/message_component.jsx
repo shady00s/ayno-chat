@@ -141,7 +141,7 @@ function MessageComponent() {
 
                         </div>
                         {/* typing container */}
-                       <div className={`${typingData.typing && typingData.type==="contact" && type?"opacity-100":"opacity-0"} transition-opacity duration-100 flex rounded-xl m-1 bg-[rgba(79,101,182,0.13)]`}>
+                       <div className={`${typingData.typing && typingData.type==="contact" ? "opacity-100":"opacity-0"} transition-opacity duration-100 flex rounded-xl m-1 bg-[rgba(79,101,182,0.13)]`}>
                         
                         <span className={"text-slate-300 text-[0.8rem] pl-2 pr-2 p-[0.3rem] "}> Typing...</span>
                         </div> 

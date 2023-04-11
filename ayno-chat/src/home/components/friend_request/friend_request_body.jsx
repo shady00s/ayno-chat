@@ -11,6 +11,7 @@ export default function FriendRequestBody(props) {
     const [loading, setLoading] = useState(false)
     const setFriend = useDispatch()
     const socket = useContext(SocketContext)
+    
     function acceptFriendRequest() {
         setLoading(true)
 
