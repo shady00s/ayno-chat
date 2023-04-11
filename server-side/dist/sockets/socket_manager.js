@@ -57,8 +57,8 @@ let socketManager = {
                 oldConversation = conversation;
                 socket.join(oldConversation);
             });
-            socket.on("isTyping", ({ name, conversation_id, isTyping }) => {
-                socket.to(conversation_id).emit("typing-data", name, isTyping);
+            socket.on("isTyping", ({ name, conversation_id, isTyping, type }) => {
+                socket.to(conversation_id).emit("typing-data", name, isTyping, type);
             });
         });
     },
