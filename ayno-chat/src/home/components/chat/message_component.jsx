@@ -103,9 +103,11 @@ function MessageComponent() {
             
 
            socket.on("typing-data",(name,isTyping,type)=>{
-               setTyping({isTyping,type})
+               setTyping({typing:isTyping,type})
             
            })
+
+           
 
            setTyping(false)
     
