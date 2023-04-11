@@ -13,7 +13,7 @@ function MessageComponent() {
     const [chat, setChat] = useState([])
     const [loading, setLoading] = useState(false)
     const [loadingPagination,setLoadingPagination] = useState(false)
-    const [typing,setTyping] = useState(false)
+    const [typingData,setTyping] = useState({typing:false,type:""})
     const scrollRef = useRef(null)
     const socket = useContext(SocketContext)
     const [isUserScrollBack,setIsUserScrollBack]=useState(false)
@@ -102,9 +102,9 @@ function MessageComponent() {
         
             
 
-           socket.on("typing-data",(name,isTyping)=>{
-               setTyping(isTyping)
-           
+           socket.on("typing-data",(name,isTyping,type)=>{
+               setTyping({isTyping,type})
+            
            })
 
            setTyping(false)
@@ -141,7 +141,7 @@ function MessageComponent() {
 
                         </div>
                         {/* typing container */}
-                       <div className={`${typing ?"opacity-100":"opacity-0"} transition-opacity duration-100 flex rounded-xl m-1 bg-[rgba(79,101,182,0.13)]`}>
+                       <div className={`${typingData.typing && typingData.type==="contact" && type?"opacity-100":"opacity-0"} transition-opacity duration-100 flex rounded-xl m-1 bg-[rgba(79,101,182,0.13)]`}>
                         
                         <span className={"text-slate-300 text-[0.8rem] pl-2 pr-2 p-[0.3rem] "}> Typing...</span>
                         </div> 
