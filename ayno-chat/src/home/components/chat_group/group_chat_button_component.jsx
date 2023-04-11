@@ -30,7 +30,10 @@ export default function GroupChatButtonComponent(props){
         setNavigation('')
         ApiCall.getGroupsInfo(props.data.conversation_id).then(data=>{
 
-            setContact(setNewContact({conversation_id:data.data.body.conversation_id,type:'group',groupName:data.data.body.conversation_name,
+            setContact(setNewContact({
+                conversation_id:data.data.body.conversation_id
+                ,
+                type:'group',groupName:data.data.body.conversation_name,
             members_number:data.data.body.members_count,
             members_colors:data.data.body.members_color
         

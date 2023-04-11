@@ -51,7 +51,9 @@ export default function ChatMessageInputComponent(props) {
           sender_id: user.id, 
           type: "group-message",
           sender_name:user.name,
-          group_name:contact.name
+          group_name:contact.name,
+          members_number:contact.members_number,
+          members_colors:contact.members_colors
         })
       });
       setTextVal("");

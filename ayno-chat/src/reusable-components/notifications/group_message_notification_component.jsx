@@ -42,10 +42,10 @@ export default function GroupNotificationComponent(){
             </div>
             <button className="text-slate-200 bg-slate-600 pl-2 pr-2 p-1 rounded-lg" onClick={()=>{
                 dispatch(setNewContact({
-                    _id:contactData.user,
-                    conversations:contactData.conversation_id,
-                    name:contactData.name,
-                    profileImagePath:contactData.profileImagePath,
+                     conversation_id:contactData.conversation_id,
+                     members_colors:contactData.members_colors,
+                     members_number:contactData.members_number,
+                     groupName:contactData.group_name,
                     type:"group"
                     
                 }))
