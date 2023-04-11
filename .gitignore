@@ -1,2 +1,9 @@
 /ayno-chat/node_modules
 /server-side/node_modules
+/server-side/.env
+/server-side/cert.pem
+/server-side/key.pem
+/server-side/privatekey.pem
+/server-side/server.crt
+/server-side/server.key
+/server-side/server.csr
