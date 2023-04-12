@@ -6,7 +6,6 @@ import { useSelector } from "react-redux";
 export default function ChatMessageComponent(props) {
     const  contact  = useSelector((state)=>state.data.contact)
     const  user  = useSelector((state)=>state.data.user)
-    useEffect(() => { }, [props.message.sender_image_path])
     const guestMainContainerStyle = ' bg-[#1E2329]  mr-2';
     const ownerMainContainerStyle = 'bg-[#008FC6] float-right ml-2 ';
     const userProfilePath = contact.profileImagePath

@@ -30,7 +30,7 @@ function MessageComponent() {
     const newImage = useCallback((textVal)=>{
         setChat(() => [...chat,{messages: {...textVal}}])
         setNewMessage(true)
-    },[socket,newMessages])
+    },[socket])
 
     const typing = useCallback((name,isTyping,type)=>{
         setTyping(()=>({typing:isTyping,type:type}))
@@ -97,8 +97,14 @@ function MessageComponent() {
            
     }, [contact])
     useEffect(()=>{
-        socket.on("images",newImage)
-    },[socket])
+        if(socket.connected){
+            socket.on("images",newImage)
+
+        }
+        return (()=>{
+            socket.off("images")
+        })
+    },[socket,newMessages])
 
     useEffect(() => {
        if(socket.connected){
@@ -116,7 +122,7 @@ function MessageComponent() {
         return(()=>{
             socket.off("recive-message")
             socket.off("typing-data")
-            socket.off("images")
+           
         })
     }, [socket])
     return (
