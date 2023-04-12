@@ -32,6 +32,10 @@ function MessageComponent() {
         setNewMessage(true)
     },[socket])
 
+    const typing = useCallback((name,isTyping,type)=>{
+        setTyping(()=>({typing:isTyping,type:type}))
+     
+    },[socket])
     const scrollToBottom = () => {
         scrollRef.current?.scrollIntoView({ behavior: "smooth" })
     }
@@ -102,10 +106,7 @@ function MessageComponent() {
         
             
 
-           socket.on("typing-data",(name,isTyping,type)=>{
-               setTyping(()=>({typing:isTyping,type:type}))
-            
-           })
+           socket.on("typing-data",typing)
 
            
 
