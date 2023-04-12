@@ -1,7 +1,7 @@
-import { createElement, useState } from "react"
+import React,{ createElement, useState } from "react"
 import { Save,Menu } from "react-feather"
 import saveImageToDevice from "../../../utils/save_image_to_device.js"
-export default function ImageContainer(props){
+const ImageContainer = (props)=>{
     const [open,setOpen] = useState(false)
     const [load,setLoad]=useState(false)
     function onLoad(){
@@ -23,3 +23,5 @@ export default function ImageContainer(props){
         {!load &&<div className={`w-8/12 h-6/6 `}></div>}
     </div>)
 }
+
+export default React.memo(ImageContainer)
