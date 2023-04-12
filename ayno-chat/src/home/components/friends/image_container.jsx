@@ -3,8 +3,10 @@ import { Save,Menu } from "react-feather"
 import saveImageToDevice from "../../../utils/save_image_to_device.js"
 export default function ImageContainer(props){
     const [open,setOpen] = useState(false)
-    const [load,setLoad]=useState(true)
-   
+    const [load,setLoad]=useState(false)
+    function onLoad(){
+        setLoad(false)
+    }
     return(<div className="relative w-30 h-30 flex justify-end ">
         <div className="absolute flex flex-row-reverse p-2 ">
             <Menu onClick={()=>{setOpen(!open)}} className="stroke-slate-300 shadow-lg cursor-pointer "/>
@@ -15,8 +17,9 @@ export default function ImageContainer(props){
             </div>
 
         </div>
-        {load? <div className="w-7/12 h-4/6"></div>:<img onLoad={()=>setLoad(false)} onClick={(target)=>{
+        <img onLoad={onLoad} onClick={(target)=>{
             setOpen(!open)
-        }} className="w-full object-contain rounded-md p-1 " src={props.image}/>}
+        }} className={`w-full object-contain rounded-md p-1 ${load? "block":"none"}`} src={props.image}/>
+        {!load &&<div className={`w-7/12 h-4/6 `}></div>}
     </div>)
 }
