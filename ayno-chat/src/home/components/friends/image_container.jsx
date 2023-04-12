@@ -5,7 +5,7 @@ export default function ImageContainer(props){
     const [open,setOpen] = useState(false)
     const [load,setLoad]=useState(false)
     function onLoad(){
-        setLoad(false)
+        setLoad(true)
     }
     return(<div className="relative w-30 h-30 flex justify-end ">
         <div className="absolute flex flex-row-reverse p-2 ">
