@@ -21,12 +21,16 @@ function MessageComponent() {
     const [page,setPage] = useState(0)
     const [newMessages,setNewMessage]=useState(false)
     const user = useSelector((state)=>state.data.user)
-    const newMessage =(textVal) => {
+
+    const newMessage = useCallback((textVal) => {
         setNewMessage(true)
         return setChat((prev) => [...prev, {messages:{...textVal}}])
-    }
-    
+    },[socket])
 
+    const newImage = useCallback((textVal)=>{
+        setChat(() => [...chat,{messages: {...textVal}}])
+        setNewMessage(true)
+    },[socket])
 
     const scrollToBottom = () => {
         scrollRef.current?.scrollIntoView({ behavior: "smooth" })
@@ -89,11 +93,9 @@ function MessageComponent() {
            
     }, [contact])
     useEffect(()=>{
-        socket.on("images",(textVal)=>{
-            setChat(() => [...chat,{messages: {...textVal}}])
-            setNewMessage(true)
-        })
+        socket.on("images",newImage)
     },[socket,newMessages])
+    
     useEffect(() => {
        if(socket.connected){
            socket.on("recive-message",newMessage )
