@@ -15,7 +15,7 @@ export default function ImageContainer(props){
             </div>
 
         </div>
-        {load? <div className="w-7/12 h-4/6"></div>:<img onLoad={()=>{setLoad(false)}} onClick={(target)=>{
+        {load? <div className="w-7/12 h-4/6"></div>:<img onLoad={()=>setLoad(false)} onClick={(target)=>{
             setOpen(!open)
         }} className="w-full object-contain rounded-md p-1 " src={props.image}/>}
     </div>)
