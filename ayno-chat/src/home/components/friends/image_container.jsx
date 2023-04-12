@@ -20,7 +20,7 @@ export default function ImageContainer(props){
         <img onLoad={onLoad} onClick={(target)=>{
             setOpen(!open)
         }} className={`w-full object-contain rounded-md p-1 ${load? "block":"none"}`} src={props.image}/>
-        {!load &&<div className={`w-8/12 h-6/6 `}></div>}
+        <div className={`${!load? "block w-0 h-0 ":"none w-8/12 h-6/6 "}`}></div>
     </div>)
 }
 
