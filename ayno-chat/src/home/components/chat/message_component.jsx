@@ -95,7 +95,7 @@ function MessageComponent() {
         return (() => {
             socket.off("images")
         })
-    }, [socket, newMessages])
+    }, [socket,chat])
 
     useEffect(() => {
         if (socket.connected) {
