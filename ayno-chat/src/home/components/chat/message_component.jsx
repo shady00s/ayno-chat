@@ -94,8 +94,8 @@ function MessageComponent() {
     }, [contact])
     useEffect(()=>{
         socket.on("images",newImage)
-    },[socket,newMessages])
-    
+    },[socket])
+
     useEffect(() => {
        if(socket.connected){
            socket.on("recive-message",newMessage )
