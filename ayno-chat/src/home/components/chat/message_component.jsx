@@ -30,13 +30,13 @@ function MessageComponent() {
     const newImage = useCallback((textVal)=>{
         setChat(() => [...chat,{messages: {...textVal}}])
         setNewMessage(true)
-    },[socket])
+    },[socket,newMessages])
 
     const typing = useCallback((name,isTyping,type)=>{
         setTyping(()=>({typing:isTyping,type:type}))
      
     },[socket])
-    const scrollToBottom = () => {
+    function scrollToBottom () {
         scrollRef.current?.scrollIntoView({ behavior: "smooth" })
     }
 
